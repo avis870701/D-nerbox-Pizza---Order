@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改訂單資料</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom styles here if needed */
+    </style>
+</head>
+
+<body style="background-color: #fdf5e6">
+<div class="container">
+    <div class="text-center">
+        <h2>修改訂單資料</h2>
+        <form method="post" action="/delivery/upd">
+            <input type="hidden" name="_method" value="PUT"/>
+            <div class="form-group">
+                <label for="id">訂單編號</label>
+				<th:each="delivery : ${delivery}">
+                <input id="id" type="text" class="form-control" name="id" th:value="${delivery.id}" required/>
+            </div>
+            <div class="form-group">
+                <label for="cname">顧客姓名</label>
+                <input id="cname" type="text" class="form-control" name="cname" value="" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">電話</label>
+                <input id="phone" type="text" class="form-control" name="phone" value="" pattern="[0]{1}[2-9]{1}[0-9]{8}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="product">產品</label>
+                <select id="product" class="form-control" name="product" required>
+                    <option value="夏威夷德國披薩">夏威夷德國披薩</option>
+                    <!-- Add other options here -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="num">數量</label>
+                <input id="num" type="number" class="form-control" name="num" value="1" min="1" max="10"/>
+            </div>
+
+            <div class="form-group">
+                <label for="price">價格</label>
+                <input id="price" type="text" class="form-control" name="price" value=""/>
+            </div>
+
+            <div class="form-group">
+                <label for="ename">外送員工</label>
+                <select id="ename" class="form-control" name="ename">
+                    <option value="Henry">Henry</option>
+                    <!-- Add other options here -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="address">地址</label>
+                <select id="address" class="form-control" name="address">
+                    <option value="中原大學">中原大學</option>
+                    <!-- Add other options here -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="time">外送時間</label>
+                <input id="time" type="text" class="form-control" name="time" value=""/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">送出</button>
+        </form>
+
+        <a href="/delivery/findTall" class="btn btn-secondary">回上一頁</a>
+        <button id="ClickButton" class="btn btn-info">一鍵輸入</button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#ClickButton').click(function () {
+            $('#cname').val('王建宇');
+            $('#phone').val('0927112569');
+            $('#num').val('5');
+            $('#price').val('230');
+            $('#time').val('10');
+        });
+    });
+</script>
+</body>
+</html>

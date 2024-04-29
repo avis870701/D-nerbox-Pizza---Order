@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif; /* 使用常见的无衬线字体 */
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #333; /* 设置标题颜色 */
+    text-align: center; /* 标题居中 */
+}
+
+div {
+    max-width: 600px; /* 设置 div 的最大宽度 */
+    margin: 0 auto; /* 居中显示 */
+    padding: 20px;
+    background-color: #fff; /* 设置背景颜色 */
+    border-radius: 8px; /* 圆角边框 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+
+button {
+    padding: 10px 20px; /* 设置按钮内边距 */
+    background-color: #007bff; /* 设置按钮背景颜色 */
+    color: #fff; /* 设置按钮文字颜色 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
+}
+
+button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+}
+
+.button-container {
+    text-align: center; /* 按钮水平居中 */
+    margin-top: 20px; /* 上边距 20px */
+}
+
+.button-container form {
+    display: inline; /* 让表单和按钮水平排列 */
+}
