@@ -44,6 +44,7 @@
 								<th>產品狀態</th>
 								<th>修改</th>
 								<th>狀態</th>
+								<th>上架時間</th>
 								<% List<ProductBean> productBeans = (ArrayList<ProductBean>)
 										request.getAttribute("productBeans");
 										for (ProductBean productBean : productBeans) {
@@ -81,6 +82,9 @@
 										<option value="1">上架中</option>
 										<option value="0">已下架</option>
 									</select>
+								</td>
+								<td>
+									<%=productBean.getProductCreateDate()%>
 								</td>
 							</tr>
 							<% } %>

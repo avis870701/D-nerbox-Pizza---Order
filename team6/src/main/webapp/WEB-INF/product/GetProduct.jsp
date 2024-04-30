@@ -53,6 +53,10 @@ img {
 				<td>商品狀態</td>
 				<td><input type="text" readonly value="<%=productBean.getProductState().getProductStateName()%>"></td>
 			</tr>
+			<tr>
+				<td>上架時間</td>
+				<td><input type="text" readonly value="<%=productBean.getProductCreateDate()%>"></td>
+			</tr>
 
 		</table>
 		<p>

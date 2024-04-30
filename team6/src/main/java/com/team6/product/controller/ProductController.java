@@ -2,6 +2,7 @@ package com.team6.product.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,9 +169,12 @@ public class ProductController {
 			@RequestParam("productDesc") String productDesc,
 			@RequestParam("productImg_url") MultipartFile mf, 
 			@RequestParam("productPrice") Integer productPrice) throws IllegalStateException, IOException {
-		
+		// 加入產品狀態預設值為1(已上架)
 		ProductState productStateDefault = pStateService.findProductStateById(1);
-
+		// 加一個現在的日期(商品上架日期)
+		LocalDate productCreateDate = LocalDate.now();
+		System.out.println("商品上架日期: " + productCreateDate);
+		
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
@@ -181,13 +185,13 @@ public class ProductController {
 			String productImg_url = "/product/images/" + fileName;
 			
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
-					productPrice, productStateDefault);
+					productPrice, productStateDefault, productCreateDate);
 			productService.InsertProduct(productBean);
 			return "redirect:Product_SelectAll";
 		} else {
 
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productPrice,
-					productStateDefault);
+					productStateDefault, productCreateDate);
 			productService.InsertProduct(productBean);
 			return "redirect:Product_SelectAll";
 		}

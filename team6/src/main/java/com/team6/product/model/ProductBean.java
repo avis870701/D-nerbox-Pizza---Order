@@ -1,5 +1,7 @@
 package com.team6.product.model;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
@@ -36,6 +38,9 @@ public class ProductBean {
 
 	@Column(name = "PRODUCTPRICE")
 	private Integer productPrice;
+	
+	@Column(name = "PRODUCTCREATEDATE")
+	private LocalDate productCreateDate;
 
 //	@Column(name = "PRODUCTSTATEID")
 //	private Integer ProductStateId;
@@ -51,26 +56,28 @@ public class ProductBean {
 //	----------------------
 	public ProductBean() {
 	}
-
+//	新增有圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, String productImg_url,
-			Integer productPrice, ProductState productState) {
+			Integer productPrice, ProductState productState, LocalDate productCreateDate) {
 		this.CategoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
 		this.productPrice = productPrice;
 		this.productState = productState;
+		this.productCreateDate = productCreateDate;
 	}
-
+//	新增沒圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, Integer productPrice,
-			ProductState productState) {
+			ProductState productState, LocalDate productCreateDate) {
 		this.CategoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productPrice = productPrice;
 		this.productState = productState;
+		this.productCreateDate = productCreateDate;
 	}
-	
+//	修改用的	
 	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
 			String productImg_url, Integer productPrice, ProductState productState) {
 		this.productId = productId;
@@ -151,6 +158,14 @@ public class ProductBean {
 		this.productState = productState;
 	}
 
+	public LocalDate getProductCreateDate() {
+		return productCreateDate;
+	}
+
+	public void setProductCreateDate(LocalDate productCreateDate) {
+		this.productCreateDate = productCreateDate;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -166,7 +181,8 @@ public class ProductBean {
 		builder.append(productImg_url);
 		builder.append(", productPrice=");
 		builder.append(productPrice);
-		builder.append(", ProductStateId=");
+		builder.append(", productCreateDate=");
+		builder.append(productCreateDate);
 		builder.append(", productCategory=");
 		builder.append(productCategory);
 		builder.append(", productState=");
@@ -174,5 +190,7 @@ public class ProductBean {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

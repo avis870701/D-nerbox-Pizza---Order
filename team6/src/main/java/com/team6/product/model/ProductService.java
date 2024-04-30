@@ -18,13 +18,11 @@ public class ProductService {
 	// 新增
 	public void InsertProduct(ProductBean productBean) {
 		pRespository.save(productBean);
-//		productDAO.InsertProduct(productBean);
 	}
 	
 	// Delete
 	public void DeleteProduct(Integer productId) {
 		pRespository.deleteById(productId);
-//		productDAO.DeleteProduct(productId);
 	}
 	
 	// 偽刪除，修改																	
@@ -36,13 +34,11 @@ public class ProductService {
 		changeStatebyId.setProductState(pState);
 		ProductBean save = pRespository.save(changeStatebyId);
 		return save;
-//		productDAO.ChangeProductState(productId, stateId);
 	}
 	
 	// 修改								
 	public void UpdateProduct(ProductBean productBean) {
 		pRespository.save(productBean);
-//		productDAO.UpdateProduct(productBean);
 	}
 	
 	
