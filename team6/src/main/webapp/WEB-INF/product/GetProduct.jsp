@@ -50,6 +50,10 @@ img {
 				<td><input type="text" readonly value="<%=productBean.getProductPrice()%>"></td>
 			</tr>
 			<tr>
+				<td>商品數量</td>
+				<td><input type="text" readonly value="<%=productBean.getProductQuantity()%>"></td>
+			</tr>
+			<tr>
 				<td>商品狀態</td>
 				<td><input type="text" readonly value="<%=productBean.getProductState().getProductStateName()%>"></td>
 			</tr>

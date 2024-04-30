@@ -38,12 +38,12 @@ public class ProductBean {
 
 	@Column(name = "PRODUCTPRICE")
 	private Integer productPrice;
-	
+
+	@Column(name = "PRODUCTQUANTITY")
+	private Integer productQuantity;
+
 	@Column(name = "PRODUCTCREATEDATE")
 	private LocalDate productCreateDate;
-
-//	@Column(name = "PRODUCTSTATEID")
-//	private Integer ProductStateId;
 
 	@JoinColumn(name = "CATEGORYID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -56,30 +56,35 @@ public class ProductBean {
 //	----------------------
 	public ProductBean() {
 	}
+
 //	新增有圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, String productImg_url,
-			Integer productPrice, ProductState productState, LocalDate productCreateDate) {
+			Integer productPrice, ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
 		this.CategoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
 		this.productPrice = productPrice;
 		this.productState = productState;
+		this.productQuantity = productQuantity;
 		this.productCreateDate = productCreateDate;
 	}
+
 //	新增沒圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, Integer productPrice,
-			ProductState productState, LocalDate productCreateDate) {
+			ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
 		this.CategoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productPrice = productPrice;
 		this.productState = productState;
+		this.productQuantity = productQuantity;
 		this.productCreateDate = productCreateDate;
 	}
+
 //	修改用的	
 	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
-			String productImg_url, Integer productPrice, ProductState productState) {
+			String productImg_url, Integer productPrice, ProductState productState, Integer productQuantity) {
 		this.productId = productId;
 		this.CategoryId = categoryId;
 		this.productName = productName;
@@ -87,12 +92,10 @@ public class ProductBean {
 		this.productImg_url = productImg_url;
 		this.productPrice = productPrice;
 		this.productState = productState;
+		this.productQuantity = productQuantity;
 	}
-	
-	
-	
-//	----------------------
 
+//	----------------------
 
 	public Integer getProductId() {
 		return productId;
@@ -166,6 +169,14 @@ public class ProductBean {
 		this.productCreateDate = productCreateDate;
 	}
 
+	public Integer getProductQuantity() {
+		return productQuantity;
+	}
+
+	public void setProductQuantity(Integer productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -181,6 +192,8 @@ public class ProductBean {
 		builder.append(productImg_url);
 		builder.append(", productPrice=");
 		builder.append(productPrice);
+		builder.append(", productQuantity=");
+		builder.append(productQuantity);
 		builder.append(", productCreateDate=");
 		builder.append(productCreateDate);
 		builder.append(", productCategory=");
@@ -190,7 +203,5 @@ public class ProductBean {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 
 }

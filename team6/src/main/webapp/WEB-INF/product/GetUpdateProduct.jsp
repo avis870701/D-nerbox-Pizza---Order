@@ -79,8 +79,13 @@
 						<td><input type="text" name="productPrice" value="<%=productBean.getProductPrice()%>"></td>
 					</tr>
 					<tr>
+						<td>商品數量</td>
+						<td><input type="text" name="productQuantity" value="<%=productBean.getProductQuantity()%>"></td>
+					</tr>
+					<tr>
 						<td>選擇狀態</td>
 						<td><select name="productStateId">
+						<option>修改狀態</option>
 									<% List<ProductState> productStates = (ArrayList<ProductState>)
 											request.getAttribute("allProductState");
 											for (ProductState productState : productStates) {

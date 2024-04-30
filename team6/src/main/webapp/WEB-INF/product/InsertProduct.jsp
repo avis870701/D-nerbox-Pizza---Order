@@ -122,6 +122,11 @@
 								<legend>上傳商品價格:</legend>
 								<input id="pPrice" type="text" name="productPrice" />
 							<p>
+							<p>
+
+								<legend>上傳商品數量:</legend>
+								<input id="pQuantity" type="text" name="productQuantity" />
+							<p>
 
 								<button type="button" onclick="onetap()"><b>一個大括號</b></button>
 								<button type="submit"><b>新增</b></button>
@@ -155,6 +160,7 @@
 						pName.value = '測試44';
 						pDesc.value = '這是冊4';
 						pPrice.value = 444;
+						pQuantity.value = 10;
 					}
 
 

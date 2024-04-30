@@ -47,6 +47,7 @@ CREATE TABLE Product (
 	ProductImg_url NVARCHAR(1000) NULL,
 	ProductPrice INT NOT NULL,
 	ProductStateId INT NOT NULL DEFAULT 1,
+	ProductQuantity INT NOT NULL,
 	ProductCreateDate Date Not Null,
 	FOREIGN KEY (CategoryId) REFERENCES ProductCategory(CategoryId),
 	FOREIGN KEY (ProductStateId) REFERENCES ProductState(ProductStateId)

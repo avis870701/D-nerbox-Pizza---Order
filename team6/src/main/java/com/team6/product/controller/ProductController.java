@@ -112,7 +112,8 @@ public class ProductController {
 			@RequestParam("productDesc") String productDesc,
 			@RequestParam("productImg_url") MultipartFile mf,
 			@RequestParam("productPrice") Integer productPrice,
-			@RequestParam("productStateId") Integer productStateId) throws IllegalStateException, IOException {
+			@RequestParam("productStateId") Integer productStateId,
+			@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
 		
 		ProductState productState = pStateService.findProductStateById(productStateId);
 		
@@ -124,13 +125,13 @@ public class ProductController {
 			mf.transferTo(fileDirPath);
 			
 			String productImg_url = "/product/images/" + fileName;
-			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState);
+			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity);
 			productService.UpdateProduct(productBean);
 			
 			return "redirect:Product_SelectAll";
 		} else {
 			ProductBean oldProductBean = productService.SelectById(productId);
-			ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState);
+			ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity);
 			productService.UpdateProduct(productBeanNoImg);
 			return "redirect:Product_SelectAll";
 		}
@@ -168,7 +169,8 @@ public class ProductController {
 			@RequestParam("productName") String productName, 
 			@RequestParam("productDesc") String productDesc,
 			@RequestParam("productImg_url") MultipartFile mf, 
-			@RequestParam("productPrice") Integer productPrice) throws IllegalStateException, IOException {
+			@RequestParam("productPrice") Integer productPrice,
+			@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
 		// 加入產品狀態預設值為1(已上架)
 		ProductState productStateDefault = pStateService.findProductStateById(1);
 		// 加一個現在的日期(商品上架日期)
@@ -185,13 +187,13 @@ public class ProductController {
 			String productImg_url = "/product/images/" + fileName;
 			
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
-					productPrice, productStateDefault, productCreateDate);
+					productPrice, productStateDefault, productQuantity, productCreateDate);
 			productService.InsertProduct(productBean);
 			return "redirect:Product_SelectAll";
 		} else {
 
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productPrice,
-					productStateDefault, productCreateDate);
+					productStateDefault, productQuantity, productCreateDate);
 			productService.InsertProduct(productBean);
 			return "redirect:Product_SelectAll";
 		}

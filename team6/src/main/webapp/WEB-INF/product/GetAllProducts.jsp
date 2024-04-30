@@ -41,6 +41,7 @@
 								<th>產品介紹</th>
 								<th>產品圖片</th>
 								<th>產品價格</th>
+								<th>產品數量</th>
 								<th>產品狀態</th>
 								<th>修改</th>
 								<th>狀態</th>
@@ -68,6 +69,9 @@
 								<td><img alt="暫無圖片" src="<%=productBean.getProductImg_url()%>"></td>
 								<td>
 									<%=productBean.getProductPrice()%>
+								</td>
+								<td>
+									<%=productBean.getProductQuantity()%>
 								</td>
 								<td data-product-id="<%=productBean.getProductId()%>">
 									<%=productBean.getProductState().getProductStateName()%>
