@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-		<title>Login here</title>
+		<title>EmpLogin here</title>
 		<style>
 			body {
 				font-family: Arial, Helvetica, sans-serif;
@@ -110,10 +110,10 @@
 		<div class="center">
 
 			<div class="model">
-				<h2>Login Form</h2>
-				<form action="memberlogin.controller" method="post">
+				<h2>EmpLogin Form</h2>
+				<form action="emplogin.controller" method="post">
 					<div class="imgcontainer">
-						<img src="/member/images/loginmember01.jpg" alt="Avatar" class="avatar">
+						<img src="/member/images/DönerPizza.jpg" alt="Avatar" class="avatar">
 					</div>
 
 					<div class="container">
