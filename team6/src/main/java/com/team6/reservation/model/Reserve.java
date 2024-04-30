@@ -1,0 +1,172 @@
+package com.team6.reservation.model;
+
+import org.springframework.stereotype.Component;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "reservation")
+@Component
+public class Reserve {
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RESERVATIONID")
+	private int  reservationId;
+	@Column(name = "ACCOUNT")
+	private String account;
+	@Column(name = "RESERVATIONNAME")
+	private String reservationName;
+	@Column(name = "PHONE")
+	private String phone;
+	@Column(name = "NUMBEROFPEOPLE")
+	private int numberOfPeople;
+	@Column(name = "RESERVATIONTIME")
+	private String reservationTime;
+	@Column(name = "RESERVATIONDATE")
+	private String reservationDate;
+	@Column(name = "RESERVATIONSTATUS")
+	private int reservationStatus;
+	@Column(name = "NOTE")
+	private String note;
+	@Column(name = "CHECKINSTATUS")
+	private int checkInStatus;
+	
+	
+	public Reserve(String account, String reservationName, String phone, int numberOfPeople, String reservationTime,
+			String reservationDate, int reservationStatus, String note, int checkInStatus) {
+		this.account = account;
+		this.reservationName = reservationName;
+		this.phone = phone;
+		this.numberOfPeople = numberOfPeople;
+		this.reservationTime = reservationTime;
+		this.reservationDate = reservationDate;
+		this.reservationStatus = reservationStatus;
+		this.note = note;
+		this.checkInStatus = checkInStatus;
+	}
+
+
+	public Reserve(int reservationId, String account, String reservationName, String phone, int numberOfPeople,
+			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
+		this.reservationId = reservationId;
+		this.account = account;
+		this.reservationName = reservationName;
+		this.phone = phone;
+		this.numberOfPeople = numberOfPeople;
+		this.reservationTime = reservationTime;
+		this.reservationDate = reservationDate;
+		this.reservationStatus = reservationStatus;
+		this.note = note;
+		this.checkInStatus = checkInStatus;
+	}
+
+
+	public int getReservationId() {
+		return reservationId;
+	}
+
+
+	public void setReservationId(int reservationId) {
+		this.reservationId = reservationId;
+	}
+
+
+	public String getAccount() {
+		return account;
+	}
+
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+
+	public String getReservationName() {
+		return reservationName;
+	}
+
+
+	public void setReservationName(String reservationName) {
+		this.reservationName = reservationName;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public int getNumberOfPeople() {
+		return numberOfPeople;
+	}
+
+
+	public void setNumberOfPeople(int numberOfPeople) {
+		this.numberOfPeople = numberOfPeople;
+	}
+
+
+	public String getReservationTime() {
+		return reservationTime;
+	}
+
+
+	public void setReservationTime(String reservationTime) {
+		this.reservationTime = reservationTime;
+	}
+
+
+	public String getReservationDate() {
+		return reservationDate;
+	}
+
+
+	public void setReservationDate(String reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+
+
+	public int getReservationStatus() {
+		return reservationStatus;
+	}
+
+
+	public void setReservationStatus(int reservationStatus) {
+		this.reservationStatus = reservationStatus;
+	}
+
+
+	public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	public int getCheckInStatus() {
+		return checkInStatus;
+	}
+
+
+	public void setCheckInStatus(int checkInStatus) {
+		this.checkInStatus = checkInStatus;
+	}
+
+
+	public Reserve() {
+	}
+
+}

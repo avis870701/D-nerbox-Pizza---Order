@@ -98,7 +98,7 @@
 				<h2>修 改 會 員 資 料</h2>
 				<hr>
 				<div class="textRed">${err}</div>
-				<jsp:useBean id="bean" scope="request" class="com.team6.model.MemberBean" />
+				<jsp:useBean id="bean" scope="request" class="com.team6.member.model.MemberBean" />
 				<form method="post" action="Member.Update">
 					<input type="hidden" name="_method" value="PUT" />
 					<table>

@@ -125,7 +125,7 @@
 
 			<div class="div2">
 
-				<div class="header"><img src="/images/pizza.jpg">
+				<div class="header"><img src="/product/images/pizza.jpg">
 					<h2>產品後台管理</h2>
 				</div>
 

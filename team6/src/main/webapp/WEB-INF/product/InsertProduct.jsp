@@ -1,5 +1,5 @@
 <%@page import="java.util.*" %>
-	<%@page import="com.team6.model.ProductCategory" %>
+	<%@page import="com.team6.product.model.ProductCategory" %>
 		<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 			<!DOCTYPE html>
 			<html>

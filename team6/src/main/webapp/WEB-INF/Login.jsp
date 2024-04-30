@@ -113,7 +113,7 @@
 				<h2>Login Form</h2>
 				<form action="login.controller" method="post">
 					<div class="imgcontainer">
-						<img src="/images/loginmember01.jpg" alt="Avatar" class="avatar">
+						<img src="/member/images/loginmember01.jpg" alt="Avatar" class="avatar">
 					</div>
 
 					<div class="container">

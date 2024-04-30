@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.*" %>
-<%@page import="com.team6.model.ProductCategory" %>
-<%@page import="com.team6.model.ProductState" %>
+<%@page import="com.team6.product.model.ProductCategory" %>
+<%@page import="com.team6.product.model.ProductState" %>
 
 	<!DOCTYPE html>
 	<html>
@@ -35,7 +35,7 @@
 		<div align="center">
 
 			<h2>修改產品資料</h2>
-			<jsp:useBean id="productBean" scope="request" class="com.team6.model.ProductBean" />
+			<jsp:useBean id="productBean" scope="request" class="com.team6.product.model.ProductBean" />
 			<form method="post" action="Product_DoUpdate" enctype="multipart/form-data">
 				<input type="hidden" name="_method" value="PUT">
 				<table>

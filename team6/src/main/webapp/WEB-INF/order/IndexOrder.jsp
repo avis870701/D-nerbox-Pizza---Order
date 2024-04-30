@@ -28,7 +28,7 @@ button:hover {
  <div class="header">
         <div class="header-container">
             <div class="header-left">
-                <img class="logo" src="/images/logo.jpg" alt="Dönerbox Pizza">
+                <img class="logo" src="/product/images/logo.jpg" alt="Dönerbox Pizza">
             </div>
             <div class="header-container">
                 <div class="header-right">

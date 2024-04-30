@@ -1,4 +1,4 @@
-<%@page import="com.team6.model.ProductBean" %>
+<%@page import="com.team6.product.model.ProductBean" %>
 	<%@page import="java.util.*" %>
 		<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 			<%!@SuppressWarnings("unchecked")%>

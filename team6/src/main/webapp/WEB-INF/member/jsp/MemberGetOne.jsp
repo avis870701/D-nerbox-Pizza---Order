@@ -75,7 +75,7 @@
 		<div class="div2">
 			<h2>會 員 資 料</h2>
 			<hr>
-			<jsp:useBean id="bean" scope="request" class="com.team6.model.MemberBean" />
+			<jsp:useBean id="bean" scope="request" class="com.team6.member.model.MemberBean" />
 			<form method="post" action="MemberGoToUpdate">
 				<table>
 					<tr>

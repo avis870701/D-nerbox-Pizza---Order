@@ -49,7 +49,7 @@
         margin-bottom: 10px;
     }
 </style>
-<jsp:useBean id="insertReservation" class="com.team6.model.Reserve" scope="request"/>
+<jsp:useBean id="insertReservation" class="com.team6.reservation.model.Reserve" scope="request"/>
 </head>
 <body>
 <div class="container">

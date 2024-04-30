@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,java.util.List,com.team6.model.*" %>
+    pageEncoding="UTF-8" import="java.util.*,java.util.List,com.team6.reservation.model.*" %>
 <!DOCTYPE html>
 <html>
 <head>

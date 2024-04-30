@@ -23,7 +23,7 @@ img {
 	<div align="center">
 		<h2>產品資料</h2>
 		<jsp:useBean id="productBean" scope="request"
-			class="com.team6.model.ProductBean" />
+			class="com.team6.product.model.ProductBean" />
 		<table>
 			<tr>
 				<td>商品編號</td>
