@@ -35,7 +35,8 @@ VALUES ('member01','member01','1'),
 	   ('team02','team02','1'),
 	   ('team03','team03','1'),
 	   ('team04','team04','1'),
-	   ('team05','team05','0')
+	   ('team05','team05','0'),
+	   ('team06','team06','0')
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,RegistrationDate)
 VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-20'),
 	   ('2','MEMBER02','member02@gmail.com','0987654321','2023-11-05','2024-03-20'),
@@ -52,8 +53,10 @@ VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-2
 	   ('13','team3','team3@gmail.com','0987654321','2022-07-05','2024-03-20'),
 	   ('14','team4','team4@gmail.com','0987654321','2021-08-05','2024-03-20'),
 	   ('15','team5','team5@gmail.com','0987654321','2021-09-05','2024-03-20'),
-	   ('15','team6','team6@gmail.com','0987654321','2021-01-05','2024-03-20')
+	   ('16','team6','team6@gmail.com','0987654321','2021-01-05','2024-03-20')
 
 
 SELECT * FROM memberAccount
 SELECT * FROM memberDetail
+SELECT * FROM memberAccount a join memberDetail d on a.maid= d.fk_maId
+SELECT * FROM memberAccount a join memberDetail d on a.maid= d.fk_maId where d.mName like '%e%' or a.mAccount like '%e%' ORDER BY a.maid

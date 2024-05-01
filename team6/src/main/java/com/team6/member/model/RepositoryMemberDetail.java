@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RepositoryMemberDetail extends JpaRepository<MemberDetailBean, Integer> {
 
-	@Query(value = "select * from memberDetail where fk_maId = ?1 ORDER BY mdid",nativeQuery = true)
-	public Optional<MemberDetailBean> findDetailByAccount(String account);
+//	@Query(value = "select * from memberDetail where fk_maId = ?1 ORDER BY mdid",nativeQuery = true)
+//	public Optional<MemberDetailBean> findDetailByAccount(String account);
 	
-	@Query(value = "from MemberDetailBean where mName like concat('%',?1,'%')")
-	public List<MemberDetailBean> findDetailByName(String name);
+//	@Query(value = "from MemberDetailBean where mName like concat('%',?1,'%')")
+//	public List<MemberDetailBean> findDetailByName(String name);
 }

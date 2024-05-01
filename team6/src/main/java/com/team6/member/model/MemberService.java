@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,25 +39,8 @@ public class MemberService {
 		return null;
 	}
 
-	public MemberAccountBean findById(int id) {
-		Optional<MemberAccountBean> optional = rma.findById(id);
-		if (!optional.isEmpty()) {
-			return optional.get();
-		}
-		return null;
-	}
-
-	// 查詢單筆-細項Detail
-	public MemberDetailBean findDetailByAccount(String account) {
-		Optional<MemberDetailBean> optional = rmd.findDetailByAccount(account);
-		if (!optional.isEmpty()) {
-			return optional.get();
-		}
-		return null;
-	}
-
-	public MemberDetailBean findDetailById(int id) {
-		Optional<MemberDetailBean> optional = rmd.findById(id);
+	public MemberAccountBean findById(int maid) {
+		Optional<MemberAccountBean> optional = rma.findById(maid);
 		if (!optional.isEmpty()) {
 			return optional.get();
 		}
@@ -63,13 +48,21 @@ public class MemberService {
 	}
 
 	// 模糊查詢
-	public List<MemberDetailBean> findByName(String name) {
-		return rmd.findDetailByName(name);
+	public List<MemberAccountBean> findByName(String name) {
+		return rma.findByName(name);
 	}
 
 	// 全部查詢
 	public List<MemberAccountBean> findAll() {
 		return rma.findAll();
+	}
+
+	// 回傳搜尋頁面筆數
+	public Page<MemberAccountBean> findAllByPage(Pageable pageable) {
+		return rma.findAll(pageable);
+	}
+	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,/*String type,*/String name) {
+		return rma.findByNamePage(pageable,/*type,*/name);
 	}
 	// =================================================================
 
@@ -83,10 +76,13 @@ public class MemberService {
 	}
 
 	// 新增?更新?會員細項
-	public MemberDetailBean insertDetail(MemberDetailBean detailBean) {
-		Optional<MemberDetailBean> optional = rmd.findDetailByAccount(detailBean.getAccountBean().getmAccount());
+	public MemberAccountBean insertDetail(MemberAccountBean accountBean) {
+		Optional<MemberAccountBean> optional = rma.findById(accountBean.getMaid());
 		if (!optional.isEmpty()) {
-			return rmd.save(detailBean);
+			MemberAccountBean aBean = optional.get();
+			MemberDetailBean detailBean = aBean.getDetailBean();
+			rmd.save(detailBean);
+			return aBean;
 		}
 		return null;
 	}

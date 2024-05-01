@@ -40,7 +40,8 @@ VALUES ('member01','member01','1'),
 	   ('team02','team02','1'),
 	   ('team03','team03','1'),
 	   ('team04','team04','1'),
-	   ('team05','team05','0')
+	   ('team05','team05','0'),
+	   ('team06','team06','0')
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,RegistrationDate)
 VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-20'),
 	   ('2','MEMBER02','member02@gmail.com','0987654321','2023-11-05','2024-03-20'),
@@ -57,7 +58,7 @@ VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-2
 	   ('13','team3','team3@gmail.com','0987654321','2022-07-05','2024-03-20'),
 	   ('14','team4','team4@gmail.com','0987654321','2021-08-05','2024-03-20'),
 	   ('15','team5','team5@gmail.com','0987654321','2021-09-05','2024-03-20'),
-	   ('15','team6','team6@gmail.com','0987654321','2021-01-05','2024-03-20')
+	   ('16','team6','team6@gmail.com','0987654321','2021-01-05','2024-03-20')
 
 ----------------------------------------------------------------------------------------
 --------------------------------¤½¥q---------------------------------------------
@@ -65,7 +66,8 @@ VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-2
 CREATE TABLE EmployeeAccount(
 	empid int identity(1,1) not null  primary key,
 	empAccount nvarchar(max) not null,
-	empPassword nvarchar(max) not null
+	empPassword nvarchar(max) not null,
+	empPermissions int not null
 )
 CREATE TABLE EmployeeDept(
 	deptno int identity(601,1) not null primary key,
@@ -86,32 +88,32 @@ CREATE TABLE EmployeeDetail(
 	fk_deptno int references EmployeeDept(deptno)
 )
 
-INSERT INTO EmployeeAccount(empAccount,empPassword) 
-VALUES ('bossTeam6','bossTeam6'),
-	   ('member','member'),
-	   ('product','product'),
-	   ('order','order'),
-	   ('Promotions','Promotions'),
-	   ('reservation','reservation'),
-	   ('delivery','delivery'),
-	   ('DeliveryBoy1','123456'),
-	   ('DeliveryBoy2','123456'),
-	   ('DeliveryBoy3','123456'),
-	   ('DeliveryBoy4','123456'),
-	   ('DeliveryBoy5','123456'),
-	   ('DeliveryBoy6','123456'),
-	   ('DeliveryBoy7','123456'),
-	   ('DeliveryBoy8','123456'),
-	   ('staff1','123456'),
-	   ('staff2','123456'),
-	   ('staff3','123456'),
-	   ('staff4','123456'),
-	   ('staff5','123456'),
-	   ('staff6','123456'),
-	   ('staff7','123456'),
-	   ('staff8','123456'),
-	   ('staff9','123456'),
-	   ('staff10','123456')
+INSERT INTO EmployeeAccount(empAccount,empPassword,empPermissions) 
+VALUES ('bossTeam6','bossTeam6','1'),
+	   ('member','member','2'),
+	   ('product','product','2'),
+	   ('order','order','2'),
+	   ('Promotions','Promotions','2'),
+	   ('reservation','reservation','2'),
+	   ('delivery','delivery','2'),
+	   ('DeliveryBoy1','123456','3'),
+	   ('DeliveryBoy2','123456','3'),
+	   ('DeliveryBoy3','123456','3'),
+	   ('DeliveryBoy4','123456','3'),
+	   ('DeliveryBoy5','123456','3'),
+	   ('DeliveryBoy6','123456','3'),
+	   ('DeliveryBoy7','123456','3'),
+	   ('DeliveryBoy8','123456','3'),
+	   ('staff1','123456','3'),
+	   ('staff2','123456','3'),
+	   ('staff3','123456','3'),
+	   ('staff4','123456','3'),
+	   ('staff5','123456','3'),
+	   ('staff6','123456','3'),
+	   ('staff7','123456','3'),
+	   ('staff8','123456','3'),
+	   ('staff9','123456','3'),
+	   ('staff10','123456','3')
 
 INSERT INTO EmployeeDept(deptname) 
 VALUES ('member'),
@@ -150,11 +152,13 @@ VALUES ('2','¹Åíi','member@gmail.com','0912345678','2001-01-24','2023-12-14','me
 
 --====================================================================================================================DeliveryBoy
 --====================================================================================================================staff
---SELECT * FROM memberAccount
---SELECT * FROM memberDetail
+SELECT * FROM memberAccount
+SELECT * FROM memberDetail
+SELECT * FROM memberAccount a join memberDetail d on a.maid= d.fk_maId where d.mName like '%e%' or a.mAccount like '%e%' ORDER BY a.maid
 SELECT * FROM EmployeeDept
 SELECT * FROM EmployeeAccount
 SELECT * FROM EmployeeDetail
+SELECT * FROM EmployeeDetail edt join EmployeeAccount ea on ea.empid = edt.fk_empId join EmployeeDept edp on edt.fk_deptno=edp.deptno
 
 --================================================================================
 -----------------------------------------¾Þ§@ÅÞ¿è--------------

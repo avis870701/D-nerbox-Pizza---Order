@@ -58,21 +58,30 @@
 <div class="div1">
 <div class="div2" >
 <h2> Dönerbox  Pizza </h2>
-<label>會 員 專 區</label>
+<label>後 臺 管 理</label>
 <hr>
 <div>${boss}</div>
 <br>
-<form method="get" action="">
-<button> 個人資料 </button><p>
+<form method="get" action="/member/Member.SelectAll">
+<button> 會員功能 </button><p>
 </form>
-<form method="get" action="">
-<button> 隱私設定 </button><p>
+<form method="get" action="/emp/Member.SelectAll">
+<button> 員工功能 </button><p>
+</form>
+<form method="get" action="/product/product.atcion">
+<button> 產品功能 </button><p>
 </form>
 <form method="get" action="/order/order.action">
-<button> 我的訂單 </button><p>
+<button> 訂單功能 </button><p>
 </form>
 <form method="get" action="/reservation/reservemain.controller">
-<button> 我的優惠券 </button><p>
+<button> 訂位功能 </button><p>
+</form>
+<form method="get" action="/delivery/findTall">
+<button> 外送功能 </button><p>
+</form>
+<form method="get" action="/promotions/promotionsMain"> 
+<button> 活動功能 </button><p>
 </form>
 <br>
 </div>

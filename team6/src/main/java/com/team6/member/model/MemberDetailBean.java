@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class MemberDetailBean {
 	private int mdid;
 	
 	// 外來建:接 MemberAccount 的 maid
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "fk_maid")
 	private MemberAccountBean accountBean;

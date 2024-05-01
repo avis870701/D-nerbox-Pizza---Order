@@ -94,3 +94,5 @@ VALUES ('2','π≈Ìi','member@gmail.com','0912345678','2001-01-24','2023-12-14','me
 SELECT * FROM EmployeeDept
 SELECT * FROM EmployeeAccount
 SELECT * FROM EmployeeDetail
+SELECT * FROM EmployeeDetail edt join EmployeeAccount ea on ea.empid = edt.fk_empId join EmployeeDept edp on edt.fk_deptno=edp.deptno
+SELECT * FROM EmployeeDetail edt join EmployeeAccount ea on ea.empid = edt.fk_empId join EmployeeDept edp on edt.fk_deptno=edp.deptno

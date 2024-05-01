@@ -44,7 +44,7 @@ public class EmployeeDetailBean {
 	// 自連自:接 EmployeeDetail 的 empdid 
 	// 老師說不要那麼麻煩，直接用權限找
 	@Column(name = "mgr")
-	private int mgr;
+	private String mgr;
 	
 	@Column(name = "job")
 	private String job;
@@ -65,7 +65,7 @@ public class EmployeeDetailBean {
 	// 方法----------------------------------------------------------------
 	public EmployeeDetailBean() {	}
 	public EmployeeDetailBean(int empdid, EmployeeAccountBean empAccountBean, String empName, String empEmail,
-			String empPhone, LocalDate empbirthday, LocalDate hiredate, int mgr, String job, String salary, String comm,
+			String empPhone, LocalDate empbirthday, LocalDate hiredate, String mgr, String job, String salary, String comm,
 			int deptno, EmployeeDeptBean deptBean) {
 		this.empdid = empdid;
 		this.empAccountBean = empAccountBean;
@@ -140,10 +140,10 @@ public class EmployeeDetailBean {
 		this.hiredate = hiredate;
 	}
 
-	public int getMgr() {
+	public String getMgr() {
 		return mgr;
 	}
-	public void setMgr(int mgr) {
+	public void setMgr(String mgr) {
 		this.mgr = mgr;
 	}
 	public int getDeptno() {

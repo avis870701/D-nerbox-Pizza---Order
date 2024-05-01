@@ -16,3 +16,11 @@
 -- 員工登入初版完成: 權限問題未解決無法使登入後的畫面不同。
 -- error目前問題: Employee是否也需要封鎖欄位、 Employee(mgr) 是 OneToOne 還是 OneToMany、怎麼做翻頁?
 -- 更新 SQL Server，EmployeeAccount 增加 權限欄位； EmployeeDetail mgr 純粹接 mgr 的 empid，不做JOIN。
+
+
+
+2024-05-01
+-- 更新 SQL Server, MemberDetail 資料有誤，已更正。
+-- 更新 Member會員功能，進入會員專區 Index.jsp。Employee 員工功能，進入後台 EmpIndex.jsp。
+-- 更新 Member 單筆id查詢、name模糊查詢+分頁、全部搜尋+分頁。
+-- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。
