@@ -84,7 +84,7 @@ public class ProductBean {
 
 //	修改用的	
 	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
-			String productImg_url, Integer productPrice, ProductState productState, Integer productQuantity) {
+			String productImg_url, Integer productPrice, ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
 		this.productId = productId;
 		this.CategoryId = categoryId;
 		this.productName = productName;
@@ -93,6 +93,7 @@ public class ProductBean {
 		this.productPrice = productPrice;
 		this.productState = productState;
 		this.productQuantity = productQuantity;
+		this.productCreateDate = productCreateDate;
 	}
 
 //	----------------------

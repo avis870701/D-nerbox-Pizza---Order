@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,8 @@ import com.team6.product.model.ProductService;
 import com.team6.product.model.ProductState;
 import com.team6.product.model.ProductStateService;
 
+import jakarta.persistence.metamodel.SetAttribute;
+
 //@SessionAttributes(names = {})
 @Controller
 @RequestMapping(path = "/product")
@@ -41,11 +44,34 @@ public class ProductController {
 	
 	/*因為thymeleaf會搶路徑,所以要forward:*/
 	
-	@GetMapping("/123.atcion")
-	public String testMainprocess() {
-		return "ForTest";
-		
+	
+	
+	
+	// 測試扣產品數量
+	@GetMapping("/product.test")
+	public String testProductQuantity(Model model) {
+		// 18號測試用
+		ProductBean productBean = productService.SelectById(18);
+		model.addAttribute("productBean", productBean);
+		return "forward:/WEB-INF/product/Number.jsp";
 	}
+	
+	// 測試扣產品數量
+	@PutMapping("/Product_coQuantity")
+	@ResponseBody
+	public ResponseEntity<ProductBean> testCoProductQuantity(
+			@RequestParam("quantity") Integer quantity,
+			@RequestParam("productId") Integer productId){
+		ProductBean productBean = productService.SelectById(productId);
+		Integer pQuantity = productBean.getProductQuantity();
+		
+		pQuantity -= quantity;
+		productBean.setProductQuantity(pQuantity);
+		productService.UpdateProduct(productBean);
+		
+		return ResponseEntity.ok().body(productBean);
+	}
+	
 	
 	
 	
@@ -114,8 +140,12 @@ public class ProductController {
 			@RequestParam("productPrice") Integer productPrice,
 			@RequestParam("productStateId") Integer productStateId,
 			@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
-		
+		// 找產品狀態的bean
 		ProductState productState = pStateService.findProductStateById(productStateId);
+		// 有一些舊資料不需要更新先抓出來等等塞回去
+		ProductBean oldProductBean = productService.SelectById(productId);
+		// 不給修改日期上架日期
+		LocalDate oldproductCreateDate = oldProductBean.getProductCreateDate();
 		
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
@@ -125,13 +155,13 @@ public class ProductController {
 			mf.transferTo(fileDirPath);
 			
 			String productImg_url = "/product/images/" + fileName;
-			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity);
+			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
 			productService.UpdateProduct(productBean);
 			
 			return "redirect:Product_SelectAll";
 		} else {
-			ProductBean oldProductBean = productService.SelectById(productId);
-			ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity);
+			
+			ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
 			productService.UpdateProduct(productBeanNoImg);
 			return "redirect:Product_SelectAll";
 		}
