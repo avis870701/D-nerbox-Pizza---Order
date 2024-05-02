@@ -1,0 +1,32 @@
+2024-04-29
+-- 新增 5張 class(MemberAccountBean、MemberDetailBean、EmployeeAccountBean、EmployeeDeptBean、EmployeeDetailBean)。舊檔MemberBean還未刪除。
+-- 新增 member 新的 SQL語句指令檔(有分別分開的會員表與公司表，還有一個兩張表都有的總檔)。
+-- 新增 Döner Pizza.jpg Döner Pizza 的 商標圖檔。
+-- test.txt 改名為 記錄檔.txt ，紀錄 member 的詳細說明。
+-- 將 class 內 @Column(name="") 更改成全小寫。
+-- 建立新資料夾 model.member  ，將5張表移入，並建立 5張表 各自的 Repository。
+
+
+
+2024-04-30
+-- 更新 5張 class(MemberAccountBean、MemberDetailBean、EmployeeAccountBean、EmployeeDeptBean、EmployeeDetailBean)。舊檔MemberBean刪除。
+-- 新增 5張 Repository、2張 Service、2張 Controller，還有 1張 memberLogin.jsp、1張 EmpLogin.jsp。
+-- 更新 SQL Server，MemberAccount 增加 權限欄位； MemberDetail 移除 權限欄位。
+-- 會員登入初版完成: 權限被封鎖者無法登入。
+-- 員工登入初版完成: 權限問題未解決無法使登入後的畫面不同。
+-- error目前問題: Employee是否也需要封鎖欄位、 Employee(mgr) 是 OneToOne 還是 OneToMany、怎麼做翻頁?
+-- 更新 SQL Server，EmployeeAccount 增加 權限欄位； EmployeeDetail mgr 純粹接 mgr 的 empid，不做JOIN。
+
+
+
+2024-05-01
+-- 更新 SQL Server, MemberDetail 資料有誤，已更正。
+-- 更新 Member會員功能，進入會員專區 Index.jsp。Employee 員工功能，進入後台 EmpIndex.jsp。
+-- 更新 Member 單筆id查詢、name模糊查詢+分頁、全部搜尋+分頁。
+-- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。
+
+
+
+2024-05-02
+-- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
+-- 新增 店面 Logo、店內類之圖片。

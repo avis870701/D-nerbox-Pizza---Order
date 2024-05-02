@@ -16,230 +16,186 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
 	@Autowired
-	private MemberRepository repository;
-	
+	private RepositoryMemberAccount rma;
 	@Autowired
-	private BossAcconutRepository bossRepository;
-	
-	// 登入
-	public BossAccountBean login(String account,String pwd) {
-		Optional<BossAccountBean> optional =bossRepository.login(account, pwd);
-		if(!optional.isEmpty()) {
-			return optional.get();
-		}
-		return null;
-	}
+	private RepositoryMemberDetail rmd;
 
-	// 查詢單筆
-	public MemberBean findById(String account) {
-		Optional<MemberBean> optional = repository.findById(account);
+	// 會員登入
+	public MemberAccountBean login(String account, String pwd) {
+		Optional<MemberAccountBean> optional = rma.login(account, pwd);
 		if (!optional.isEmpty()) {
 			return optional.get();
 		}
 		return null;
 	}
-	
+	// =================================================================
+
+	// 查詢單筆
+	public MemberAccountBean findAccountByAccount(String account) {
+		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
+		if (!optional.isEmpty()) {
+			return optional.get();
+		}
+		return null;
+	}
+
+	public MemberAccountBean findById(int maid) {
+		Optional<MemberAccountBean> optional = rma.findById(maid);
+		if (!optional.isEmpty()) {
+			return optional.get();
+		}
+		return null;
+	}
+
 	// 模糊查詢
-	public List<MemberBean> findByName(String name) {
-		return repository.findBymName(name);
+	public List<MemberAccountBean> findByName(String name) {
+		return rma.findByName(name);
 	}
 
 	// 全部查詢
-	public List<MemberBean> findAll() {
-		return repository.findAll();
+	public List<MemberAccountBean> findAll() {
+		return rma.findAll();
 	}
 
-	// 回傳模糊搜尋頁面筆數
-	/*public Page<MemberBean> findByNameByPage(Pageable pageable,String name) {
-		List<MemberBean>beans=repository.findBymName(name);
-		Page<MemberBean> page = new Page<MemberBean>() {
-			
-			@Override
-			public Iterator<MemberBean> iterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Pageable previousPageable() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Pageable nextPageable() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean isLast() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean isFirst() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean hasPrevious() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean hasContent() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public Sort getSort() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public int getSize() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public int getNumberOfElements() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public int getNumber() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public List<MemberBean> getContent() {
-				return repository.findBymNameByPage(name, pageable.getPageNumber(), pageable.getPageSize());
-			}
-			
-			@Override
-			public <U> Page<U> map(Function<? super MemberBean, ? extends U> converter) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public int getTotalPages() {
-				// TODO Auto-generated method stub
-				return beans.size()/pageable.getPageSize();
-			}
-			
-			@Override
-			public long getTotalElements() {
-				// TODO Auto-generated method stub
-				return beans.size();
-			}
-		};
-		return page;
-	}*/
-	
 	// 回傳搜尋頁面筆數
-		public Page<MemberBean> findAllByPage(Pageable pageable) {
-			return repository.findAll(pageable);
-		}
+	public Page<MemberAccountBean> findAllByPage(Pageable pageable) {
+		return rma.findAll(pageable);
+	}
+	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,/*String type,*/String name) {
+		return rma.findByNamePage(pageable,/*type,*/name);
+	}
+	// =================================================================
 
-	// 新增
-	public MemberBean insert(MemberBean bean) {
-		Optional<MemberBean> optional = repository.findById(bean.getAccount());
+	// 新增會員帳號
+	public MemberAccountBean insertAccount(MemberAccountBean accountBean) {
+		Optional<MemberAccountBean> optional = rma.findAccountByAccount(accountBean.getmAccount());
 		if (optional.isEmpty()) {
-			return repository.save(bean);
+			return rma.save(accountBean);
 		}
 		return null;
 	}
 
-	// 更新
-	public MemberBean update(MemberBean bean) {
-		Optional<MemberBean> optional = repository.findById(bean.getAccount());
+	// 新增?更新?會員細項
+	public MemberAccountBean insertDetail(MemberAccountBean accountBean) {
+		Optional<MemberAccountBean> optional = rma.findById(accountBean.getMaid());
 		if (!optional.isEmpty()) {
-			return repository.save(bean);
+			MemberAccountBean aBean = optional.get();
+			MemberDetailBean detailBean = aBean.getDetailBean();
+			rmd.save(detailBean);
+			return aBean;
 		}
 		return null;
 	}
+	// =================================================================
 
-	// 更新權限
-	public boolean updateToPermissions(String acconut, int permissions) {
-		Optional<MemberBean> optional = repository.findById(acconut);
+	// 更改權限
+	public boolean updateToPermissions(String account, int permissions) {
+		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
 		if (!optional.isEmpty()) {
-			MemberBean bean = optional.get();
-			bean.setPermissions(permissions);
-			repository.save(bean);
+			MemberAccountBean accountBean = optional.get();
+			accountBean.setPermissions(permissions);
+			rma.save(accountBean);
 			return true;
 		}
 		return false;
 	}
-	
-	// 刪除
-	public boolean delete(String account) {
-		Optional<MemberBean> optional=repository.findById(account);
-		if (!optional.isEmpty()) {
-			repository.delete(optional.get());
-			return true;
+	// =================================================================
+
+	// 存檔Account CSV
+	public void saveAccountToCSV() {
+		String file = "C:\\Users\\User\\Downloads\\memberAccount.csv";
+		String accountCSV = "maid,mAccount,mPassword,permissions\n";
+		List<MemberAccountBean> beans = rma.findAll();
+		try (FileOutputStream fos = new FileOutputStream(file);
+				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
+			for (MemberAccountBean bean : beans) {
+				accountCSV += bean.saveToCsv() + "\n";
+			}
+			byte[] bytes = accountCSV.getBytes();
+			bos.write(bytes);
+		} catch (Exception e) {
 		}
-		return false;
 	}
-	
+
 	// 存檔 CSV
-	public void saveToCSV() {
-		String file = "C:\\Users\\User\\Downloads\\newMember.csv";
-		String csv = "account,mName,password,mEmail,mPhone,birthday,permissions\n";
-		List<MemberBean> beans =repository.findAll();
+	public void saveDetailToCSV() {
+		String file = "C:\\Users\\User\\Downloads\\memberDetail.csv";
+		String dCSV = "maid,mAccount,mPassword,permissions\n";
+		List<MemberDetailBean> beans = rmd.findAll();
 		try (FileOutputStream fos = new FileOutputStream(file);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
-			for (MemberBean bean : beans) {
-				csv += bean.saveToCsv()+"\n";
+			for (MemberDetailBean bean : beans) {
+				dCSV += bean.saveToCsv() + "\n";
 			}
-			byte[] bytes = csv.getBytes();
+			byte[] bytes = dCSV.getBytes();
 			bos.write(bytes);
 		} catch (Exception e) {
 		}
 	}
+
+	// 存檔Account XML
+	public void saveAccountToXML() {
+		String file = "C:\\Users\\User\\Downloads\\memberAccount.xml";
+		String accountxml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + "<Root>" + "\n";
+		List<MemberDetailBean> beans = rmd.findAll();
+		try (FileOutputStream fos = new FileOutputStream(file);
+				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
+			for (MemberDetailBean bean : beans) {
+				accountxml += bean.saveToXml();
+			}
+			accountxml += "</Root>";
+			byte[] bytes = accountxml.getBytes();
+			bos.write(bytes);
+		} catch (Exception e) {
+		}
+	}
+
 	// 存檔 XML
-	public void saveToXML() {
-		String file = "C:\\Users\\User\\Downloads\\newMember.xml";
-		String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n"+"<Root>"+"\n";
-		List<MemberBean> beans =repository.findAll();
+	public void saveDetailToXML() {
+		String file = "C:\\Users\\User\\Downloads\\memberDetail.xml";
+		String dxml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n" + "<Root>" + "\n";
+		List<MemberDetailBean> beans = rmd.findAll();
 		try (FileOutputStream fos = new FileOutputStream(file);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
-			for (MemberBean bean : beans) {
-				xml += bean.saveToXml();
+			for (MemberDetailBean bean : beans) {
+				dxml += bean.saveToXml();
 			}
-			xml +="</Root>";
-			byte[] bytes = xml.getBytes();
+			dxml += "</Root>";
+			byte[] bytes = dxml.getBytes();
 			bos.write(bytes);
 		} catch (Exception e) {
 		}
 	}
-	// 存檔 JSON
-	public void saveToJSON() {
-		String file = "C:\\Users\\User\\Downloads\\newMember.json";
-		String json= "[";
-		List<MemberBean> beans =repository.findAll();
+
+	// 存檔Account JSON
+	public void saveAccountToJSON() {
+		String file = "C:\\Users\\User\\Downloads\\memberAccount.json";
+		String accountjson = "[";
+		List<MemberAccountBean> beans = rma.findAll();
 		try (FileOutputStream fos = new FileOutputStream(file);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
-			for (MemberBean bean : beans) {
-				json += bean.saveToJson()+"\n";
+			for (MemberAccountBean bean : beans) {
+				accountjson += bean.saveToJson() + "\n";
 			}
-			json=json.substring(0, json.length()-2)+"\n]";
-			byte[] bytes = json.getBytes();
+			accountjson = accountjson.substring(0, accountjson.length() - 2) + "\n]";
+			byte[] bytes = accountjson.getBytes();
+			bos.write(bytes);
+		} catch (Exception e) {
+		}
+	}
+
+	// 存檔 JSON
+	public void saveDetailToJSON() {
+		String file = "C:\\Users\\User\\Downloads\\memberDetail.json";
+		String djson = "[";
+		List<MemberAccountBean> beans = rma.findAll();
+		try (FileOutputStream fos = new FileOutputStream(file);
+				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
+			for (MemberAccountBean bean : beans) {
+				djson += bean.saveToJson() + "\n";
+			}
+			djson = djson.substring(0, djson.length() - 2) + "\n]";
+			byte[] bytes = djson.getBytes();
 			bos.write(bytes);
 		} catch (Exception e) {
 		}

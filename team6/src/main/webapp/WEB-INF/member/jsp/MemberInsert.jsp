@@ -1,144 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<!DOCTYPE html>
-	<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>註冊 會員</title>
+  <link rel="shortcut icon" type="image/png" href="/member/images/pizzaQ.png" />
+  <link rel="stylesheet" href="/css/styles.min.css" />
+</head>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert Member</title>
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: #CCCCFF;
-			}
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="/member/images/DonerPizzaSmall.png" width="180" alt="">
+                </a>
+                <p class="text-center">請填寫下列資訊</p>
+                <form>
+                  <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">使用者帳號</label>
+                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">電子信箱</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label">密碼</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註 冊</button>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">已有帳號 ?</p>
+                    <a class="text-primary fw-bold ms-2" href="/member/login">登入</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/libs/jquery/dist/jquery.min.js"></script>
+  <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-			.div1 {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 35%;
-				height: 100%;
-				padding: 30px;
-				margin: 30px;
-				background-color: #FFFFFF;
-				border-radius: 10%;
-			}
-
-			.div2 {
-				text-align: center;
-				align-items: center;
-				background-color: #99CCFF;
-				width: 450px;
-				height: 100%;
-				padding: 30px;
-				font-size: 20px;
-				color: #336699;
-				font-weight: 700;
-				border-radius: 10%;
-			}
-
-			.div2 button {
-				font-size: 20px;
-				background-color: #FFFFFF;
-				border: 1px solid #336699;
-				color: #336699;
-				border-radius: 25%;
-				padding: 5px;
-			}
-
-			.div2 fieldset {
-				border: none;
-			}
-
-			.div2 input {
-				border: 1px solid #336699;
-				color: #336699;
-			}
-
-			.textRed {
-				color: red;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="div1">
-
-			<div class="div2">
-				<h2>新 增 會 員 資 料</h2>
-				<div class="textRed">${err}</div>
-				<form method="POST" action="Member.Insert">
-					<fieldset>
-						<div>
-							<p>
-								會員帳號： <input type="text" name="account" id="account" maxlength="20" required>
-							</p>
-						</div>
-						<div>
-							<p>
-								會員名稱： <input type="text" name="mName" id="mName" maxlength="20" required>
-							</p>
-						</div>
-						<div>
-							<p>
-								會員密碼： <input type="password" name="password" maxlength="18" required
-									id="password"><br><br><input type="checkbox" onclick="myFunction()">Show Password
-
-							</p>
-						</div>
-						<div>
-							<p>
-								電子信箱： <input type="email" name="mEmail" id="mEmail" value="@gmail.com" required>
-							</p>
-						</div>
-						<div>
-							<p>
-								電話號碼： <input type="text" name="mPhone" id="mPhone" value="09"
-									pattern="[0]{1}[9]{1}\d{8}" maxlength="10" required>
-							</p>
-						</div>
-						<div>
-							<p>
-								會員生日： <input type="date" name="birthday" id="birthday" value="1990-01-01">
-							</p>
-						</div>
-					</fieldset>
-					<p>
-						<button name="type" value="insert">確定新增</button>
-				</form>
-				<button name="button" onclick="onekey()">一鍵登天</button>
-				<a href="Member.SelectAll"><button>取消</button></a>
-
-			</div>
-		</div>
-		<script>
-			function myFunction() {
-				var x = document.getElementById("password");
-				if (x.type === "password") {
-					x.type = "text";
-				} else {
-					x.type = "password";
-				}
-			}
-
-			function onekey() {
-				var account = document.getElementById("account");
-				var mName = document.getElementById("mName");
-				var password = document.getElementById("password");
-				var mEmail = document.getElementById("mEmail");
-				var mPhone = document.getElementById("mPhone");
-				var birthday = document.getElementById("birthday");
-				account.value = "onelogout";
-				mName.value = "一步登出";
-				password.value = "onelogout";
-				mEmail.value = "onelogout@gmail.com";
-				mPhone.value = "0987654321";
-				birthday.value = "2024-04-03";
-			}
-		</script>
-	</body>
-
-	</html>
+</html>
