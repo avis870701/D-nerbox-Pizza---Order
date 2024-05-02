@@ -93,15 +93,19 @@ table {
 	<div id="container">
 		<div id="left-column">
 			<div id="CheckIn">
-				<h3>Check in</h3>
+				<h3>報到</h3>
 				<form method="get" action="/reservation/checkInByName">
 					<div>
-						姓名：<input type="text" placeholder="姓名及電話擇一輸入即可，若未輸入則顯示所有未報到客人資訊"
+						姓名：<input type="text" placeholder="若未輸入則顯示當日所有未報到客人資訊"
 							name="nameSelect">
 					</div>
 					<button value="selectByName" name="checkin">姓名查詢</button>
+					</form>
+				<br/>
+				<h3>查詢(不分日期)</h3>
+				<form method="get" action="/reservation/checkInByPhone">	
 					<div>
-						電話：<input type="text" placeholder="姓名及電話擇一輸入即可" name="phoneSelect">
+						電話：<input type="text" placeholder="將顯示該客人的所有未報到資訊" name="phoneSelect">
 					</div>
 					<button value="selectByPhone" name="checkin">電話查詢</button>
 				</form>
@@ -109,9 +113,7 @@ table {
 				<form method="get" action="/reservation/selectAllChecked">
 					<div>
 						<button value="selectAllChecked" name="checkin">目前用餐客人資訊</button>
-					<p>目前共 <span style="font-weight: bold; color: red;">
-		            <%= request.getAttribute("selectAllChecked") %>
-		        </span> 位客人正在用餐</p>
+						<p>目前共 <span id="result" style="font-weight: bold; color: red;"></span> 位客人正在用餐</p>		
 					</div>
 				</form>	
 			
@@ -136,6 +138,7 @@ table {
 				    <button type="submit" name="checkin" value="customerReserve" style="background-color: #4CAF50; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer;">送出</button>
 				</form>
  
+
 			</div>
 			
 		</div>
@@ -182,29 +185,39 @@ table {
 	    var currentDate = now.toISOString().split('T')[0];
 	    var currentTime = now.toTimeString().split(' ')[0].substring(0, 5); // 只保留時和分
 
-
-	    // 將日期和時間設置為當前的本地日期和時間
 	    document.getElementById('date').value = currentDate;
 	    document.getElementById('time').value = currentTime;
 	    document.getElementById('dateSelect').value = currentDate;
 	    
 	        
 	    function submitForm() {
-	        var numberOfPeople = parseInt(document.getElementById("people").value); // 獲取用餐人數
+	        var numberOfPeople = parseInt(document.getElementById("people").value);
 
-	        // 如果用餐人數大於20，顯示錯誤消息並阻止表單提交
 	        if (numberOfPeople + <%= request.getAttribute("selectAllChecked") %> > 20) {
 	            alert("用餐人數超過限制，最多只能容納20人。");
-	            return false; // 阻止表單提交
+	            return false;
 	        }
 	        alert("新增成功")
-	        return true; // 允許表單提交
+	        return true;
 	    }
 	    
 	    jQuery('#time').datetimepicker({
 	    	  datepicker:false,
 	    	  format:'H:i'
 	    	});
+	    
+	    function updateCheckedInfo() {
+	        var xhr = new XMLHttpRequest();
+	        xhr.open('GET', '/reservation/selectAllCheckedCounts', true); 
+	        xhr.onreadystatechange = function() {
+	            if (xhr.readyState === 4 && xhr.status === 200) {
+	                document.getElementById('result').innerHTML = xhr.responseText;
+	            }
+	        };
+	        xhr.send();
+	    }
+	    window.onload = updateCheckedInfo;
+
 	</script>
 </body>
 </html>

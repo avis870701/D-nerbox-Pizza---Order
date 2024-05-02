@@ -75,7 +75,6 @@
 		        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		        xhr.onreadystatechange = function() {
 				location.reload();
-
 		        };
 		        xhr.send('action=confirmReservation&reservationId=' + reservationId);
 		    }
@@ -85,7 +84,7 @@
 		    var confirmed = confirm("確定要刪除此訂位嗎？");
 		    if (confirmed) {
 		        var xhr = new XMLHttpRequest();
-		        xhr.open('DELETE', '/reservation/deleteCheckIn', true);
+		        xhr.open('PUT', '/reservation/updateReservationStatusTo5', true);
 		        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		        xhr.onreadystatechange = function() {
 				location.reload();

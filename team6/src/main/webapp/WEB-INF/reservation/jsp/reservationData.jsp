@@ -24,6 +24,27 @@
     th {
         background-color: #f2f2f2;
     }
+    
+    button {
+	border: none;
+	border-radius: 8px;
+	padding: 10px 20px;
+	background-color: #3498db;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 4px 2px;
+	cursor: pointer;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+	transition-duration: 0.4s;
+}
+
+button:hover {
+	background-color: #2980b9;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* 滑鼠懸停時的陰影效果 */
+}
 </style>
 </head>
 <body>
@@ -38,6 +59,7 @@
             <th>姓名</th>
             <th>電話</th>
             <th>備註</th>
+            <th>預定狀態</th>
             <th>修改</th>
             <th>刪除</th>
         </tr>
@@ -49,21 +71,44 @@
                            for (Reserve reservation : reservations) {
         %>        
             <tr>
-                <td><%= index++ %></td>
-                <td><%= reservation.getReservationDate() %></td>
-                <td><%= reservation.getReservationTime()%></td>
-                <td><%= reservation.getNumberOfPeople() %></td>
-                <td><%= reservation.getReservationName() %></td>
-                <td><%= reservation.getPhone() %></td>
-                <td><%= reservation.getNote() %></td>
+				<td><%=index++%></td>
+				<td><%=reservation.getReservationDate()%></td>
+				<td><%=reservation.getReservationTime()%></td>
+				<td><%=reservation.getNumberOfPeople()%></td>
+				<td><%=reservation.getReservationName()%></td>
+				<td><%=reservation.getPhone()%></td>
+				<td><%=reservation.getNote()%></td>
 				<td>
-					<button type="button" onclick="updatePeople('<%= reservation.getReservationId() %>')">人數修改</button>
-					<input type="text" id="peopleInput<%= reservation.getReservationId() %>" style="width: 55px;" placeholder="人數修改"> 		
-					<button type="button" onclick="updateTime('<%= reservation.getReservationId() %>')">時間修改</button>
-					<input type="time" id="timeInput<%= reservation.getReservationId() %>"  >
-					<button type="button" onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
-					<input type="date" id="dateInput<%= reservation.getReservationId() %>" > 		
-			    </td>
+					<%
+					// 獲取 reservationStatus 的值
+					int status = reservation.getReservationStatus();
+
+					// 根據不同的狀態顯示不同的文本
+					if (status == 1) {
+						out.print("未確認");
+					} else if (status == 2) {
+						out.print("不會來");
+					} else if (status == 3) {
+						out.print("會來");
+					} else {
+						out.print("其他狀態"); // 如果狀態值不是 1、2 或 3，顯示默認文本
+					}
+					%>
+				</td>
+				<td><input type="text"
+					id="peopleInput<%=reservation.getReservationId()%>"
+					style="width: 55px;" placeholder="人數修改">
+					<button type="button"
+						onclick="updatePeople('<%= reservation.getReservationId() %>')">人數修改</button>
+					<input type="time"
+					id="timeInput<%= reservation.getReservationId() %>">
+					<button type="button"
+						onclick="updateTime('<%= reservation.getReservationId() %>')">時間修改</button>
+					<input type="date"
+					id="dateInput<%= reservation.getReservationId() %>">
+					<button type="button"
+						onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
+				</td>
 				<td><button type="button" onclick="deleteReservation('<%= reservation.getReservationId() %>')">刪除</button></td>
             </tr>
         <% } %>
