@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,com.team6.order.model.OrderBean,com.team6.order.model.OrderDetailsBean"%>
+    pageEncoding="UTF-8" import="java.util.*,com.team6.order.model.Order,com.team6.order.model.OrderDetails"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +27,10 @@
 			<th>刪除
 		</tr>
 				
-	<%List<OrderDetailsBean> details = (ArrayList<OrderDetailsBean>)request.getAttribute("details");
-	for(OrderDetailsBean detail : details) {%>
+	<%
+					List<OrderDetails> details = (ArrayList<OrderDetails>)request.getAttribute("details");
+						for(OrderDetails detail : details) {
+					%>
 	
 		<tr>
 		<input type="hidden" value="<%=detail.getDetailsId() %>">

@@ -13,42 +13,42 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="orderdetails")
+@Table(name="ORDERDETAILS")
 @Component
-public class OrderDetailsBean {
+public class OrderDetails {
 	
-	@Column(name="detailsid")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@Column(name="DETAILSID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer detailsId;
 	
-	@Column(name="orderid")
+	@Column(name="ORDERID")
 	private String orderId;
 	
-	@Column(name="productid")
+	@Column(name="PRODUCTID")
 	private String productId;
 	
-	@Column(name="product")
+	@Column(name="PRODUCT")
 	private String product;
 	
-	@Column(name="unitprice")
+	@Column(name="UNITPRICE")
 	private String unitPrice;
 	
-	@Column(name="quantity")
+	@Column(name="QUANTITY")
 	private String quantity;
 	
-	@Column(name="subtotal")
+	@Column(name="SUBTOTAL")
 	private String subtotal;
 	
-	@Column(name="note")
+	@Column(name="NOTE")
 	private String note;
 	
-	@JoinColumn(name="orderid", insertable = false, updatable = false)
+	@JoinColumn(name="ORDERID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.EAGER)
-	private OrderBean orderBean;
+	private Order order;
 
-	public OrderDetailsBean(Integer detailsId, String orderId, String productId, String product, String unitPrice,
-			String quantity, String subtotal, String note, OrderBean orderBean) {
+	public OrderDetails(Integer detailsId, String orderId, String productId, String product, String unitPrice,
+			String quantity, String subtotal, String note, Order order) {
 		this.detailsId = detailsId;
 		this.orderId = orderId;
 		this.productId = productId;
@@ -57,11 +57,11 @@ public class OrderDetailsBean {
 		this.quantity = quantity;
 		this.subtotal = subtotal;
 		this.note = note;
-		this.orderBean = orderBean;
+		this.order= order;
 	}
 
-	public OrderDetailsBean(String orderId, String productId, String product, String unitPrice, String quantity,
-			String subtotal, String note, OrderBean orderBean) {
+	public OrderDetails(String orderId, String productId, String product, String unitPrice, String quantity,
+			String subtotal, String note, Order order) {
 		this.orderId = orderId;
 		this.productId = productId;
 		this.product = product;
@@ -69,13 +69,13 @@ public class OrderDetailsBean {
 		this.quantity = quantity;
 		this.subtotal = subtotal;
 		this.note = note;
-		this.orderBean = orderBean;
+		this.order = order;
 	}
 
-	public OrderDetailsBean() {
+	public OrderDetails() {
 		
 	}
-	
+
 	public Integer getDetailsId() {
 		return detailsId;
 	}
@@ -140,19 +140,21 @@ public class OrderDetailsBean {
 		this.note = note;
 	}
 
-	public OrderBean getOrderBean() {
-		return orderBean;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setOrderBean(OrderBean orderBean) {
-		this.orderBean = orderBean;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderDetailsBean [detailsId=" + detailsId + ", orderId=" + orderId + ", productId=" + productId
+		return "OrderDetails [detailsId=" + detailsId + ", orderId=" + orderId + ", productId=" + productId
 				+ ", product=" + product + ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", subtotal="
-				+ subtotal + ", note=" + note + ", orderBean=" + orderBean + "]";
+				+ subtotal + ", note=" + note + ", order=" + order + "]";
 	}
+
+	
 	
 }
