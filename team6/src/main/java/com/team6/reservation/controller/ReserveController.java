@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -94,7 +94,8 @@ public class ReserveController {
 				@RequestParam(value = "note", required = false) String specialRequests,
 				@RequestParam(value = "name", required = false) String reservationName,Model model) 
 				{
-			reserve =reserveService.InsertReservation("ispanTeam2", numberOfPeople, reservationDate, phone, reservationTime,
+			UUID uuid = UUID.randomUUID();
+			reserve =reserveService.InsertReservation("ispanTeam2",uuid,numberOfPeople, reservationDate, phone, reservationTime,
 			specialRequests, reservationName);
 			
 			String receivers = "ispanteam6@gmail.com";
@@ -197,18 +198,17 @@ public class ReserveController {
 	//客人前一天點選確認,將rs由1改為3
 	@GetMapping("/customerComfirmto3")
 	@ResponseBody
-	public String customerComfirmto3(@RequestParam(value = "reservationId") int reservationId) {		
-		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationId);		
-		if(reserve!=null) {
-			int reserveStatus = reserve.getReservationStatus();			
-			if(reserveStatus==1) {
-				reserveService.updateReservationStatusTo3(reservationId);
-				return "感謝您的確認，明天見😀😀";}
-			else {
+	public String customerComfirmto3(@RequestParam(value = "reservationUuid") UUID reservationUuid) {
+		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
+		if (reserve != null) {
+			int reserveStatus = reserve.getReservationStatus();
+			if (reserveStatus == 1) {
+				reserveService.updateReservationStatusTo3(reservationUuid);
+				return "感謝您的確認，明天見😀😀";
+			} else {
 				return "連結已失效";
-				}
-			}	
-		else {
+			}
+		} else {
 			return "連結已失效";
 		}
 	}
@@ -216,12 +216,13 @@ public class ReserveController {
 	//客人前一天點選確認不會去,將rs由1改為2
 	@GetMapping("/customerComfirmto2")
 	@ResponseBody
-	public String customerComfirmto2(@RequestParam(value = "reservationId") int reservationId) {
-		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationId);
+	public String customerComfirmto2(@RequestParam(value = "reservationUuid") UUID reservationUuid) {
+
+		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
 		if(reserve!=null) {
 			int reserveStatus = reserve.getReservationStatus();			
 			if(reserveStatus==1) {
-				reserveService.updateReservationStatusTo2(reservationId);		
+				reserveService.updateReservationStatusTo2(reservationUuid);		
 				return "感謝您的確認，希望下次能再次為您服務😄😄";}
 			else {
 				return "連結已失效";
@@ -234,8 +235,9 @@ public class ReserveController {
 
 	//查詢客人的預訂資訊並顯示在確認信件中(rs=1,cs=0)
 	@GetMapping("/selectCustomerTommorowComeOrNot")
-	public String selectCustomerTommorowComeOrNot(@RequestParam(value = "reservationId") int reservationId, Model model) {
-	    Reserve selectCustomerTommorowComeOrNot = reserveService.selectCustomerTommorowComeOrNot(reservationId);
+	public String selectCustomerTommorowComeOrNot(@RequestParam(value = "reservationUuid") UUID reservationUuid, Model model) {
+
+		Reserve selectCustomerTommorowComeOrNot = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
 	    if (selectCustomerTommorowComeOrNot == null) {
 	        return "forward:/WEB-INF/reservation/jsp/fail.jsp";
 	    }
@@ -246,8 +248,8 @@ public class ReserveController {
 	//客人前一天想更改人數,並將rs由1改為3
 	@GetMapping("/updateNumberOfPeopleAndReservationStatusTo3")
 	@ResponseBody
-	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationId") int reservationId,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
-		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationId, newNumberOfPeople);
+	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationUuid") UUID reservationUuid,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
+		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
 		return "修改成功";
 	}
 	

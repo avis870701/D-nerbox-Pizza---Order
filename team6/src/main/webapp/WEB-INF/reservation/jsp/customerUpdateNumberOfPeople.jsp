@@ -79,10 +79,15 @@
             <td>訂位時間：</td>
             <td><%= selectCustomerTommorowComeOrNot.getReservationTime() %></td>
         </tr> 
+        <tr>
+            <td>UUID：</td>
+            <td><%= selectCustomerTommorowComeOrNot.getReservationUUID() %></td>
+        </tr> 
+        
 </div>       
 
     <form action="/reservation/updateNumberOfPeopleAndReservationStatusTo3" method="GET">
-        <input type="hidden" name="reservationId" value="<%= selectCustomerTommorowComeOrNot.getReservationId() %>">
+        <input type="hidden" name="reservationUuid" value="<%= selectCustomerTommorowComeOrNot.getReservationUUID() %>">
         <input type="number" name="newNumberOfPeople" placeholder="輸入新的人數">
         <button type="submit"><b>更新人數</b></button>
     </form>
