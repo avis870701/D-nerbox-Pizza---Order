@@ -1,17 +1,19 @@
 package com.team6.reservation.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 
-	@Query(value = "from Reserve where reservationName like concat('%',?1,'%') and reservationStatus = 1 and checkInStatus = 0 order by reservationDate asc, reservationTime asc")
-	public List<Reserve> checkInByName(String name);
+	@Query(value = "from Reserve where reservationName like concat('%',?1,'%') and reservationStatus = 1 and checkInStatus = 0 and reservationDate = ?2 order by reservationDate asc, reservationTime asc")
+	public List<Reserve> checkInByName(String name,String date);
 	
-	@Query(value = "from Reserve where phone like concat('%',?1,'%') and reservationStatus = 1 and checkInStatus = 0 order by reservationDate asc, reservationTime asc")
+	@Query(value = "from Reserve where phone = ?1 and reservationStatus = 1 and checkInStatus = 0 order by reservationDate asc, reservationTime asc")
 	public List<Reserve> checkInByPhone(String phone);
 
 	@Query(value = "from Reserve where reservationDate = ?1 and reservationStatus = 1 and checkInStatus = 0 ORDER BY reservationDate ASC, reservationTime ASC")
@@ -57,5 +59,29 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	@Query(value = "delete FROM Reserve WHERE reservationId= ?1")
 	public void deleteCheckInStatus(int reservation_id);
 
+	
+	
+	//customerConfirm.html(客人點選:明天會報到)
+	@Modifying
+	@Query(value = "update Reserve SET reservationStatus = 3 WHERE reservationId= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo3(int reservationId);
+	
+	//customerConfirm.html(客人點選:明天不會報到或無回應)
+	@Modifying
+	@Query(value = "update Reserve SET reservationStatus = 2 WHERE reservationId= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo2(int reservationId);
+	
+	//customerConfirm.html(客人點選:明天要更改人數而且會報到)
+	@Modifying
+	@Query(value = "update Reserve set numberOfPeople = ?2 , reservationStatus = 3 WHERE reservationId = ?1" )
+	public void updateNumberOfPeopleAndReservationStatusTo3(int reservationId, int newNumberOfPeople);
+		
+	//comfirm.html(呈現客人訂位資訊讓客人確認)
+	@Query(value = "from Reserve where reservationId = ?1 and reservationStatus = 1 and checkInStatus = 0 ")
+	public Reserve selectCustomerTommorowComeOrNot(int reservationId);
+	
+	//系統掃描rs=1,cs=0的客人是否有 reservationDate - localdate = 1 的客人
+	@Query(value = "FROM Reserve WHERE CAST(reservationDate AS DATE) = DATEADD(day, 1, CAST(GETDATE() AS DATE)) and reservationStatus=1")	
+	public List<Reserve> selectCustomerTommorowReservation();
 	
 }

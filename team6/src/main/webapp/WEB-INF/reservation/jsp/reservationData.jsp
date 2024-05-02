@@ -24,6 +24,27 @@
     th {
         background-color: #f2f2f2;
     }
+    
+    button {
+	border: none;
+	border-radius: 8px;
+	padding: 10px 20px;
+	background-color: #3498db;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 4px 2px;
+	cursor: pointer;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+	transition-duration: 0.4s;
+}
+
+button:hover {
+	background-color: #2980b9;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* 滑鼠懸停時的陰影效果 */
+}
 </style>
 </head>
 <body>
@@ -57,12 +78,12 @@
                 <td><%= reservation.getPhone() %></td>
                 <td><%= reservation.getNote() %></td>
 				<td>
-					<button type="button" onclick="updatePeople('<%= reservation.getReservationId() %>')">人數修改</button>
 					<input type="text" id="peopleInput<%= reservation.getReservationId() %>" style="width: 55px;" placeholder="人數修改"> 		
+					<button type="button" onclick="updatePeople('<%= reservation.getReservationId() %>')">人數修改</button>
+					<input type="time" id="timeInput<%= reservation.getReservationId() %>"  >		
 					<button type="button" onclick="updateTime('<%= reservation.getReservationId() %>')">時間修改</button>
-					<input type="time" id="timeInput<%= reservation.getReservationId() %>"  >
-					<button type="button" onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
 					<input type="date" id="dateInput<%= reservation.getReservationId() %>" > 		
+					<button type="button" onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
 			    </td>
 				<td><button type="button" onclick="deleteReservation('<%= reservation.getReservationId() %>')">刪除</button></td>
             </tr>

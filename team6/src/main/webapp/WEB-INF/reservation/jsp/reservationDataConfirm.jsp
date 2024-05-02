@@ -75,7 +75,6 @@
 		        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		        xhr.onreadystatechange = function() {
 				location.reload();
-
 		        };
 		        xhr.send('action=confirmReservation&reservationId=' + reservationId);
 		    }

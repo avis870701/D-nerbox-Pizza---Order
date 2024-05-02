@@ -65,17 +65,17 @@ button:hover {
     <tbody>
     <tr>
         <%
-        List<Reserve> selectName = (ArrayList<Reserve>) request.getAttribute("selectName");
-                        for (Reserve selectNames : selectName) {
+        List<Reserve> selectPhone = (ArrayList<Reserve>) request.getAttribute("selectPhone");
+                        for (Reserve selectPhones : selectPhone) {
         %>
-                <td><%= selectNames.getReservationName() %></td>
-                <td><%= selectNames.getReservationDate() %></td>
-                <td><%= selectNames.getReservationTime() %></td>
-                <td><%= selectNames.getPhone() %></td>
-                <td><%= selectNames.getNumberOfPeople() %></td>
-                <td><%= selectNames.getNote() %></td>
-                <td><button type="button" onclick="checkInSuccess('<%= selectNames.getReservationId() %>')">報到完成</button></td>
-                <td><button type="button" onclick="deleteCheckIn('<%= selectNames.getReservationId() %>')">刪除</button></td>
+                <td><%= selectPhones.getReservationName() %></td>
+                <td><%= selectPhones.getReservationDate() %></td>
+                <td><%= selectPhones.getReservationTime() %></td>
+                <td><%= selectPhones.getPhone() %></td>
+                <td><%= selectPhones.getNumberOfPeople() %></td>
+                <td><%= selectPhones.getNote() %></td>
+                <td><button type="button" onclick="checkInSuccess('<%= selectPhones.getReservationId() %>')">報到完成</button></td>
+                <td><button type="button" onclick="deleteCheckIn('<%= selectPhones.getReservationId() %>')">刪除</button></td>
             </tr>
         <% } %>
     </tbody>

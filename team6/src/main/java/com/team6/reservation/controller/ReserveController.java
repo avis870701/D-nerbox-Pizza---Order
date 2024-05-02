@@ -1,6 +1,10 @@
 package com.team6.reservation.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +13,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/reservation")
@@ -24,19 +32,16 @@ public class ReserveController {
 	private ReserveService reserveService;
 	@Autowired
 	private Reserve reserve;
-	
-	/*因為thymeleaf會搶路徑,所以要forward:*/
 
 	//後台進入點&店家查詢待確認預訂訊息的總數
 	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
 	public String reserveMainAction(Model model) {
 		int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
-		int selectAllChecked = reserveService.selectAllCheckedCounts();		
+		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
-		model.addAttribute("selectAllChecked",selectAllChecked);	
 		return "forward:/WEB-INF/reservation/jsp/reserveIndex.jsp";
 	}
-	
+		
 	//客人預訂進入點
 	@RequestMapping(path = "/customerreservemain.controller", method = RequestMethod.GET)
 	public String customerreserveMainAction() {
@@ -47,7 +52,9 @@ public class ReserveController {
 	@GetMapping("/checkInByName")
 	public String checkInByName(@RequestParam("nameSelect") String nameSelect,
 			Model model) {
-		List<Reserve> selectName = reserveService.checkInByName(nameSelect);
+		LocalDate currentDate = LocalDate.now();       
+	    String currentDateAsString = currentDate.toString();
+		List<Reserve> selectName = reserveService.checkInByName(nameSelect,currentDateAsString);
 		model.addAttribute("selectName", selectName);
 		return "forward:/WEB-INF/reservation/jsp/checkInByName.jsp";
 	}
@@ -56,8 +63,8 @@ public class ReserveController {
 	@GetMapping("/checkInByPhone")
 	public String checkInByPhone(@RequestParam("phoneSelect") String phoneSelect,Model model) {
 		List<Reserve> selectByPhone = reserveService.checkInByPhone(phoneSelect);
-		model.addAttribute("selectName", selectByPhone);
-		return "forward:/WEB-INF/reservation/jsp/checkInByName.jsp";
+		model.addAttribute("selectPhone", selectByPhone);
+		return "forward:/WEB-INF/reservation/jsp/checkInByPhone.jsp";
 	}
 	
 	//店家查詢已確認後的訂位,依日期查詢(可更改人數,日期,時間)ok
@@ -123,6 +130,14 @@ public class ReserveController {
 		return "forward:/WEB-INF/reservation/jsp/selectAllChecked.jsp";
 	}
 	
+	//目前用餐客人人數顯示
+	@GetMapping("/selectAllCheckedCounts")
+	@ResponseBody
+	public int selectAllCheckedCounts() {
+		int selectAllChecked = reserveService.selectAllCheckedCounts();
+		return selectAllChecked;
+	}
+	
 	//店家更新人數(來自reservationData.jsp)ok
 	@PutMapping("/updateNumberOfPeople")
 	public void updateNumberOfPeople(@RequestParam(value="reservationId") int reservationId,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
@@ -165,5 +180,67 @@ public class ReserveController {
 	public void deleteCheckIn(@RequestParam(value = "reservationId")int reservationId,Model model) {
 		reserveService.deleteCheckInStatus(reservationId);		
 	}
+			
+	
+	
+
+	
+	//客人前一天點選確認,將rs由1改為3
+	@GetMapping("/customerComfirmto3")
+	@ResponseBody
+	public String customerComfirmto3(@RequestParam(value = "reservationId") int reservationId) {		
+		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationId);		
+		if(reserve!=null) {
+			int reserveStatus = reserve.getReservationStatus();			
+			if(reserveStatus==1) {
+				reserveService.updateReservationStatusTo3(reservationId);
+				return "感謝您的確認，明天見😀😀";}
+			else {
+				return "連結已失效";
+				}
+			}	
+		else {
+			return "連結已失效";
+		}
+	}
+	
+	//客人前一天點選確認不會去,將rs由1改為2
+	@GetMapping("/customerComfirmto2")
+	@ResponseBody
+	public String customerComfirmto2(@RequestParam(value = "reservationId") int reservationId) {
+		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationId);
+		if(reserve!=null) {
+			int reserveStatus = reserve.getReservationStatus();			
+			if(reserveStatus==1) {
+				reserveService.updateReservationStatusTo2(reservationId);		
+				return "感謝您的確認，希望下次能再次為您服務😄😄";}
+			else {
+				return "連結已失效";
+				}
+			}	
+		else {
+			return "連結已失效";
+		}
+	}
+
+	//查詢客人的預訂資訊並顯示在確認信件中(rs=1,cs=0)
+	@GetMapping("/selectCustomerTommorowComeOrNot")
+	public String selectCustomerTommorowComeOrNot(@RequestParam(value = "reservationId") int reservationId, Model model) {
+	    Reserve selectCustomerTommorowComeOrNot = reserveService.selectCustomerTommorowComeOrNot(reservationId);
+	    if (selectCustomerTommorowComeOrNot == null) {
+	        return "forward:/WEB-INF/reservation/jsp/fail.jsp";
+	    }
+	    model.addAttribute("selectCustomerTommorowComeOrNot", selectCustomerTommorowComeOrNot);
+	    return "forward:/WEB-INF/reservation/jsp/customerUpdateNumberOfPeople.jsp";    
+	}
+
+	//客人前一天想更改人數,並將rs由1改為3
+	@GetMapping("/updateNumberOfPeopleAndReservationStatusTo3")
+	@ResponseBody
+	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationId") int reservationId,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
+		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationId, newNumberOfPeople);
+		return "修改成功";
+	}
 	
 }
+

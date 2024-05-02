@@ -1,5 +1,9 @@
 package com.team6.reservation.model;
 
+import java.util.Date;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
@@ -13,10 +17,16 @@ import jakarta.persistence.Table;
 @Table(name = "reservation")
 @Component
 public class Reserve {
-
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RESERVATIONID")
 	private int  reservationId;
+	/*@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	@Column(name = "RESERVATIONUUID", columnDefinition = "BINARY(16)")
+	private UUID reservationUUID;*/
 	@Column(name = "ACCOUNT")
 	private String account;
 	@Column(name = "RESERVATIONNAME")
@@ -51,9 +61,10 @@ public class Reserve {
 	}
 
 
-	public Reserve(int reservationId, String account, String reservationName, String phone, int numberOfPeople,
+	public Reserve(int reservationId, /*UUID reservationUuid,*/String account, String reservationName, String phone, int numberOfPeople,
 			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.reservationId = reservationId;
+		/*this.reservationUUID = reservationUuid;*/
 		this.account = account;
 		this.reservationName = reservationName;
 		this.phone = phone;
@@ -74,6 +85,17 @@ public class Reserve {
 	public void setReservationId(int reservationId) {
 		this.reservationId = reservationId;
 	}
+	
+	
+
+	/*public UUID getReservationUUID() {
+		return reservationUUID;
+	}
+
+
+	public void setReservationUUID(UUID reservationUUID) {
+		this.reservationUUID = reservationUUID;
+	}*/
 
 
 	public String getAccount() {
