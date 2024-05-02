@@ -60,9 +60,9 @@
 		</head>
 
 		<body>
+			<jsp:useBean id="productBean" scope="request" class="com.team6.product.model.ProductBean" />
 			<div class="container py-5">
 				<div id="product">
-					<jsp:useBean id="productBean" scope="request" class="com.team6.product.model.ProductBean" />
 					<table border="1">
 						<tr style="background-color: #a8fefa">
 							<th>產品編號</th>
@@ -148,13 +148,11 @@
 						url: "Product_coQuantity",
 						method: 'PUT',
 						data: { "quantity": quantity, "productId": productId },
-						success: function (data, type, err) {
-							console.log('status: ' + type);
-							console.log(err);
-							console.log(data);
-							productElem.innerHTML = ``;
+						success: function (response) {
+							console.log(response);
+							// order的設計模式因為畫面會重導，不需要處理hibernate的無限迴圈
+							window.location.reload();
 
-							//window.location.reload();
 						},
 						error: function (data, type, err) {
 							console.log('status: ' + type);

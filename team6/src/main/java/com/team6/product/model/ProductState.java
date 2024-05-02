@@ -30,7 +30,7 @@ public class ProductState {
 	@Column(name = "PRODUCTSTATENAME")
 	private String ProductStateName;
 
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) order的設計不需要處理無限迴圈先註解
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productState", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<ProductBean> pBeans = new LinkedHashSet<>();
 	

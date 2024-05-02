@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "product")
 @Component
-@JsonIgnoreProperties({"productCategory", "productState"})
+//@JsonIgnoreProperties({"productCategory", "productState"}) order的設計不需要處理無限迴圈先註解
 public class ProductBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -52,12 +52,12 @@ public class ProductBean implements Serializable {
 	@Column(name = "PRODUCTCREATEDATE")
 	private LocalDate productCreateDate;
 
-	@JsonIgnore
+//	@JsonIgnore order的設計不需要處理無限迴圈先註解
 	@JoinColumn(name = "CATEGORYID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
 
-	@JsonIgnore
+//	@JsonIgnore order的設計不需要處理無限迴圈先註解
 	@JoinColumn(name = "PRODUCTSTATEID", insertable = false, updatable = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductState productState;
