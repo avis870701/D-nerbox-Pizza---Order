@@ -30,3 +30,6 @@
 2024-05-02
 -- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
 -- 新增 店面 Logo、店內類之圖片。
+-- 更新 前端畫面之 Bootstrap.css 、style.css 內的綠主色改為藍色。
+-- 更新 統整 店面主照片 2張 成同樣高度 720 。
+-- 新增會員 已完成。

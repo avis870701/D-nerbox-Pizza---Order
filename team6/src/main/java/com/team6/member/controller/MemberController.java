@@ -166,21 +166,33 @@ public class MemberController {
 		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
 	}
 	@PostMapping("/Member.Insert")
-	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword, Model model) throws ParseException {
+	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword, @RequestParam("mEmail") String mEmail, Model model) throws ParseException {
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
+		LocalDate nowDate = LocalDate.now();
 		MemberAccountBean bean = new MemberAccountBean();
 		bean.setmAccount(mAccount);
 		bean.setmPassword(mPassword);
-		bean.setDetailBean(null);
 		bean.setPermissions(1);
-		MemberAccountBean result = service.insertAccount(bean);
+		bean.setHidden(1);
+		MemberAccountBean returnBean = service.insertAccount(bean);
+		MemberDetailBean detailBean =new MemberDetailBean();
+		detailBean.setBean(returnBean);
+		detailBean.setmName(returnBean.getmAccount());
+		detailBean.setmEmail(mEmail);
+		detailBean.setmPhone("");
+		detailBean.setMbirthday(nowDate);
+		detailBean.setRegistrationDate(nowDate);
+		returnBean.setDetailBean(detailBean);
+		MemberAccountBean result = service.insertDetail(returnBean);
 		if (result != null) {
 			return "redirect:Member.SelectAll";
 		}
 		model.addAttribute("err", "新增失敗!!");
 		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
 	}
+	// ===================================================================================================
+	
 	// 更新會員密碼
 	// 更新會員細項
 	// 更新權限
