@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +29,8 @@ public class ProductState {
 	
 	@Column(name = "PRODUCTSTATENAME")
 	private String ProductStateName;
-	
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productState", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<ProductBean> pBeans = new LinkedHashSet<>();
 	

@@ -61,7 +61,7 @@
 
 		<body>
 			<div class="container py-5">
-				<div>
+				<div id="product">
 					<jsp:useBean id="productBean" scope="request" class="com.team6.product.model.ProductBean" />
 					<table border="1">
 						<tr style="background-color: #a8fefa">
@@ -122,6 +122,7 @@
 				const decrementButton = document.getElementById('decrement');
 				const incrementButton = document.getElementById('increment');
 				const maxQuantity = <%= productBean.getProductQuantity() %>;
+				const productElem = document.getElementById('product');
 
 
 
@@ -147,10 +148,18 @@
 						url: "Product_coQuantity",
 						method: 'PUT',
 						data: { "quantity": quantity, "productId": productId },
-						success: function (response) {
-							window.location.reload();
+						success: function (data, type, err) {
+							console.log('status: ' + type);
+							console.log(err);
+							console.log(data);
+							productElem.innerHTML = ``;
+
+							//window.location.reload();
 						},
-						error: function (response) {
+						error: function (data, type, err) {
+							console.log('status: ' + type);
+							console.log('statuscontent : ' + err);
+							console.log(data);
 							alert('爆開');
 						}
 

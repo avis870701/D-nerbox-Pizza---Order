@@ -1,8 +1,12 @@
 package com.team6.product.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +21,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "product")
 @Component
-public class ProductBean {
+@JsonIgnoreProperties({"productCategory", "productState"})
+public class ProductBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,10 +52,12 @@ public class ProductBean {
 	@Column(name = "PRODUCTCREATEDATE")
 	private LocalDate productCreateDate;
 
+	@JsonIgnore
 	@JoinColumn(name = "CATEGORYID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
 
+	@JsonIgnore
 	@JoinColumn(name = "PRODUCTSTATEID", insertable = false, updatable = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductState productState;

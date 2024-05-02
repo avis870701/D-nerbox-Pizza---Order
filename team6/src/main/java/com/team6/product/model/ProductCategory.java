@@ -1,9 +1,12 @@
 package com.team6.product.model;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,7 +21,9 @@ import jakarta.persistence.Table;
 @Entity		   
 @Table(name = "productcategory")
 @Component
-public class ProductCategory {
+public class ProductCategory implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,7 @@ public class ProductCategory {
 	@Column(name = "CATEGORYNAME")
 	private String CategoryName;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<ProductBean> pBeans = new LinkedHashSet<>();
 	
