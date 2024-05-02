@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team6.product.dto.ProductBeanDto;
+import com.team6.product.dto.ProductTest;
 import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductCategory;
 import com.team6.product.model.ProductCategoryService;
@@ -57,21 +60,48 @@ public class ProductController {
 	}
 	
 	// 測試扣產品數量
+//	@PutMapping("/Product_coQuantity")
+//	@ResponseBody
+//	public ResponseEntity<ProductBean> testCoProductQuantity(
+//			@RequestParam("quantity") Integer quantity,
+//			@RequestParam("productId") Integer productId){
+//		ProductBean productBean = productService.SelectById(productId);
+//		Integer pQuantity = productBean.getProductQuantity();
+//		
+//		pQuantity -= quantity;
+//		productBean.setProductQuantity(pQuantity);
+//		productService.UpdateProduct(productBean);
+//		
+//		ProductBean newPbean = productService.SelectById(productBean.getProductId());
+//		
+//		return ResponseEntity.ok().body(newPbean);
+//	}
+//	
+	// 測試扣產品數量2，用@RequestBody接 然後使用DTO傳輸資料
 	@PutMapping("/Product_coQuantity")
 	@ResponseBody
-	public ResponseEntity<ProductBean> testCoProductQuantity(
-			@RequestParam("quantity") Integer quantity,
-			@RequestParam("productId") Integer productId){
-		ProductBean productBean = productService.SelectById(productId);
+	public ResponseEntity<ProductBeanDto> testCoProductQuantity(
+			@RequestBody ProductTest productTest){
+		ProductBean productBean = productService.SelectById(productTest.getProductId());
 		Integer pQuantity = productBean.getProductQuantity();
 		
-		pQuantity -= quantity;
+		
+		pQuantity -= productTest.getQuantity();
 		productBean.setProductQuantity(pQuantity);
 		productService.UpdateProduct(productBean);
 		
-		return ResponseEntity.ok().body(productBean);
+		ProductBean newPbean = productService.SelectById(productBean.getProductId());
+		ProductBeanDto productBeanDto = new ProductBeanDto(
+				newPbean.getProductId(),
+				newPbean.getProductCategory().getCategoryName(),
+				newPbean.getProductName(), newPbean.getProductDesc(),
+				newPbean.getProductImg_url(), newPbean.getProductPrice(),
+				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
+				newPbean.getProductState().getProductStateName());
+		
+		
+		return ResponseEntity.ok().body(productBeanDto);
 	}
-	
 	
 	
 	

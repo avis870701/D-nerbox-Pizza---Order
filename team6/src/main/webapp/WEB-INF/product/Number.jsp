@@ -108,7 +108,8 @@
 				<div class="counter d-flex justify-content-center align-items-center">
 					<button class="btn btn-outline-secondary btn-lg" id="decrement">-</button>
 					<input type="text" class="mx-3 display-5 fw-bold text-center fs-3 counter-input" id="count"
-						value="0" min="0" max="<%= productBean.getProductQuantity() %>">
+						value="0" min="0" max="<%= productBean.getProductQuantity() %>" pattern="[0-9]{1}"
+						oninput="value=value.replace(/[^\d]/g,'')" onpaste="return false;" readonly>
 					<button class="btn btn-outline-secondary btn-lg" id="increment">+</button>
 					<button class="mx-3 display-5 rounded-pill" id="submit"
 						onclick="forCoQuantity('<%=productBean.getProductId()%>')">送出</button>
@@ -118,28 +119,38 @@
 			</div>
 
 			<script>
-				const countElement = document.getElementById('count');
+				let countElement = document.getElementById('count');
 				const decrementButton = document.getElementById('decrement');
 				const incrementButton = document.getElementById('increment');
-				const maxQuantity = <%= productBean.getProductQuantity() %>;
+				let maxQuantity = <%= productBean.getProductQuantity() %>;
 				const productElem = document.getElementById('product');
+				const maxCounterValue = 11;
 
-
+				countElement.addEventListener('input', function () {
+					const maxLength = 2; // 設置最大位數為2
+					if (this.value.length > maxLength) {
+						this.value = this.value.slice(0, maxLength); // 截取前maxLength個字符
+					}
+				});
 
 
 				decrementButton.addEventListener('click', () => {
-					if (countElement.value > 0) {
-						countElement.value--;
+					const newValue = parseInt(countElement.value) - 1;
+					if (newValue >= 0) {
+						countElement.value = newValue;
 					}
 				});
 
 				incrementButton.addEventListener('click', () => {
-					if (countElement.value < maxQuantity) {
-						countElement.value++;
+					const newValue = parseInt(countElement.value) + 1;
+					if (newValue <= maxQuantity && newValue < maxCounterValue) {
+						countElement.value = newValue;
+					} else if (newValue >= maxCounterValue) {
+						// 當數值達到10時,不做任何操作
+						return;
 					} else {
 						alert(`不能超過產品數量 ${maxQuantity}`);
 					}
-
 				});
 
 				function forCoQuantity(productId) {
@@ -147,18 +158,53 @@
 					$.ajax({
 						url: "Product_coQuantity",
 						method: 'PUT',
-						data: { "quantity": quantity, "productId": productId },
+						dataType: "json",
+						data: JSON.stringify({ "quantity": quantity, "productId": productId }),
+						headers: { 'Content-Type': 'application/json' },
 						success: function (response) {
 							console.log(response);
-							// order的設計模式因為畫面會重導，不需要處理hibernate的無限迴圈
-							window.location.reload();
+							console.log(response.categoryName);
 
-						},
-						error: function (data, type, err) {
-							console.log('status: ' + type);
-							console.log('statuscontent : ' + err);
-							console.log(data);
-							alert('爆開');
+							let product = response;
+
+							console.log(product.productImg_url);
+
+							// order的設計模式因為畫面會重導，不需要處理hibernate的無限迴圈
+							// window.location.reload();
+
+							productElem.innerHTML = ``;
+							countElement.value = 0;
+
+							let productHtml = `
+							<table border="1">
+								<tr style="background-color: #a8fefa">
+									<th>產品編號</th>
+									<th>產品類別</th>
+									<th>產品名稱</th>
+									<th>產品介紹</th>
+									<th>產品圖片</th>
+									<th>產品價格</th>
+									<th>產品數量</th>
+									<th>產品狀態</th>
+									<th>上架時間</th>
+								</tr>
+								<tr>
+									<td>` + product.productId + `</td>
+      								<td>` + product.categoryName + `</td>
+      								<td>` + product.productName + `</td>
+      								<td>` + product.productDesc + `</td>
+      								<td><img src="` + product.productImg_url + `" alt="產品圖片"></td>
+      								<td>` + product.productPrice + `</td>
+      								<td>` + product.productQuantity + `</td>
+      								<td>` + product.productStateName + `</td>
+      								<td>` + product.productCreateDate + `</td>
+								</tr>
+							</table>
+`
+							productElem.innerHTML = productHtml;
+							countElement.max = product.productQuantity;
+							maxQuantity = product.productQuantity;
+
 						}
 
 					});
