@@ -122,7 +122,7 @@ public class ReserveController {
 			return "redirect:reservemain.controller";
 		}
 	
-	//店家查詢用餐中的客人(rs=1,cs=1)ok
+	//店家查詢用餐中的客人(rs=3~4,cs=1)ok
 	@GetMapping("/selectAllChecked")
 	public String selectAllChecked(Model model) {
 		List<Reserve> selectAllChecked = reserveService.selectAllChecked();
@@ -175,15 +175,24 @@ public class ReserveController {
 		reserveService.updateCheckInStatus(reservationId);
 	}
 	
-	//店家刪除用餐狀態,客人用餐完畢後已離開(來自checkInByName.jsp)ok
-	@DeleteMapping("/deleteCheckIn")
+	//客人預訂確認完但不來了:將rs=2(來自checkInByName.jsp)ok
+	@PutMapping("/deleteCheckIn")
 	public void deleteCheckIn(@RequestParam(value = "reservationId")int reservationId,Model model) {
 		reserveService.deleteCheckInStatus(reservationId);		
 	}
 			
+	//客人吃飽了:將cs由1改為2,rs=3~4
+	@PutMapping("/deleteCheckInStatusTo2")
+	public void deleteCheckInStatusTo2(@RequestParam(value = "reservationId")int reservationId,Model model) {
+		reserveService.deleteCheckInStatusTo2(reservationId);
+	}
+		
+	//店家不接該筆訂位(rs由0改為5)(來自reservationDataConfirm.jsp)
+	@PutMapping("/updateReservationStatusTo5")
+	public void updateReservationStatusTo5(@RequestParam(value = "reservationId")int reservationId) {
+		reserveService.updateReservationStatusTo5(reservationId);
+	}
 	
-	
-
 	
 	//客人前一天點選確認,將rs由1改為3
 	@GetMapping("/customerComfirmto3")

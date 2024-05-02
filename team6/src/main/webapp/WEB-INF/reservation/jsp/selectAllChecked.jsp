@@ -69,7 +69,7 @@
 
 	function deleteCheckIn(reservationId) {
 	    var xhr = new XMLHttpRequest();
-	    xhr.open('DELETE', '/reservation/deleteCheckIn', true);
+	    xhr.open('PUT', '/reservation/deleteCheckInStatusTo2', true);
 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    xhr.onreadystatechange = function() {
 	        if (xhr.readyState === XMLHttpRequest.DONE) {

@@ -95,7 +95,7 @@ button:hover {
 	
 	function deleteCheckIn(reservationId) {
 	    var xhr = new XMLHttpRequest();
-	    xhr.open('DELETE', '/reservation/deleteCheckIn', true);
+	    xhr.open('PUT', '/reservation/deleteCheckIn', true);
 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    xhr.onreadystatechange = function() {
 	    location.reload(); 

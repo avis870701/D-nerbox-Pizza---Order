@@ -160,7 +160,7 @@ public class ReserveService {
             reserve.setReservationTime(reservationTime);
             reserve.setReservationDate(reservationDate);
             reserve.setNote(note);
-            reserve.setReservationStatus(1);
+            reserve.setReservationStatus(4);
             reserve.setCheckInStatus(1);
             reserve = reserveRepository.save(reserve);
         } catch (Exception e) {
@@ -187,4 +187,14 @@ public class ReserveService {
         mailSender.send(message);
     } 
 	
+	//待確認預訂訊息-刪除:將rs=5(店家不接該筆預定)
+	public void updateReservationStatusTo5(int reservationId) {
+		reserveRepository.updateReservationStatusTo5(reservationId);
+	}
+	
+	//客人吃飽了:將cs由1改為2,rs=3~4
+	public void deleteCheckInStatusTo2(int reservation_id) {
+		reserveRepository.deleteCheckInStatusTo2(reservation_id);
+	}
+
 }
