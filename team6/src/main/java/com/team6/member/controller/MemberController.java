@@ -1,5 +1,7 @@
 package com.team6.member.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.team6.member.model.MemberAccountBean;
+import com.team6.member.model.MemberDetailBean;
 import com.team6.member.model.MemberService;
 
+import jakarta.mail.internet.ParseException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -38,7 +43,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/memberlogin.controller")
-	public String login(@RequestParam String account, @RequestParam String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
 		MemberAccountBean bean = service.login(account, pwd);
 		if (bean != null) {
 			if (bean.getPermissions() == 1) {
@@ -58,7 +63,8 @@ public class MemberController {
 	// 後台從會員功能返回主頁
 	@RequestMapping(path = "/MemberGoBackToIndex", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoBackToIndex() {
-		return "forward:/WEB-INF/EmpIndex.jsp";
+//		return "forward:/WEB-INF/Index.jsp";
+		return "forward:/WEB-INF/Index.jsp";
 	}
 	// ===================================================================================================
 
@@ -75,6 +81,7 @@ public class MemberController {
 		model.addAttribute("bean", bean);
 		return "forward:/WEB-INF/member/jsp/MemberGetOne.jsp";
 	}
+	// ===================================================================================================
 	
 	// 查詢系列--模糊
 	@GetMapping("/Member.SelectByName")
@@ -118,6 +125,7 @@ public class MemberController {
 
 		return page.getContent();
 	}
+	// ===================================================================================================
 	
 	// 查詢系列--全部
 	@GetMapping("/Member.SelectAll")
@@ -150,4 +158,32 @@ public class MemberController {
 		
 		return page.getContent();
 	}
+	// ===================================================================================================
+	
+	// 新增會員
+	@RequestMapping(path = "/MemberGoToInsert", method = { RequestMethod.GET, RequestMethod.POST })
+	public String MemberGoToInsert() {
+		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
+	}
+	@PostMapping("/Member.Insert")
+	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword, Model model) throws ParseException {
+//		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		bean.setBirthday(LocalDate.parse(birthday,formatter));
+		MemberAccountBean bean = new MemberAccountBean();
+		bean.setmAccount(mAccount);
+		bean.setmPassword(mPassword);
+		bean.setDetailBean(null);
+		bean.setPermissions(1);
+		MemberAccountBean result = service.insertAccount(bean);
+		if (result != null) {
+			return "redirect:Member.SelectAll";
+		}
+		model.addAttribute("err", "新增失敗!!");
+		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
+	}
+	// 更新會員密碼
+	// 更新會員細項
+	// 更新權限
+	// 假刪除? 真刪除?
+	// 存檔會員資料表
 }

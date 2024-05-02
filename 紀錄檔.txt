@@ -24,3 +24,9 @@
 -- 更新 Member會員功能，進入會員專區 Index.jsp。Employee 員工功能，進入後台 EmpIndex.jsp。
 -- 更新 Member 單筆id查詢、name模糊查詢+分頁、全部搜尋+分頁。
 -- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。
+
+
+
+2024-05-02
+-- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
+-- 新增 店面 Logo、店內類之圖片。

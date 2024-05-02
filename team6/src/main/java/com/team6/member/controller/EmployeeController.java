@@ -28,7 +28,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/emplogin.controller")
-	public String login(@RequestParam String account, @RequestParam String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
 		EmployeeAccountBean bean = eService.login(account, pwd);
 		if (bean != null) {
 			switch (bean.getEmpPermissions()) {
@@ -54,6 +54,15 @@ public class EmployeeController {
 		model.addAttribute("err", "帳號或密碼不正確!!");
 		return "forward:/WEB-INF/EmpLogin.jsp";
 	}
-	//===================================================================================================
-	
+	// ===================================================================================================
+
+	// 單筆查詢
+	// 模糊查詢
+	// 全部查詢
+	// 新增員工
+	// 更新員工密碼
+	// 更新員工細項
+	// 更新員工權限
+	// 假刪除? 真刪除?
+	// 存檔員工資料表
 }
