@@ -39,13 +39,13 @@ public class ReserveController {
 		int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
 		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
-		return "forward:/WEB-INF/reservation/jsp/reserveIndex.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
 	}
 		
 	//客人預訂進入點
 	@RequestMapping(path = "/customerreservemain.controller", method = RequestMethod.GET)
 	public String customerreserveMainAction() {
-		return "forward:/WEB-INF/reservation/jsp/cutomerReservePage.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/cutomerReservePage.jsp";
 	}
 	
 	//依姓名查詢ok
@@ -56,7 +56,7 @@ public class ReserveController {
 	    String currentDateAsString = currentDate.toString();
 		List<Reserve> selectName = reserveService.checkInByName(nameSelect,currentDateAsString);
 		model.addAttribute("selectName", selectName);
-		return "forward:/WEB-INF/reservation/jsp/checkInByName.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/checkInByName.jsp";
 	}
 	
 	//依電話查詢ok
@@ -64,7 +64,7 @@ public class ReserveController {
 	public String checkInByPhone(@RequestParam("phoneSelect") String phoneSelect,Model model) {
 		List<Reserve> selectByPhone = reserveService.checkInByPhone(phoneSelect);
 		model.addAttribute("selectPhone", selectByPhone);
-		return "forward:/WEB-INF/reservation/jsp/checkInByPhone.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/checkInByPhone.jsp";
 	}
 	
 	//店家查詢已確認後的訂位,依日期查詢(可更改人數,日期,時間)ok
@@ -73,7 +73,7 @@ public class ReserveController {
 			Model model) {
 		List<Reserve> dateReservations = reserveService.selectReservationData(dateSelect);
 		model.addAttribute("reservations", dateReservations);
-		return "forward:/WEB-INF/reservation/jsp/reservationData.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/reservationData.jsp";
 	}	
 	
 	//店家查詢尚未確認此訂位ok
@@ -81,7 +81,7 @@ public class ReserveController {
 	public String selectByStatus(Model model) {
 		List<Reserve> selectReservationStatus = reserveService.selectReservationStatus();
 		model.addAttribute("selectReservationStatus", selectReservationStatus);
-		return "forward:/WEB-INF/reservation/jsp/reservationDataConfirm.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/reservationDataConfirm.jsp";
 	}
 	
 	
@@ -105,7 +105,7 @@ public class ReserveController {
 			reserveService.sendPlainText(receivers, subject, content,from);
 						
 			model.addAttribute("insertReservation", reserve);
-			return "forward:/WEB-INF/reservation/jsp/reserveSuccess.jsp";
+			return "forward:/WEB-INF/back-jsp/reservation/reserveSuccess.jsp";
 		}
 	
 	//店家新增現場客人ok
@@ -128,7 +128,7 @@ public class ReserveController {
 	public String selectAllChecked(Model model) {
 		List<Reserve> selectAllChecked = reserveService.selectAllChecked();
 		model.addAttribute("selectAllChecked", selectAllChecked);
-		return "forward:/WEB-INF/reservation/jsp/selectAllChecked.jsp";
+		return "forward:/WEB-INF/back-jsp/reservation/selectAllChecked.jsp";
 	}
 	
 	//目前用餐客人人數顯示
@@ -242,7 +242,7 @@ public class ReserveController {
 	        return "forward:/WEB-INF/reservation/jsp/fail.jsp";
 	    }
 	    model.addAttribute("selectCustomerTommorowComeOrNot", selectCustomerTommorowComeOrNot);
-	    return "forward:/WEB-INF/reservation/jsp/customerUpdateNumberOfPeople.jsp";    
+	    return "forward:/WEB-INF/back-jsp/reservation/customerUpdateNumberOfPeople.jsp";    
 	}
 
 	//客人前一天想更改人數,並將rs由1改為3

@@ -109,8 +109,8 @@ public class ReserveService {
 				String reservationDate = reservation.getReservationDate();
 				String reservationTime = reservation.getReservationTime();
 				int numberOfPeople = reservation.getNumberOfPeople();
-	            UUID reservationUuid = reservation.getReservationUUID();
-				
+	            String reservationUuid = reservation.getReservationUUID().toString();
+	            				
 	            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationUuid=" + reservationUuid;
 	            String updateNumberOfPeopleAndConfirmLink = "http://localhost:8080/reservation/selectCustomerTommorowComeOrNot?reservationUuid=" + reservationUuid;
 	            String rejectionLink = "http://localhost:8080/reservation/customerComfirmto2?reservationUuid=" + reservationUuid;
