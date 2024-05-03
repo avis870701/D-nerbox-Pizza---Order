@@ -1,3 +1,11 @@
+2024-05-03
+-- SQL Server 終版(大概)。
+-- 更新memberLogin、memberInsert 畫面。
+-- 更改 新路徑 與 資料夾命名。
+-- 新增 EmpIndex 要 MemberInsert 的 card 畫面。
+
+
+
 2024-05-02
 -- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
 -- 新增 店面 Logo、店內類之圖片。
