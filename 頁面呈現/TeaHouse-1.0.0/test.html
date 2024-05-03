@@ -132,8 +132,6 @@ $('#delivery').click(function() {
 });
 $('#Attraction1').change(function(){ 
     var selectedValue = $(this).val();
-    console.log(selectedValue);
-
     // 隐藏所有的 iframe
     $('#iframe1, #iframe2, #iframe3, #iframe4, #iframe5, #iframe6, #iframe7').hide();
 
@@ -167,80 +165,80 @@ $('#Attraction1').change(function(){
     }
 });
 
-// $('#Attraction1').change(function(){ 
-//     var selectedValue = $(this).val();
-//     console.log(selectedValue);
-//     switch (selectedValue) {
-//         case '桃園市中壢區中北路200號':
-//         $('#iframe1').show();
-//         $('#iframe2').hide();
-//         $('#iframe3').hide();
-//         $('#iframe4').hide();
-//         $('#iframe5').hide();
-//         $('#iframe6').hide();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區健行路229號':
-//         $('#iframe1').hide();
-//         $('#iframe2').show();
-//         $('#iframe3').hide();
-//         $('#iframe4').hide();
-//         $('#iframe5').hide();
-//         $('#iframe6').hide();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區中和路139號':
-//         $('#iframe1').hide();
-//         $('#iframe2').hide();
-//         $('#iframe3').show();
-//         $('#iframe4').hide();
-//         $('#iframe5').hide();
-//         $('#iframe6').hide();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區中華路一段267號':
-//         $('#iframe1').hide();
-//         $('#iframe2').hide();
-//         $('#iframe3').hide();
-//         $('#iframe4').show();
-//         $('#iframe5').hide();
-//         $('#iframe6').hide();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區中山東路二段510號':
-//         $('#iframe1').hide();
-//         $('#iframe2').hide();
-//         $('#iframe3').hide();
-//         $('#iframe4').hide();
-//         $('#iframe5').show();
-//         $('#iframe6').hide();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區中北路200號':
-//         $('#iframe1').hide();
-//         $('#iframe2').hide();
-//         $('#iframe3').hide();
-//         $('#iframe4').hide();
-//         $('#iframe5').hide();
-//         $('#iframe6').show();
-//         $('#iframe7').hide();
-//         case '桃園市中壢區遠東路135號':
-//         $('#iframe1').hide();
-//         $('#iframe2').hide();
-//         $('#iframe3').hide();
-//         $('#iframe4').hide();
-//         $('#iframe5').hide();
-//         $('#iframe6').hide();
-//         $('#iframe7').show();
-//     }
-// });
+   
+    $('#Attraction2').click(function(){
+        let Attraction1 = $('#Attraction1').val();
+        let Data = {
+            address : Attraction1,
+        };
+        $.ajax({
+            type:'POST',
+            url:'/saveData',
+            contentType: 'application/json',
+            data:JSON.stringify(Data),
+            success:function() {
+                console.log("成功");;
+            }
 
-    $('#submit').click(function(){
-        const catchval =  $('#catchbar').val()
-        console.log(catchval);
-        const matchesPattern = checkAddressFormat(catchval);
 
-        if (matchesPattern) {
-            alert('输入的字符串符合指定的模式。');
-        } else {
-            alert('請输入桃園市中壢區及路名。');
-        }
-    });
+        })
+
+
+    })
+
+
+
+    // $('#submit').click(function(){
+    //     const catchbar =  $('#catchbar').val()
+    //     console.log(catchbar);
+    //     const matchesPattern = checkAddressFormat(catchval);
+
+    //     if (matchesPattern) {
+    //         console.log("Success");
+    //         $.ajax({
+    //             type:'POST',
+    //             url:'/saveData',
+    //             contentType: 'application/json',
+    //             data:JSON.stringify(Data),
+    //             success:function() {
+    //                 console.log("成功");
+    //             }
+    //         })
+    //             error: function(xhr, status, error) {
+	//                    console.error('刪除失敗:', error);
+    //                    alert('請输入桃園市中壢區及路名。');
+    //         }
+
+    $('#submit').click(function() {
+    const catchval = $('#catchbar').val(); // Corrected variable name to 'catchval'
+    console.log(catchval);
+
+    // Corrected function call from 'checkAddressFormat(catchval)' to 'checkAddressFormat(catchval)'
+    const matchesPattern = checkAddressFormat(catchval);
+
+    if (matchesPattern) {
+        console.log("Success");
+        const Data = { address: catchval }; // Assuming 'Data' is defined with the required data
+
+        // AJAX request to save data
+        $.ajax({
+            type: 'POST',
+            url: '/saveData',
+            contentType: 'application/json',
+            data: JSON.stringify(Data),
+            success: function() {
+                console.log("保存成功"); // Corrected success message to Chinese
+            },
+            error: function(xhr, status, error) {
+                console.error('保存失败:', error); // Corrected error message to Chinese
+                alert('请输入桃園市中壢區及路名。'); // Corrected alert message to Chinese
+            }
+        });
+    } else {
+        alert('请按正确格式输入地址。'); // Alert user for incorrect address format (Chinese)
+    }
+});
+
 
     // 使用正则表达式的 test() 方法检查输入字符串是否符合模式
     function checkAddressFormat(inputString) {
@@ -262,11 +260,7 @@ $('#Attraction1').change(function(){
     }
 });
 
-    $('#Attraction2').click(function(){
-        let Attraction1 = $('#Attraction1').val();
-        console.log(Attraction1);
-    })
-
+   
 </script>
 </body>
 </html>
