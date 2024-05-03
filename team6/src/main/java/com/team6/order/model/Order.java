@@ -17,16 +17,13 @@ public class Order {
 
 	@Id
 	@Column(name = "ORDERID")
-	private Integer orderId;
+	private String orderId;
 
 	@Column(name = "ORDERTIME")
 	private String orderTime;
 
 	@Column(name = "ACCOUNT")
 	private String account;
-
-	@Column(name = "MEMAIL")
-	private String mEmail;
 
 	@Column(name = "ORIAMOUNT")
 	private Integer oriAmount;
@@ -58,8 +55,11 @@ public class Order {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<OrderDetails> details = new LinkedHashSet<>();
 	
+	
 	public Order() {
 		
 	}
+	
+	
 
 }
