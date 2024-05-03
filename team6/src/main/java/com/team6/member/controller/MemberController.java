@@ -37,17 +37,19 @@ public class MemberController {
 
 	// 會員自行登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberMain(SessionStatus status) {
+	public String MemberMain(SessionStatus status, HttpSession session) {
 		status.isComplete();
+		session.removeAttribute("member");
 		return "forward:/WEB-INF/Login.jsp";
 	}
 
 	@PostMapping("/memberlogin.controller")
-	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model, HttpSession session) {
 		MemberAccountBean bean = service.login(account, pwd);
 		if (bean != null) {
 			if (bean.getPermissions() == 1) {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getmName());
+				session.setAttribute("member", bean);
 				return "forward:/WEB-INF/Index.jsp";
 			} else if (bean.getPermissions() == 0) {
 				model.addAttribute("err", "此帳號已凍結!!");
@@ -64,13 +66,8 @@ public class MemberController {
 	public String MemberGoBackToIndex() {
 		return "forward:/WEB-INF/Index.jsp";
 	}
-
-	// 後台從會員功能返回主頁
-	@RequestMapping(path = "/EmpGoBackToEmpIndex", method = { RequestMethod.GET, RequestMethod.POST })
-	public String EmpGoBackToEmpIndex() {
-		return "forward:/WEB-INF/EmpIndex.jsp";
-	}
-	// 後台從會員功能返回主頁
+	
+	// 來到 後台登入畫面
 	@RequestMapping(path = "/emplogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public String EmpMain(SessionStatus status) {
 		status.isComplete();
@@ -101,12 +98,12 @@ public class MemberController {
 		if (beans.isEmpty()) {
 			model.addAttribute("err", "查無資料");
 			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/member/MemberGetByName.jsp";
+			return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
 		} else {
 			model.addAttribute("beans", beans);
 			model.addAttribute("totalElements", beans.size());
 			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/member/MemberGetByName.jsp";
+			return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
 		}
 	}
 
@@ -142,11 +139,11 @@ public class MemberController {
 		if (beans.isEmpty()) {
 			model.addAttribute("err", "查無資料");
 			model.addAttribute("totalElements", beans.size());
-			return "forward:/WEB-INF/member/jsp/MemberGetAll.jsp";
+			return "forward:/WEB-INF/back-jsp/member/jsp/MemberGetAll.jsp";
 		}
 		model.addAttribute("beans", beans);
 		model.addAttribute("totalElements", beans.size());
-		return "forward:/WEB-INF/member/MemberGetAll.jsp";
+		return "forward:/WEB-INF/back-jsp/member/MemberGetAll.jsp";
 	}
 
 	@RequestMapping(path = "/MemberGetAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -171,7 +168,7 @@ public class MemberController {
 	// 新增會員
 	@RequestMapping(path = "/MemberGoToInsert", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToInsert() {
-		return "forward:/WEB-INF/member/MemberInsert.jsp";
+		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
 
 	@PostMapping("/Member.Insert")
@@ -199,11 +196,38 @@ public class MemberController {
 			return "redirect:Member.SelectAll";
 		}
 		model.addAttribute("err", "新增失敗!!");
-		return "forward:/WEB-INF/member/MemberInsert.jsp";
+		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
 	// ===================================================================================================
 
 	// 更新會員密碼
+	@PostMapping("/Member.UpdatePwd")
+	public String UpdatePwd(@RequestParam("account") String mAccount, @RequestParam("beforepassword") String mPassword,
+			@RequestParam("mEmail") String mEmail, Model model) throws ParseException {
+//		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		bean.setBirthday(LocalDate.parse(birthday,formatter));
+		LocalDate nowDate = LocalDate.now();
+		MemberAccountBean bean = new MemberAccountBean();
+		bean.setmAccount(mAccount);
+		bean.setmPassword(mPassword);
+		bean.setPermissions(1);
+		bean.setHidden(1);
+		MemberAccountBean returnBean = service.insertAccount(bean);
+		MemberDetailBean detailBean = new MemberDetailBean();
+		detailBean.setBean(returnBean);
+		detailBean.setmName(returnBean.getmAccount());
+		detailBean.setmEmail(mEmail);
+		detailBean.setmPhone("");
+		detailBean.setMbirthday(nowDate);
+		detailBean.setRegistrationDate(nowDate);
+		returnBean.setDetailBean(detailBean);
+		MemberAccountBean result = service.insertDetail(returnBean);
+		if (result != null) {
+			return "redirect:Member.SelectAll";
+		}
+		model.addAttribute("err", "新增失敗!!");
+		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
+	}
 	// 更新會員細項
 	// 更新權限
 	// 假刪除? 真刪除?

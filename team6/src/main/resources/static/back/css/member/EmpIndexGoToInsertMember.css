@@ -57,7 +57,7 @@ span.psw {
 }
 
 /* The Modal (background) */
-.modal {
+.insertmodal {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -65,10 +65,9 @@ span.psw {
     z-index: 1;
     /* Sit on top */
     left: 50%;
-    top: 0;
+    top: 2%;
     width: 600px;
     /* Full width */
-    height: 100%;
     /* Full height */
     overflow: auto;
     /* Enable scroll if needed */
@@ -77,16 +76,22 @@ span.psw {
     /*background-color: rgba(0, 0, 0, 0.4);*/
     /* Black w/ opacity */
     padding-top: 60px;
+    background-color: #fefefe;
+    border: 1px solid #888;
 }
 
 /* Modal Content/Box */
-.modal-content {
-    /*background-color: #fefefe;*/
+.insertmodal-content {
+    background-color: #fefefe;
     margin: 5% auto 15% auto;
     /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 80%;
     /* Could be more or less, depending on screen size */
+}
+
+.small {
+    width: 600px;
 }
 
 /* The Close Button (x) */

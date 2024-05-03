@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>後台系統</title>
     <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
-    <link rel="stylesheet" href="/back/css/styles.min.css" />
     <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
+    <link rel="stylesheet" href="/back/css/styles.min.css" />
   </head>
 
   <body>
@@ -568,10 +568,8 @@
         </div>
       </div>
     </div>
-    </div>
-    <div id="memberInsert" class="modal">
-      <div class=" w-100">
-
+    <div id="memberInsert" class="insertmodal small">
+      <div class="w-100">
         <form class="modal-content animate" action="Member.Insert" method="post">
           <div class="imgcontainer">
             <span onclick="document.getElementById('memberInsert').style.display='none'" class="close"
@@ -604,6 +602,7 @@
               class="cancelbtn">Cancel</button>
           </div>
         </form>
+      </div>
       </div>
       <script src="/back/libs/jquery/dist/jquery.min.js"></script>
       <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

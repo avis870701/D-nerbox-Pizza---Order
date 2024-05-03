@@ -3,6 +3,8 @@
 -- 更新memberLogin、memberInsert 畫面。
 -- 更改 新路徑 與 資料夾命名。
 -- 新增 EmpIndex 要 MemberInsert 的 card 畫面。
+-- 放上舊版程式整合專題。
+-- 將登入後人員資訊丟入 session。
 
 
 

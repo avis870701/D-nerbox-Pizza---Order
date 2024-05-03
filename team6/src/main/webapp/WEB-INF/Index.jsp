@@ -57,20 +57,19 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="product.html" class="nav-item nav-link">Products</a>
-                            <a href="store.html" class="nav-item nav-link">Store</a>
+                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="#" class="nav-item nav-link">活動優惠</a>
+                            <a href="#" class="nav-item nav-link">訂位趣</a>
+                            <a href="#" class="nav-item nav-link">線上點餐</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
                                 <div class="dropdown-menu bg-light rounded-0 m-0">
-                                    <a href="feature.html" class="dropdown-item">Features</a>
-                                    <a href="blog.html" class="dropdown-item">Blog Article</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                    <a href="#" class="dropdown-item">Features</a>
+                                    <a href="#" class="dropdown-item">Blog Article</a>
+                                    <a href="#" class="dropdown-item">Testimonial</a>
+                                    <a href="#" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="border-start ps-4 d-none d-lg-block">
                            <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 

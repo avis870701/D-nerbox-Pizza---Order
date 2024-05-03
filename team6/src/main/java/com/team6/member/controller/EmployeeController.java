@@ -13,6 +13,8 @@ import com.team6.member.model.EmployeeAccountBean;
 import com.team6.member.model.EmployeeService;
 import com.team6.member.model.MemberAccountBean;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/emp")
 public class EmployeeController {
@@ -22,13 +24,20 @@ public class EmployeeController {
 
 	// 登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String EmpMain(SessionStatus status) {
+	public String EmpMain(SessionStatus status,HttpSession session) {
 		status.isComplete();
+		session.removeAttribute("emp");
 		return "forward:/WEB-INF/EmpLogin.jsp";
+	}
+	@RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
+	public String EmpOutMain(SessionStatus status,HttpSession session) {
+		status.isComplete();
+		session.removeAttribute("emp");
+		return "forward:/WEB-INF/Login.jsp";
 	}
 
 	@PostMapping("/emplogin.controller")
-	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model,HttpSession session) {
 		EmployeeAccountBean bean = eService.login(account, pwd);
 		if (bean != null) {
 			switch (bean.getEmpPermissions()) {
@@ -38,14 +47,17 @@ public class EmployeeController {
 			}
 			case "1": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 老闆大人");
+				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/EmpIndex.jsp";
 			}
 			case "2": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 主管");
+				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/EmpIndex.jsp";
 			}
 			case "3": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 員工");
+				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/EmpIndex.jsp";
 			}
 			default:
@@ -54,8 +66,13 @@ public class EmployeeController {
 		model.addAttribute("err", "帳號或密碼不正確!!");
 		return "forward:/WEB-INF/EmpLogin.jsp";
 	}
+	// ===================================================================================================
 	
-	
+	// 後台從會員功能返回主頁
+		@RequestMapping(path = "/EmpGoBackToEmpIndex", method = { RequestMethod.GET, RequestMethod.POST })
+		public String EmpGoBackToEmpIndex() {
+			return "forward:/WEB-INF/EmpIndex.jsp";
+		}	
 	// ===================================================================================================
 
 	// 單筆查詢
