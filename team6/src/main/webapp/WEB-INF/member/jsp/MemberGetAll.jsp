@@ -98,8 +98,8 @@
 									</table>
 									<br>
 									<hr>
-									<a href="MemberGoBackToIndex"><button>回主頁</button></a> <a
-										href="login"><button>登出</button></a> <a
+									<a href="EmpGoBackToEmpIndex"><button>回主頁</button></a> <a
+										href="emplogin"><button>登出</button></a> <a
 										href="Member.Save"><button>印出檔案</button></a>
 								</div>
 							</div>

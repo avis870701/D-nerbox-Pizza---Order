@@ -1,10 +1,18 @@
-2024-04-29
--- 新增 5張 class(MemberAccountBean、MemberDetailBean、EmployeeAccountBean、EmployeeDeptBean、EmployeeDetailBean)。舊檔MemberBean還未刪除。
--- 新增 member 新的 SQL語句指令檔(有分別分開的會員表與公司表，還有一個兩張表都有的總檔)。
--- 新增 Döner Pizza.jpg Döner Pizza 的 商標圖檔。
--- test.txt 改名為 記錄檔.txt ，紀錄 member 的詳細說明。
--- 將 class 內 @Column(name="") 更改成全小寫。
--- 建立新資料夾 model.member  ，將5張表移入，並建立 5張表 各自的 Repository。
+2024-05-02
+-- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
+-- 新增 店面 Logo、店內類之圖片。
+-- 更新 前端畫面之 Bootstrap.css 、style.css 內的綠主色改為藍色。
+-- 更新 統整 店面主照片 2張 成同樣高度 720 。
+-- 新增會員 已完成。
+-- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。 註冊日期需要取到時分秒嗎?
+
+
+
+2024-05-01
+-- 更新 SQL Server, MemberDetail 資料有誤，已更正。
+-- 更新 Member會員功能，進入會員專區 Index.jsp。Employee 員工功能，進入後台 EmpIndex.jsp。
+-- 更新 Member 單筆id查詢、name模糊查詢+分頁、全部搜尋+分頁。
+-- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。
 
 
 
@@ -19,17 +27,10 @@
 
 
 
-2024-05-01
--- 更新 SQL Server, MemberDetail 資料有誤，已更正。
--- 更新 Member會員功能，進入會員專區 Index.jsp。Employee 員工功能，進入後台 EmpIndex.jsp。
--- 更新 Member 單筆id查詢、name模糊查詢+分頁、全部搜尋+分頁。
--- error目前問題: Member做分頁搜尋時，並不會立即出現此頁目前分頁div，而是維持上筆記綠之分頁div。
-
-
-
-2024-05-02
--- 更新 套版畫面，EmpLogin.jsp、EmpIndex.jsp、MemberLogin.jsp、Index.jsp、MemberInsert.jsp。
--- 新增 店面 Logo、店內類之圖片。
--- 更新 前端畫面之 Bootstrap.css 、style.css 內的綠主色改為藍色。
--- 更新 統整 店面主照片 2張 成同樣高度 720 。
--- 新增會員 已完成。
+2024-04-29
+-- 新增 5張 class(MemberAccountBean、MemberDetailBean、EmployeeAccountBean、EmployeeDeptBean、EmployeeDetailBean)。舊檔MemberBean還未刪除。
+-- 新增 member 新的 SQL語句指令檔(有分別分開的會員表與公司表，還有一個兩張表都有的總檔)。
+-- 新增 Döner Pizza.jpg Döner Pizza 的 商標圖檔。
+-- test.txt 改名為 記錄檔.txt ，紀錄 member 的詳細說明。
+-- 將 class 內 @Column(name="") 更改成全小寫。
+-- 建立新資料夾 model.member  ，將5張表移入，並建立 5張表 各自的 Repository。
