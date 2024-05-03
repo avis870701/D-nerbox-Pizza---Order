@@ -29,7 +29,7 @@ public class PromotionsController {
         List<Promotions> promotions = promotionsService.selectAll();
         model.addAttribute("promotions", promotions);
 //        return "GetAllPromotions";
-          return "test123" ;
+          return "promotions/test123" ;
     }
 
     // 查詢單筆
@@ -53,12 +53,13 @@ public class PromotionsController {
             try {
                 String fileName = mf.getOriginalFilename();
                 // 上传文件的保存路径
-                String fileDir = "C:/Users/User/Downloads/0424/SpringBoot版/team6/src/main/resources/static/images";
+//                String fileDir = "C:/Users/User/Downloads/0424/SpringBoot版/team6/src/main/resources/static/images";
+                String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/promotions";
                 File fileDirPath = new File(fileDir, fileName);
 
                 mf.transferTo(fileDirPath);
 
-                String Promotions_picture = "/images/" + fileName;
+                String Promotions_picture = "/images/promotions/" + fileName;
 
                 Promotions result = new Promotions(Promotions_id, Promotions_name, Promotions_content, Promotions_picture, Promotions_discount, Promotions_discountcode, Promotions_startdate, Promotions_enddate);
                 promotionsService.insertPromotions(result);
