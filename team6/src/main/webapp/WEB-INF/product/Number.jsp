@@ -190,21 +190,24 @@
 								</tr>
 								<tr>
 									<td>` + product.productId + `</td>
-      								<td>` + product.categoryName + `</td>
-      								<td>` + product.productName + `</td>
-      								<td>` + product.productDesc + `</td>
-      								<td><img src="` + product.productImg_url + `" alt="產品圖片"></td>
-      								<td>` + product.productPrice + `</td>
-      								<td>` + product.productQuantity + `</td>
-      								<td>` + product.productStateName + `</td>
-      								<td>` + product.productCreateDate + `</td>
+							      	<td>` + product.categoryName + `</td>
+							      	<td>` + product.productName + `</td>
+							      	<td>` + product.productDesc + `</td>
+							      	<td><img src="` + product.productImg_url + `" alt="產品圖片"></td>
+							      	<td>` + product.productPrice + `</td>
+							      	<td>` + product.productQuantity + `</td>
+							      	<td>` + product.productStateName + `</td>
+							      	<td>` + product.productCreateDate + `</td>
 								</tr>
 							</table>
-`
+							`
 							productElem.innerHTML = productHtml;
 							countElement.max = product.productQuantity;
 							maxQuantity = product.productQuantity;
 
+						},
+						error: function (data, type, err) {
+							console.log(data.responseText);
 						}
 
 					});
