@@ -218,7 +218,7 @@ public class ProductController {
 	
 	//進入主畫面
 	@GetMapping("/Product_Test_Main")
-	public String productTestMain(Model model) {
+	public String productTestMain() {
 
 		return "forward:/WEB-INF/back-jsp/product/productSimpleBackIndex.jsp";
 	}
@@ -232,8 +232,6 @@ public class ProductController {
 		model.addAttribute("productBeans", selectAll);
 		return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
 	}
-	
-	
 	
 	
 	
