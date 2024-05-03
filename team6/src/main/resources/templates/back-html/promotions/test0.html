@@ -79,7 +79,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./promotionsMain" aria-expanded="false">
+                        <a class="sidebar-link" href="/promotions/promotionsMain" aria-expanded="false">
                 <span>
                   <i class="ti ti-typography"></i>
                 </span>
@@ -204,84 +204,46 @@
                 <div class="card-body">
 
                     <div style="text-align: center;">
-                        <h2>所有活動資料</h2>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>活動編號</th>
-                                <th>活動名稱</th>
-                                <th>活動內容</th>
-                                <th>活動圖片</th>
-                                <th>活動折扣</th>
-                                <th>折扣碼</th>
-                                <th>開始日期</th>
-                                <th>結束日期</th>
-                                <th>修改</th>
-                                <th>刪除</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="promotions : ${promotions}">
-                                <td th:text="${promotions.promotions_id}"></td>
-                                <td><a th:href="@{/promotions/promotions/{id}(id=${promotions.promotions_id})}"
-                                       th:text="${promotions.promotions_name}"></a></td>
-                                <td th:text="${promotions.promotions_content}"></td>
-                                <td><img class="pimg" th:src="${promotions.promotions_picture}" alt="無圖片"></td>
-                                <td th:text="${promotions.promotions_discount}"></td>
-                                <td th:text="${promotions.promotions_discountcode}"></td>
-                                <td th:text="${promotions.promotions_startdate}"></td>
-                                <td th:text="${promotions.promotions_enddate}"></td>
-                                <td><a class="btn"
-                                       th:href="@{/promotions/promotions/update/{id}(id=${promotions.promotions_id})}">修改</a>
-                                </td>
-                                <!--            <td><a class="btn btn-danger" href="javascript:void(0);" th:onclick="'deletePromotions(\'' + ${promotions.promotions_name} + '\', \'' + ${promotions.promotions_id} + '\')'">刪除</a></td>-->
-                                <td>
-                                    <a class="btn btn-danger" href="javascript:void(0);"
-                                       th:attr="data-promotions-name=${promotions.promotions_name},
-                           data-promotions-id=${promotions.promotions_id}"
-                                       onclick="deletePromotions(this)">
-                                        刪除
-                                    </a>
-                                </td>
 
-
-                            </tr>
-                            </tbody>
-                        </table>
-                        <h3>
-                            共<span th:text="${promotions.size()}"></span>筆活動資料
-                        </h3>
-                        <p>
-                            <a class="btn" th:href="@{/promotions/promotions/insert}">新增活動</a>
-                            <a class="btn" th:href="@{/MemberGoBackToIndex}">回首頁</a>
-                        </p>
-                    </div>
-
-                    <script th:inline="javascript">
-
-                        function deletePromotions(element) {
-                            var promotionsName = element.getAttribute('data-promotions-name');
-                            var promotionsId = element.getAttribute('data-promotions-id');
-
-                            var confirmDelete = confirm("確定要刪除活動 '" + promotionsName + "' 嗎？");
-                            if (confirmDelete) {
-                                $.ajax({
-                                    url: "/promotions/promotions/delete/" + promotionsId,
-                                    type: "DELETE",
-                                    success: function (response) {
-                                        window.location.href = "/promotions/promotionsMain";
-                                        alert("活動已成功刪除！");
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("刪除活動失敗：");
-                                    }
-                                });
-                            }
-                        }
-
-                    </script>
-
-                </div>
+                            <h2>活動資料</h2>
+                            <table>
+                                <tr>
+                                    <td>活動編號:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_id}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>活動名稱:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_name}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>活動內容:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_content}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>活動圖片:</td>
+                                    <td><img  class="pimg" th:src="${promotions.promotions_picture}" alt="暫無圖片"></td>
+                                </tr>
+                                <tr>
+                                    <td>活動折扣:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_discount}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>折扣碼:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_discountcode}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>開始日期:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_startdate}" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>結束日期:</td>
+                                    <td><input type="text" th:value="${promotions.promotions_enddate}" readonly></td>
+                                </tr>
+                            </table>
+                            <p>
+                                <a href="/promotions/promotionsMain">查詢所有活動</a>
+                            </p>
+                        </div>
             </div>
         </div>
     </div>
