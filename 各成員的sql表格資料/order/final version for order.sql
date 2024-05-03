@@ -2,7 +2,7 @@
 
 
 create table pizzaOrder(
-orderId INT PRIMARY KEY not null,
+orderId NVARCHAR(50) PRIMARY KEY not null,
 orderTime DATETIME DEFAULT GETDATE(),
 acoount NVARCHAR(20) FOREIGN KEY REFERENCES member,
 mEmail NVARCHAR(255) not null,
