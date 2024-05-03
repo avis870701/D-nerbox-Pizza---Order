@@ -5,14 +5,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Döner Pizza - 登入會員</title>
+    <title>Döner Pizza - 會員註冊</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
     <link rel="shortcut icon" type="image/png" href="/member/images/pizzaQ.png" />
-    
+
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="/front/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,10 +54,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="product.html" class="nav-item nav-link">Products</a>
-                        <a href="store.html" class="nav-item nav-link">Store</a>
+                        <a href="#" class="nav-item nav-link">Home</a>
+                        <a href="#" class="nav-item nav-link">About</a>
+                        <a href="#" class="nav-item nav-link">Products</a>
+                        <a href="#" class="nav-item nav-link">Store</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu bg-light rounded-0 m-0">
@@ -67,7 +67,7 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="#" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
                            <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 
@@ -82,12 +82,12 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
-            <h1 class="display-2 text-dark mb-4 animated slideInDown">會員登入</h1>
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">會員註冊</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#">首頁</a></li>
                     <li class="breadcrumb-item"><a href="#">會員</a></li>
-                    <li class="breadcrumb-item text-dark" aria-current="page">會員登入</li>
+                    <li class="breadcrumb-item text-dark" aria-current="page">會員註冊</li>
                 </ol>
             </nav>
         </div>
@@ -100,34 +100,30 @@
         <div class="container justify-content-center">
             <div class="row g-5 justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xxl-3">
-            <div class="card mb-0">
+             <div class="card mb-0">
               <div class="card-body">
-                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <a href="#" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="/images/member/images/DonerPizzaSmall.png" width="180" alt="">
                 </a>
-                <p class="text-center">會員登入</p>
-                <form action="memberlogin.controller" method="post">
+                <p class="text-center">請填寫下列資訊</p>
+                <form method="POST" action="Member.Insert">
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">使用者帳號</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="account">
+                    <label for="exampleInputtext1" class="form-label">使用者帳號</label>
+                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" name="account" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">電子信箱</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="mEmail">
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">密碼</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
                   </div>
-                  <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
-                      <label class="form-check-label text-dark" for="flexCheckChecked">
-                        記住登入
-                      </label>
-                    </div>
-                    <a class="text-primary fw-bold" href="#">忘記密碼 ?</a>
-                  </div>
-                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">登 入</button>
+                  <div>${err}</div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註 冊</button>
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">還不是會員 ?</p>
-                    <a class="text-primary fw-bold ms-2" href="/member/MemberGoToInsert">加入會員</a>
+                    <p class="fs-4 mb-0 fw-bold">已有帳號 ?</p>
+                    <a class="text-primary fw-bold ms-2" href="/member/login">登入</a>
                   </div>
                 </form>
               </div>

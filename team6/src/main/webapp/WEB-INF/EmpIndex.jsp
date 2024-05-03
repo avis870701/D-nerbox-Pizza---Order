@@ -7,8 +7,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>後台系統</title>
-  <link rel="shortcut icon" type="image/png" href="/member/images/pizzaQ.png" />
-  <link rel="stylesheet" href="/css/styles.min.css" />
+  <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
+  <link rel="stylesheet" href="/back/css/styles.min.css" />
 </head>
 
 <body>
@@ -20,8 +20,8 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
-            <img src="/member/images/DonerPizzaSmall.png" width="180" alt="" />
+          <a href="#" class="text-nowrap logo-img">
+            <img src="/images/member/images/DonerPizzaSmall.png" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -35,7 +35,7 @@
               <span class="hide-menu">個人資料</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+              <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -533,13 +533,13 @@
       </div>
     </div>
   </div>
-  <script src="/libs/jquery/dist/jquery.min.js"></script>
-  <script src="/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/sidebarmenu.js"></script>
-  <script src="/js/app.min.js"></script>
-  <script src="/libs/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="/libs/simplebar/dist/simplebar.js"></script>
-  <script src="/js/dashboard.js"></script>
+  <script src="/back/libs/jquery/dist/jquery.min.js"></script>
+  <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/back/js/sidebarmenu.js"></script>
+  <script src="/back/js/app.min.js"></script>
+  <script src="/back/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="/back/libs/simplebar/dist/simplebar.js"></script>
+  <script src="/back/js/dashboard.js"></script>
 </body>
 
 </html>

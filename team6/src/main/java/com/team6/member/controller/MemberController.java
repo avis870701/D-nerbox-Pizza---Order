@@ -83,14 +83,14 @@ public class MemberController {
 	public String SelectByOne(@RequestParam("id") int id, Model model) {
 		MemberAccountBean bean = service.findById(id);
 		model.addAttribute("bean", bean);
-		return "forward:/WEB-INF/member/jsp/MemberGetOne.jsp";
+		return "forward:/WEB-INF/member/MemberGetOne.jsp";
 	}
 
 	@GetMapping("/Member.SelectOneByAccount")
 	public String SelectByOne(@RequestParam("account") String account, Model model) {
 		MemberAccountBean bean = service.findAccountByAccount(account);
 		model.addAttribute("bean", bean);
-		return "forward:/WEB-INF/member/jsp/MemberGetOne.jsp";
+		return "forward:/WEB-INF/member/MemberGetOne.jsp";
 	}
 	// ===================================================================================================
 
@@ -101,12 +101,12 @@ public class MemberController {
 		if (beans.isEmpty()) {
 			model.addAttribute("err", "查無資料");
 			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/member/jsp/MemberGetByName.jsp";
+			return "forward:/WEB-INF/member/MemberGetByName.jsp";
 		} else {
 			model.addAttribute("beans", beans);
 			model.addAttribute("totalElements", beans.size());
 			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/member/jsp/MemberGetByName.jsp";
+			return "forward:/WEB-INF/member/MemberGetByName.jsp";
 		}
 	}
 
@@ -146,7 +146,7 @@ public class MemberController {
 		}
 		model.addAttribute("beans", beans);
 		model.addAttribute("totalElements", beans.size());
-		return "forward:/WEB-INF/member/jsp/MemberGetAll.jsp";
+		return "forward:/WEB-INF/member/MemberGetAll.jsp";
 	}
 
 	@RequestMapping(path = "/MemberGetAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -171,7 +171,7 @@ public class MemberController {
 	// 新增會員
 	@RequestMapping(path = "/MemberGoToInsert", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToInsert() {
-		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
+		return "forward:/WEB-INF/member/MemberInsert.jsp";
 	}
 
 	@PostMapping("/Member.Insert")
@@ -199,7 +199,7 @@ public class MemberController {
 			return "redirect:Member.SelectAll";
 		}
 		model.addAttribute("err", "新增失敗!!");
-		return "forward:/WEB-INF/member/jsp/MemberInsert.jsp";
+		return "forward:/WEB-INF/member/MemberInsert.jsp";
 	}
 	// ===================================================================================================
 

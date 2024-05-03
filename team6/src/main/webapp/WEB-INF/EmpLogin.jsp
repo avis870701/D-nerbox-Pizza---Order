@@ -6,8 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>後台 登入</title>
-  <link rel="shortcut icon" type="image/png" href="/member/images/pizzaQ.png" />
-  <link rel="stylesheet" href="/css/styles.min.css" />
+  <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
+  <link rel="stylesheet" href="/back/css/styles.min.css" />
 </head>
 
 <body>
@@ -22,10 +22,10 @@
             <div class="card mb-0">
               <div class="card-body">
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="/member/images/DönerPizza.jpg" width="180" alt="">
+                  <img src="/images/member/images/DönerPizza.jpg" width="180" alt="">
                 </a>
                 <p class="text-center">公司後台登入系統</p>
-                <form action="emplogin.controller" method="post">
+                <form action="/emp/emplogin.controller" method="post">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">使用者帳號</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="account">
@@ -56,8 +56,8 @@
       </div>
     </div>
   </div>
-  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/back/libs/jquery/dist/jquery.min.js"></script>
+  <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

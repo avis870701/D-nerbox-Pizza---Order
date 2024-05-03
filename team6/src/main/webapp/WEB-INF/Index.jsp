@@ -25,14 +25,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="/lib/animate/animate.min.css" rel="stylesheet">
-        <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="/front/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/front/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="/css/TeaHouseStyle.css" rel="stylesheet">
+        <link href="/front/css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -49,7 +49,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
                     <a href="index" class="navbar-brand">
-                        <img class="img-fluid" src="/indexImages/DonerPizzaLogo.png" alt="Logo">
+                        <img class="img-fluid" src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
                     </a>
                     <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
@@ -87,7 +87,7 @@
             <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="w-100" src="/indexImages/pizzashop01.png" alt="Image">
+                        <img class="w-100" src="/images/indexImages/pizzashop01.png" alt="Image">
                         <div class="carousel-caption">
                             <div class="container">
                                 <div class="row justify-content-center">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="w-100" src="/indexImages/pizzashop02.png" alt="Image">
+                        <img class="w-100" src="/images/indexImages/pizzashop02.png" alt="Image">
                         <div class="carousel-caption">
                             <div class="container">
                                 <div class="row justify-content-center">
@@ -142,15 +142,15 @@
                         <div class="row g-3">
                             <div class="col-6 text-end">
                                 <img class="img-fluid bg-white w-100 mb-3 wow fadeIn" data-wow-delay="0.1s"
-                                    src="img/about-1.jpg" alt="">
+                                    src="/front/img/about-1.jpg" alt="">
                                 <img class="img-fluid bg-white w-50 wow fadeIn" data-wow-delay="0.2s"
-                                    src="img/about-3.jpg" alt="">
+                                    src="/front/img/about-3.jpg" alt="">
                             </div>
                             <div class="col-6">
                                 <img class="img-fluid bg-white w-50 mb-3 wow fadeIn" data-wow-delay="0.3s"
-                                    src="img/about-4.jpg" alt="">
+                                    src="/front/img/about-4.jpg" alt="">
                                 <img class="img-fluid bg-white w-100 wow fadeIn" data-wow-delay="0.4s"
-                                    src="img/about-2.jpg" alt="">
+                                    src="/front/img/about-2.jpg" alt="">
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         </div>
                         <div class="row g-3 mb-4">
                             <div class="col-sm-4">
-                                <img class="img-fluid bg-white w-100" src="img/about-5.jpg" alt="">
+                                <img class="img-fluid bg-white w-100" src="/front/img/about-5.jpg" alt="">
                             </div>
                             <div class="col-sm-8">
                                 <h5>Our tea is one of the most popular drinks in the world</h5>
@@ -177,7 +177,7 @@
                                     amet diam et eos. Clita erat ipsum et lorem et sit</p>
                             </div>
                             <div class="col-sm-4">
-                                <img class="img-fluid bg-white w-100" src="img/about-6.jpg" alt="">
+                                <img class="img-fluid bg-white w-100" src="/front/img/about-6.jpg" alt="">
                             </div>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                 </div>
                 <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
                     <a href="" class="d-block product-item rounded">
-                        <img src="img/product-1.jpg" alt="">
+                        <img src="/front/img/product-1.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Green Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -205,7 +205,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="img/product-2.jpg" alt="">
+                        <img src="/front/img/product-2.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Black Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -213,7 +213,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="img/product-3.jpg" alt="">
+                        <img src="/front/img/product-3.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Spiced Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -221,7 +221,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="img/product-4.jpg" alt="">
+                        <img src="/front/img/product-4.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Organic Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -239,7 +239,7 @@
             <div class="container">
                 <div class="row g-5">
                     <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                        <img class="img-fluid" src="img/article.jpg" alt="">
+                        <img class="img-fluid" src="/front/img/article.jpg" alt="">
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <div class="section-title">
@@ -359,7 +359,7 @@
                 <div class="row g-4">
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="img/store-product-1.jpg" alt="">
+                            <img class="img-fluid" src="/front/img/store-product-1.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -382,7 +382,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="img/store-product-2.jpg" alt="">
+                            <img class="img-fluid" src="/front/img/store-product-2.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -405,7 +405,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="img/store-product-3.jpg" alt="">
+                            <img class="img-fluid" src="/front/img/store-product-3.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -448,7 +448,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="img/testimonial-1.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-1.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -459,7 +459,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="img/testimonial-2.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-2.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -470,7 +470,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="img/testimonial-3.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-3.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -607,13 +607,13 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/lib/wow/wow.min.js"></script>
-        <script src="/lib/easing/easing.min.js"></script>
-        <script src="/lib/waypoints/waypoints.min.js"></script>
-        <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="/front/lib/wow/wow.min.js"></script>
+        <script src="/front/lib/easing/easing.min.js"></script>
+        <script src="/front/lib/waypoints/waypoints.min.js"></script>
+        <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="/js/main.js"></script>
+        <script src="/front/js/main.js"></script>
     </body>
 
     </html>
