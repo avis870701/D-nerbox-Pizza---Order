@@ -209,10 +209,36 @@ public class ProductController {
 	
 	// 刪除
 	@DeleteMapping("/Product_Delete")
-	public String Product_Delete(@RequestParam("productId") Integer productId) {
+	public String product_Delete(@RequestParam("productId") Integer productId) {
 		productService.DeleteProduct(productId);
 		return "redirect:Product_SelectAll";
 	}
+	
+//--------------------------------測試套版---------------------------------------
+	
+	//進入主畫面
+	@GetMapping("/Product_Test_Main")
+	public String productTestMain(Model model) {
+
+		return "forward:/WEB-INF/back-jsp/product/productSimpleBackIndex.jsp";
+	}
+	
+	
+	// 查全部
+	@GetMapping("/Product_Test_SelectAll")
+	public String productTestSelectAll(Model model) {
+
+		List<ProductBean> selectAll = productService.SelectAll();
+		model.addAttribute("productBeans", selectAll);
+		return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
