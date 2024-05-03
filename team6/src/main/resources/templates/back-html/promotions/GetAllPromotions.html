@@ -1,9 +1,5 @@
-<%@page import="com.team6.promotions.model.Promotions" %>
-<%@page import="java.util.*" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -84,6 +80,7 @@
 <div align="center">
     <h2>所有活動資料</h2>
     <table>
+        <thead>
         <tr>
             <th>活動編號</th>
             <th>活動名稱</th>
@@ -96,56 +93,65 @@
             <th>修改</th>
             <th>刪除</th>
         </tr>
-        <%
-            List<Promotions> promotionsBeans = (ArrayList<Promotions>) request.getAttribute("promotions");
-            for (Promotions promotions : promotionsBeans) {
-        %>
-
-        <tr>
-            <td><%=promotions.getPromotions_id()%>
-            </td>
-            <td><a
-                    href="promotions/<%=promotions.getPromotions_id()%>"><%=promotions.getPromotions_name()%>
-            </a>
-            </td>
-            <td><%=promotions.getPromotions_content()%>
-            </td>
-            <td><img alt="無圖片" src=" <%=promotions.getPromotions_picture()%>"></td>
-            <!--<td><img src="<%=promotions.getPromotions_picture()%>?timestamp=<%=System.currentTimeMillis()%>"></td>-->
-            <td><%=promotions.getPromotions_discount()%>
-            </td>
-            <td><%=promotions.getPromotions_discountcode()%>
-            </td>
-            <td><%=promotions.getPromotions_startdate()%>
-            </td>
-            <td><%=promotions.getPromotions_enddate()%>
-            </td>
-            <td>
-                <a class="btn"
-                   href="promotions/update/<%=promotions.getPromotions_id()%>">修改</a>
-            </td>
+        </thead>
+        <tbody>
+        <tr th:each="promotions : ${promotions}">
+            <td th:text="${promotions.promotions_id}"></td>
+            <td><a th:href="@{/promotions/promotions/{id}(id=${promotions.promotions_id})}" th:text="${promotions.promotions_name}"></a></td>
+            <td th:text="${promotions.promotions_content}"></td>
+            <td><img th:src="${promotions.promotions_picture}" alt="無圖片"></td>
+            <td th:text="${promotions.promotions_discount}"></td>
+            <td th:text="${promotions.promotions_discountcode}"></td>
+            <td th:text="${promotions.promotions_startdate}"></td>
+            <td th:text="${promotions.promotions_enddate}"></td>
+            <td><a class="btn" th:href="@{/promotions/promotions/update/{id}(id=${promotions.promotions_id})}">修改</a></td>
+<!--            <td><a class="btn btn-danger" href="javascript:void(0);" th:onclick="'deletePromotions(\'' + ${promotions.promotions_name} + '\', \'' + ${promotions.promotions_id} + '\')'">刪除</a></td>-->
             <td>
                 <a class="btn btn-danger" href="javascript:void(0);"
-                   onclick="deletePromotions('<%=promotions.getPromotions_name()%>', '<%=promotions.getPromotions_id()%>')">刪除</a>
+                   th:attr="data-promotions-name=${promotions.promotions_name},
+                 data-promotions-id=${promotions.promotions_id}"
+                   onclick="deletePromotions(this)" >
+                    刪除
+                </a>
             </td>
+
+
+
         </tr>
-        <%
-            }
-        %>
+        </tbody>
     </table>
     <h3>
-        共<%=promotionsBeans.size()%>筆活動資料
+        共<span th:text="${promotions.size()}"></span>筆活動資料
     </h3>
     <p>
-        <a class="btn" href="promotions/insert">新增活動</a>
-        <a class="btn" href="/member/MemberGoBackToIndex">回首頁</a>
+        <a class="btn" th:href="@{/promotions/promotions/insert}">新增活動</a>
+        <a class="btn" th:href="@{/MemberGoBackToIndex}">回首頁</a>
     </p>
 </div>
 
+<script th:inline="javascript">
+    // function deletePromotions(promotionsName, promotionsId) {
+    //     var confirmDelete = confirm("確定要刪除活動 '" + promotionsName + "' 嗎？");
+    //     if (confirmDelete) {
+    //         $.ajax({
+    //             url: "/promotions/promotions/delete/" + promotionsId,
+    //             type: "DELETE",
+    //             success: function (response) {
+    //                 window.location.href = "/promotions/promotionsMain";
+    //                 alert("活動已成功刪除！");
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 alert("刪除活動失敗：");
+    //             }
+    //         });
+    //     }
+    // }
 
-<script>
-    function deletePromotions(promotionsName, promotionsId) {
-        let confirmDelete = confirm("確定要刪除活動 '" + promotionsName + "' 嗎？");
+    function deletePromotions(element) {
+        var promotionsName = element.getAttribute('data-promotions-name');
+        var promotionsId = element.getAttribute('data-promotions-id');
+
+        var confirmDelete = confirm("確定要刪除活動 '" + promotionsName + "' 嗎？");
         if (confirmDelete) {
             $.ajax({
                 url: "/promotions/promotions/delete/" + promotionsId,
@@ -160,8 +166,8 @@
             });
         }
     }
-</script>
 
+</script>
 
 </body>
 
