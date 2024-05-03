@@ -245,10 +245,9 @@ public class ReserveController {
 
 	//客人前一天想更改人數,並將rs由1改為3
 	@GetMapping("/updateNumberOfPeopleAndReservationStatusTo3")
-	@ResponseBody
 	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationUuid") UUID reservationUuid,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
 		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
-		return "修改成功";
+	    return "forward:/WEB-INF/back-jsp/reservation/success.jsp"; 
 	}
 	
 }
