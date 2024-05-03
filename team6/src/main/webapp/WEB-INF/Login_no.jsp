@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!doctype html>
 <html>
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>註冊 會員</title>
+  <title>登入 會員</title>
   <link rel="shortcut icon" type="image/png" href="/member/images/pizzaQ.png" />
   <link rel="stylesheet" href="/css/styles.min.css" />
 </head>
@@ -24,24 +24,29 @@
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="/member/images/DonerPizzaSmall.png" width="180" alt="">
                 </a>
-                <p class="text-center">請填寫下列資訊</p>
-                <form>
+                <p class="text-center">會員登入</p>
+                <form action="memberlogin.controller" method="post">
                   <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">使用者帳號</label>
-                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">電子信箱</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="exampleInputEmail1" class="form-label">使用者帳號</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="account">
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">密碼</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                   </div>
-                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註 冊</button>
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
+                      <label class="form-check-label text-dark" for="flexCheckChecked">
+                        記住登入
+                      </label>
+                    </div>
+                    <a class="text-primary fw-bold" href="./index.html">忘記密碼 ?</a>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">登 入</button>
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">已有帳號 ?</p>
-                    <a class="text-primary fw-bold ms-2" href="/member/login">登入</a>
+                    <p class="fs-4 mb-0 fw-bold">還不是會員 ?</p>
+                    <a class="text-primary fw-bold ms-2" href="/member/MemberGoToInsert">加入會員</a>
                   </div>
                 </form>
               </div>

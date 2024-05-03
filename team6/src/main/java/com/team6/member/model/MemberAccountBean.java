@@ -24,22 +24,26 @@ public class MemberAccountBean {
 	private String mPassword; 
 	@Column(name = "permissions")
 	private int permissions;
+	@Column(name = "hidden")
+	private int hidden;
 	
 	@OneToOne(mappedBy = "accountBean",cascade = CascadeType.ALL)
 	private MemberDetailBean detailBean;
 	
 	// 方法----------------------------------------------------------------
 	public MemberAccountBean() {}
-	public MemberAccountBean(int maid, String mAccount, String mPassword, int permissions,
+	public MemberAccountBean(int maid, String mAccount, String mPassword, int permissions, int hidden,
 			MemberDetailBean detailBean) {
 		this.maid = maid;
 		this.mAccount = mAccount;
 		this.mPassword = mPassword;
 		this.permissions = permissions;
+		this.hidden = hidden;
 		this.detailBean = detailBean;
 	}
+
 	public String saveToCsv() {
-		String csv = maid +","+ mAccount+","+mPassword+","+permissions;
+		String csv = maid +","+ mAccount+","+mPassword+","+permissions+","+hidden;
 		return csv;
 	}
 	public String saveToXml() {
@@ -49,6 +53,7 @@ public class MemberAccountBean {
 				   +"<mAccount>"+mAccount+"</mAccount>\n"
 				   +"<mPassword>"+mPassword+"</mPassword>\n"
 				   +"<permissions>"+permissions+"</permissions>\n"
+				   +"<hidden>"+hidden+"</hidden>\n"
 				   +"</Row>\n";
 		return xml;
 	}
@@ -57,7 +62,8 @@ public class MemberAccountBean {
 		String json="{\n\"maid\":\""+maid+"\",\n"
 					+"\"mAccount\":\""+mAccount+"\",\n"
 					+"\"mPassword\":\""+mPassword+"\",\n"
-					+"\"permissions\":\""+permissions+"\"\n},";
+					+"\"permissions\":\""+permissions+"\",\n"
+					+"\"hidden\":\""+hidden+"\"\n},";
 //		json=json.substring(1, json.length()-1)+"\n]";
 		return json;
 	}
@@ -92,6 +98,12 @@ public class MemberAccountBean {
 	}
 	public void setPermissions(int permissions) {
 		this.permissions = permissions;
+	}
+	public int getHidden() {
+		return hidden;
+	}
+	public void setHidden(int hidden) {
+		this.hidden = hidden;
 	}
 	
 }

@@ -10,7 +10,7 @@
 						<head>
 							<meta charset="UTF-8">
 							<title>會員資料</title>
-							<link rel="stylesheet" href="/css/MemberGetAll.css">
+							<link rel="stylesheet" href="/back/css/member/MemberGetAll.css">
 							<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 						</head>
 
@@ -42,8 +42,8 @@
 									</table>
 									<br>
 									<hr>
-									<a href="MemberGoBackToIndex"><button>回主頁</button></a> <a
-										href="login"><button>登出</button></a> <a
+									<a href="EmpGoBackToEmpIndex"><button>回主頁</button></a> <a
+										href="emplogin"><button>登出</button></a> <a
 										href="Member.Save"><button>印出檔案</button></a>
 								</div>
 							</div>

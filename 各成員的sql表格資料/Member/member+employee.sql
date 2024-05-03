@@ -12,36 +12,37 @@ CREATE TABLE memberAccount(
 	maid int identity(1,1) not null primary key,
 	mAccount nvarchar(max)  not null ,
 	mPassword nvarchar(max) not null,
-	permissions int not null
+	permissions int not null,
+	hidden int not null
 )
 CREATE TABLE memberDetail(
 	mdid int identity(1,1) primary key,
 	fk_maId int references memberAccount(maid) not null,
-	mName nvarchar(20) not null,
+	mName nvarchar(20),
 	mEmail nvarchar(max) not null,
-	mPhone nvarchar(10) not null,
+	mPhone nvarchar(10),
 	mbirthday date,
 	mPhoto nvarchar(max),
 	RegistrationDate date not null,
 )
 
-INSERT INTO memberAccount(mAccount,mPassword,permissions) 
-VALUES ('member01','member01','1'),
-	   ('member02','member02','0'),
-	   ('member03','member03','1'),
-	   ('member04','member04','1'),
-	   ('member05','member05','1'),
-	   ('member06','member06','1'),
-	   ('member07','member07','0'),
-	   ('member08','member08','1'),
-	   ('member09','member09','1'),
-	   ('member10','member10','0'),
-	   ('team01','team01','0'),
-	   ('team02','team02','1'),
-	   ('team03','team03','1'),
-	   ('team04','team04','1'),
-	   ('team05','team05','0'),
-	   ('team06','team06','0')
+INSERT INTO memberAccount(mAccount,mPassword,permissions,hidden)
+VALUES ('member01','member01','1','1'),
+	   ('member02','member02','0','1'),
+	   ('member03','member03','1','1'),
+	   ('member04','member04','1','1'),
+	   ('member05','member05','1','1'),
+	   ('member06','member06','1','1'),
+	   ('member07','member07','0','1'),
+	   ('member08','member08','1','1'),
+	   ('member09','member09','1','1'),
+	   ('member10','member10','0','1'),
+	   ('team01','team01','0','1'),
+	   ('team02','team02','1','1'),
+	   ('team03','team03','1','1'),
+	   ('team04','team04','1','1'),
+	   ('team05','team05','0','1'),
+	   ('team06','team06','0','1')
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,RegistrationDate)
 VALUES ('1','MEMBER01','member01@gmail.com','0987654321','2023-10-05','2024-03-20'),
 	   ('2','MEMBER02','member02@gmail.com','0987654321','2023-11-05','2024-03-20'),
