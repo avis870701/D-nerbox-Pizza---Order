@@ -4,8 +4,7 @@
 create table pizzaOrder(
 orderId NVARCHAR(50) PRIMARY KEY not null,
 orderTime DATETIME DEFAULT GETDATE(),
-acoount NVARCHAR(20) FOREIGN KEY REFERENCES member,
-mEmail NVARCHAR(255) not null,
+acoount NVARCHAR(20) FOREIGN KEY REFERENCES member not null,
 oriAmount INT not null,
 discount NVARCHAR(50) DEFAULT '' FOREIGN KEY REFERENCES Promotions,
 discountPrice INT DEFAULT 0,
