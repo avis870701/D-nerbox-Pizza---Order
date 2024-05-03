@@ -197,7 +197,6 @@ public class ReserveController {
 	
 	//客人前一天點選確認,將rs由1改為3
 	@GetMapping("/customerComfirmto3")
-	@ResponseBody
 	public String customerComfirmto3(@RequestParam(value = "reservationUuid") UUID reservationUuid) {
 		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
 		if (reserve != null) {
@@ -206,16 +205,15 @@ public class ReserveController {
 				reserveService.updateReservationStatusTo3(reservationUuid);
 				return "感謝您的確認，明天見😀😀";
 			} else {
-				return "連結已失效";
+				return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 			}
 		} else {
-			return "連結已失效";
+			return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 		}
 	}
 	
 	//客人前一天點選確認不會去,將rs由1改為2
 	@GetMapping("/customerComfirmto2")
-	@ResponseBody
 	public String customerComfirmto2(@RequestParam(value = "reservationUuid") UUID reservationUuid) {
 
 		Reserve reserve = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
@@ -225,11 +223,11 @@ public class ReserveController {
 				reserveService.updateReservationStatusTo2(reservationUuid);		
 				return "感謝您的確認，希望下次能再次為您服務😄😄";}
 			else {
-				return "連結已失效";
+				return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 				}
 			}	
 		else {
-			return "連結已失效";
+			return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 		}
 	}
 
@@ -239,7 +237,7 @@ public class ReserveController {
 
 		Reserve selectCustomerTommorowComeOrNot = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
 	    if (selectCustomerTommorowComeOrNot == null) {
-	        return "forward:/WEB-INF/reservation/jsp/fail.jsp";
+	    	return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 	    }
 	    model.addAttribute("selectCustomerTommorowComeOrNot", selectCustomerTommorowComeOrNot);
 	    return "forward:/WEB-INF/back-jsp/reservation/customerUpdateNumberOfPeople.jsp";    
