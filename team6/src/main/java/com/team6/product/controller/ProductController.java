@@ -28,8 +28,6 @@ import com.team6.product.model.ProductService;
 import com.team6.product.model.ProductState;
 import com.team6.product.model.ProductStateService;
 
-import jakarta.persistence.metamodel.SetAttribute;
-
 //@SessionAttributes(names = {})
 @Controller
 @RequestMapping(path = "/product")
@@ -48,67 +46,10 @@ public class ProductController {
 	/*因為thymeleaf會搶路徑,所以要forward:*/
 	
 	
-	
-	
-	// 測試扣產品數量
-	@GetMapping("/product.test")
-	public String testProductQuantity(Model model) {
-		// 18號測試用
-		ProductBean productBean = productService.SelectById(18);
-		model.addAttribute("productBean", productBean);
-		return "forward:/WEB-INF/product/Number.jsp";
-	}
-	
-	// 測試扣產品數量
-//	@PutMapping("/Product_coQuantity")
-//	@ResponseBody
-//	public ResponseEntity<ProductBean> testCoProductQuantity(
-//			@RequestParam("quantity") Integer quantity,
-//			@RequestParam("productId") Integer productId){
-//		ProductBean productBean = productService.SelectById(productId);
-//		Integer pQuantity = productBean.getProductQuantity();
-//		
-//		pQuantity -= quantity;
-//		productBean.setProductQuantity(pQuantity);
-//		productService.UpdateProduct(productBean);
-//		
-//		ProductBean newPbean = productService.SelectById(productBean.getProductId());
-//		
-//		return ResponseEntity.ok().body(newPbean);
-//	}
-//	
-	// 測試扣產品數量2，用@RequestBody接 然後使用DTO傳輸資料
-	@PutMapping("/Product_coQuantity")
-	@ResponseBody
-	public ResponseEntity<ProductBeanDto> testCoProductQuantity(
-			@RequestBody ProductTest productTest){
-		ProductBean productBean = productService.SelectById(productTest.getProductId());
-		Integer pQuantity = productBean.getProductQuantity();
-		
-		
-		pQuantity -= productTest.getQuantity();
-		productBean.setProductQuantity(pQuantity);
-		productService.UpdateProduct(productBean);
-		
-		ProductBean newPbean = productService.SelectById(productBean.getProductId());
-		ProductBeanDto productBeanDto = new ProductBeanDto(
-				newPbean.getProductId(),
-				newPbean.getProductCategory().getCategoryName(),
-				newPbean.getProductName(), newPbean.getProductDesc(),
-				newPbean.getProductImg_url(), newPbean.getProductPrice(),
-				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
-				newPbean.getProductState().getProductStateName());
-		
-		
-		return ResponseEntity.ok().body(productBeanDto);
-	}
-	
-	
-	
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
 	public String productMainprocess() {
-		return "forward:/WEB-INF/product/Product_Index.jsp";
+		return "forward:/WEB-INF/back-jsp/product/Product_Index.jsp";
 		
 	}
 	
@@ -118,7 +59,7 @@ public class ProductController {
 		
 		List<ProductBean> selectAll = productService.SelectAll();
 		model.addAttribute("productBeans", selectAll);
-		return "forward:/WEB-INF/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
 	}
 	
 	// 模糊查詢
@@ -128,7 +69,7 @@ public class ProductController {
 		List<ProductBean> selectName = productService.SelectName(productName);
 		
 		model.addAttribute("productBeans", selectName);
-		return "forward:/WEB-INF/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
 	}
 	
 	// 查單筆byId
@@ -138,7 +79,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/product/GetProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetProduct.jsp";
 	}
 	
 	// 更新資料先查出該筆
@@ -156,7 +97,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/product/GetUpdateProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetUpdateProduct.jsp";
 	}
 	
 	// 查出後更新資料
@@ -180,11 +121,11 @@ public class ProductController {
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 			
-			String productImg_url = "/product/images/" + fileName;
+			String productImg_url = "/images/product/" + fileName;
 			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
 			productService.UpdateProduct(productBean);
 			
@@ -219,7 +160,7 @@ public class ProductController {
 		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
 		model.addAttribute("findAllProductCategory", findAllProductCategory);
 		
-		return "forward:/WEB-INF/product/InsertProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/InsertProduct.jsp";
 	}
 	
 	// 新增
@@ -240,11 +181,11 @@ public class ProductController {
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 
-			String productImg_url = "/product/images/" + fileName;
+			String productImg_url = "/images/product/" + fileName;
 			
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
 					productPrice, productStateDefault, productQuantity, productCreateDate);
@@ -263,7 +204,7 @@ public class ProductController {
 	// 刪除主進入點
 	@GetMapping("/DeleteInsertProductMain")
 	public String deleteInsertProductMain() {
-		return "forward:/WEB-INF/product/DeleteProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/DeleteProduct.jsp";
 	}
 	
 	// 刪除
