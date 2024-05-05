@@ -5,10 +5,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>後台系統</title>
+    <title>Dönerbox Pizza 後臺管理系統</title>
     <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
     <link rel="stylesheet" href="/back/css/styles.min.css" />
     <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
   </head>
 
   <body>
@@ -30,36 +31,26 @@
           <!-- Sidebar navigation-->
           <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
+
+
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">個人資料</span>
+                <span class="hide-menu">後臺功能</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="#" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-layout-dashboard"></i>
-                  </span>
-                  <span class="hide-menu">我的資料</span>
-                </a>
-              </li>
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">後台功能列表</span>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="/member/Member.SelectAll" aria-expanded="false">
+                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                   <span>
                     <i class="ti ti-article"></i>
                   </span>
-                  <span class="hide-menu">會員管理功能</span>
+                  <span class="hide-menu">會員</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="#" aria-expanded="false">
+                <a class="sidebar-link" href="/product/Product_Test_SelectAll" aria-expanded="false">
                   <span>
                     <i class="ti ti-alert-circle"></i>
                   </span>
-                  <span class="hide-menu">Alerts</span>
+                  <span class="hide-menu">產品</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -67,7 +58,7 @@
                   <span>
                     <i class="ti ti-cards"></i>
                   </span>
-                  <span class="hide-menu">Card</span>
+                  <span class="hide-menu">訂單</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -75,15 +66,23 @@
                   <span>
                     <i class="ti ti-file-description"></i>
                   </span>
-                  <span class="hide-menu">Forms</span>
+                  <span class="hide-menu">訂位</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-file-description"></i>
+                  </span>
+                  <span class="hide-menu">外送</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="/promotions/promotionsMain" aria-expanded="false">
                   <span>
                     <i class="ti ti-typography"></i>
                   </span>
-                  <span class="hide-menu">Typography</span>
+                  <span class="hide-menu">活動</span>
                 </a>
               </li>
               <li class="nav-small-cap">
@@ -127,6 +126,19 @@
                 </a>
               </li>
             </ul>
+            <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+              <div class="d-flex">
+                <div class="unlimited-access-title me-3">
+                  <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
+                  <a href="https://adminmart.com/product/modernize-bootstrap-5-admin-template/" target="_blank"
+                    class="btn btn-primary fs-2 fw-semibold lh-sm">Buy
+                    Pro</a>
+                </div>
+                <div class="unlimited-access-img">
+                  <img src="../../../static/back/images/backgrounds/rocket.png" alt="" class="img-fluid">
+                </div>
+              </div>
+            </div>
           </nav>
           <!-- End Sidebar navigation -->
         </div>
@@ -153,8 +165,7 @@
             </ul>
             <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
               <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <button onclick="document.getElementById('memberInsert').style.display='block'" style="width:auto;"
-                  class="btn btn-primary">新憎會員</button>
+                <button style="width:auto;" class="btn btn-primary">沒用到</button>
                 <li class="nav-item dropdown">
                   <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -191,7 +202,7 @@
                 <div class="card-body">
                   <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
                     <div class="mb-3 mb-sm-0">
-                      <h5 class="card-title fw-semibold">Sales Overview</h5>
+                      <h5 class="card-title fw-semibold">銷售概況</h5>
                     </div>
                     <div>
                       <select class="form-select">
@@ -212,16 +223,16 @@
                   <!-- Yearly Breakup -->
                   <div class="card overflow-hidden">
                     <div class="card-body p-4">
-                      <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
+                      <h5 class="card-title mb-9 fw-semibold">年度總額</h5>
                       <div class="row align-items-center">
                         <div class="col-8">
-                          <h4 class="fw-semibold mb-3">$36,358</h4>
+                          <h4 class="fw-semibold mb-3">$1,786,358</h4>
                           <div class="d-flex align-items-center mb-3">
                             <span
                               class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
                               <i class="ti ti-arrow-up-left text-success"></i>
                             </span>
-                            <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                            <p class="text-dark me-1 fs-3 mb-0">+13%</p>
                             <p class="fs-3 mb-0">last year</p>
                           </div>
                           <div class="d-flex align-items-center">
@@ -231,7 +242,7 @@
                             </div>
                             <div>
                               <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
-                              <span class="fs-2">2023</span>
+                              <span class="fs-2">2022</span>
                             </div>
                           </div>
                         </div>
@@ -250,15 +261,15 @@
                     <div class="card-body">
                       <div class="row alig n-items-start">
                         <div class="col-8">
-                          <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
-                          <h4 class="fw-semibold mb-3">$6,820</h4>
+                          <h5 class="card-title mb-9 fw-semibold"> 當月營收 </h5>
+                          <h4 class="fw-semibold mb-3">$126,820</h4>
                           <div class="d-flex align-items-center pb-1">
                             <span
                               class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
                               <i class="ti ti-arrow-down-right text-danger"></i>
                             </span>
-                            <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                            <p class="fs-3 mb-0">last year</p>
+                            <p class="text-dark me-1 fs-3 mb-0">-7%</p>
+                            <p class="fs-3 mb-0">last month</p>
                           </div>
                         </div>
                         <div class="col-4">
@@ -278,175 +289,28 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="col-lg-12 d-flex align-items-stretch">
               <div class="card w-100">
                 <div class="card-body p-4">
-                  <div class="mb-4">
-                    <h5 class="card-title fw-semibold">Recent Transactions</h5>
-                  </div>
-                  <ul class="timeline-widget mb-0 position-relative mb-n5">
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment received from John Doe of $385.90</div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">10:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                          href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment was made of $64.95 to Michael</div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                          href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8 d-flex align-items-stretch">
-              <div class="card w-100">
-                <div class="card-body p-4">
-                  <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                  <h5 class="card-title fw-semibold mb-4">所有產品資料</h5>
                   <div class="table-responsive">
-                    <table class="table text-nowrap mb-0 align-middle">
-                      <thead class="text-dark fs-4">
+                    <table id="example" class="table table-striped" style="width:100%">
+                      <thead>
                         <tr>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Id</h6>
-                          </th>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Assigned</h6>
-                          </th>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Name</h6>
-                          </th>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Priority</h6>
-                          </th>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Budget</h6>
-                          </th>
+                          <th>編號</th>
+                          <th>類別</th>
+                          <th>名稱</th>
+                          <th>介紹</th>
+                          <th>圖片</th>
+                          <th>價格</th>
+                          <th>數量</th>
+                          <th>狀態</th>
+                          <th>上架時間</th>
+                          <th>修改狀態</th>
+                          <th>功能區</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">1</h6>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                            <span class="fw-normal">Web Designer</span>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">Elite Admin</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <div class="d-flex align-items-center gap-2">
-                              <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                            </div>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">2</h6>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                            <span class="fw-normal">Project Manager</span>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">Real Homes WP Theme</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <div class="d-flex align-items-center gap-2">
-                              <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                            </div>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">3</h6>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                            <span class="fw-normal">Project Manager</span>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">MedicalPro WP Theme</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <div class="d-flex align-items-center gap-2">
-                              <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                            </div>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">4</h6>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                            <span class="fw-normal">Frontend Engineer</span>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">Hosting Press HTML</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <div class="d-flex align-items-center gap-2">
-                              <span class="badge bg-success rounded-3 fw-semibold">Critical</span>
-                            </div>
-                          </td>
-                          <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
-                          </td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -454,165 +318,122 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6 col-xl-3">
-              <div class="card overflow-hidden rounded-2">
-                <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
-                      alt="..."></a>
-                  <a href="javascript:void(0)"
-                    class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
-                      class="ti ti-basket fs-4"></i></a>
-                </div>
-                <div class="card-body pt-3 p-4">
-                  <h6 class="fw-semibold fs-4">Boat Headphone</h6>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="fw-semibold fs-4 mb-0">$50 <span
-                        class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>
-                    <ul class="list-unstyled d-flex align-items-center mb-0">
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-              <div class="card overflow-hidden rounded-2">
-                <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
-                      alt="..."></a>
-                  <a href="javascript:void(0)"
-                    class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
-                      class="ti ti-basket fs-4"></i></a>
-                </div>
-                <div class="card-body pt-3 p-4">
-                  <h6 class="fw-semibold fs-4">MacBook Air Pro</h6>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="fw-semibold fs-4 mb-0">$650 <span
-                        class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
-                    <ul class="list-unstyled d-flex align-items-center mb-0">
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-              <div class="card overflow-hidden rounded-2">
-                <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
-                      alt="..."></a>
-                  <a href="javascript:void(0)"
-                    class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
-                      class="ti ti-basket fs-4"></i></a>
-                </div>
-                <div class="card-body pt-3 p-4">
-                  <h6 class="fw-semibold fs-4">Red Valvet Dress</h6>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="fw-semibold fs-4 mb-0">$150 <span
-                        class="ms-2 fw-normal text-muted fs-3"><del>$200</del></span></h6>
-                    <ul class="list-unstyled d-flex align-items-center mb-0">
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xl-3">
-              <div class="card overflow-hidden rounded-2">
-                <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
-                      alt="..."></a>
-                  <a href="javascript:void(0)"
-                    class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
-                      class="ti ti-basket fs-4"></i></a>
-                </div>
-                <div class="card-body pt-3 p-4">
-                  <h6 class="fw-semibold fs-4">Cute Soft Teddybear</h6>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <h6 class="fw-semibold fs-4 mb-0">$285 <span
-                        class="ms-2 fw-normal text-muted fs-3"><del>$345</del></span></h6>
-                    <ul class="list-unstyled d-flex align-items-center mb-0">
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                      <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="py-6 px-6 text-center">
-            <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a
-                href="https://themewagon.com">ThemeWagon</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <div id="memberInsert" class="modal">
-      <div class=" w-100">
 
-        <form class="modal-content animate" action="Member.Insert" method="post">
-          <div class="imgcontainer">
-            <span onclick="document.getElementById('memberInsert').style.display='none'" class="close"
-              title="Close Modal">&times;</span>
-            <img src="/images/member/images/DonerPizzaSmall.png" alt="Avatar" class="avatar">
-          </div>
-          <p class="text-center">請填寫下列資訊</p>
-          <div class="container">
-            <div class="mb-3">
-              <label for="UserAccount" class="form-label">使用者帳號</label>
-              <input type="text" class="form-control" id="UserAccount" aria-describedby="textHelp" name="account"
-                required placeholder="請輸入帳號">
-            </div>
-            <div class="mb-3">
-              <label for="UserEmail" class="form-label">電子信箱</label>
-              <input type="email" class="form-control" id="UserEmail" aria-describedby="emailHelp" name="mEmail"
-                required placeholder="請輸入電子信箱">
-            </div>
-            <div class="mb-4">
-              <label for="password" class="form-label">密碼</label>
-              <input type="password" class="form-control" id="password" name="password" required placeholder="請輸入密碼">
-              <input type="checkbox" onclick="myFunction()">Show Password
-            </div>
-            <div>${err}</div>
-            <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註 冊</button>
-          </div>
 
-          <div class="container">
-            <button type="button" onclick="document.getElementById('memberInsert').style.display='none'"
-              class="cancelbtn">Cancel</button>
-          </div>
-        </form>
-      </div>
-      <script src="/back/libs/jquery/dist/jquery.min.js"></script>
-      <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="/back/js/sidebarmenu.js"></script>
-      <script src="/back/js/app.min.js"></script>
-      <script src="/back/libs/apexcharts/dist/apexcharts.min.js"></script>
-      <script src="/back/libs/simplebar/dist/simplebar.js"></script>
-      <script src="/back/js/dashboard.js"></script>
-      <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
+          <script src="/back/libs/jquery/dist/jquery.min.js"></script>
+          <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="/back/js/sidebarmenu.js"></script>
+          <script src="/back/js/app.min.js"></script>
+          <script src="/back/libs/apexcharts/dist/apexcharts.min.js"></script>
+          <script src="/back/libs/simplebar/dist/simplebar.js"></script>
+          <script src="/back/js/dashboard.js"></script>
+          <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
+          <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+          <script>
+
+            $(document).ready(function () {
+              $('#example').DataTable({
+                language: {
+                  "lengthMenu": "顯示 _MENU_ 筆資料",
+                  "sProcessing": "處理中...",
+                  "sZeroRecords": "没有匹配结果",
+                  "sInfo": "目前有 _MAX_ 筆資料",
+                  "sInfoEmpty": "目前共有 0 筆紀錄",
+                  "sInfoFiltered": " ",
+                  "sInfoPostFix": "",
+                  "sSearch": "搜尋:",
+                  "sUrl": "",
+                  "sEmptyTable": "尚未有資料紀錄存在",
+                  "sLoadingRecords": "載入資料中...",
+                  "sInfoThousands": ",",
+                  "oPaginate": {
+                    "sFirst": "首頁",
+                    "sPrevious": "上一頁",
+                    "sNext": "下一頁",
+                    "sLast": "末頁"
+                  },
+                  "order": [[8, "desc"], [0, "asc"]], // 先按上架日期遞減排序,再按產品ID遞增排序
+                  "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                  }
+                },
+                "ajax": {
+                  "url": "Product_Test_SelectAll",
+                  "method": "GET",
+                  "dataSrc": ""
+                },
+                "columns": [
+                  { "data": "productId" },
+                  { "data": "productCategory.categoryName" },
+                  { "data": "productName" },
+                  { "data": "productDesc" },
+                  {
+                    "data": "productImg_url",
+                    "render": function (data, type, row) {
+                      return '<div style="width: 12vw; height: 12vw; overflow: hidden;">' +
+                        '<img src="' + data + '" alt="沒有頭貼" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">' +
+                        '</div>';
+                    }
+                  },
+                  { "data": "productPrice" },
+                  { "data": "productQuantity" },
+                  { "data": "productState.productStateName" },
+                  { "data": "productCreateDate" },
+                  {
+                    "data": "productState.productStateId",
+                    "render": function (data, type, row) {
+                      let productId = row.productId;
+                      let changeState = `<select onchange="change(` + productId + `, this.value)">
+                        <option value="">修改狀態</option>
+                        <option value="1">上架中</option>
+                        <option value="0">已下架</option>
+                       </select>`;
+                      return changeState;
+                    }
+                  },
+                  {
+                    "data": null,
+                    "render": function (data, type, row) {
+                      return '<button type="button" class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">修改</button>';
+                    }
+                  }
+                ]
+              });
+            });
+
+          </script>
+
+          <script>
+
+            function change(productId, productStateId) {
+              // let path = "${pageContext.request.contextPath}/Product_ChangeState?productId="
+              // 	+ productId + "&productStateId=" + productStateId;
+              // window.location.href = path;
+              // 分隔
+              $.ajax({
+                url: "Product_ChangeState",
+                method: 'PUT',
+                data: { "productId": productId, "productStateId": productStateId },
+                success: function (response) {
+                  // 根據服務器回應的新狀態名稱更新對應行的productState.productStateName欄位
+                  let table = $('#example').DataTable();
+                  let row = table.row(function (index, data, node) {
+                    return data.productId === productId;
+                  });
+
+                  if (row.length) {
+                    row.data().productState = {
+                      productStateId: productStateId,
+                      productStateName: response
+                    };
+                    row.invalidate(); // 重新渲染
+                  }
+                },
+                error: (xhr, status, error) => console.log(error)
+              });
+            }
+          </script>
   </body>
 
   </html>

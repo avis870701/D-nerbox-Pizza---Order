@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -34,8 +35,9 @@ public class ProductCategory implements Serializable {
 	@Column(name = "CATEGORYNAME")
 	private String CategoryName;
 	
-//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) order的設計不需要處理無限迴圈先註解
 //	@JsonBackReference
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // order的設計不需要處理無限迴圈先註解
+//	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<ProductBean> pBeans = new LinkedHashSet<>();
 	

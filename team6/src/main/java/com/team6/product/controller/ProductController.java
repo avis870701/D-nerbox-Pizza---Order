@@ -3,6 +3,7 @@ package com.team6.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team6.product.dto.ProductBeanDto;
+import com.team6.product.dto.ProductCategoryDto;
+import com.team6.product.dto.ProductStateDto;
 import com.team6.product.dto.ProductTest;
 import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductCategory;
@@ -218,19 +221,51 @@ public class ProductController {
 	
 	//進入主畫面
 	@GetMapping("/Product_Test_Main")
-	public String productTestMain() {
+	public String productTestMain(Model model) {
+		
+		List<ProductBean> selectAll = productService.SelectAll();
+		model.addAttribute("productBeans", selectAll);
 
-		return "forward:/WEB-INF/back-jsp/product/productSimpleBackIndex.jsp";
+		return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
 	}
 	
 	
 	// 查全部
 	@GetMapping("/Product_Test_SelectAll")
-	public String productTestSelectAll(Model model) {
+	@ResponseBody
+	public ResponseEntity<List<ProductBeanDto>> productTestSelectAll() {
 
 		List<ProductBean> selectAll = productService.SelectAll();
-		model.addAttribute("productBeans", selectAll);
-		return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
+		List<ProductBeanDto> selectAllDto = new ArrayList<>();
+		
+		for (ProductBean pBean : selectAll) {
+			
+			ProductCategoryDto pCategoryDto = new ProductCategoryDto(
+					pBean.getProductCategory().getCategoryId(),
+					pBean.getProductCategory().getCategoryName()
+					);
+			
+			ProductStateDto pStateDto = new ProductStateDto(
+					pBean.getProductState().getProductStateId(),
+					pBean.getProductState().getProductStateName());
+			
+			ProductBeanDto pBeanDto = new ProductBeanDto(
+					pBean.getProductId(),
+					pBean.getCategoryId(),
+					pBean.getProductName(),
+					pBean.getProductDesc(),
+					pBean.getProductImg_url(),
+					pBean.getProductPrice(),
+					pBean.getProductQuantity(),
+					pBean.getProductCreateDate(),
+					pCategoryDto,
+					pStateDto
+					);
+			
+			selectAllDto.add(pBeanDto);		
+		}
+		
+		return ResponseEntity.ok().body(selectAllDto);
 	}
 	
 	

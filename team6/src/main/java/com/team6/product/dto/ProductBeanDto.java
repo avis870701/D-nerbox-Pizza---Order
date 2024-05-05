@@ -6,7 +6,9 @@ public class ProductBeanDto {
 
 	private Integer productId;
 
-	private String CategoryName;
+	private Integer CategoryId; 
+	
+//	private String CategoryName;
 
 	private String productName;
 
@@ -20,45 +22,63 @@ public class ProductBeanDto {
 
 	private LocalDate productCreateDate;
 
-	private String ProductStateName;
+//	private String ProductStateName;
+	
+	private ProductCategoryDto productCategory;
+	
+	private ProductStateDto productState;
 	
 //	----------------------------------
 
 	public ProductBeanDto() {
 	}
 
-	public ProductBeanDto(Integer productId, String categoryName, String productName, String productDesc,
+	public ProductBeanDto(Integer productId, Integer categoryId, String productName, String productDesc,
 			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
-			String productStateName) {
+			ProductCategoryDto productCategory, ProductStateDto productState) {
 		this.productId = productId;
-		this.CategoryName = categoryName;
+		this.CategoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
 		this.productPrice = productPrice;
 		this.productQuantity = productQuantity;
 		this.productCreateDate = productCreateDate;
-		this.ProductStateName = productStateName;
+		this.productCategory = productCategory;
+		this.productState = productState;
 	}
 
+//	public ProductBeanDto(Integer productId, String categoryName, String productName, String productDesc,
+//			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
+//			String productStateName) {
+//		this.productId = productId;
+//		this.CategoryName = categoryName;
+//		this.productName = productName;
+//		this.productDesc = productDesc;
+//		this.productImg_url = productImg_url;
+//		this.productPrice = productPrice;
+//		this.productQuantity = productQuantity;
+//		this.productCreateDate = productCreateDate;
+//		this.ProductStateName = productStateName;
+//	}
+	
 //	----------------------------------
 	
-	
+
 	public Integer getProductId() {
 		return productId;
 	}
-
 
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 
-	public String getCategoryName() {
-		return CategoryName;
+	public Integer getCategoryId() {
+		return CategoryId;
 	}
 
-	public void setCategoryName(String categoryName) {
-		CategoryName = categoryName;
+	public void setCategoryId(Integer categoryId) {
+		CategoryId = categoryId;
 	}
 
 	public String getProductName() {
@@ -109,12 +129,23 @@ public class ProductBeanDto {
 		this.productCreateDate = productCreateDate;
 	}
 
-	public String getProductStateName() {
-		return ProductStateName;
+	public ProductCategoryDto getProductCategory() {
+		return productCategory;
 	}
 
-	public void setProductStateName(String productStateName) {
-		ProductStateName = productStateName;
+	public void setProductCategory(ProductCategoryDto productCategory) {
+		this.productCategory = productCategory;
 	}
+
+	public ProductStateDto getProductState() {
+		return productState;
+	}
+
+	public void setProductState(ProductStateDto productState) {
+		this.productState = productState;
+	}
+
+
+	
 
 }

@@ -45,29 +45,29 @@ public class FrontProductController {
 	}
 	
 	// 測試扣產品數量2，用@RequestBody接 然後使用DTO傳輸資料
-	@PutMapping("/Product_coQuantity")
-	@ResponseBody
-	public ResponseEntity<ProductBeanDto> testCoProductQuantity(
-			@RequestBody ProductTest productTest){
-		ProductBean productBean = productService.SelectById(productTest.getProductId());
-		Integer pQuantity = productBean.getProductQuantity();
-		
-		
-		pQuantity -= productTest.getQuantity();
-		productBean.setProductQuantity(pQuantity);
-		productService.UpdateProduct(productBean);
-		
-		ProductBean newPbean = productService.SelectById(productBean.getProductId());
-		ProductBeanDto productBeanDto = new ProductBeanDto(
-				newPbean.getProductId(),
-				newPbean.getProductCategory().getCategoryName(),
-				newPbean.getProductName(), newPbean.getProductDesc(),
-				newPbean.getProductImg_url(), newPbean.getProductPrice(),
-				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
-				newPbean.getProductState().getProductStateName());
-		
-		return ResponseEntity.ok().body(productBeanDto);
-	}
+//	@PutMapping("/Product_coQuantity")
+//	@ResponseBody
+//	public ResponseEntity<ProductBeanDto> testCoProductQuantity(
+//			@RequestBody ProductTest productTest){
+//		ProductBean productBean = productService.SelectById(productTest.getProductId());
+//		Integer pQuantity = productBean.getProductQuantity();
+//		
+//		
+//		pQuantity -= productTest.getQuantity();
+//		productBean.setProductQuantity(pQuantity);
+//		productService.UpdateProduct(productBean);
+//		
+//		ProductBean newPbean = productService.SelectById(productBean.getProductId());
+//		ProductBeanDto productBeanDto = new ProductBeanDto(
+//				newPbean.getProductId(),
+//				newPbean.getProductCategory().getCategoryName(),
+//				newPbean.getProductName(), newPbean.getProductDesc(),
+//				newPbean.getProductImg_url(), newPbean.getProductPrice(),
+//				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
+//				newPbean.getProductState().getProductStateName());
+//		
+//		return ResponseEntity.ok().body(productBeanDto);
+//	}
 	
 	
 }
