@@ -288,6 +288,7 @@
               </div>
             </div>
           </div>
+          <!-- DataTable -->
           <div class="row">
             <div class="col-lg-12 d-flex align-items-stretch">
               <div class="card w-100">
@@ -318,7 +319,7 @@
               </div>
             </div>
           </div>
-
+          <!-- DataTable -->
 
           <script src="/back/libs/jquery/dist/jquery.min.js"></script>
           <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
