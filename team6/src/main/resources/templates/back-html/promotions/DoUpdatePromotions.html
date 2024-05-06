@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
-    <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>
+    <title>更新活動資料</title>
+    <!--     <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>-->
+    <link rel="shortcut icon" type="image/png" href="../../../static/images/indexImages/DönerPizza.jpg"/>
     <link rel="stylesheet" href="../../../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../../../static/back/css/promotions/GetAll.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -21,8 +22,7 @@
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
                 <a href="./index.html" class="text-nowrap logo-img">
-                    <img src="../../../static/back/images/logos/dark-logo.svg" width="180" alt=""/>
-                </a>
+                    <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt=""/>                </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
                 </div>
@@ -30,28 +30,17 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                 <ul id="sidebarnav">
+
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                            <span class="hide-menu">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">UI COMPONENTS</span>
+                        <span class="hide-menu">後臺功能</span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Buttons</span>
+                            <span class="hide-menu">會員</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -59,7 +48,7 @@
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                            <span class="hide-menu">Alerts</span>
+                            <span class="hide-menu">產品</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -67,7 +56,7 @@
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
-                            <span class="hide-menu">Card</span>
+                            <span class="hide-menu">訂單</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -75,15 +64,23 @@
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
-                            <span class="hide-menu">Forms</span>
+                            <span class="hide-menu">訂位</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/promotions/promotionsMain" aria-expanded="false">
+                        <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                            <span class="hide-menu">外送</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./promotionsMain" aria-expanded="false">
                 <span>
                   <i class="ti ti-typography"></i>
                 </span>
-                            <span class="hide-menu">優惠活動管理</span>
+                            <span class="hide-menu">活動</span>
                         </a>
                     </li>
                     <li class="nav-small-cap">
@@ -219,7 +216,10 @@
                                 </tr>
                                 <tr>
                                     <td>活動內容</td>
-                                    <td><input type="text" name="promotions_content" th:value="${promotions.promotions_content}"></td>
+                                    <td><textarea name="promotions_content" th:text="${promotions.promotions_content}" cols="22"
+                                        rows="3"></textarea></td>
+
+                                    <!--                                    <td><input type="text" name="promotions_content" th:value="${promotions.promotions_content}"></td>-->
                                 </tr>
                                 <tr>
                                     <td>活動圖片</td>
@@ -242,8 +242,8 @@
                                     <td><input type="text" name="promotions_enddate" th:value="${promotions.promotions_enddate}"></td>
                                 </tr>
                             </table>
-                            <button type="submit">更新</button>
-                            <a href="/promotions/promotionsMain">查詢所有活動</a>
+                            <button class="btn" type="submit">更新</button>
+                            <a class="btn" href="/promotions/promotionsMain">查詢所有活動</a>
                         </form>
                     </div>
                 </div>

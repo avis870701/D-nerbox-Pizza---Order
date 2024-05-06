@@ -23,6 +23,8 @@ public class PromotionsController {
 
     private PromotionsService promotionsService;
 
+//    入口:http://localhost:8080/promotions/promotionsMain
+
     // 查詢全部
     @GetMapping("/promotionsMain")
     public String getAllPromotions(Model model) {

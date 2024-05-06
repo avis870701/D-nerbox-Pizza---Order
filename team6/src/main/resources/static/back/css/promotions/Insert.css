@@ -66,3 +66,13 @@ a:hover {
     display: block;
     margin-top: 10px;
 }
+.btn {
+    padding: 8px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}

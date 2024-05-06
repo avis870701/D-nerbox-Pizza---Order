@@ -4,11 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
-    <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>
+    <title>查詢單筆活動資料</title>
+    <!--     <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>-->
+    <link rel="shortcut icon" type="image/png" href="../static/images/indexImages/DönerPizza.jpg"/>
     <link rel="stylesheet" href="../../../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../../../static/back/css/promotions/GetAll.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
 </head>
 
 <body>
@@ -21,8 +24,7 @@
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
                 <a href="./index.html" class="text-nowrap logo-img">
-                    <img src="../../../static/back/images/logos/dark-logo.svg" width="180" alt=""/>
-                </a>
+                    <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt=""/> </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
                 </div>
@@ -30,28 +32,17 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                 <ul id="sidebarnav">
+
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                            <span class="hide-menu">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">UI COMPONENTS</span>
+                        <span class="hide-menu">後臺功能</span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Buttons</span>
+                            <span class="hide-menu">會員</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -59,7 +50,7 @@
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                            <span class="hide-menu">Alerts</span>
+                            <span class="hide-menu">產品</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -67,7 +58,7 @@
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
-                            <span class="hide-menu">Card</span>
+                            <span class="hide-menu">訂單</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -75,7 +66,15 @@
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
-                            <span class="hide-menu">Forms</span>
+                            <span class="hide-menu">訂位</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                            <span class="hide-menu">外送</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -83,7 +82,7 @@
                 <span>
                   <i class="ti ti-typography"></i>
                 </span>
-                            <span class="hide-menu">優惠活動</span>
+                            <span class="hide-menu">活動</span>
                         </a>
                     </li>
                     <li class="nav-small-cap">
@@ -205,55 +204,58 @@
 
                     <div style="text-align: center;">
 
-                            <h2>活動資料</h2>
-                            <table>
-                                <tr>
-                                    <td>活動編號:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_id}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>活動名稱:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_name}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>活動內容:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_content}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>活動圖片:</td>
-                                    <td><img  class="pimg" th:src="${promotions.promotions_picture}" alt="暫無圖片"></td>
-                                </tr>
-                                <tr>
-                                    <td>活動折扣:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_discount}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>折扣碼:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_discountcode}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>開始日期:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_startdate}" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>結束日期:</td>
-                                    <td><input type="text" th:value="${promotions.promotions_enddate}" readonly></td>
-                                </tr>
-                            </table>
-                            <p>
-                                <a href="/promotions/promotionsMain">查詢所有活動</a>
-                            </p>
-                        </div>
+                        <h2>活動資料</h2>
+                        <table>
+                            <tr>
+                                <td>活動編號:</td>
+                                <td><input type="text" th:value="${promotions.promotions_id}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>活動名稱:</td>
+                                <td><input type="text" th:value="${promotions.promotions_name}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>活動內容:</td>
+                                <!--                                    <td><input type="text" th:value="${promotions.promotions_content}" readonly></td>-->
+                                <td><textarea th:text="${promotions.promotions_content}" readonly cols="22"
+                                              rows="3"></textarea></td>
+
+                            </tr>
+                            <tr>
+                                <td>活動圖片:</td>
+                                <td><img class="pimg" th:src="${promotions.promotions_picture}" alt="暫無圖片"></td>
+                            </tr>
+                            <tr>
+                                <td>活動折扣:</td>
+                                <td><input type="text" th:value="${promotions.promotions_discount}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>折扣碼:</td>
+                                <td><input type="text" th:value="${promotions.promotions_discountcode}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>開始日期:</td>
+                                <td><input type="text" th:value="${promotions.promotions_startdate}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>結束日期:</td>
+                                <td><input type="text" th:value="${promotions.promotions_enddate}" readonly></td>
+                            </tr>
+                        </table>
+                        <p>
+                            <a href="/promotions/promotionsMain">查詢所有活動</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
-<script src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../../static/back/js/sidebarmenu.js"></script>
-<script src="../../../static/back/js/app.min.js"></script>
-<script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
+    <script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../static/back/js/sidebarmenu.js"></script>
+    <script src="../../../static/back/js/app.min.js"></script>
+    <script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
 </body>
 
 </html>
