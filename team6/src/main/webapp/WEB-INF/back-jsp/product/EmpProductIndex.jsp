@@ -385,7 +385,8 @@
 
                 <div class="offcanvas-footer mb-3 d-flex justify-content-between">
                   <button type="button" class="btn btn-dark-light " data-bs-dismiss="offcanvas">取消</button>
-                  <button type="button" class="btn btn-primary" id="saveChangesBtn" onclick="">確認更新</button>
+                  <button type="button" class="btn btn-primary" id="saveChangesBtn"
+                    onclick="productDoUpdate()">確認更新</button>
                 </div>
                 <!-- 放東西 -->
 
@@ -437,7 +438,7 @@
                 },
                 "columns": [
                   { "data": "productId" },
-                  { "data": "productCategory.categoryId" },
+                  { "data": "productCategory.categoryName" },
                   { "data": "productName" },
                   { "data": "productDesc" },
                   {
@@ -450,10 +451,10 @@
                   },
                   { "data": "productPrice" },
                   { "data": "productQuantity" },
-                  { "data": "productStateId.productStateName" },
+                  { "data": "productState.productStateName" },
                   { "data": "productCreateDate" },
                   {
-                    "data": "productStateId.productStateId",
+                    "data": "productState.productStateId",
                     "render": function (data, type, row) {
                       let productId = row.productId;
                       let changeState = `<select onchange="change(` + productId + `, this.value)">
@@ -471,6 +472,23 @@
                       return '<button class="btn btn-warning btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" data-product-data=\'' + JSON.stringify(row) + '\'>修改</button>'
                     }
                   }
+                ], // 設定表頭元素定義
+                headerCallback: function (thead, data, start, end, display) {
+                  $(thead).find('th').addClass('text-center')
+                },
+                columnDefs: [
+                  {
+                    targets: [0, 1, 7],
+                    width: '6%'
+                  },
+                  {
+                    targets: [2, 6],
+                    width: '10%'
+                  },
+                  {
+                    targets: '_all',
+                    className: 'text-center'
+                  }
                 ]
               });
             });
@@ -479,24 +497,22 @@
 
           <script>
 
+            // 改產品狀態的方法
             function change(productId, productStateId) {
-              // let path = "${pageContext.request.contextPath}/Product_ChangeState?productId="
-              // 	+ productId + "&productStateId=" + productStateId;
-              // window.location.href = path;
-              // 分隔
+
               $.ajax({
                 url: "Product_ChangeState",
                 method: 'PUT',
                 data: { "productId": productId, "productStateId": productStateId },
                 success: function (response) {
-                  // 根據服務器回應的新狀態名稱更新對應行的productState.productStateName欄位
+                  // 後臺回應的新狀態名稱更新對應的productState.productStateName欄位
                   let table = $('#example').DataTable();
                   let row = table.row(function (index, data, node) {
                     return data.productId === productId;
                   });
 
                   if (row.length) {
-                    row.data().productStateId = {
+                    row.data().productState = {
                       productStateId: productStateId,
                       productStateName: response
                     };
@@ -506,6 +522,37 @@
                 error: (xhr, status, error) => console.log(error)
               });
             }
+
+            // 整個產品更新的方法 
+            function productDoUpdate() {
+
+              console.log('進入productDoUpdate');
+              // A.先取到Offcanvas內所有欄位的資料,這邊用formData因為我要傳檔案QAQ
+              let formData = new FormData();
+              formData.append('productId', $('#productId').val());
+              formData.append('categoryId', $('#categoryId').val());
+              formData.append('productName', $('#productName').val());
+              formData.append('productDesc', $('#productDesc').val());
+              formData.append('productImg_url', $('#productImg_url')[0].files[0]);
+              formData.append('productPrice', $('#productPrice').val());
+              formData.append('productQuantity', $('#productQuantity').val());
+              formData.append('productStateId', $('#productStateId').val());
+              console.log(formData);
+
+              // B.把productData傳到後臺處理
+              $.ajax({
+                url: "product_Test_DoUpdate",
+                method: 'PUT',
+                contentType: false, // 必須設為false,才能上傳檔案
+                processData: false,  // 必須設為false,才能上傳檔案
+                data: formData,
+                success: function (response) {
+                  console.log('good');
+                  console.log(response);
+                }
+              })
+            }
+
           </script>
           <script>
 
@@ -539,7 +586,7 @@
               $('#productDesc').val(productData.productDesc);
               $('#productPrice').val(productData.productPrice);
               $('#productQuantity').val(productData.productQuantity);
-              $('#productStateId').val(productData.productStateId.productStateId);
+              $('#productStateId').val(productData.productState.productStateId);
               $('#productCreateDate').val(productData.productCreateDate);
 
               // 如果有圖片網址，顯示圖片預覽

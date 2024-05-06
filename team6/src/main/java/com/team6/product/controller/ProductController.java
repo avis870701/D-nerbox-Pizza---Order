@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -280,18 +281,20 @@ public class ProductController {
 				@RequestParam("categoryId") Integer categoryId,
 				@RequestParam("productName") String productName,
 				@RequestParam("productDesc") String productDesc,
-				@RequestParam("productImg_url") MultipartFile mf,
+				@RequestPart(value = "productImg_url", required = false) MultipartFile mf,
 				@RequestParam("productPrice") Integer productPrice,
 				@RequestParam("productStateId") Integer productStateId,
 				@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
 			// 找產品狀態的bean
 			ProductState productState = pStateService.findProductStateById(productStateId);
+			// 找產品類別的bean
+			ProductCategory productCategory = pCategoryService.findProductCategoryById(categoryId);
 			// 有一些舊資料不需要更新先抓出來等等塞回去
 			ProductBean oldProductBean = productService.SelectById(productId);
 			// 不給修改日期上架日期
 			LocalDate oldproductCreateDate = oldProductBean.getProductCreateDate();
 			
-			if (!mf.isEmpty()) {
+			if (mf != null && !mf.isEmpty()) {
 				String fileName = mf.getOriginalFilename();
 //				String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
 				String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
@@ -299,7 +302,12 @@ public class ProductController {
 				mf.transferTo(fileDirPath);
 				
 				String productImg_url = "/images/product/" + fileName;
-				ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
+				
+				ProductBean productBean = new ProductBean(
+						productId, categoryId, productName, 
+						productDesc, productImg_url, productPrice, 
+						productQuantity, oldproductCreateDate, productCategory, productState);
+				
 				productService.UpdateProduct(productBean);
 				
 				ProductBean newPbean = productService.SelectById(productBean.getProductId());
@@ -329,7 +337,13 @@ public class ProductController {
 				return ResponseEntity.ok(pBeanDto);
 			} else {
 				
-				ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
+//				ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
+				ProductBean productBeanNoImg = new ProductBean(
+						productId, categoryId, productName, 
+						productDesc, oldProductBean.getProductImg_url(), 
+						productPrice, productQuantity, oldproductCreateDate, 
+						productCategory, productState);
+				
 				productService.UpdateProduct(productBeanNoImg);
 				
 				ProductBean newPbean = productService.SelectById(productBeanNoImg.getProductId());
