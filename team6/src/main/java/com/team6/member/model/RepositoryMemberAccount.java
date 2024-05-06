@@ -21,6 +21,9 @@ public interface RepositoryMemberAccount extends JpaRepository<MemberAccountBean
 	@Query(value ="from MemberAccountBean where detailBean.mName like %:n% or mAccount like %:n% ORDER BY maid")
 	public List<MemberAccountBean> findByName(@Param("n")String name);
 	
+	@Query(value ="SELECT * FROM memberAccount where hidden =1",nativeQuery = true)
+	public List<MemberAccountBean> findAllByNotHidden();
+	
 	@Query(value ="SELECT * FROM memberAccount a join memberDetail d on a.maid = d.fk_maId WHERE d.mName like %:n%",nativeQuery = true)
 	public Page<MemberAccountBean> findByNamePage(Pageable pageable, @Param("n")String empName);
 //	@Query(value ="from MemberAccountBean where :type like %:name% ORDER BY maid")

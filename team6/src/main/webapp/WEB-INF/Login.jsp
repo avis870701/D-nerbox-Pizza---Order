@@ -128,7 +128,7 @@
                                                 記住登入
                                             </label>
                                         </div>
-                                        <a class="text-primary fw-bold" href="#">忘記密碼 ?</a>
+                                        <a class="text-primary fw-bold" href="/member/forgot">忘記密碼 ?</a>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">登
                                         入</button>

@@ -5,7 +5,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>Döner Pizza - 會員註冊</title>
+<title>Döner Pizza - 會員資料</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -101,12 +101,12 @@
 	<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container text-center py-5">
-			<h1 class="display-2 text-dark mb-4 animated slideInDown">會員註冊</h1>
+			<h1 class="display-2 text-dark mb-4 animated slideInDown">會員資料</h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb justify-content-center mb-0">
 					<li class="breadcrumb-item"><a href="#">首頁</a></li>
 					<li class="breadcrumb-item"><a href="#">會員</a></li>
-					<li class="breadcrumb-item text-dark" aria-current="page">會員註冊</li>
+					<li class="breadcrumb-item text-dark" aria-current="page">會員資料</li>
 				</ol>
 			</nav>
 		</div>
@@ -127,7 +127,7 @@
 								alt="">
 							</a>
 							<p class="text-center">請填寫下列資訊</p>
-							<form method="POST" action="Member.Insert">
+							<form method="POST" action="Member.UpdateDetail">
 								<div class="mb-3">
 									<label for="exampleInputtext1" class="form-label">使用者帳號</label>
 									<input type="text" class="form-control" id="exampleInputtext1"

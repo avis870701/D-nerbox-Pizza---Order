@@ -29,20 +29,20 @@
 												$('table').prepend('<tr><td>no result</td></tr>');
 											} else {
 												var table = $('#showmember');
-												table.append("<thead><tr>" + "<th>會員ID</th><th>會員帳號</th><th>會員名稱</th><th>註冊日期</th><th>修改</th><th>修改</th><th>刪除</th></tr></thead><tbody>");
+												table.append("<thead><tr>" + "<th>會員ID</th><th>會員帳號</th><th>會員名稱</th><th>會員頭貼</th><th>註冊日期</th><th>修改</th><th>刪除</th></tr></thead><tbody>");
 												$.each(response, function (i, n) {
 													console.log(response);
-													var tr = `<tr><td>` + n.maid + `</td><td>` + n.mAccount + "</td><td><a href='Member.SelectOneByID?id=" + n.maid + "'>" + n.detailBean.mName + "</a></td><td>" + n.detailBean.registrationDate + "</td>";
+													var tr = `<tr><td>` + n.maid + `</td><td>` + n.mAccount + "</td><td><a href='Member.SelectOneByID?id=" + n.maid + "'>" + n.detailBean.mName + "</a></td><td>" + `<img src="` + n.detailBean.mPhoto + `" class="userphoto">` + "</td><td>" + n.detailBean.registrationDate + "</td>";
 													if (n.permissions == 0) {
-														tr += `<td><label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.account + `', this.value)" checked>已封鎖</label>`
-															+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.account + `', this.value)">已啟用</label></td>`;
+														tr += `< td > <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.account + `', this.value)" checked>已封鎖</label>`
+															+ `< label > <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.account + `', this.value)">已啟用</label></td > `;
 													} else if (n.permissions == 1) {
-														tr += `<td><label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.account + `', this.value)">已封鎖</label>`
-															+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.account + `', this.value)" checked>已啟用</label></td>`;
+														tr += `< td > <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.account + `', this.value)">已封鎖</label>`
+															+ `< label > <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.account + `', this.value)" checked>已啟用</label></td > `;
 													}
-													// tr += `</form>`;
+													// tr += `</form > `;
 													tr += "<td><a href='MemberGoToUpdate?account=" + n.account + "'><button type='submit'>更新</button></a></td>";
-													tr += `<td><button type="submit" onclick="deleteAccount('` + n.account + `')">刪除</button></td>`;
+													tr += `<td><button type="submit" onclick="deleteAccount('` + n.account + `')">刪除</button></td >`;
 													tr += "</tr>";
 													table.append(tr);
 												})
@@ -88,8 +88,8 @@
 									<table id="showmember"></table>
 									<table id="showpage">
 										<tr>
-											<td>總共 ${totalPages} 頁 有 ${totalElements} 筆資料</td>
-											<td colspan="3" align="right">Previous
+											<td class="border-bottom-0">總共 ${totalPages} 頁 有 ${totalElements} 筆資料</td>
+											<td colspan="3" align="right" class="border-bottom-0">Previous
 												<c:forEach var="i" begin="1" end="${totalPages}" step="1">
 													<button id="myPage" type="button" onclick="page(${i})">${i}</button>
 												</c:forEach>Next

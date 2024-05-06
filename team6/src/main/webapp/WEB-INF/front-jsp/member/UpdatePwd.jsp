@@ -5,7 +5,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>Döner Pizza - 會員註冊</title>
+<title>Döner Pizza - 修改密碼</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -70,7 +70,6 @@
 							class="nav-item nav-link">活動優惠</a> <a href="#"
 							class="nav-item nav-link">訂位趣</a> <a href="#"
 							class="nav-item nav-link">線上點餐</a>
-						</div>
 					</div>
 					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
 						<a class="nav-link dropdown-toggle"
@@ -101,12 +100,12 @@
 	<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container text-center py-5">
-			<h1 class="display-2 text-dark mb-4 animated slideInDown">會員註冊</h1>
+			<h1 class="display-2 text-dark mb-4 animated slideInDown">修改密碼</h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb justify-content-center mb-0">
 					<li class="breadcrumb-item"><a href="#">首頁</a></li>
 					<li class="breadcrumb-item"><a href="#">會員</a></li>
-					<li class="breadcrumb-item text-dark" aria-current="page">會員註冊</li>
+					<li class="breadcrumb-item text-dark" aria-current="page">修改密碼</li>
 				</ol>
 			</nav>
 		</div>
@@ -127,31 +126,21 @@
 								alt="">
 							</a>
 							<p class="text-center">請填寫下列資訊</p>
-							<form method="POST" action="Member.Insert">
+							<form method="POST" action="Member.UpdatePwd">
 								<div class="mb-3">
-									<label for="exampleInputtext1" class="form-label">使用者帳號</label>
-									<input type="text" class="form-control" id="exampleInputtext1"
-										aria-describedby="textHelp" name="account" required>
-								</div>
-								<div class="mb-3">
-									<label for="exampleInputEmail1" class="form-label">電子信箱</label>
+									<label for="exampleInputEmail1" class="form-label">舊密碼</label>
 									<input type="email" class="form-control"
 										id="exampleInputEmail1" aria-describedby="emailHelp"
 										name="mEmail">
 								</div>
 								<div class="mb-4">
-									<label for="exampleInputPassword1" class="form-label">密碼</label>
+									<label for="exampleInputPassword1" class="form-label">新密碼</label>
 									<input type="password" class="form-control"
 										id="exampleInputPassword1" name="password" required>
 								</div>
 								<div>${err}</div>
 								<button type="submit"
-									class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
-									冊</button>
-								<div class="d-flex align-items-center justify-content-center">
-									<p class="fs-4 mb-0 fw-bold">已有帳號 ?</p>
-									<a class="text-primary fw-bold ms-2" href="/member/login">登入</a>
-								</div>
+									class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">確定</button>
 							</form>
 						</div>
 					</div>
