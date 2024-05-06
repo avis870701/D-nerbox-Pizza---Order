@@ -1,57 +1,33 @@
 USE team6;
-
-CREATE TABLE DeliveryStatus (
-    statusid tinyint PRIMARY KEY,
-    status_name VARCHAR(50)
-);
-
-SELECT * FROM DeliveryStatus
-INSERT INTO DeliveryStatus (statusid, status_name)
-VALUES
-    (1, '待處理'),
-    (2, '已接單'),
-    (3, '外送中'),
-    (4, '已送達'),
-    (5, '已取消');
-
-SELECT * FROM Delivery
+--創建表格
 CREATE TABLE Delivery (
     delivery_id INT	IDENTITY PRIMARY KEY,
 	order_id NVARCHAR(max),
     date DATE,
     address NVARCHAR(MAX),
-    status tinyint DEFAULT 1,
-    FOREIGN KEY (status) REFERENCES DeliveryStatus(statusid),
+	status INT DEFAULT 1
 );
 
-INSERT INTO DeliveryStatus (statusid, status_name)
-VALUES (2, '已接單');
-INSERT INTO delivery(date,address)
-VALUES 
-(GETDATE(), '桃園市中壢區中山東路二段510號')
+--新增假資料
+INSERT INTO delivery(order_id,date,address,status)
+VALUES
+('20240503120214','2024-05-03','桃園市中壢區健行路229號',4),
+('20240503132324','2024-05-03','桃園市中壢區中華路一段267號',4),
+('20240503181324','2024-05-03','桃園市中壢區中華路一段267號',4),
+('20240504121115','2024-05-04','桃園市中壢區中北路200號',4),
+('20240504141532','2024-05-04', '桃園市中壢區健行路229號',4),
+('20240504153919','2024-05-04','桃園市中壢區中和路139號',4),
+('20240504183345','2024-05-04','桃園市中壢區遠東路135號',4),
+('20240504195802','2024-05-04','桃園市中壢區健行路229號',4),
+('20240505114213','2024-05-05','桃園市中壢區健行路229號',5),
+('20240505125426','2024-05-05','桃園市中壢區中華路一段267號',4),
+('20240505160718','2024-05-05','桃園市中壢區健行路229號',4),
+('20240505163312','2024-05-05','桃園市中壢區中和路139號',4),
+('20240505170111','2024-05-05','桃園市中壢區健行路229號',2),
+('20240505181709','2024-05-05','桃園市中壢區中和路139號',3),
+('20240505200112','2024-05-05','桃園市中壢區健行路229號',1);
+SELECT * FROM Delivery
 
-
-SELECT *
-FROM delivery 
-JOIN DeliveryStatus ds ON status = statusid
-WHERE status = 2;
-
---status_name = 1 的訂單
-SELECT delivery_id,order_id,date,address ,status_name
-FROM delivery  
-JOIN DeliveryStatus ds ON status = statusid
-WHERE status = 1;
-
-UPDATE Delivery SET order_id = '20240303013000' WHERE delivery_id = 1;
---INSERT INTO delivery(Detailsid,address) 
---VALUES
---(20240303013000,,'桃園市中壢區中山東路二段510號'),
---(20240312153000,,'桃園市中壢區中山東路二段510號'),
---(20240323133000,,'桃園市中壢區中山東路二段510號'),
---(20240113153000,,'桃園市中壢區中山東路二段510號'),
---(20240121153000,,'桃園市中壢區中山東路二段510號'),
---(20240131153000,,'桃園市中壢區中山東路二段510號'),
---(20240403013000,,'桃園市中壢區健行路229號'),
---(20240413123000,,'桃園市中壢區中山東路二段510號'),
---(20240423153000,,'桃園市中壢區中山東路二段510號'),
---(20240430113000,,'桃園市中壢區中山東路二段510號');
+--測試
+UPDATE Delivery SET status = 2 WHERE delivery_id = 2;
+SELECT * FROM Delivery
