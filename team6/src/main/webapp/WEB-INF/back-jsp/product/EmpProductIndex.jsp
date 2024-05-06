@@ -8,7 +8,7 @@
     <title>Dönerbox Pizza 後臺管理系統</title>
     <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
     <link rel="stylesheet" href="/back/css/styles.min.css" />
-    <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
   </head>
 
@@ -320,6 +320,78 @@
             </div>
           </div>
           <!-- DataTable -->
+          <!-- Offcanvas -->
+          <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">修改產品資料</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <!-- 放東西 -->
+
+              <form id="editForm">
+                <div class="mb-3">
+                  <label for="productId" class="form-label">產品編號:</label> <input type="text" id="productId"
+                    name="productId" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="categoryId" class="form-label">產品類別:</label>
+                  <select id="categoryId" name="categoryId" class="form-select">
+                    <option value="1">披薩</option>
+                    <option value="2">焗烤</option>
+                    <option value="3">炸物</option>
+                    <option value="4">甜點</option>
+                    <option value="5">飲料</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="productName" class="form-label">產品名稱:</label> <input type="text" id="productName"
+                    name="productName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label for="productDesc" class="form-label">產品介紹:</label> <input type="text" id="productDesc"
+                    name="productDesc" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label for="productImg_url" class="form-label">圖片:</label> <input type="file" id="productImg_url"
+                    name="productImg_url" class="form-control" onchange="previewFile()">
+                </div>
+                <div class="mb-3">
+                  <img src="" id="previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
+                </div>
+                <div class=" mb-3">
+                  <label for="productPrice" class="form-label">產品價格:</label> <input type="text" id="productPrice"
+                    name="productPrice" class="form-control" required>
+                </div>
+                <div class=" mb-3">
+                  <label for="productQuantity" class="form-label">產品數量:</label> <input type="text" id="productQuantity"
+                    name="productQuantity" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label for="productStateId" class="form-label">產品狀態:</label>
+                  <select id="productStateId" name="productStateId" class="form-select">
+                    <option value="">修改狀態</option>
+                    <option value="1">上架中</option>
+                    <option value="0">已下架</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="productCreateDate" class="form-label">上架時間:</label> <input type="text"
+                    id="productCreateDate" name="productCreateDate" class="form-control" readonly>
+                </div>
+
+
+                <div class="offcanvas-footer mb-3 d-flex justify-content-between">
+                  <button type="button" class="btn btn-dark-light " data-bs-dismiss="offcanvas">取消</button>
+                  <button type="button" class="btn btn-primary" id="saveChangesBtn" onclick="">確認更新</button>
+                </div>
+                <!-- 放東西 -->
+
+            </div>
+          </div>
+          <!-- Offcanvas -->
 
           <script src="/back/libs/jquery/dist/jquery.min.js"></script>
           <script src="/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -328,7 +400,6 @@
           <script src="/back/libs/apexcharts/dist/apexcharts.min.js"></script>
           <script src="/back/libs/simplebar/dist/simplebar.js"></script>
           <script src="/back/js/dashboard.js"></script>
-          <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
           <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
           <script>
 
@@ -366,7 +437,7 @@
                 },
                 "columns": [
                   { "data": "productId" },
-                  { "data": "productCategory.categoryName" },
+                  { "data": "productCategory.categoryId" },
                   { "data": "productName" },
                   { "data": "productDesc" },
                   {
@@ -379,10 +450,10 @@
                   },
                   { "data": "productPrice" },
                   { "data": "productQuantity" },
-                  { "data": "productState.productStateName" },
+                  { "data": "productStateId.productStateName" },
                   { "data": "productCreateDate" },
                   {
-                    "data": "productState.productStateId",
+                    "data": "productStateId.productStateId",
                     "render": function (data, type, row) {
                       let productId = row.productId;
                       let changeState = `<select onchange="change(` + productId + `, this.value)">
@@ -396,7 +467,8 @@
                   {
                     "data": null,
                     "render": function (data, type, row) {
-                      return '<button type="button" class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">修改</button>';
+                      // return '<button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">修改</button>';
+                      return '<button class="btn btn-warning btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" data-product-data=\'' + JSON.stringify(row) + '\'>修改</button>'
                     }
                   }
                 ]
@@ -424,7 +496,7 @@
                   });
 
                   if (row.length) {
-                    row.data().productState = {
+                    row.data().productStateId = {
                       productStateId: productStateId,
                       productStateName: response
                     };
@@ -435,6 +507,51 @@
               });
             }
           </script>
+          <script>
+
+            // 圖片預覽
+            function previewFile() {
+              const fileInput = document.getElementById('productImg_url');
+              const previewImage = document.getElementById('previewImage');
+              const file = fileInput.files[0];
+
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                  previewImage.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+              } else {
+                previewImage.src = '';
+              }
+            }
+
+            // offcanvas
+
+            $('#offcanvasRight').on('show.bs.offcanvas', function (event) {
+              const button = $(event.relatedTarget);
+              const productData = button.data('product-data');
+
+              // 填充表單欄位
+              $('#productId').val(productData.productId);
+              $('#categoryId').val(productData.productCategory.categoryId);
+              $('#productName').val(productData.productName);
+              $('#productDesc').val(productData.productDesc);
+              $('#productPrice').val(productData.productPrice);
+              $('#productQuantity').val(productData.productQuantity);
+              $('#productStateId').val(productData.productStateId.productStateId);
+              $('#productCreateDate').val(productData.productCreateDate);
+
+              // 如果有圖片網址，顯示圖片預覽
+              if (productData.productImg_url) {
+                $('#previewImage').attr('src', productData.productImg_url);
+              } else {
+                $('#previewImage').attr('src', '');
+              }
+            });
+
+          </script>
+
   </body>
 
   </html>

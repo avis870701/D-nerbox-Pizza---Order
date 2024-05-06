@@ -233,7 +233,7 @@ public class ProductController {
 	// 查全部
 	@GetMapping("/Product_Test_SelectAll")
 	@ResponseBody
-	public ResponseEntity<List<ProductBeanDto>> productTestSelectAll() {
+	public ResponseEntity<List<ProductBeanDto>> productTestSelectAll(Model model) {
 
 		List<ProductBean> selectAll = productService.SelectAll();
 		List<ProductBeanDto> selectAllDto = new ArrayList<>();
@@ -265,11 +265,102 @@ public class ProductController {
 			selectAllDto.add(pBeanDto);		
 		}
 		
+		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
+		model.addAttribute("findAllProductCategory", findAllProductCategory);
+		
 		return ResponseEntity.ok().body(selectAllDto);
 	}
 	
 	
-	
+	// 查出後更新資料
+		@PutMapping("/product_Test_DoUpdate")
+		@ResponseBody
+		public ResponseEntity<ProductBeanDto> product_Test_DoUpdate(
+				@RequestParam("productId") Integer productId,
+				@RequestParam("categoryId") Integer categoryId,
+				@RequestParam("productName") String productName,
+				@RequestParam("productDesc") String productDesc,
+				@RequestParam("productImg_url") MultipartFile mf,
+				@RequestParam("productPrice") Integer productPrice,
+				@RequestParam("productStateId") Integer productStateId,
+				@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
+			// 找產品狀態的bean
+			ProductState productState = pStateService.findProductStateById(productStateId);
+			// 有一些舊資料不需要更新先抓出來等等塞回去
+			ProductBean oldProductBean = productService.SelectById(productId);
+			// 不給修改日期上架日期
+			LocalDate oldproductCreateDate = oldProductBean.getProductCreateDate();
+			
+			if (!mf.isEmpty()) {
+				String fileName = mf.getOriginalFilename();
+//				String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
+				String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
+				File fileDirPath = new File(fileDir, fileName);
+				mf.transferTo(fileDirPath);
+				
+				String productImg_url = "/images/product/" + fileName;
+				ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
+				productService.UpdateProduct(productBean);
+				
+				ProductBean newPbean = productService.SelectById(productBean.getProductId());
+				
+				ProductCategoryDto pCategoryDto = new ProductCategoryDto(
+						newPbean.getProductCategory().getCategoryId(),
+						newPbean.getProductCategory().getCategoryName()
+						);
+				
+				ProductStateDto pStateDto = new ProductStateDto(
+						newPbean.getProductState().getProductStateId(),
+						newPbean.getProductState().getProductStateName());
+				
+				
+				ProductBeanDto pBeanDto = new ProductBeanDto(
+						newPbean.getProductId(),
+						newPbean.getCategoryId(),
+						newPbean.getProductName(),
+						newPbean.getProductDesc(),
+						newPbean.getProductImg_url(),
+						newPbean.getProductPrice(),
+						newPbean.getProductQuantity(),
+						newPbean.getProductCreateDate(),
+						pCategoryDto,
+						pStateDto );
+				
+				return ResponseEntity.ok(pBeanDto);
+			} else {
+				
+				ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
+				productService.UpdateProduct(productBeanNoImg);
+				
+				ProductBean newPbean = productService.SelectById(productBeanNoImg.getProductId());
+				
+				ProductCategoryDto pCategoryDto = new ProductCategoryDto(
+						newPbean.getProductCategory().getCategoryId(),
+						newPbean.getProductCategory().getCategoryName()
+						);
+				
+				ProductStateDto pStateDto = new ProductStateDto(
+						newPbean.getProductState().getProductStateId(),
+						newPbean.getProductState().getProductStateName());
+				
+				
+				ProductBeanDto pBeanDto = new ProductBeanDto(
+						newPbean.getProductId(),
+						newPbean.getCategoryId(),
+						newPbean.getProductName(),
+						newPbean.getProductDesc(),
+						newPbean.getProductImg_url(),
+						newPbean.getProductPrice(),
+						newPbean.getProductQuantity(),
+						newPbean.getProductCreateDate(),
+						pCategoryDto,
+						pStateDto );
+				
+				return ResponseEntity.ok(pBeanDto);
+			}
+			
+		}
+		
 	
 	
 	
