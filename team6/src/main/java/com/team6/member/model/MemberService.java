@@ -65,6 +65,9 @@ public class MemberService {
 	public Page<MemberAccountBean> findAllByPage(Pageable pageable) {
 		return rma.findAll(pageable);
 	}
+	public Page<MemberAccountBean> findAllByNotHiddenByPage(Pageable pageable) {
+		return rma.findAllByNotHiddenByPage(pageable);
+	}
 	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,/*String type,*/String name) {
 		return rma.findByNamePage(pageable,/*type,*/name);
 	}

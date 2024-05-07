@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>後台系統</title>
-    <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
+    <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
     <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
     <link rel="stylesheet" href="/back/css/styles.min.css" />
   </head>
@@ -21,7 +21,7 @@
         <div>
           <div class="brand-logo d-flex align-items-center justify-content-between">
             <a href="#" class="text-nowrap logo-img">
-              <img src="/images/member/images/DonerPizzaSmall.png" width="180" alt="" />
+              <img src="/images/member/DonerPizzaSmall.png" width="180" alt="" />
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
               <i class="ti ti-x fs-8"></i>
@@ -35,7 +35,7 @@
                 <span class="hide-menu">後台功能列表</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/member/Member.SelectAll" aria-expanded="false">
+                <a class="sidebar-link" href="/member/Member.SelectAll/1" aria-expanded="false">
                   <span>
                     <i class="ti ti-user-plus"></i>
                   </span>
@@ -43,7 +43,7 @@
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/member/MemberGetAll2/1" aria-expanded="false">
+                <a class="sidebar-link" href="/member/Member.SelectAllByNotHidden/1" aria-expanded="false">
                   <span>
                     <i class="ti ti-article"></i>
                   </span>
@@ -186,7 +186,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="/member/images/user.png" alt="" width="35" height="35" class="rounded-circle">
+                    <img src="/member/user.png" alt="" width="35" height="35" class="rounded-circle">
                   </a>
                   <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                     <div class="message-body">
@@ -487,7 +487,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -513,7 +513,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -539,7 +539,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -565,7 +565,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -603,7 +603,7 @@
           <div class="imgcontainer">
             <span onclick="document.getElementById('memberInsert').style.display='none'" class="close"
               title="Close Modal">&times;</span>
-            <img src="/images/member/images/DonerPizzaSmall.png" alt="Avatar" class="avatar">
+            <img src="/images/member/DonerPizzaSmall.png" alt="Avatar" class="avatar">
           </div>
           <p class="text-center">請填寫下列資訊</p>
           <div class="container">

@@ -65,32 +65,16 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<div class="navbar-nav ms-auto">
-						<a href="#" class="nav-item nav-link active">產品</a> <a href="#"
-							class="nav-item nav-link">活動優惠</a> <a href="#"
-							class="nav-item nav-link">訂位趣</a> <a href="#"
-							class="nav-item nav-link">線上點餐</a>
-						</div>
-					</div>
-					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-						<a class="nav-link dropdown-toggle"
-							href="#" > <img src="/member/images/user.png"
-							alt="" width="35" height="35" class="rounded-circle">${name}
-						</a>
-						<div class="dropdown-menu bg-light rounded-0 m-0">
-							<a href="#" class="dropdown-item"> <i
-								class="ti ti-user fs-6"></i>
-								<p class="mb-0 dropdown-item ">會員資料</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-mail fs-6"></i>
-								<p class="mb-0 dropdown-item">訂單查詢</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-list-check fs-6"></i>
-								<p class="mb-0 dropdown-item">優惠券</p>
-							</a> <a href="/member/logout"
-								class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
-						</div>
-				</div>
+                        <div class="navbar-nav ms-auto">
+                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="#" class="nav-item nav-link">活動優惠</a>
+                            <a href="#" class="nav-item nav-link">訂位趣</a>
+                            <a href="#" class="nav-item nav-link">線上點餐</a>
+                        </div>
+                        <div class="border-start ps-4 d-none d-lg-block">
+                           <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 
+                        </div>
+                    </div>
 			</nav>
 		</div>
 	</div>
@@ -123,7 +107,7 @@
 						<div class="card-body">
 							<a href="#"
 								class="text-nowrap logo-img text-center d-block py-3 w-100">
-								<img src="/images/member/images/DonerPizzaSmall.png" width="180"
+								<img src="/images/member/DonerPizzaSmall.png" width="180"
 								alt="">
 							</a>
 							<p class="text-center">請填寫下列資訊</p>

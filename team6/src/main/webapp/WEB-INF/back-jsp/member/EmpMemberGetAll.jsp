@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <!DOCTYPE html>
   <html>
 
@@ -9,6 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
     <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
     <link rel="stylesheet" href="/back/css/styles.min.css" />
+    <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
   </head>
 
   <body>
@@ -21,7 +23,7 @@
         <div>
           <div class="brand-logo d-flex align-items-center justify-content-between">
             <a href="#" class="text-nowrap logo-img">
-              <img src="/images/member/images/DonerPizzaSmall.png" width="180" alt="" />
+              <img src="/images/member/DonerPizzaSmall.png" width="180" alt="" />
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
               <i class="ti ti-x fs-8"></i>
@@ -126,7 +128,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="/member/images/user.png" alt="" width="35" height="35" class="rounded-circle">
+                    <img src="/member/user.png" alt="" width="35" height="35" class="rounded-circle">
                   </a>
                   <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                     <div class="message-body">
@@ -246,70 +248,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-4 d-flex align-items-stretch">
-              <div class="card w-100">
-                <div class="card-body p-4">
-                  <div class="mb-4">
-                    <h5 class="card-title fw-semibold">最近交易 time</h5>
-                  </div>
-                  <ul class="timeline-widget mb-0 position-relative mb-n5">
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment received from John Doe of $385.90</div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">10:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                          href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment was made of $64.95 to Michael</div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                          href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-                        <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded
-                      </div>
-                    </li>
-                    <li class="timeline-item d-flex position-relative overflow-hidden">
-                      <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                      <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                        <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                      </div>
-                      <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="col-lg-12 d-flex align-items-stretch">
               <div class="card w-100">
                 <div class="card-body p-4">
                   <h5 class="card-title fw-semibold mb-4">所有會員</h5>
@@ -323,7 +262,7 @@
                         <td class="border-bottom-0">總共 ${totalPages} 頁 有 ${totalElements} 筆資料</td>
                         <td class="border-bottom-0">Previous
                          <c:forEach var="i" begin="1" end="${totalPages}" step="1">
-							<button id="myPage" type="button" onclick="page(${i})">${i}</button>
+							<button class="btn btn-primary" id="myPage" type="button" onclick="page(${i})">${i}</button>
 						</c:forEach>Next
                         </td>
                       </tr>
@@ -337,7 +276,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -363,7 +302,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -389,7 +328,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -415,7 +354,7 @@
             <div class="col-sm-6 col-xl-3">
               <div class="card overflow-hidden rounded-2">
                 <div class="position-relative">
-                  <a href="javascript:void(0)"><img src="/product/images/向日葵.jpg" class="card-img-top rounded-0"
+                  <a href="javascript:void(0)"><img src="/product/向日葵.jpg" class="card-img-top rounded-0"
                       alt="..."></a>
                   <a href="javascript:void(0)"
                     class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
@@ -453,7 +392,7 @@
           <div class="imgcontainer">
             <span onclick="document.getElementById('memberInsert').style.display='none'" class="close"
               title="Close Modal">&times;</span>
-            <img src="/images/member/images/DonerPizzaSmall.png" alt="Avatar" class="avatar">
+            <img src="/images/member/DonerPizzaSmall.png" alt="Avatar" class="avatar">
           </div>
           <p class="text-center">請填寫下列資訊</p>
           <div class="container">
@@ -490,7 +429,6 @@
     <script src="/back/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="/back/libs/simplebar/dist/simplebar.js"></script>
     <script src="/back/js/dashboard.js"></script>
-    <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
     <script src="/back/js/member/EmpMemberGetAll.js"></script>
   </body>
 

@@ -34,8 +34,8 @@ function loadPage(indexPage) {
                             + `< label > <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.account + `', this.value)" checked>已啟用</label></td > `;
                     }
                     // tr += `</form > `;
-                    tr += `<td class="border-bottom-0"><a href='MemberGoToUpdate?account=` + n.account + "'><button type='submit'>更新</button></a></td>";
-                    tr += `<td class="border-bottom-0"><button type="submit" onclick="deleteAccount('` + n.account + `')">刪除</button></td >`;
+                    tr += `<td class="border-bottom-0"><a href='MemberGoToUpdate?account=` + n.account + `'><button class="btn btn-primary" type='submit'>更新</button></a></td>`;
+                    tr += `<td class="border-bottom-0"><button class="btn btn-primary" type="submit" onclick="deleteAccount('` + n.account + `')">刪除</button></td >`;
                     tr += "</tr>";
                     table.append(tr);
                 })

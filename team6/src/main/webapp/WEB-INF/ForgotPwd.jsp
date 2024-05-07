@@ -10,7 +10,7 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <link rel="shortcut icon" type="image/png"
-	href="/member/images/pizzaQ.png" />
+	href="/images/member/pizzaQ.png" />
 
 <!-- Favicon -->
 <link href="/front/img/favicon.ico" rel="icon">
@@ -65,41 +65,16 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<div class="navbar-nav ms-auto">
-						<a href="#" class="nav-item nav-link active">產品</a> <a href="#"
-							class="nav-item nav-link">活動優惠</a> <a href="#"
-							class="nav-item nav-link">訂位趣</a> <a href="#"
-							class="nav-item nav-link">線上點餐</a>
-						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle"
-								data-bs-toggle="dropdown">關於?</a>
-							<div class="dropdown-menu bg-light rounded-0 m-0">
-								<a href="#" class="dropdown-item">Features</a> <a href="#"
-									class="dropdown-item">Blog Article</a> <a href="#"
-									class="dropdown-item">Testimonial</a> <a href="#"
-									class="dropdown-item">404 Page</a>
-							</div>
-						</div>
-					</div>
-					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-						<a class="nav-link dropdown-toggle"
-							href="#" > <img src="/member/images/user.png"
-							alt="" width="35" height="35" class="rounded-circle">${name}
-						</a>
-						<div class="dropdown-menu bg-light rounded-0 m-0">
-							<a href="#" class="dropdown-item"> <i
-								class="ti ti-user fs-6"></i>
-								<p class="mb-0 dropdown-item ">會員資料</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-mail fs-6"></i>
-								<p class="mb-0 dropdown-item">訂單查詢</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-list-check fs-6"></i>
-								<p class="mb-0 dropdown-item">優惠券</p>
-							</a> <a href="/member/logout"
-								class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
-						</div>
-				</div>
+                        <div class="navbar-nav ms-auto">
+                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="#" class="nav-item nav-link">活動優惠</a>
+                            <a href="#" class="nav-item nav-link">訂位趣</a>
+                            <a href="#" class="nav-item nav-link">線上點餐</a>
+                        </div>
+                        <div class="border-start ps-4 d-none d-lg-block">
+                           <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 
+                        </div>
+                    </div>
 			</nav>
 		</div>
 	</div>
@@ -110,12 +85,12 @@
 	<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container text-center py-5">
-			<h1 class="display-2 text-dark mb-4 animated slideInDown">修改密碼</h1>
+			<h1 class="display-2 text-dark mb-4 animated slideInDown">忘記密碼</h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb justify-content-center mb-0">
 					<li class="breadcrumb-item"><a href="#">首頁</a></li>
 					<li class="breadcrumb-item"><a href="#">會員</a></li>
-					<li class="breadcrumb-item text-dark" aria-current="page">修改密碼</li>
+					<li class="breadcrumb-item text-dark" aria-current="page">忘記密碼</li>
 				</ol>
 			</nav>
 		</div>
@@ -132,19 +107,18 @@
 						<div class="card-body">
 							<a href="#"
 								class="text-nowrap logo-img text-center d-block py-3 w-100">
-								<img src="/images/member/images/DonerPizzaSmall.png" width="180"
-								alt="">
+								<img src="/images/member/DonerPizzaSmall.png" width="180" alt="">
 							</a>
 							<p class="text-center">請填寫下列資訊</p>
 							<form method="POST" action="Member.UpdatePwd">
 								<div class="mb-3">
-									<label for="exampleInputEmail1" class="form-label">舊密碼</label>
+									<label for="exampleInputEmail1" class="form-label">電子信箱</label>
 									<input type="email" class="form-control"
 										id="exampleInputEmail1" aria-describedby="emailHelp"
 										name="mEmail">
 								</div>
 								<div class="mb-4">
-									<label for="exampleInputPassword1" class="form-label">新密碼</label>
+									<label for="exampleInputPassword1" class="form-label">新密碼?</label>
 									<input type="password" class="form-control"
 										id="exampleInputPassword1" name="password" required>
 								</div>

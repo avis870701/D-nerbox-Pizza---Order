@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>後台 登入</title>
-  <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
+  <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
   <link rel="stylesheet" href="/back/css/styles.min.css" />
 </head>
 
@@ -22,7 +22,7 @@
             <div class="card mb-0">
               <div class="card-body">
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="/images/member/images/DönerPizza.jpg" width="180" alt="">
+                  <img src="/images/member/DönerPizza.jpg" width="180" alt="">
                 </a>
                 <p class="text-center">公司後台登入系統</p>
                 <form action="/emp/emplogin.controller" method="post">

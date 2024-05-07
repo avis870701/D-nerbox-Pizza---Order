@@ -73,7 +73,7 @@
 					</div>
 					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
 						<a class="nav-link dropdown-toggle"
-							href="#" > <img src="/member/images/user.png"
+							href="#" > <img src="/images/member/user.png"
 							alt="" width="35" height="35" class="rounded-circle">${name}
 						</a>
 						<div class="dropdown-menu bg-light rounded-0 m-0">

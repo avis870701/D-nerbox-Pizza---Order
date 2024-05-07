@@ -76,7 +76,7 @@ public class MemberController {
 	
 	@RequestMapping(path = "/forgot", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToForgotPwd() {
-		return "forward:/WEB-INF/front-jsp/member/ForgotPwd.jsp";
+		return "forward:/WEB-INF/ForgotPwd.jsp";
 	}
 
 	// 來到 後台登入畫面
@@ -144,32 +144,61 @@ public class MemberController {
 	}
 	// ===================================================================================================
 
-	// 查詢系列--全部
-	@GetMapping("/Member.SelectAll")
-	public String SelectAll(Model model) {
-		List<MemberAccountBean> beans = service.findAll();
-		if (beans.isEmpty()) {
+	// 查詢系列--全部(假刪除以外)
+	@GetMapping("/Member.SelectAllByNotHidden/{pageNo}")
+	public String SelectAllByNotHidden(@PathVariable("pageNo") int pageNo, Model model) {
+		int pageSize = 10;
+		if(pageNo<=0) {
+			pageNo=1;
+		}
+		Pageable pageable=PageRequest.of(pageNo-1, pageSize);
+		Page<MemberAccountBean> page = service.findAllByNotHiddenByPage(pageable);
+		int totalPages = page.getTotalPages();
+		long totalElements = page.getTotalElements();
+		if (totalElements==0) {
 			model.addAttribute("err", "查無資料");
-			model.addAttribute("totalElements", beans.size());
+			model.addAttribute("totalElements", totalElements);
 			return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
 		}
-		model.addAttribute("beans", beans);
-		model.addAttribute("totalElements", beans.size());
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalElements",totalElements);
+		model.addAttribute(page.getContent());
 		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
 	}
-	@GetMapping("/Member.SelectAllByNotHidden")
-	public String SelectAllByNotHidden(Model model) {
-		List<MemberAccountBean> beans = service.findAllByNotHidden();
-		if (beans.isEmpty()) {
-			model.addAttribute("err", "查無資料");
-			model.addAttribute("totalElements", beans.size());
-			return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-		}
-		model.addAttribute("beans", beans);
-		model.addAttribute("totalElements", beans.size());
-		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-	}
+	@RequestMapping(path = "/MemberGetAllByNotHidden/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public List<MemberAccountBean> processQueryAllByNotHiddenByPage(@PathVariable("pageNo") int pageNo, Model m,
+			HttpServletRequest request) {
+		int pageSize = 10;
+		Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
+		Page<MemberAccountBean> page = service.findAllByNotHiddenByPage(p1);
 
+		int totalPages = page.getTotalPages();
+		long totalElements = page.getTotalElements();
+
+		HttpSession session = request.getSession();
+		session.setAttribute("totalPages", totalPages);
+		session.setAttribute("totalElements", totalElements);
+
+		return page.getContent();
+	}
+	
+	// 查詢系列--全部
+	@RequestMapping(path = "/Member.SelectAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String GetAllByPage(@PathVariable("pageNo") int pageNo, Model m) {
+		int pageSize = 10;
+		if(pageNo<=0) {
+			pageNo=1;
+		}
+		Pageable pageable=PageRequest.of(pageNo-1, pageSize);
+		Page<MemberAccountBean> page = service.findAllByPage(pageable);
+		int totalPages = page.getTotalPages();
+		long totalElements = page.getTotalElements();
+		m.addAttribute("totalPages",totalPages);
+		m.addAttribute("totalElements",totalElements);
+		m.addAttribute(page.getContent());
+		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+	}
 	@RequestMapping(path = "/MemberGetAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public List<MemberAccountBean> processQueryAllByPage(@PathVariable("pageNo") int pageNo, Model m,
@@ -188,21 +217,6 @@ public class MemberController {
 		return page.getContent();
 	}
 	
-	@RequestMapping(path = "/MemberGetAll2/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String GetAllByPage(@PathVariable("pageNo") int pageNo, Model m,HttpServletRequest request) {
-		int pageSize = 10;
-		if(pageNo<=0) {
-			pageNo=1;
-		}
-		Pageable pageable=PageRequest.of(pageNo-1, pageSize);
-		Page<MemberAccountBean> page = service.findAllByPage(pageable);
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-		m.addAttribute("totalPages",totalPages);
-		m.addAttribute("totalElements",totalElements);
-		m.addAttribute(page.getContent());
-		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-	}
 	// ===================================================================================================
 
 	// 新增會員
@@ -302,3 +316,16 @@ public class MemberController {
 		return "redirect:Member.SelectAll";
 	}
 }
+
+//	@GetMapping("/Member.SelectAll")
+//	public String SelectAll(Model model) {
+//		List<MemberAccountBean> beans = service.findAll();
+//		if (beans.isEmpty()) {
+//			model.addAttribute("err", "查無資料");
+//			model.addAttribute("totalElements", beans.size());
+//			return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+//		}
+//		model.addAttribute("beans", beans);
+//		model.addAttribute("totalElements", beans.size());
+//		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+//	}
