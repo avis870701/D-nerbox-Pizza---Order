@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.team6.member.model.MemberDetailBean;
+
 public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 
 	@Query(value = "from Reserve where reservationName like concat('%',?1,'%') and reservationStatus = 3 and checkInStatus = 0 and reservationDate = ?2 order by reservationDate asc, reservationTime asc")
@@ -95,4 +97,8 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	@Query(value = "FROM Reserve WHERE CAST(reservationDate AS DATE) = DATEADD(day, 1, CAST(GETDATE() AS DATE)) and reservationStatus=1")	
 	public List<Reserve> selectCustomerTommorowReservation();
 	
+	
+	//測試用(抓的到mail嗎)
+	@Query(value = "SELECT md.mEmail FROM reservation r JOIN memberAccount ma ON r.reservationId = ma.maid JOIN memberDetail md ON ma.maid = md.fk_maId" , nativeQuery = true)
+	public List<String> test();
 }

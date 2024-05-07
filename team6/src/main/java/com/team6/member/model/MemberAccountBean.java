@@ -1,6 +1,10 @@
 package com.team6.member.model;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import com.team6.reservation.model.Reserve;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -29,6 +34,29 @@ public class MemberAccountBean {
 	
 	@OneToOne(mappedBy = "accountBean",cascade = CascadeType.ALL)
 	private MemberDetailBean detailBean;
+	
+//	//測試用
+//	@OneToMany(mappedBy = "memberAccountBean",cascade = {CascadeType.REFRESH,CascadeType.MERGE})
+//	private List<Reserve> reserve;
+//	
+//	public List<Reserve> getReserve() {
+//		return reserve;
+//	}
+//	public void setReserve(List<Reserve> reserve) {
+//		this.reserve = reserve;
+//	}	
+//	
+//	public MemberAccountBean(int maid, String mAccount, String mPassword, int permissions, int hidden,
+//			MemberDetailBean detailBean, List<Reserve> reserve) {
+//		this.maid = maid;
+//		this.mAccount = mAccount;
+//		this.mPassword = mPassword;
+//		this.permissions = permissions;
+//		this.hidden = hidden;
+//		this.detailBean = detailBean;
+//		this.reserve = reserve;
+//	}
+//	//測試用
 	
 	// 方法----------------------------------------------------------------
 	public MemberAccountBean() {}
