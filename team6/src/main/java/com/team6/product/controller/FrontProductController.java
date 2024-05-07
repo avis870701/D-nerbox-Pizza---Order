@@ -39,25 +39,26 @@ public class FrontProductController {
 	@GetMapping("/product.test")
 	public String testProductQuantity(Model model) {
 		// 18號測試用
-		ProductBean productBean = productService.SelectById(18);
+		ProductBean productBean = productService.SelectById(31);
 		model.addAttribute("productBean", productBean);
 		return "forward:/WEB-INF/front-jsp/product/Number.jsp";
 	}
 	
 	// 測試扣產品數量2，用@RequestBody接 然後使用DTO傳輸資料
-//	@PutMapping("/Product_coQuantity")
-//	@ResponseBody
-//	public ResponseEntity<ProductBeanDto> testCoProductQuantity(
-//			@RequestBody ProductTest productTest){
-//		ProductBean productBean = productService.SelectById(productTest.getProductId());
-//		Integer pQuantity = productBean.getProductQuantity();
-//		
-//		
-//		pQuantity -= productTest.getQuantity();
-//		productBean.setProductQuantity(pQuantity);
-//		productService.UpdateProduct(productBean);
-//		
-//		ProductBean newPbean = productService.SelectById(productBean.getProductId());
+	@PutMapping("/Product_coQuantity")
+	@ResponseBody
+	public ResponseEntity<ProductBean> testCoProductQuantity(
+			@RequestBody ProductTest productTest){
+		ProductBean productBean = productService.SelectById(productTest.getProductId());
+		Integer pQuantity = productBean.getProductQuantity();
+		
+		
+		pQuantity -= productTest.getQuantity();
+		productBean.setProductQuantity(pQuantity);
+		productService.UpdateProduct(productBean);
+		
+		ProductBean newPbean = productService.SelectById(productBean.getProductId());
+		
 //		ProductBeanDto productBeanDto = new ProductBeanDto(
 //				newPbean.getProductId(),
 //				newPbean.getProductCategory().getCategoryName(),
@@ -65,9 +66,9 @@ public class FrontProductController {
 //				newPbean.getProductImg_url(), newPbean.getProductPrice(),
 //				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
 //				newPbean.getProductState().getProductStateName());
-//		
-//		return ResponseEntity.ok().body(productBeanDto);
-//	}
+		
+		return ResponseEntity.ok().body(newPbean);
+	}
 	
 	
 }

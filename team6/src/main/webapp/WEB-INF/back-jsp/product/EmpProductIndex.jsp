@@ -438,7 +438,7 @@
                 },
                 "columns": [
                   { "data": "productId" },
-                  { "data": "productCategory.categoryName" },
+                  { "data": "categoryName" },
                   { "data": "productName" },
                   { "data": "productDesc" },
                   {
@@ -451,10 +451,10 @@
                   },
                   { "data": "productPrice" },
                   { "data": "productQuantity" },
-                  { "data": "productState.productStateName" },
+                  { "data": "stateName" },
                   { "data": "productCreateDate" },
                   {
-                    "data": "productState.productStateId",
+                    "data": "productState",
                     "render": function (data, type, row) {
                       let productId = row.productId;
                       let changeState = `<select onchange="change(` + productId + `, this.value)">
@@ -510,12 +510,14 @@
                   let row = table.row(function (index, data, node) {
                     return data.productId === productId;
                   });
-
+                  console.log(row.data().stateName); // 這邊印的是[object Object]
                   if (row.length) {
-                    row.data().productState = {
-                      productStateId: productStateId,
-                      productStateName: response
-                    };
+                    let stateObj = row.data().stateName;
+
+                    // 更新 stateName 物件的屬性值
+                    // stateObj.productStateId = productStateId;
+                    stateObj.productStateName = response;
+
                     row.invalidate(); // 重新渲染
                   }
                 },

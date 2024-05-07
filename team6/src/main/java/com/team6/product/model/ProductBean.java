@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 //@JsonIgnoreProperties({"productCategory", "productState"}) order的設計不需要處理無限迴圈先註解
 @Entity
@@ -52,17 +53,33 @@ public class ProductBean implements Serializable {
 	@Column(name = "PRODUCTCREATEDATE")
 	private LocalDate productCreateDate;
 
-//	@JsonIgnore //order的設計不需要處理無限迴圈先註解
+	@JsonIgnore 
 	@JoinColumn(name = "CATEGORYID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
+	
+	// 避免傳一個集合到前台,所以用這個方式抓資料
+	@Transient // 表示這個屬性不會對應到資料庫
+	private String categoryName;
+		
+	public String getCategoryName() {
+		return productCategory.getCategoryName();
+	}
 
-//	@JsonIgnore //order的設計不需要處理無限迴圈先註解
+	@JsonIgnore //order的設計不需要處理無限迴圈先註解
 	@JoinColumn(name = "PRODUCTSTATEID", insertable = false, updatable = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductState productState;
+	
+	@Transient
+	private String stateName;
+	
+	public String getStateName() {
+		return productState.getProductStateName();
+	}
+	
 
-//	----------------------
+	//	----------------------
 	public ProductBean() {
 	}
 

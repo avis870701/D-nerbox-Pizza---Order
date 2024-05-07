@@ -234,7 +234,7 @@ public class ProductController {
 	// 查全部
 	@GetMapping("/Product_Test_SelectAll")
 	@ResponseBody
-	public ResponseEntity<List<ProductBeanDto>> productTestSelectAll(Model model) {
+	public ResponseEntity<List<ProductBean>> productTestSelectAll(Model model) {
 
 		List<ProductBean> selectAll = productService.SelectAll();
 		List<ProductBeanDto> selectAllDto = new ArrayList<>();
@@ -269,14 +269,14 @@ public class ProductController {
 		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
 		model.addAttribute("findAllProductCategory", findAllProductCategory);
 		
-		return ResponseEntity.ok().body(selectAllDto);
+		return ResponseEntity.ok().body(selectAll);
 	}
 	
 	
 	// 查出後更新資料
 		@PutMapping("/product_Test_DoUpdate")
 		@ResponseBody
-		public ResponseEntity<ProductBeanDto> product_Test_DoUpdate(
+		public ResponseEntity<ProductBean> product_Test_DoUpdate(
 				@RequestParam("productId") Integer productId,
 				@RequestParam("categoryId") Integer categoryId,
 				@RequestParam("productName") String productName,
@@ -334,7 +334,7 @@ public class ProductController {
 						pCategoryDto,
 						pStateDto );
 				
-				return ResponseEntity.ok(pBeanDto);
+				return ResponseEntity.ok(newPbean);
 			} else {
 				
 //				ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
@@ -370,7 +370,7 @@ public class ProductController {
 						pCategoryDto,
 						pStateDto );
 				
-				return ResponseEntity.ok(pBeanDto);
+				return ResponseEntity.ok(newPbean);
 			}
 			
 		}

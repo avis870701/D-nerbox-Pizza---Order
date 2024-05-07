@@ -8,8 +8,6 @@ public class ProductBeanDto {
 
 	private Integer CategoryId; 
 	
-//	private String CategoryName;
-
 	private String productName;
 
 	private String productDesc;
@@ -22,11 +20,12 @@ public class ProductBeanDto {
 
 	private LocalDate productCreateDate;
 
-//	private String ProductStateName;
-	
 	private ProductCategoryDto productCategory;
 	
 	private ProductStateDto productState;
+//------------------測試----------------------	
+	private String CategoryName;
+	private String ProductStateName;
 	
 //	----------------------------------
 
@@ -48,19 +47,19 @@ public class ProductBeanDto {
 		this.productState = productState;
 	}
 
-//	public ProductBeanDto(Integer productId, String categoryName, String productName, String productDesc,
-//			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
-//			String productStateName) {
-//		this.productId = productId;
-//		this.CategoryName = categoryName;
-//		this.productName = productName;
-//		this.productDesc = productDesc;
-//		this.productImg_url = productImg_url;
-//		this.productPrice = productPrice;
-//		this.productQuantity = productQuantity;
-//		this.productCreateDate = productCreateDate;
-//		this.ProductStateName = productStateName;
-//	}
+	public ProductBeanDto(Integer productId, String categoryName, String productName, String productDesc,
+			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
+			String productStateName) {
+		this.productId = productId;
+		this.CategoryName = categoryName;
+		this.productName = productName;
+		this.productDesc = productDesc;
+		this.productImg_url = productImg_url;
+		this.productPrice = productPrice;
+		this.productQuantity = productQuantity;
+		this.productCreateDate = productCreateDate;
+		this.ProductStateName = productStateName;
+	}
 	
 //	----------------------------------
 	
@@ -144,8 +143,22 @@ public class ProductBeanDto {
 	public void setProductState(ProductStateDto productState) {
 		this.productState = productState;
 	}
+//-------------------測試--------------
 
+	public String getCategoryName() {
+		return CategoryName;
+	}
 
-	
+	public void setCategoryName(String categoryName) {
+		CategoryName = categoryName;
+	}
+
+	public String getProductStateName() {
+		return ProductStateName;
+	}
+
+	public void setProductStateName(String productStateName) {
+		ProductStateName = productStateName;
+	}
 
 }
