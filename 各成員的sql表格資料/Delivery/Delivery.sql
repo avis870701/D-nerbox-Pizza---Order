@@ -1,11 +1,33 @@
 USE team6;
-CREATE TABLE delivery (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    Detailsid INT, -- 假設這是與披薩訂單詳情相關的信息（可能需要澄清）
-    deliverystate INT, -- 外送狀態
-    deliveryEmpid INT, -- 外送員工 ID，外鍵關聯 deliveryEmp 表
-    address NVARCHAR(MAX) NOT NULL, -- 外送地址
-    --FOREIGN KEY (Detailsid) REFERENCES pizzaOrder(orderId), -- 參考披薩訂單相關的表
-    FOREIGN KEY (deliveryEmpid) REFERENCES deliveryEmp(empid) -- 參考外送員工表的 empid
+--創建表格
+CREATE TABLE Delivery (
+    delivery_id INT	IDENTITY PRIMARY KEY,
+	order_id NVARCHAR(max),
+    date DATE,
+    address NVARCHAR(MAX),
+	status INT DEFAULT 1
 );
-SELECT * FROM delivery
+
+--新增假資料
+INSERT INTO delivery(order_id,date,address,status)
+VALUES
+('20240503120214','2024-05-03','桃園市中壢區健行路229號',4),
+('20240503132324','2024-05-03','桃園市中壢區中華路一段267號',4),
+('20240503181324','2024-05-03','桃園市中壢區中華路一段267號',4),
+('20240504121115','2024-05-04','桃園市中壢區中北路200號',4),
+('20240504141532','2024-05-04', '桃園市中壢區健行路229號',4),
+('20240504153919','2024-05-04','桃園市中壢區中和路139號',4),
+('20240504183345','2024-05-04','桃園市中壢區遠東路135號',4),
+('20240504195802','2024-05-04','桃園市中壢區健行路229號',4),
+('20240505114213','2024-05-05','桃園市中壢區健行路229號',5),
+('20240505125426','2024-05-05','桃園市中壢區中華路一段267號',4),
+('20240505160718','2024-05-05','桃園市中壢區健行路229號',4),
+('20240505163312','2024-05-05','桃園市中壢區中和路139號',4),
+('20240505170111','2024-05-05','桃園市中壢區健行路229號',2),
+('20240505181709','2024-05-05','桃園市中壢區中和路139號',3),
+('20240505200112','2024-05-05','桃園市中壢區健行路229號',1);
+SELECT * FROM Delivery
+
+--測試
+UPDATE Delivery SET status = 2 WHERE delivery_id = 2;
+SELECT * FROM Delivery

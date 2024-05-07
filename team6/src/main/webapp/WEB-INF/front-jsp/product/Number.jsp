@@ -80,7 +80,7 @@
 								<%=productBean.getProductId() %>
 							</td>
 							<td>
-								<%=productBean.getProductCategory().getCategoryName() %>
+								<%=productBean.getCategoryName() %>
 							</td>
 							<td>
 								<%=productBean.getProductName() %>
@@ -96,7 +96,7 @@
 								<%=productBean.getProductQuantity() %>
 							</td>
 							<td>
-								<%=productBean.getProductState().getProductStateName() %>
+								<%=productBean.getStateName() %>
 							</td>
 							<td>
 								<%=productBean.getProductCreateDate() %>
@@ -196,7 +196,7 @@
 							      	<td><img src="` + product.productImg_url + `" alt="產品圖片"></td>
 							      	<td>` + product.productPrice + `</td>
 							      	<td>` + product.productQuantity + `</td>
-							      	<td>` + product.productStateName + `</td>
+							      	<td>` + product.stateName + `</td>
 							      	<td>` + product.productCreateDate + `</td>
 								</tr>
 							</table>

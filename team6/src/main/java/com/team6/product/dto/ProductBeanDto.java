@@ -6,8 +6,8 @@ public class ProductBeanDto {
 
 	private Integer productId;
 
-	private String CategoryName;
-
+	private Integer CategoryId; 
+	
 	private String productName;
 
 	private String productDesc;
@@ -20,11 +20,31 @@ public class ProductBeanDto {
 
 	private LocalDate productCreateDate;
 
+	private ProductCategoryDto productCategory;
+	
+	private ProductStateDto productState;
+//------------------測試----------------------	
+	private String CategoryName;
 	private String ProductStateName;
 	
 //	----------------------------------
 
 	public ProductBeanDto() {
+	}
+
+	public ProductBeanDto(Integer productId, Integer categoryId, String productName, String productDesc,
+			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
+			ProductCategoryDto productCategory, ProductStateDto productState) {
+		this.productId = productId;
+		this.CategoryId = categoryId;
+		this.productName = productName;
+		this.productDesc = productDesc;
+		this.productImg_url = productImg_url;
+		this.productPrice = productPrice;
+		this.productQuantity = productQuantity;
+		this.productCreateDate = productCreateDate;
+		this.productCategory = productCategory;
+		this.productState = productState;
 	}
 
 	public ProductBeanDto(Integer productId, String categoryName, String productName, String productDesc,
@@ -40,25 +60,24 @@ public class ProductBeanDto {
 		this.productCreateDate = productCreateDate;
 		this.ProductStateName = productStateName;
 	}
-
+	
 //	----------------------------------
 	
-	
+
 	public Integer getProductId() {
 		return productId;
 	}
-
 
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 
-	public String getCategoryName() {
-		return CategoryName;
+	public Integer getCategoryId() {
+		return CategoryId;
 	}
 
-	public void setCategoryName(String categoryName) {
-		CategoryName = categoryName;
+	public void setCategoryId(Integer categoryId) {
+		CategoryId = categoryId;
 	}
 
 	public String getProductName() {
@@ -107,6 +126,31 @@ public class ProductBeanDto {
 
 	public void setProductCreateDate(LocalDate productCreateDate) {
 		this.productCreateDate = productCreateDate;
+	}
+
+	public ProductCategoryDto getProductCategory() {
+		return productCategory;
+	}
+
+	public void setProductCategory(ProductCategoryDto productCategory) {
+		this.productCategory = productCategory;
+	}
+
+	public ProductStateDto getProductState() {
+		return productState;
+	}
+
+	public void setProductState(ProductStateDto productState) {
+		this.productState = productState;
+	}
+//-------------------測試--------------
+
+	public String getCategoryName() {
+		return CategoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		CategoryName = categoryName;
 	}
 
 	public String getProductStateName() {

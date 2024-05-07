@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Döner Pizza  德氏披薩</title>
+        <title>Tea House - Tea Shop Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -25,14 +25,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="/front/lib/animate/animate.min.css" rel="stylesheet">
-        <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="/front/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="/front/css/style.css" rel="stylesheet">
+        <link href="/css/TeaHouseStyle.css" rel="stylesheet">
     </head>
 
     <body>
@@ -48,8 +48,8 @@
         <div class="container-fluid bg-white sticky-top">
             <div class="container">
                 <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-                    <a href="index" class="navbar-brand">
-                        <img class="img-fluid" src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
+                    <a href="index.html" class="navbar-brand">
+                        <img class="img-fluid" src="/indexImages/DonerPizzaLogo.png" alt="Logo">
                     </a>
                     <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="border-start ps-4 d-none d-lg-block">
-                           <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 
+                            <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                 </nav>
@@ -86,14 +86,15 @@
             <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="w-100" src="/images/indexImages/pizzashop01.png" alt="Image">
+                        <img class="w-100" src="/indexImages/pizzashop01.png" alt="Image">
                         <div class="carousel-caption">
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-7 text-center">
-                                        <p class="fs-4 text-white animated zoomIn">歡迎蒞臨 <strong
-                                                class="text-dark">德氏披薩</strong></p>
-                                        <h1 class="display-1 text-dark mb-4 animated zoomIn">Döner Pizza 德氏披薩</h1>
+                                        <p class="fs-4 text-white animated zoomIn">Welcome to <strong
+                                                class="text-dark">TEA House</strong></p>
+                                        <h1 class="display-1 text-dark mb-4 animated zoomIn">Organic & Quality Tea
+                                            Production</h1>
                                         <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore
                                             More</a>
                                     </div>
@@ -102,14 +103,15 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="w-100" src="/images/indexImages/pizzashop02.png" alt="Image">
+                        <img class="w-100" src="/indexImages/pizzashop02.png" alt="Image">
                         <div class="carousel-caption">
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-7 text-center">
-                                        <p class="fs-4 text-white animated zoomIn">歡迎蒞臨 <strong
-                                                class="text-dark">德氏披薩</strong></p>
-                                        <h1 class="display-1 text-dark mb-4 animated zoomIn">Döner Pizza 德氏披薩</h1>
+                                        <p class="fs-4 text-white animated zoomIn">Welcome to <strong
+                                                class="text-dark">TEA House</strong></p>
+                                        <h1 class="display-1 text-dark mb-4 animated zoomIn">Organic & Quality Tea
+                                            Production</h1>
                                         <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore
                                             More</a>
                                     </div>
@@ -141,15 +143,15 @@
                         <div class="row g-3">
                             <div class="col-6 text-end">
                                 <img class="img-fluid bg-white w-100 mb-3 wow fadeIn" data-wow-delay="0.1s"
-                                    src="/front/img/about-1.jpg" alt="">
+                                    src="img/about-1.jpg" alt="">
                                 <img class="img-fluid bg-white w-50 wow fadeIn" data-wow-delay="0.2s"
-                                    src="/front/img/about-3.jpg" alt="">
+                                    src="img/about-3.jpg" alt="">
                             </div>
                             <div class="col-6">
                                 <img class="img-fluid bg-white w-50 mb-3 wow fadeIn" data-wow-delay="0.3s"
-                                    src="/front/img/about-4.jpg" alt="">
+                                    src="img/about-4.jpg" alt="">
                                 <img class="img-fluid bg-white w-100 wow fadeIn" data-wow-delay="0.4s"
-                                    src="/front/img/about-2.jpg" alt="">
+                                    src="img/about-2.jpg" alt="">
                             </div>
                         </div>
                     </div>
@@ -160,7 +162,7 @@
                         </div>
                         <div class="row g-3 mb-4">
                             <div class="col-sm-4">
-                                <img class="img-fluid bg-white w-100" src="/front/img/about-5.jpg" alt="">
+                                <img class="img-fluid bg-white w-100" src="img/about-5.jpg" alt="">
                             </div>
                             <div class="col-sm-8">
                                 <h5>Our tea is one of the most popular drinks in the world</h5>
@@ -176,7 +178,7 @@
                                     amet diam et eos. Clita erat ipsum et lorem et sit</p>
                             </div>
                             <div class="col-sm-4">
-                                <img class="img-fluid bg-white w-100" src="/front/img/about-6.jpg" alt="">
+                                <img class="img-fluid bg-white w-100" src="img/about-6.jpg" alt="">
                             </div>
                         </div>
                     </div>
@@ -196,7 +198,7 @@
                 </div>
                 <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-1.jpg" alt="">
+                        <img src="img/product-1.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Green Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -204,7 +206,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-2.jpg" alt="">
+                        <img src="img/product-2.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Black Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -212,7 +214,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-3.jpg" alt="">
+                        <img src="img/product-3.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Spiced Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -220,7 +222,7 @@
                         </div>
                     </a>
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-4.jpg" alt="">
+                        <img src="img/product-4.jpg" alt="">
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                             <h4 class="text-primary">Organic Tea</h4>
                             <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
@@ -238,7 +240,7 @@
             <div class="container">
                 <div class="row g-5">
                     <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                        <img class="img-fluid" src="/front/img/article.jpg" alt="">
+                        <img class="img-fluid" src="img/article.jpg" alt="">
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <div class="section-title">
@@ -266,7 +268,8 @@
                     <div class="col-lg-6 py-5 wow fadeIn" data-wow-delay="0.1s">
                         <div class="py-5">
                             <h1 class="display-6 mb-4">Tea is a drink of <span class="text-white">health</span> and
-                                <span class="text-white">beauty</span></h1>
+                                <span class="text-white">beauty</span>
+                            </h1>
                             <h5 class="fw-normal lh-base fst-italic text-white mb-5">Tempor erat elitr rebum at clita.
                                 Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit
                             </h5>
@@ -358,7 +361,7 @@
                 <div class="row g-4">
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="/front/img/store-product-1.jpg" alt="">
+                            <img class="img-fluid" src="img/store-product-1.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -381,7 +384,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="/front/img/store-product-2.jpg" alt="">
+                            <img class="img-fluid" src="img/store-product-2.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -404,7 +407,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="/front/img/store-product-3.jpg" alt="">
+                            <img class="img-fluid" src="img/store-product-3.jpg" alt="">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <small class="fa fa-star text-primary"></small>
@@ -447,7 +450,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-1.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="img/testimonial-1.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -458,7 +461,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-2.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="img/testimonial-2.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -469,7 +472,7 @@
                         <p class="mb-4">Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et
                             lorem et sit, sed stet lorem sit clita duo justo</p>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="img-fluid flex-shrink-0" src="/front/img/testimonial-3.jpg" alt="">
+                            <img class="img-fluid flex-shrink-0" src="img/testimonial-3.jpg" alt="">
                             <div class="text-start ms-3">
                                 <h5>Client Name</h5>
                                 <span class="text-primary">Profession</span>
@@ -531,15 +534,15 @@
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">聯絡資訊</h4>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>320桃園市中壢區大仁街51號1F
+                        <h4 class="text-primary mb-4">Our Office</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA
                         </p>
-                        <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>0966 464 603</p>
-                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>kebabtaiwan@gmail.com</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
                         <div class="d-flex pt-3">
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/donerzhongli/"><i
+                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-youtube"></i></a>
@@ -548,21 +551,21 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">快速連結</h4>
-                        <a class="btn btn-link" href="">關於我們</a>
-                        <a class="btn btn-link" href="">聯絡我們</a>
-                        <a class="btn btn-link" href="">我們的服務</a>
-                        <a class="btn btn-link" href="">條款與協議</a>
-                        <a class="btn btn-link" href="">支援</a>
+                        <h4 class="text-primary mb-4">Quick Links</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Our Services</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                        <a class="btn btn-link" href="">Support</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">營業 時間</h4>
-                        <p class="mb-1">禮拜一 到 禮拜五</p>
-                        <h6 class="text-light">11:00 am - 9:00 pm</h6>
-                        <p class="mb-1">禮拜六 禮拜日</p>
-                        <h6 class="text-light">11:00 am - 9:00 pm</h6>
-                        <p class="mb-1">禮拜三</p>
-                        <h6 class="text-light">休息</h6>
+                        <h4 class="text-primary mb-4">Business Hours</h4>
+                        <p class="mb-1">Monday - Friday</p>
+                        <h6 class="text-light">09:00 am - 07:00 pm</h6>
+                        <p class="mb-1">Saturday</p>
+                        <h6 class="text-light">09:00 am - 12:00 pm</h6>
+                        <p class="mb-1">Sunday</p>
+                        <h6 class="text-light">Closed</h6>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h4 class="text-primary mb-4">Newsletter</h4>
@@ -585,11 +588,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
+                        &copy; <a class="fw-medium" href="#">Your Site Name</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a
+                        Designed By <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a
                             class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
                     </div>
                 </div>
@@ -606,13 +609,13 @@
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/front/lib/wow/wow.min.js"></script>
-        <script src="/front/lib/easing/easing.min.js"></script>
-        <script src="/front/lib/waypoints/waypoints.min.js"></script>
-        <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="/lib/wow/wow.min.js"></script>
+        <script src="/lib/easing/easing.min.js"></script>
+        <script src="/lib/waypoints/waypoints.min.js"></script>
+        <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="/front/js/main.js"></script>
+        <script src="/js/main.js"></script>
     </body>
 
     </html>

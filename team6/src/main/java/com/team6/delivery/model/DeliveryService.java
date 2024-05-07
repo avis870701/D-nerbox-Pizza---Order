@@ -1,7 +1,6 @@
 package com.team6.delivery.model;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,43 +13,18 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
-	public Delivery insert(Delivery delivery) {
-		return dRepos.save(delivery);
-	}
-	public Delivery update(Delivery delivery) {
-		return dRepos.save(delivery);
-	}
-
-	public void deleteById(Integer id) {
-		dRepos.deleteById(id);
-	}
-	
-	public List<Delivery> findAll(){
+	//查詢所有外送單資料
+	public List<Delivery> findall(){
 		return dRepos.findAll();
 	}
-	//查詢未刪除
-	public List<Delivery> findTall(){
-		return dRepos.findTall();
+	//刪除單筆
+	public void DelDelivery(int id) {
+		dRepos.deleteById(id);
 	}
-	//查詢已刪除
-	public List<Delivery> findFall(){
-		return dRepos.findFall();
+	//新增
+	public Delivery insert(Delivery delivery){
+		 return dRepos.save(delivery);
 	}
+	 
 	
-	public Delivery findById(Integer id) {
-		Optional<Delivery> op1 = dRepos.findById(id);
-	if(op1.isPresent()) {
-		return op1.get();
-	}
-		return null;
-	
-	}
-	
-	public void updateDel(Integer id) {
-		dRepos.UpdateDel(id);
-	}
-	
-	public void rollback(Integer id) {
-		dRepos.RollbackDel(id);
-	}
 }

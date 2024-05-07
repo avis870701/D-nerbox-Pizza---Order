@@ -23,13 +23,14 @@ public class PromotionsController {
 
     private PromotionsService promotionsService;
 
+//    入口:http://localhost:8080/promotions/promotionsMain
+
     // 查詢全部
     @GetMapping("/promotionsMain")
     public String getAllPromotions(Model model) {
         List<Promotions> promotions = promotionsService.selectAll();
         model.addAttribute("promotions", promotions);
-//        return "GetAllPromotions";
-          return "back-html/promotions/test123" ;
+        return "back-html/promotions/GetAllPromotions";
     }
 
     // 查詢單筆
@@ -37,14 +38,12 @@ public class PromotionsController {
     public String getPromotionsById(@PathVariable("id") String promotionsId, Model model) {
         Promotions promotions = promotionsService.selectOne(promotionsId);
         model.addAttribute("promotions", promotions);
-//        return "forward:/WEB-INF/back-jsp/promotions/GetPromotions.jsp";
-//        return "back-html/promotions/GetPromotions";
-        return "back-html/promotions/test0" ;
+        return "back-html/promotions/GetPromotions";
     }
 
     @GetMapping("/promotions/insert")
     public String insertPromotions() {
-        return "InsertPromotions";
+        return "back-html/promotions/InsertPromotions";
     }
 
 
@@ -54,8 +53,6 @@ public class PromotionsController {
         if (!mf.isEmpty()) {
             try {
                 String fileName = mf.getOriginalFilename();
-                // 上传文件的保存路径
-//                String fileDir = "C:/Users/User/Downloads/0424/SpringBoot版/team6/src/main/resources/static/images";
                 String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/promotions";
                 File fileDirPath = new File(fileDir, fileName);
 
@@ -83,7 +80,7 @@ public class PromotionsController {
     public String showUpdateForm(@PathVariable("id") String promotionsId, Model model) {
         Promotions promotions = promotionsService.selectOne(promotionsId);
         model.addAttribute("promotions", promotions);
-        return "DoUpdatePromotions";
+        return "back-html/promotions/DoUpdatePromotions";
     }
 
     //更新
@@ -98,7 +95,6 @@ public class PromotionsController {
     @ResponseBody
     public String deletePromotions(@PathVariable("id") String promotionsId) {
         boolean isSuccess = promotionsService.deletePromotions(promotionsId);
-//		return isSuccess ? "redirect:/promotions/promotionsMain" : "FailPromotions";
         return "success";
     }
 }
