@@ -72,10 +72,10 @@ public class Reserve {
 	}
 
 
-	public Reserve(int reservationId, /*UUID reservationUuid,*/String account, String reservationName, String phone, int numberOfPeople,
+	public Reserve(int reservationId, UUID reservationUuid,String account, String reservationName, String phone, int numberOfPeople,
 			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.reservationId = reservationId;
-		/*this.reservationUUID = reservationUuid;*/
+		this.reservationUuid = reservationUuid;
 		this.account = account;
 		this.reservationName = reservationName;
 		this.phone = phone;
@@ -99,14 +99,14 @@ public class Reserve {
 	
 	
 
-	/*public UUID getReservationUUID() {
-		return reservationUUID;
+	public UUID getReservationUUID() {
+		return reservationUuid;
 	}
 
 
 	public void setReservationUUID(UUID reservationUUID) {
-		this.reservationUUID = reservationUUID;
-	}*/
+		this.reservationUuid = reservationUUID;
+	}
 
 
 	public String getAccount() {

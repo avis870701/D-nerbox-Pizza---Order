@@ -17,7 +17,7 @@ public class Order {
 
 	@Id
 	@Column(name = "ORDERID")
-	private Integer orderId;
+	private String orderId;
 
 	@Column(name = "ORDERTIME")
 	private String orderTime;

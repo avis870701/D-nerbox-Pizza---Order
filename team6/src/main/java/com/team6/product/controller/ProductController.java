@@ -50,37 +50,6 @@ public class ProductController {
 	
 	/*因為thymeleaf會搶路徑,所以要forward:*/
 	
-	
-	
-	
-	// 測試扣產品數量
-	@GetMapping("/product.test")
-	public String testProductQuantity(Model model) {
-		// 18號測試用
-		ProductBean productBean = productService.SelectById(18);
-		model.addAttribute("productBean", productBean);
-		return "forward:/WEB-INF/product/Number.jsp";
-	}
-	
-	// 測試扣產品數量
-	@PutMapping("/Product_coQuantity")
-	@ResponseBody
-	public ResponseEntity<ProductBean> testCoProductQuantity(
-			@RequestParam("quantity") Integer quantity,
-			@RequestParam("productId") Integer productId){
-		ProductBean productBean = productService.SelectById(productId);
-		Integer pQuantity = productBean.getProductQuantity();
-		
-		pQuantity -= quantity;
-		productBean.setProductQuantity(pQuantity);
-		productService.UpdateProduct(productBean);
-		
-		return ResponseEntity.ok().body(productBean);
-	}
-	
-	
-	
-	
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
 	public String productMainprocess() {
