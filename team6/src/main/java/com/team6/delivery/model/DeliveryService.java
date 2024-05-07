@@ -1,6 +1,5 @@
 package com.team6.delivery.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,18 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
-	 
-	public List<Delivery> finall(){
+	//查詢所有外送單資料
+	public List<Delivery> findall(){
 		return dRepos.findAll();
 	}
-	public List<Delivery> findstatus(){
-		return dRepos.findstatus();
+	//刪除單筆
+	public void DelDelivery(int id) {
+		dRepos.deleteById(id);
 	}
-
-
+	//新增
+	public Delivery insert(Delivery delivery){
+		 return dRepos.save(delivery);
+	}
+	 
 	
 }

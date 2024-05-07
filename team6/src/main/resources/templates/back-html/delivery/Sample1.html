@@ -2,13 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>外送單資料</title>
-    <link rel="stylesheet" href="../../static/back/css/delivery/delivery.css">
+    <title>外送訂單資料</title>
     <link rel="stylesheet" href="../../static/back/css/styles.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css"> -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
 </head>
 <body>
      <!--  Body Wrapper -->
@@ -68,7 +66,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/delivery/" aria-expanded="false">
+                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
         <span>
           <i class="ti ti-file-description"></i>
         </span>
@@ -195,14 +193,9 @@
       <div class="card">
         <div class="card-body">
             <div align="center">
-              
-                <h2>外送單資料</h2>
+                <h2>外送訂單資料</h2>
                 <br>
                 <table id="table_id" class="display" style="width:100%">
-                  <div style="text-align: left;"> <!-- 使用样式使内容靠左对齐 -->
-                    <button onclick="addDelivery()"><i class="fa-regular fa-square-plus"></i>添加</button>
-                </div>
-                <br>
                     <thead>
                     <tr style="background-color:white">
                         <th>日期</th>
@@ -218,69 +211,33 @@
                         <tr th:each="delivery : ${delivery}">
                             <td th:text="${delivery.date}"></td>
                             <td id="id" th:text="${delivery.id}"></td>
-                            <td th:text="${delivery.orderid}">
-                              <a th:href="@{/delivery/update/{id}(id=${delivery.orderid})}"></a>
-                            </td>
+                            <td th:text="${delivery.orderid}"></td>
                             <td id="address" th:text="${delivery.address}"></td>
-                            <td id="state" th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
+                            <td id="state"   th:text="${delivery.status}"></td>
+                            <!-- <td id="state"   th:text="${delivery.statusname}"></td> -->
                             <td>
-                                <button th:onclick="'Delete(\'' + ${delivery.id} + '\')'">刪除</button>
+                                <button th:onclick="'Delete(\'' + ${delivery.id} + '\');'"><i class="fa-solid fa-trash"></i>刪除</button>
                             </td>
                             <td>
                                 <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
-                                    <button id="update">修改</button></a>
+                                    <button>修改</button></a>
                             </td>
+                            </th:if>
                         </tr>
-                      </tbody>
-                </table>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>
-    
-<!-- <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
-<!-- <script src="../assets/js/sidebarmenu.js"></script> -->
-<!-- <script src="../assets/js/app.min.js"></script> -->
-<!-- <script src="../assets/libs/simplebar/dist/simplebar.js"></script> -->
+<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/sidebarmenu.js"></script>
+<script src="../assets/js/app.min.js"></script>
+<script src="../assets/libs/simplebar/dist/simplebar.js"></script>      
 <script>
      $(document).ready(function() {
         $('#table_id').DataTable();
     });
-    // 發送刪除請求
-    function Delete(deliveryId) {
-        if (confirm('你是否要刪除這筆外送單?')) {
-            console.log('Deleting delivery with ID:', deliveryId);
-        } else {
-            console.log('Deletion cancelled.');
-        }
-    }
-    //新增外送單
-    function addDelivery() {
-    // 獲取表單中的資料
-    let orderid = document.getElementById('orderid').value;
-    let date = document.getElementById('date').value;
-    let address= document.getElementById('address').value;
-    // 建成json
-    let Data = {
-        orderid: orderid,
-        date: date,
-        address: address
-    };
-
-    // 發送新增請求
-    $.ajax({
-        type: 'POST',
-        url: '/delivery/insert', 
-        contentType: 'application/json',
-        data: JSON.stringify(Data),
-        success: function(response) {
-            console.log('新增成功:', response);
-        },
-        error: function(xhr, status, error) {
-            console.error('新增失敗:', error);
-        }
-    });
-}
-</script>
 </script>    
 </body>
 </html>

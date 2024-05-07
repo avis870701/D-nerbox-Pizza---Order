@@ -2,7 +2,6 @@ package com.team6.reservation.model;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -74,22 +73,22 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	
 	//customerConfirm.html(客人點選:明天會報到)
 	@Modifying
-	@Query(value = "update Reserve SET reservationStatus = 3 WHERE reservationUuid= ?1 and reservationStatus = 1")
-	public void updateReservationStatusTo3(UUID reservationUuid);
+	@Query(value = "update Reserve SET reservationStatus = 3 WHERE reservationId= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo3(int reservationId);
 	
 	//customerConfirm.html(客人點選:明天不會報到或無回應)
 	@Modifying
-	@Query(value = "update Reserve SET reservationStatus = 2 WHERE reservationUuid= ?1 and reservationStatus = 1")
-	public void updateReservationStatusTo2(UUID reservationUuid);
+	@Query(value = "update Reserve SET reservationStatus = 2 WHERE reservationId= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo2(int reservationId);
 	
 	//customerConfirm.html(客人點選:明天要更改人數而且會報到)
 	@Modifying
-	@Query(value = "update Reserve set numberOfPeople = ?2 , reservationStatus = 3 WHERE reservationUuid = ?1" )
-	public void updateNumberOfPeopleAndReservationStatusTo3(UUID reservationUuid, int newNumberOfPeople);
+	@Query(value = "update Reserve set numberOfPeople = ?2 , reservationStatus = 3 WHERE reservationId = ?1" )
+	public void updateNumberOfPeopleAndReservationStatusTo3(int reservationId, int newNumberOfPeople);
 		
 	//comfirm.html(呈現客人訂位資訊讓客人確認)
-	@Query(value = "from Reserve where reservationUuid = ?1 and reservationStatus = 1 and checkInStatus = 0 ")
-	public Reserve selectCustomerTommorowComeOrNot(UUID reservationUuid);
+	@Query(value = "from Reserve where reservationId = ?1 and reservationStatus = 1 and checkInStatus = 0 ")
+	public Reserve selectCustomerTommorowComeOrNot(int reservationId);
 	
 	//系統掃描rs=1,cs=0的客人是否有 reservationDate - localdate = 1 的客人
 	@Query(value = "FROM Reserve WHERE CAST(reservationDate AS DATE) = DATEADD(day, 1, CAST(GETDATE() AS DATE)) and reservationStatus=1")	

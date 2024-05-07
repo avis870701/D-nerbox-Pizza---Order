@@ -1,3 +1,4 @@
+/* styles.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -61,7 +62,7 @@ a:hover {
     background-color: #cc0000;
 }
 
-.pimg {
+img {
     width: 12vw;
     height: 12vw;
 }

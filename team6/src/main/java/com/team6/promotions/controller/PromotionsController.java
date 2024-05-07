@@ -29,7 +29,7 @@ public class PromotionsController {
         List<Promotions> promotions = promotionsService.selectAll();
         model.addAttribute("promotions", promotions);
 //        return "GetAllPromotions";
-          return "back-html/promotions/test123" ;
+          return "/back-html/promotions/test123" ;
     }
 
     // 查詢單筆
@@ -37,9 +37,7 @@ public class PromotionsController {
     public String getPromotionsById(@PathVariable("id") String promotionsId, Model model) {
         Promotions promotions = promotionsService.selectOne(promotionsId);
         model.addAttribute("promotions", promotions);
-//        return "forward:/WEB-INF/back-jsp/promotions/GetPromotions.jsp";
-//        return "back-html/promotions/GetPromotions";
-        return "back-html/promotions/test0" ;
+        return "GetPromotions";
     }
 
     @GetMapping("/promotions/insert")
