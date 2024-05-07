@@ -1,33 +1,3 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Full-width input fields */
-input[type=text],
-input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-/* Set a style for all buttons */
-button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
 /* Extra styles for the cancel button */
 .cancelbtn {
     width: auto;
@@ -42,22 +12,12 @@ button:hover {
     position: relative;
 }
 
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
-
 .container {
     padding: 16px;
 }
 
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-
 /* The Modal (background) */
-.modal {
+.insertmodal {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -65,10 +25,9 @@ span.psw {
     z-index: 1;
     /* Sit on top */
     left: 50%;
-    top: 0;
+    top: 2%;
     width: 600px;
     /* Full width */
-    height: 100%;
     /* Full height */
     overflow: auto;
     /* Enable scroll if needed */
@@ -77,16 +36,22 @@ span.psw {
     /*background-color: rgba(0, 0, 0, 0.4);*/
     /* Black w/ opacity */
     padding-top: 60px;
+    background-color: #fefefe;
+    border: 1px solid #888;
 }
 
 /* Modal Content/Box */
-.modal-content {
-    /*background-color: #fefefe;*/
+.insertmodal-content {
+    background-color: #fefefe;
     margin: 5% auto 15% auto;
     /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 80%;
     /* Could be more or less, depending on screen size */
+}
+
+.small {
+    width: 600px;
 }
 
 /* The Close Button (x) */
@@ -141,4 +106,8 @@ span.psw {
     .cancelbtn {
         width: 100%;
     }
+}
+
+.userphoto {
+    width: 35px;
 }

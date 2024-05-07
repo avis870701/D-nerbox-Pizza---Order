@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <th>col1</th>
+        </thead>
+        <tbody id="test">
+        </tbody>
+    </table>
+    <script>
+        let content = `            <tr>
+                <td>
+                    <input type="radio" name="permissions" value="0" checked>
+                    <input type="radio" name="permissions" value="1">
+                </td>
+            </tr>`;
+        let test = document.getElementById("test");
+        console.log(test);
+        test.innerHTML = content;
+    </script>
+</body>
+
+</html>

@@ -8,6 +8,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
+        <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
 
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
@@ -56,20 +57,19 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="product.html" class="nav-item nav-link">Products</a>
-                            <a href="store.html" class="nav-item nav-link">Store</a>
+                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="#" class="nav-item nav-link">活動優惠</a>
+                            <a href="#" class="nav-item nav-link">訂位趣</a>
+                            <a href="#" class="nav-item nav-link">線上點餐</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
                                 <div class="dropdown-menu bg-light rounded-0 m-0">
-                                    <a href="feature.html" class="dropdown-item">Features</a>
-                                    <a href="blog.html" class="dropdown-item">Blog Article</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                    <a href="#" class="dropdown-item">Features</a>
+                                    <a href="#" class="dropdown-item">Blog Article</a>
+                                    <a href="#" class="dropdown-item">Testimonial</a>
+                                    <a href="#" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="border-start ps-4 d-none d-lg-block">
                             <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
@@ -268,7 +268,8 @@
                     <div class="col-lg-6 py-5 wow fadeIn" data-wow-delay="0.1s">
                         <div class="py-5">
                             <h1 class="display-6 mb-4">Tea is a drink of <span class="text-white">health</span> and
-                                <span class="text-white">beauty</span></h1>
+                                <span class="text-white">beauty</span>
+                            </h1>
                             <h5 class="fw-normal lh-base fst-italic text-white mb-5">Tempor erat elitr rebum at clita.
                                 Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit
                             </h5>
