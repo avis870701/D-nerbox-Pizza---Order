@@ -70,18 +70,10 @@ public class MemberController {
 	}
 	// ===================================================================================================
 
-<<<<<<< HEAD
 	// 進入官網(無登入)
 	@RequestMapping(path = "/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public String GoToIndex() {
 		return "forward:/WEB-INF/front-jsp/Index.jsp";
-=======
-	// 後台從會員功能返回主頁
-	@RequestMapping(path = "/MemberGoBackToIndex", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberGoBackToIndex() {
-//		return "forward:/WEB-INF/Index.jsp";
-		return "forward:/WEB-INF/Index.jsp";
->>>>>>> 5cb613dc168536986d23f03ec9d20930c3800938
 	}
 	
 	// 來到 後台登入畫面
@@ -117,6 +109,7 @@ public class MemberController {
 		model.addAttribute("bean", bean);
 		return "forward:/WEB-INF/back-jsp/member/MemberGetOne.jsp";
 	}
+
 	@GetMapping("/Member.SelectOneByAccount")
 	public String SelectByOne(@RequestParam("account") String account, Model model) {
 		MemberAccountBean bean = service.findAccountByAccount(account);
@@ -124,10 +117,10 @@ public class MemberController {
 		return "forward:/WEB-INF/back-jsp/member/MemberGetOne.jsp";
 	}
 	// ===================================================================================================
-	
+
 	// 查詢系列--模糊
 	@GetMapping("/Member.SelectByName")
-	public String SelectByName(@RequestParam("mName") String mName, Model model,HttpSession session) {
+	public String SelectByName(@RequestParam("mName") String mName, Model model, HttpSession session) {
 		List<MemberAccountBean> beans = service.findByName(mName);
 		if (beans.isEmpty()) {
 			model.addAttribute("err", "查無資料");
@@ -140,26 +133,23 @@ public class MemberController {
 			return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
 		}
 	}
+
 	@RequestMapping(path = "/MemberSelectByName/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public List<MemberAccountBean> processQueryByNameByPage(@PathVariable("pageNo") int pageNo,/*@RequestParam("type")String type,*/ Model m,
-			HttpServletRequest request) {
+	public List<MemberAccountBean> processQueryByNameByPage(@PathVariable("pageNo") int pageNo,
+			/* @RequestParam("type")String type, */ Model m, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String name=String.valueOf(session.getAttribute("mName"));
+		String name = String.valueOf(session.getAttribute("mName"));
 		int pageSize = 10;
 		Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
-		/*switch (type){
-		case "mName": {
-			Page<MemberAccountBean> page = service.findByNameByPage(p1,"detailBean.mName",name);
-		}
-		case "account":{
-			Page<MemberAccountBean> page = service.findByNameByPage(p1,"mAccount",name);
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + type);
-		}*/
-		Page<MemberAccountBean> page = service.findByNameByPage(p1,name);
-		
+		/*
+		 * switch (type){ case "mName": { Page<MemberAccountBean> page =
+		 * service.findByNameByPage(p1,"detailBean.mName",name); } case "account":{
+		 * Page<MemberAccountBean> page = service.findByNameByPage(p1,"mAccount",name);
+		 * } default: throw new IllegalArgumentException("Unexpected value: " + type); }
+		 */
+		Page<MemberAccountBean> page = service.findByNameByPage(p1, name);
+
 		int totalPages = page.getTotalPages();
 		long totalElements = page.getTotalElements();
 		session.setAttribute("totalPages", totalPages);
@@ -238,39 +228,28 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		session.setAttribute("totalPages", totalPages);
 		session.setAttribute("totalElements", totalElements);
-		
+
 		return page.getContent();
 	}
 	
 	// ===================================================================================================
-<<<<<<< HEAD
 
 	// 新增會員(無登入)(註冊會員)
-=======
-	
-	// 新增會員
->>>>>>> 5cb613dc168536986d23f03ec9d20930c3800938
 	@RequestMapping(path = "/MemberGoToInsert", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToInsert() {
 		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
-<<<<<<< HEAD
 
 	@PostMapping("/Member.Insert") 
 	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword,
 			@RequestParam("mEmail") String mEmail, Model model) throws ParseException {
-=======
-	@PostMapping("/Member.Insert")
-	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword, Model model) throws ParseException {
->>>>>>> 5cb613dc168536986d23f03ec9d20930c3800938
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
+		LocalDate nowDate = LocalDate.now();
 		MemberAccountBean bean = new MemberAccountBean();
 		bean.setmAccount(mAccount);
 		bean.setmPassword(mPassword);
-		bean.setDetailBean(null);
 		bean.setPermissions(1);
-<<<<<<< HEAD
 		bean.setHidden(1);
 		MemberAccountBean returnBean = service.insertAccount(bean);
 		MemberDetailBean detailBean = new MemberDetailBean();
@@ -289,9 +268,6 @@ public class MemberController {
 		String from = "DonerPizza<h60915@gmail.com>";
 		service.sendPlainText(receivers, subject, content,from);
 		//-------------------------------------------------------
-=======
-		MemberAccountBean result = service.insertAccount(bean);
->>>>>>> 5cb613dc168536986d23f03ec9d20930c3800938
 		if (result != null) {
 			return "redirect:Member.SelectAll";
 		}
