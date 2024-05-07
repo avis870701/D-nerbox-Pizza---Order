@@ -2,6 +2,7 @@ package com.team6.order.model;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface OrderRepository extends JpaRepository<Order, String>{
 
 	//前端查詢全部
-	@Query("SELECT o FROM Order o WHERE o.hideen = 0")
+	@Query("SELECT o FROM Order o WHERE o.hideen = 0 ORDER BY o.orderId DESC")
 	List<Order> findAllByHiddenEqualsZero();
+	
+	//後端查詢全部 sort:順序由大到小
+	List<Order> findAll(Sort sort);
 	
 	//更新折扣碼
 	@Transactional

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,8 @@ public class OrderService {
 	
 	//後端查詢訂單全部
 	public List<Order> findOrderAll() {
-		return oRepos.findAll();
+		Sort sort = Sort.by(Sort.Direction.DESC, "orderId");
+	    return oRepos.findAll(sort);
 	}
 
 	// 查詢單筆訂單
