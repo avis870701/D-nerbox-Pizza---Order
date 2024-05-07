@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team6.product.dto.ProductCategoryDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +23,6 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "product")
 @Component
-//@JsonIgnoreProperties({"productCategory", "productState"}) order的設計不需要處理無限迴圈先註解
 public class ProductBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -58,6 +58,7 @@ public class ProductBean implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
 	
+	
 	// 避免傳一個集合到前台,所以用這個方式抓資料
 	@Transient // 表示這個屬性不會對應到資料庫
 	private String categoryName;
@@ -78,6 +79,12 @@ public class ProductBean implements Serializable {
 		return productState.getProductStateName();
 	}
 	
+	@Transient
+	private Integer stateId;
+	
+	public Integer getStateId() {
+		return productState.getProductStateId();
+	}
 
 	//	----------------------
 	public ProductBean() {
@@ -246,5 +253,8 @@ public class ProductBean implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
+
 
 }

@@ -53,7 +53,7 @@ public class ProductController {
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
 	public String productMainprocess() {
-		return "forward:/WEB-INF/product/Product_Index.jsp";
+		return "forward:/WEB-INF/back-jsp/product/Product_Index.jsp";
 		
 	}
 	
@@ -63,7 +63,7 @@ public class ProductController {
 		
 		List<ProductBean> selectAll = productService.SelectAll();
 		model.addAttribute("productBeans", selectAll);
-		return "forward:/WEB-INF/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
 	}
 	
 	// 模糊查詢
@@ -73,7 +73,7 @@ public class ProductController {
 		List<ProductBean> selectName = productService.SelectName(productName);
 		
 		model.addAttribute("productBeans", selectName);
-		return "forward:/WEB-INF/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
 	}
 	
 	// 查單筆byId
@@ -83,7 +83,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/product/GetProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetProduct.jsp";
 	}
 	
 	// 更新資料先查出該筆
@@ -101,7 +101,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/product/GetUpdateProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/GetUpdateProduct.jsp";
 	}
 	
 	// 查出後更新資料
@@ -146,7 +146,7 @@ public class ProductController {
 	// 更新狀態
 	@PutMapping("/Product_ChangeState")
 	@ResponseBody
-	public String product_ChangeState(
+	public ResponseEntity<ProductStateDto> product_ChangeState(
 			@RequestParam("productId") Integer productId,
 			@RequestParam("productStateId") Integer productStateId) {
 		
@@ -154,7 +154,10 @@ public class ProductController {
 		//							 save
 		ProductBean changedProduct = productService.ChangeProductState(productId, forChangeStateBean);
 		
-		return changedProduct.getProductState().getProductStateName();
+		ProductStateDto pStateDto = new ProductStateDto(changedProduct.getProductState().getProductStateId(), changedProduct.getProductState().getProductStateName());
+		
+//		return pStateDto;
+		return ResponseEntity.ok(pStateDto);
 	}
 	
 	// 新增主進入點
@@ -164,7 +167,7 @@ public class ProductController {
 		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
 		model.addAttribute("findAllProductCategory", findAllProductCategory);
 		
-		return "forward:/WEB-INF/product/InsertProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/InsertProduct.jsp";
 	}
 	
 	// 新增
@@ -208,7 +211,7 @@ public class ProductController {
 	// 刪除主進入點
 	@GetMapping("/DeleteInsertProductMain")
 	public String deleteInsertProductMain() {
-		return "forward:/WEB-INF/product/DeleteProduct.jsp";
+		return "forward:/WEB-INF/back-jsp/product/DeleteProduct.jsp";
 	}
 	
 	// 刪除
@@ -312,28 +315,6 @@ public class ProductController {
 				
 				ProductBean newPbean = productService.SelectById(productBean.getProductId());
 				
-				ProductCategoryDto pCategoryDto = new ProductCategoryDto(
-						newPbean.getProductCategory().getCategoryId(),
-						newPbean.getProductCategory().getCategoryName()
-						);
-				
-				ProductStateDto pStateDto = new ProductStateDto(
-						newPbean.getProductState().getProductStateId(),
-						newPbean.getProductState().getProductStateName());
-				
-				
-				ProductBeanDto pBeanDto = new ProductBeanDto(
-						newPbean.getProductId(),
-						newPbean.getCategoryId(),
-						newPbean.getProductName(),
-						newPbean.getProductDesc(),
-						newPbean.getProductImg_url(),
-						newPbean.getProductPrice(),
-						newPbean.getProductQuantity(),
-						newPbean.getProductCreateDate(),
-						pCategoryDto,
-						pStateDto );
-				
 				return ResponseEntity.ok(newPbean);
 			} else {
 				
@@ -347,28 +328,6 @@ public class ProductController {
 				productService.UpdateProduct(productBeanNoImg);
 				
 				ProductBean newPbean = productService.SelectById(productBeanNoImg.getProductId());
-				
-				ProductCategoryDto pCategoryDto = new ProductCategoryDto(
-						newPbean.getProductCategory().getCategoryId(),
-						newPbean.getProductCategory().getCategoryName()
-						);
-				
-				ProductStateDto pStateDto = new ProductStateDto(
-						newPbean.getProductState().getProductStateId(),
-						newPbean.getProductState().getProductStateName());
-				
-				
-				ProductBeanDto pBeanDto = new ProductBeanDto(
-						newPbean.getProductId(),
-						newPbean.getCategoryId(),
-						newPbean.getProductName(),
-						newPbean.getProductDesc(),
-						newPbean.getProductImg_url(),
-						newPbean.getProductPrice(),
-						newPbean.getProductQuantity(),
-						newPbean.getProductCreateDate(),
-						pCategoryDto,
-						pStateDto );
 				
 				return ResponseEntity.ok(newPbean);
 			}

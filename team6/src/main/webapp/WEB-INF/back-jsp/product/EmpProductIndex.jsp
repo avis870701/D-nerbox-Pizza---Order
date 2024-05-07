@@ -385,8 +385,8 @@
 
                 <div class="offcanvas-footer mb-3 d-flex justify-content-between">
                   <button type="button" class="btn btn-dark-light " data-bs-dismiss="offcanvas">取消</button>
-                  <button type="button" class="btn btn-primary" id="saveChangesBtn"
-                    onclick="productDoUpdate()">確認更新</button>
+                  <button type="button" class="btn btn-primary" id="saveChangesBtn" data-bs-dismiss="offcanvas"
+                    aria-label="Close" onclick="productDoUpdate()">確認更新</button>
                 </div>
                 <!-- 放東西 -->
 
@@ -505,20 +505,16 @@
                 method: 'PUT',
                 data: { "productId": productId, "productStateId": productStateId },
                 success: function (response) {
+                  console.log(response);
                   // 後臺回應的新狀態名稱更新對應的productState.productStateName欄位
                   let table = $('#example').DataTable();
                   let row = table.row(function (index, data, node) {
                     return data.productId === productId;
                   });
-                  console.log(row.data().stateName); // 這邊印的是[object Object]
                   if (row.length) {
-                    let stateObj = row.data().stateName;
-
-                    // 更新 stateName 物件的屬性值
-                    // stateObj.productStateId = productStateId;
-                    stateObj.productStateName = response;
-
-                    row.invalidate(); // 重新渲染
+                    row.data().stateId = response.productStateId;
+                    row.data().stateName = response.productStateName;
+                    row.invalidate().draw(); // 重新渲染
                   }
                 },
                 error: (xhr, status, error) => console.log(error)
@@ -539,7 +535,6 @@
               formData.append('productPrice', $('#productPrice').val());
               formData.append('productQuantity', $('#productQuantity').val());
               formData.append('productStateId', $('#productStateId').val());
-              console.log(formData);
 
               // B.把productData傳到後臺處理
               $.ajax({
@@ -549,8 +544,25 @@
                 processData: false,  // 必須設為false,才能上傳檔案
                 data: formData,
                 success: function (response) {
-                  console.log('good');
+                  console.log("response:");
                   console.log(response);
+                  let table = $('#example').DataTable();
+                  let row = table.row(function (index, data, node) {
+                    return data.productId === response.productId;
+                  });
+                  if (row.length) {
+                    row.data().productId = response.productId;
+                    row.data().categoryName = response.categoryName;
+                    row.data().productName = response.productName;
+                    row.data().productDesc = response.productDesc;
+                    row.data().productImg_url = response.productImg_url;
+                    row.data().productPrice = response.productPrice;
+                    row.data().productQuantity = response.productQuantity;
+                    row.data().stateId = response.stateId;
+                    row.data().stateName = response.stateName;
+                    row.data().productCreateDate = response.productCreateDate;
+                    row.invalidate().draw(); // 重新渲染
+                  }
                 }
               })
             }
@@ -580,15 +592,15 @@
             $('#offcanvasRight').on('show.bs.offcanvas', function (event) {
               const button = $(event.relatedTarget);
               const productData = button.data('product-data');
-
+              // console.log(productData);
               // 填充表單欄位
               $('#productId').val(productData.productId);
-              $('#categoryId').val(productData.productCategory.categoryId);
+              $('#categoryId').val(productData.categoryId);
               $('#productName').val(productData.productName);
               $('#productDesc').val(productData.productDesc);
               $('#productPrice').val(productData.productPrice);
               $('#productQuantity').val(productData.productQuantity);
-              $('#productStateId').val(productData.productState.productStateId);
+              $('#productStateId').val(productData.stateId);
               $('#productCreateDate').val(productData.productCreateDate);
 
               // 如果有圖片網址，顯示圖片預覽
