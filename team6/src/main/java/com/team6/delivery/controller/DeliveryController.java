@@ -35,7 +35,7 @@ public class DeliveryController {
 	public String DeliveryHome(Model model) {
 		List<Delivery> delivery = dService.findall();
 		model.addAttribute("delivery",delivery);
-		return "/back-html/delivery/delivery";
+		return "back-html/delivery/delivery";
 	}		
 	
 	//新增

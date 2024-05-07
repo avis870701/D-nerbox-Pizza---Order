@@ -24,8 +24,8 @@ public class Delivery {
 	private String address;
 	private int status = 1;
 	
-
-
+	
+	
 	public Delivery() {
 	}
 

@@ -58,8 +58,8 @@ public class ProductBean implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
 	
-	
 	// 避免傳一個集合到前台,所以用這個方式抓資料
+	
 	@Transient // 表示這個屬性不會對應到資料庫
 	private String categoryName;
 		
@@ -86,6 +86,7 @@ public class ProductBean implements Serializable {
 		return productState.getProductStateId();
 	}
 
+	
 	//	----------------------
 	public ProductBean() {
 	}
@@ -253,6 +254,7 @@ public class ProductBean implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+
 
 
 
