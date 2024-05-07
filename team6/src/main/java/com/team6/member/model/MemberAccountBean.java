@@ -26,6 +26,7 @@ public class MemberAccountBean {
 	private int permissions;
 	@Column(name = "hidden")
 	private int hidden;
+//	private int i;
 	
 	@OneToOne(mappedBy = "accountBean",cascade = CascadeType.ALL)
 	private MemberDetailBean detailBean;
