@@ -19,10 +19,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
-//@JsonIgnoreProperties({"productCategory", "productState"}) order的設計不需要處理無限迴圈先註解
 @Entity
 @Table(name = "product")
 @Component
+//@JsonIgnoreProperties({"productCategory", "productState"}) order的設計不需要處理無限迴圈先註解
 public class ProductBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class ProductBean implements Serializable {
 	private Integer productId;
 
 	@Column(name = "CATEGORYID")
-	private Integer CategoryId; 
+	private Integer CategoryId;
 
 	@Column(name = "PRODUCTNAME")
 	private String productName;

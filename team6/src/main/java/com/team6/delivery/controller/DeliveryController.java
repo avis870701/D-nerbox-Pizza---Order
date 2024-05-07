@@ -1,4 +1,5 @@
 package com.team6.delivery.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team6.delivery.model.Delivery;
 import com.team6.delivery.model.DeliveryService;
+
 
 @Controller
 @RequestMapping("/delivery")
@@ -24,24 +25,18 @@ public class DeliveryController {
 
 	@Autowired
 	private DeliveryService dService;
+//	@Autowired
+//	private DeliverystatusService dSService;
 
-	// delivery首頁
-	//查詢全部	 http://localhost:8080/delivery/findTall 
-		@GetMapping("/findTall")
-		public String Home(Model model) {
-			List<Delivery> delivery = dService.findTall();
-			model.addAttribute("delivery",delivery);  	
-			return "delivery";
-		}
-		
-		//查詢全部	 http://localhost:8080/delivery/findFall
-		@GetMapping("/findFall")
-		public String Orderdel(Model model) {
-			List<Delivery> delivery = dService.findFall();
-			model.addAttribute("delivery",delivery);  	
-			return "Orderdel";
-		}
 
+	//delivery後台
+	//網址 127.0.0.1:8080/delivery/
+	@GetMapping("/home")
+	public String DeliveryHome(Model model) {
+		List<Delivery> delivery = dService.findall();
+		model.addAttribute("delivery",delivery);
+		return "/back-html/delivery/delivery";
+	}		
 	
 	//新增
 	@PostMapping("/insert")
@@ -53,45 +48,17 @@ public class DeliveryController {
 			return new ResponseEntity<>("新增外送訂單失敗: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-
-	//修改
-	@PutMapping("/upd")
-	public String Upd(@ModelAttribute("delivery") Delivery delivery) {
-		dService.update(delivery);
-		return "redirect:/delivery/findTall ";		
+	
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public String delDelivery(@PathVariable("id") int id) {
+		dService.DelDelivery(id);
+		return	"Redirect:/delivery/";
 	}
-	
-	//復原
-	@PutMapping("/rollback/{id}")
-	public ResponseEntity<String> Rollback(@PathVariable("id") int id) {	
-		dService.rollback(id);
-		return ResponseEntity.ok().build();
-		}
-		
-	//刪除
-	@DeleteMapping("/del/{id}")
-	public ResponseEntity<String> Delete(@PathVariable("id") int id) {		
-		dService.updateDel(id);
-//		dService.deleteById(id);
-		return ResponseEntity.ok().build();
-	}
-	
-
-	//查詢單筆，導向修改表單
-	@GetMapping("/update/{id}")
-	public	String Update(@PathVariable("id") int id ,Model m){
-		Delivery delivery = dService.findById(id);
-		m.addAttribute("delivery",delivery);
-		return "update";
-	}
-
-	
-	
-
-
-
 }
+		
+	
+
 
 
 

@@ -54,8 +54,6 @@ public class EmployeeController {
 		model.addAttribute("err", "帳號或密碼不正確!!");
 		return "forward:/WEB-INF/EmpLogin.jsp";
 	}
-	
-	
 	// ===================================================================================================
 
 	// 單筆查詢

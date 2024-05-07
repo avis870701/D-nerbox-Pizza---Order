@@ -1,6 +1,5 @@
 package com.team6.product.model;
 
-import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -22,10 +21,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "productstate")
 @Component
-public class ProductState implements Serializable{
+public class ProductState {
 	
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PRODUCTSTATEID")

@@ -1,6 +1,5 @@
 package com.team6.delivery.model;
 
-
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
@@ -10,45 +9,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
-
-@Component
 @Entity
-@Table(name = "delivery")
+@Component
+@Table(name = "Delivery")
 public class Delivery {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "delivery_id")
 	private int id;
-	private String cname;
-	private String phone;
-	private String product;
-	private int num;
-	private int price;
-	private String ename;
+	@Column(name = "order_id")
+	private String orderid;
+	private String date;
 	private String address;
-	private int time;	
-	@Column(name = "delstate")
-	private boolean state = true;
+	private int status = 1;
 	
-	public Delivery() {		
+
+
+	public Delivery() {
 	}
 
-
-	public Delivery(String cname, String phone, String product, Integer num, Integer price, String ename,
-			String address, Integer time) {
-		this.cname = cname;
-		this.phone = phone;
-		this.product = product;
-		this.num = num;
-		this.price = price;
-		this.ename = ename;
-		this.address = address;
-		this.time = time;
-	}
-
-
+	
 	public int getId() {
 		return id;
 	}
@@ -57,52 +38,20 @@ public class Delivery {
 		this.id = id;
 	}
 
-	public String getCname() {
-		return cname;
+	public String getOrderid() {
+		return orderid;
 	}
 
-	public void setCname(String cname) {
-		this.cname = cname;
+	public void setOrderid(String orderid) {
+		this.orderid = orderid;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getDate() {
+		return date;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getProduct() {
-		return product;
-	}
-
-	public void setProduct(String product) {
-		this.product = product;
-	}
-
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public String getEname() {
-		return ename;
-	}
-
-	public void setEname(String ename) {
-		this.ename = ename;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getAddress() {
@@ -113,25 +62,13 @@ public class Delivery {
 		this.address = address;
 	}
 
-	public int getTime() {
-		return time;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setTime(int time) {
-		this.time = time;
-	}
-
-	public boolean isState() {
-		return state;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	
-
-
-
-
 }

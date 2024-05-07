@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface OrderRepository extends JpaRepository<Order, String>{
+public interface OrderRepository extends JpaRepository<Order, Integer>{
 
 	//前端查詢全部
 	@Query(value = "SELECT o FROM Order o WHERE o.hideen = 0 ORDER BY o.orderId DESC", nativeQuery = true)

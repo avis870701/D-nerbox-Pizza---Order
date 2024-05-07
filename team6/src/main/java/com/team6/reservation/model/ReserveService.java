@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -79,24 +78,24 @@ public class ReserveService {
 	
 	
 	//客人點選:明天會報到
-	public void updateReservationStatusTo3(UUID reservationUuid) {
-		reserveRepository.updateReservationStatusTo3(reservationUuid);
+	public void updateReservationStatusTo3(int reservationId) {
+		reserveRepository.updateReservationStatusTo3(reservationId);
 	}
 	
 	//客人點選:明天不會報到或無回應
-	public void updateReservationStatusTo2(UUID reservationUuid) {
-		reserveRepository.updateReservationStatusTo2(reservationUuid);
+	public void updateReservationStatusTo2(int reservationId) {
+		reserveRepository.updateReservationStatusTo2(reservationId);
 	}
 	
-	//客人點選:臨時修改人數且明天會報到(來自customerConfirm.html)
-	public void updateNumberOfPeopleAndReservationStatusTo3(UUID reservationUuid, int newNumberOfPeople) {
-		reserveRepository.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
+	//customerConfirm.html
+	public void updateNumberOfPeopleAndReservationStatusTo3(int reservationId, int newNumberOfPeople) {
+		reserveRepository.updateNumberOfPeopleAndReservationStatusTo3(reservationId, newNumberOfPeople);
 	}
 
 	
 	//customerConfirm.html(呈現客人rs=1,cs=0訂位資訊讓客人確認)
-	public Reserve selectCustomerTommorowComeOrNot(UUID reservationUuid) {
-		return reserveRepository.selectCustomerTommorowComeOrNot(reservationUuid);	 
+	public Reserve selectCustomerTommorowComeOrNot(int reservationId) {
+		return reserveRepository.selectCustomerTommorowComeOrNot(reservationId);	 
 	}
 
 	//系統掃描rs=1,cs=0的客人是否有 reservationDate - localdate = 1 的客人
@@ -109,11 +108,11 @@ public class ReserveService {
 				String reservationDate = reservation.getReservationDate();
 				String reservationTime = reservation.getReservationTime();
 				int numberOfPeople = reservation.getNumberOfPeople();
-	            String reservationUuid = reservation.getReservationUUID().toString();
-	            				
-	            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationUuid=" + reservationUuid;
-	            String updateNumberOfPeopleAndConfirmLink = "http://localhost:8080/reservation/selectCustomerTommorowComeOrNot?reservationUuid=" + reservationUuid;
-	            String rejectionLink = "http://localhost:8080/reservation/customerComfirmto2?reservationUuid=" + reservationUuid;
+	            int reservationId= reservation.getReservationId();
+				
+	            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationId=" + reservationId;
+	            String updateNumberOfPeopleAndConfirmLink = "http://localhost:8080/reservation/selectCustomerTommorowComeOrNot?reservationId=" + reservationId;
+	            String rejectionLink = "http://localhost:8080/reservation/customerComfirmto2?reservationId=" + reservationId;
 				
 	            String receivers = "ispanteam6@gmail.com";
 				String subject ="請確認明日訂位";
@@ -131,11 +130,10 @@ public class ReserveService {
 	
 
 	//ispanTeam2要改成會員帳號
-	public Reserve InsertReservation(String ispanTeam2,UUID reservationUuid ,int numberOfPeople, String reservationDate, String phone, String reservationTime, String note, String reservationName) {
+	public Reserve InsertReservation(String ispanTeam2, int numberOfPeople, String reservationDate, String phone, String reservationTime, String note, String reservationName) {
 		Reserve reserve = new Reserve();
         try {
             reserve.setAccount(ispanTeam2);
-            reserve.setReservationUUID(reservationUuid);
             reserve.setNumberOfPeople(numberOfPeople);
             reserve.setReservationName(reservationName);
             reserve.setPhone(phone);

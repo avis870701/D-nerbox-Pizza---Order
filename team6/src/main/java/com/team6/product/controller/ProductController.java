@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -31,6 +30,8 @@ import com.team6.product.model.ProductCategoryService;
 import com.team6.product.model.ProductService;
 import com.team6.product.model.ProductState;
 import com.team6.product.model.ProductStateService;
+
+import jakarta.persistence.metamodel.SetAttribute;
 
 //@SessionAttributes(names = {})
 @Controller
@@ -50,10 +51,40 @@ public class ProductController {
 	/*因為thymeleaf會搶路徑,所以要forward:*/
 	
 	
+	
+	
+	// 測試扣產品數量
+	@GetMapping("/product.test")
+	public String testProductQuantity(Model model) {
+		// 18號測試用
+		ProductBean productBean = productService.SelectById(18);
+		model.addAttribute("productBean", productBean);
+		return "forward:/WEB-INF/product/Number.jsp";
+	}
+	
+	// 測試扣產品數量
+	@PutMapping("/Product_coQuantity")
+	@ResponseBody
+	public ResponseEntity<ProductBean> testCoProductQuantity(
+			@RequestParam("quantity") Integer quantity,
+			@RequestParam("productId") Integer productId){
+		ProductBean productBean = productService.SelectById(productId);
+		Integer pQuantity = productBean.getProductQuantity();
+		
+		pQuantity -= quantity;
+		productBean.setProductQuantity(pQuantity);
+		productService.UpdateProduct(productBean);
+		
+		return ResponseEntity.ok().body(productBean);
+	}
+	
+	
+	
+	
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
 	public String productMainprocess() {
-		return "forward:/WEB-INF/back-jsp/product/Product_Index.jsp";
+		return "forward:/WEB-INF/product/Product_Index.jsp";
 		
 	}
 	
@@ -63,7 +94,7 @@ public class ProductController {
 		
 		List<ProductBean> selectAll = productService.SelectAll();
 		model.addAttribute("productBeans", selectAll);
-		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/product/GetAllProducts.jsp";
 	}
 	
 	// 模糊查詢
@@ -73,7 +104,7 @@ public class ProductController {
 		List<ProductBean> selectName = productService.SelectName(productName);
 		
 		model.addAttribute("productBeans", selectName);
-		return "forward:/WEB-INF/back-jsp/product/GetAllProducts.jsp";
+		return "forward:/WEB-INF/product/GetAllProducts.jsp";
 	}
 	
 	// 查單筆byId
@@ -83,7 +114,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/back-jsp/product/GetProduct.jsp";
+		return "forward:/WEB-INF/product/GetProduct.jsp";
 	}
 	
 	// 更新資料先查出該筆
@@ -101,7 +132,7 @@ public class ProductController {
 		ProductBean selectById = productService.SelectById(productId);
 		model.addAttribute("productBean", selectById);
 		
-		return "forward:/WEB-INF/back-jsp/product/GetUpdateProduct.jsp";
+		return "forward:/WEB-INF/product/GetUpdateProduct.jsp";
 	}
 	
 	// 查出後更新資料
@@ -125,11 +156,11 @@ public class ProductController {
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 			
-			String productImg_url = "/images/product/" + fileName;
+			String productImg_url = "/product/images/" + fileName;
 			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
 			productService.UpdateProduct(productBean);
 			
@@ -164,7 +195,7 @@ public class ProductController {
 		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
 		model.addAttribute("findAllProductCategory", findAllProductCategory);
 		
-		return "forward:/WEB-INF/back-jsp/product/InsertProduct.jsp";
+		return "forward:/WEB-INF/product/InsertProduct.jsp";
 	}
 	
 	// 新增
@@ -185,11 +216,11 @@ public class ProductController {
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 
-			String productImg_url = "/images/product/" + fileName;
+			String productImg_url = "/product/images/" + fileName;
 			
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
 					productPrice, productStateDefault, productQuantity, productCreateDate);
@@ -208,7 +239,7 @@ public class ProductController {
 	// 刪除主進入點
 	@GetMapping("/DeleteInsertProductMain")
 	public String deleteInsertProductMain() {
-		return "forward:/WEB-INF/back-jsp/product/DeleteProduct.jsp";
+		return "forward:/WEB-INF/product/DeleteProduct.jsp";
 	}
 	
 	// 刪除
