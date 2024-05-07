@@ -47,19 +47,6 @@ public class OrderDetails {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Order order;
 
-	public OrderDetails(Integer detailsId, String orderId, String productId, String product, String unitPrice,
-			String quantity, String subtotal, String note, Order order) {
-		this.detailsId = detailsId;
-		this.orderId = orderId;
-		this.productId = productId;
-		this.product = product;
-		this.unitPrice = unitPrice;
-		this.quantity = quantity;
-		this.subtotal = subtotal;
-		this.note = note;
-		this.order= order;
-	}
-
 	public OrderDetails(String orderId, String productId, String product, String unitPrice, String quantity,
 			String subtotal, String note, Order order) {
 		this.orderId = orderId;
