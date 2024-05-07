@@ -12,6 +12,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team6.member.model.MemberAccountBean;
+import com.team6.member.model.MemberDetailBean;
+
 @Service
 @Transactional
 public class ReserveService {
@@ -20,6 +23,11 @@ public class ReserveService {
 	private ReserveRepository reserveRepository;
 	@Autowired
 	private JavaMailSender mailSender; 
+//	@Autowired
+//	private MemberAccountBean memberAccountBean;
+//	@Autowired
+//	private MemberDetailBean memberDetailBean;
+	
 	
 	public List<Reserve> checkInByName(String name,String date){	
 		return reserveRepository.checkInByName(name,date);
@@ -101,6 +109,7 @@ public class ReserveService {
 	//系統掃描rs=1,cs=0的客人是否有 reservationDate - localdate = 1 的客人
 	public void selectCustomerTommorowReservation() {
 		List<Reserve> tomorrowReservations = reserveRepository.selectCustomerTommorowReservation();
+		List<String> mails = test();
 	    if (!tomorrowReservations.isEmpty()) {
 	        for (Reserve reservation : tomorrowReservations) {  
 	            System.out.println("我要寄信🤑");
@@ -108,11 +117,12 @@ public class ReserveService {
 				String reservationDate = reservation.getReservationDate();
 				String reservationTime = reservation.getReservationTime();
 				int numberOfPeople = reservation.getNumberOfPeople();
-	            int reservationId= reservation.getReservationId();
-				
-	            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationId=" + reservationId;
-	            String updateNumberOfPeopleAndConfirmLink = "http://localhost:8080/reservation/selectCustomerTommorowComeOrNot?reservationId=" + reservationId;
-	            String rejectionLink = "http://localhost:8080/reservation/customerComfirmto2?reservationId=" + reservationId;
+	            String reservationUuid = reservation.getReservationUUID().toString();
+	                      
+	            				
+	            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationUuid=" + reservationUuid;
+	            String updateNumberOfPeopleAndConfirmLink = "http://localhost:8080/reservation/selectCustomerTommorowComeOrNot?reservationUuid=" + reservationUuid;
+	            String rejectionLink = "http://localhost:8080/reservation/customerComfirmto2?reservationUuid=" + reservationUuid;
 				
 	            String receivers = "ispanteam6@gmail.com";
 				String subject ="請確認明日訂位";
@@ -197,4 +207,10 @@ public class ReserveService {
 		reserveRepository.deleteCheckInStatusTo2(reservation_id);
 	}
 
+	//測試用(抓的到mail嗎)
+	public List<String> test(){		
+		return reserveRepository.test();	
+	}
+
+	
 }

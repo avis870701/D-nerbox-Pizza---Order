@@ -133,38 +133,21 @@
 
                 if (nowYear > selectYear) {
                     event.preventDefault();
-                    alert("選擇的時間已過，請重新選擇。");
-                } else {
+                    alert("選擇的時間無法預訂，請重新選擇。");
+                } else if (nowYear < selectYear) {
+                    console.log('預訂了明年');
+                } else {//2024
                     if (nowMonth > selectMonth) {
                         event.preventDefault();
-                        alert("選擇的時間已過，請重新選擇。");
-                    } else if (nowMonth == selectMonth) {
+                        alert("選擇的時間無法預訂，請重新選擇。");
+                    } else if (nowMonth == selectMonth) {//2024-05
 
-                        if (nowDate > selectDay) {
+                        if (nowDate > selectDay) {//2024-05-02
                             event.preventDefault();
-                            alert("選擇的時間已過，請重新選擇。");
-                        } else if (nowDate == selectDay) {
-
-                            if (nowHour > selectHour) {
-                                event.preventDefault();
-                                alert("選擇的時間已過，請重新選擇。");
-                            } else if (nowHour == selectHour) {
-                                event.preventDefault();
-                                alert("選擇的時間已過，請重新選擇。");
-                            }
-                        }
-                    } else {
-                        if (nowDate > selectDay) {
+                            alert("選擇的時間無法預訂，請重新選擇。");
+                        } else if (nowDate == selectDay) {//2024-05-03
                             event.preventDefault();
-                            alert("選擇的時間已過，請重新選擇。");
-                        } else if (nowDate == selectDay) {
-                            if (nowHour > selectHour) {
-                                event.preventDefault();
-                                alert("選擇的時間已過，請重新選擇。");
-                            } else if (nowHour == selectHour) {
-                                event.preventDefault();
-                                alert("選擇的時間已過，請重新選擇。");
-                            }
+                            alert("選擇的時間無法預訂，請重新選擇。");
                         }
                     }
                 }
