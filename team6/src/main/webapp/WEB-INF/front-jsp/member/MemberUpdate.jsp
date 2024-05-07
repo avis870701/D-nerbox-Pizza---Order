@@ -10,7 +10,7 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <link rel="shortcut icon" type="image/png"
-	href="/member/images/pizzaQ.png" />
+	href="/images/member/pizzaQ.png" />
 
 <!-- Favicon -->
 <link href="/front/img/favicon.ico" rel="icon">
@@ -57,8 +57,9 @@
 		<div class="container">
 			<nav
 				class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-				<a href="index" class="navbar-brand"> <img class="img-fluid"
-					src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
+				<a href="/member/MemberIndex" class="navbar-brand"> <img
+					class="img-fluid" src="/images/indexImages/DonerPizzaLogo.png"
+					alt="Logo">
 				</a>
 				<button type="button" class="navbar-toggler ms-auto me-0"
 					data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -70,26 +71,24 @@
 							class="nav-item nav-link">活動優惠</a> <a href="#"
 							class="nav-item nav-link">訂位趣</a> <a href="#"
 							class="nav-item nav-link">線上點餐</a>
-						</div>
 					</div>
-					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-						<a class="nav-link dropdown-toggle"
-							href="#" > <img src="/images/member/user.png"
-							alt="" width="35" height="35" class="rounded-circle">${name}
-						</a>
-						<div class="dropdown-menu bg-light rounded-0 m-0">
-							<a href="#" class="dropdown-item"> <i
-								class="ti ti-user fs-6"></i>
-								<p class="mb-0 dropdown-item ">會員資料</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-mail fs-6"></i>
-								<p class="mb-0 dropdown-item">訂單查詢</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-list-check fs-6"></i>
-								<p class="mb-0 dropdown-item">優惠券</p>
-							</a> <a href="/member/logout"
-								class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
-						</div>
+				</div>
+				<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#"> <img
+						src="/images/member/user.png" alt="" width="35" height="35"
+						class="rounded-circle">${member.detailBean.mName}
+					</a>
+				<div class="dropdown-menu bg-light rounded-0 m-0">
+						<a href="MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
+							<p class="mb-0 dropdown-item ">會員中心</p>
+						</a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
+							<p class="mb-0 dropdown-item">訂單查詢</p>
+						</a> <a href="#" class="dropdown-item"> <i
+							class="ti ti-list-check fs-6"></i>
+							<p class="mb-0 dropdown-item">優惠券</p>
+						</a> <a href="/member/logout"
+							class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
+					</div>
 				</div>
 			</nav>
 		</div>
@@ -101,12 +100,12 @@
 	<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container text-center py-5">
-			<h1 class="display-2 text-dark mb-4 animated slideInDown">會員資料</h1>
+			<h1 class="display-2 text-dark mb-4 animated slideInDown">個人資訊</h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb justify-content-center mb-0">
 					<li class="breadcrumb-item"><a href="#">首頁</a></li>
 					<li class="breadcrumb-item"><a href="#">會員</a></li>
-					<li class="breadcrumb-item text-dark" aria-current="page">會員資料</li>
+					<li class="breadcrumb-item text-dark" aria-current="page">個人資訊</li>
 				</ol>
 			</nav>
 		</div>
@@ -117,45 +116,103 @@
 	<!-- Article Start -->
 	<div class="container-xxl py-5 justify-content-center">
 		<div class="container justify-content-center">
-			<div class="row g-5 justify-content-center ">
-				<div class="col-md-8 col-lg-6">
-					<div class="card mb-0">
-						<div class="card-body">
-							<a href="#"
-								class="text-nowrap logo-img text-center d-block py-3 w-100">
-								<img src="/images/member/DonerPizzaSmall.png" width="180"
-								alt="">
-							</a>
-							<p class="text-center">請填寫下列資訊</p>
-							<form method="POST" action="Member.UpdateDetail">
-								<div class="mb-3">
-									<label for="exampleInputtext1" class="form-label">使用者帳號</label>
-									<input type="text" class="form-control" id="exampleInputtext1"
-										aria-describedby="textHelp" name="account" required>
-								</div>
-								<div class="mb-3">
-									<label for="exampleInputEmail1" class="form-label">電子信箱</label>
-									<input type="email" class="form-control"
-										id="exampleInputEmail1" aria-describedby="emailHelp"
-										name="mEmail">
-								</div>
-								<div class="mb-4">
-									<label for="exampleInputPassword1" class="form-label">密碼</label>
-									<input type="password" class="form-control"
-										id="exampleInputPassword1" name="password" required>
-								</div>
-								<div>${err}</div>
-								<button type="submit"
-									class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
-									冊</button>
-								<div class="d-flex align-items-center justify-content-center">
-									<p class="fs-4 mb-0 fw-bold">已有帳號 ?</p>
-									<a class="text-primary fw-bold ms-2" href="/member/login">登入</a>
+			<div class="row">
+				<div class="col-lg-4 d-flex align-items-stretch">
+					<div class="card w-100">
+						<div class="card-body p-4">
+							<h4 class="card-title fw-semibold mb-4">會員中心</h4>
+							<table class="table text-nowrap mb-0 align-middle">
+								<tr>
+									<td>
+										<p>
+											<a href="MemberAboutMe">個人資訊</a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p>
+											<a href="MemberGoToUpdatePwd">修改密碼</a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p>
+											<a href="#">我的訂單</a>
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p>
+											<a href="#">我的優惠券</a>
+										</p>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8 d-flex align-items-stretch">
+					<div class="card w-100">
+						<div class="card-body p-4">
+							<form method="post" action="Member.Update">
+								<div class="row">
+									<div class="col-50">
+										<h3 class="card-title fw-semibold mb-4">修改個人資訊</h3><p class="text-center">請填寫下列資訊</p>
+										<div class="table-responsive">
+											<table class="table text-nowrap mb-0 align-middle">
+											<tr>
+												<td><img src="/images/member/user.png" alt=""
+														width="35" height="35" class="rounded-circle"></td>
+													<td><input class="form-control" type="file"
+														id="mPhoto" name="mPhoto"></td>
+												</tr>
+												<tr>
+													<td><label for="mName"><i class="fa fa-user"></i>
+															會員名稱</label></td>
+													<td><input class="form-control" type="text" id="mName"
+														name="mName" placeholder="John M. Doe"></td>
+												</tr>
+												<tr>
+													<td><label for="mEmail"><i
+															class="fa fa-envelope"></i>電子信箱</label></td>
+													<td><input class="form-control" type="text"
+														id="mEmail" name="mEmail" placeholder="john@example.com"
+														required></td>
+												</tr>
+												<tr>
+													<td><label for="mPhone"><i
+															class="fa fa-address-card-o"></i> 行動電話</label></td>
+													<td><input class="form-control" type="text"
+														id="mPhone" name="mPhone" placeholder="0987654321"
+														pattern="[0]{1}[9]{1}\d{8}" maxlength="10"></td>
+												</tr>
+												<tr>
+													<td><label for="mbirthday"><i
+															class="fa fa-institution"></i> 生日</label></td>
+													<td><input class="form-control" type="date"
+														id="mbirthday" name="mbirthday" value="1990-01-01"></td>
+												</tr>
+
+											</table>
+											<br>
+											<table class="table text-nowrap mb-0 align-middle">
+											<tbody>
+												<tr>
+													<td class="border-bottom-0 text-center"><button class="btn btn-danger">取消</button><span>  </span><button class="btn btn-primary">確定</button></td>
+												</tr>
+											</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>

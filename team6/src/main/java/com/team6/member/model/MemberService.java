@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,8 @@ public class MemberService {
 	private RepositoryMemberAccount rma;
 	@Autowired
 	private RepositoryMemberDetail rmd;
+	@Autowired
+	private JavaMailSender mailSender;
 
 	// 會員登入
 	public MemberAccountBean login(String account, String pwd) {
@@ -81,6 +85,17 @@ public class MemberService {
 		}
 		return null;
 	}
+	
+	//自動寄信用
+    public void sendPlainText(String receivers, String subject, String content, String from) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(receivers);
+        message.setSubject(subject);
+        message.setText(content);
+        message.setFrom(from);
+
+        mailSender.send(message);
+    } 
 
 	// 新增?更新?會員細項
 	public MemberAccountBean insertDetail(MemberAccountBean accountBean) {
@@ -139,9 +154,14 @@ public class MemberService {
 	// 假刪除: 藏起來
 	public void delete(String account) {
 		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
+		System.out.println("account:"+account);
+		System.out.println("server:1");
 		if(!optional.isEmpty()) {
 			MemberAccountBean bean = optional.get();
+			bean.setPermissions(0);
 			bean.setHidden(0);
+			System.out.println("server:2");
+			rma.save(bean);
 		}
 	}
 	// =================================================================

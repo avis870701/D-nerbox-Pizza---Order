@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +9,7 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <link rel="shortcut icon" type="image/png"
-	href="/member/images/pizzaQ.png" />
+	href="/images/member/pizzaQ.png" />
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -57,7 +56,7 @@
 		<div class="container">
 			<nav
 				class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-				<a href="index" class="navbar-brand"> <img class="img-fluid"
+				<a href="MemberIndex" class="navbar-brand"> <img class="img-fluid"
 					src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
 				</a>
 				<button type="button" class="navbar-toggler ms-auto me-0"
@@ -74,21 +73,19 @@
 					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
 						<a class="nav-link dropdown-toggle"
 							href="#" > <img src="/images/member/user.png"
-							alt="" width="35" height="35" class="rounded-circle">${name}
+							alt="" width="35" height="35" class="rounded-circle">${member.detailBean.mName}
 						</a>
 						<div class="dropdown-menu bg-light rounded-0 m-0">
-							<a href="#" class="dropdown-item"> <i
-								class="ti ti-user fs-6"></i>
-								<p class="mb-0 dropdown-item ">會員資料</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-mail fs-6"></i>
-								<p class="mb-0 dropdown-item">訂單查詢</p>
-							</a> <a href="#" class="dropdown-item"> <i
-								class="ti ti-list-check fs-6"></i>
-								<p class="mb-0 dropdown-item">優惠券</p>
-							</a> <a href="/member/logout"
-								class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
-						</div>
+						<a href="MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
+							<p class="mb-0 dropdown-item ">會員中心</p>
+						</a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
+							<p class="mb-0 dropdown-item">訂單查詢</p>
+						</a> <a href="#" class="dropdown-item"> <i
+							class="ti ti-list-check fs-6"></i>
+							<p class="mb-0 dropdown-item">優惠券</p>
+						</a> <a href="/member/logout"
+							class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
+					</div>
 					</div>
 				</div>
 			</nav>
@@ -237,8 +234,7 @@
 					</div>
 				</a> <a href="" class="d-block product-item rounded"> <img
 					src="/front/img/product-2.jpg" alt="">
-					<div
-						class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+					<div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
 						<h4 class="text-primary">Black Tea</h4>
 						<span class="text-body">Diam dolor diam ipsum sit diam amet
 							diam et eos. Clita erat ipsum</span>
@@ -379,8 +375,7 @@
 				<div class="modal-body">
 					<!-- 16:9 aspect ratio -->
 					<div class="ratio ratio-16x9">
-						<iframe class="embed-responsive-item" src="" id="video"
-							allowfullscreen allowscriptaccess="always" allow="autoplay"></iframe>
+						<iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always" allow="autoplay"></iframe>
 					</div>
 				</div>
 			</div>
