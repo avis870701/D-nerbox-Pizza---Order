@@ -160,6 +160,16 @@ table {
 					<div>
 						<button value="selectByDate" name="checkin">查詢</button>
 			</form>
+			
+			<h3>依月份查詢預訂訊息</h3>
+			<form method="get" action="/reservation/selectByMonthAndYear">
+				<div id="reservationStatus">
+					<input id="monthSelect" type="month" name="monthSelect" required="required"
+						style="background-color: #b8f083;">
+					<div>
+						<button value="selectByMonth" name="checkin">查詢</button>
+			</form>
+						
 		</div>
 
 	</div>
