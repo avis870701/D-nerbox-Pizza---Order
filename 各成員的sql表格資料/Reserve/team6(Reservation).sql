@@ -22,7 +22,8 @@ CREATE TABLE reservation (
 	reservationUuid uniqueidentifier,
     account nvarchar(max) NOT NULL,
     reservationName nvarchar(50) NOT NULL,
-	phone nvarchar(50) NOT NULL,
+	phone nvarchar(50) ,
+	mail nvarchar(50) , 
     numberOfPeople INT CHECK (numberOfPeople > 0) NOT NULL,
     reservationTime nvarchar(50) NOT NULL,
     reservationDate date NOT NULL,
@@ -30,11 +31,12 @@ CREATE TABLE reservation (
 	note nvarchar(200),
 	checkInStatus INT NOT NULL,
 
-	FOREIGN KEY (reservationId) REFERENCES memberAccount(id)
+
+	FOREIGN KEY (reservationId) REFERENCES memberAccount(maid)
 
 );
 
-SELECT md.mEmail FROM reservation r JOIN memberAccount ma ON r.fk_maId = ma.maid JOIN memberDetail md ON ma.maid = md.fk_maId;
+SELECT md.mEmail FROM reservation r JOIN memberAccount ma ON r.reservationid = ma.maid JOIN memberDetail md ON ma.maid = md.fk_maId where reservationDate = '2024-05-08';
 
 INSERT INTO memberAccount(mAccount,mPassword,permissions,hidden)
 VALUES('John1001', '123456', '1', '1'),
@@ -66,7 +68,8 @@ VALUES('John1001', '123456', '1', '1'),
 ('Thompson', '123456', '1', '1'),
 ('LilyLewis', '123456', '0', '0'),
 ('Gabriel', '123456', '1', '1'),
-('Zoe48098', '123456', '1', '1');
+('Zoe48098', '123456', '1', '1'),
+('ispan6','123456','1','1');
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,mPhoto,RegistrationDate)
 VALUES ('1', 'John Doe', 'john.doe@gmail.com', '1234567890', '1995-08-15','/images/member/user.png', '2004-03-26'),
 ('2', 'Jane Smith', 'jane.smith@gmail.com', '2345678901', '1990-06-25','/images/member/user.png', '1997-10-20'),
@@ -97,11 +100,11 @@ VALUES ('1', 'John Doe', 'john.doe@gmail.com', '1234567890', '1995-08-15','/imag
 ('27', 'Aubrey Rodriguez', 'aubrey.rodriguez@gmail.com', '3210987654', '1987-11-03','/images/member/user.png', '1998-11-14'),
 ('28', 'Lily Lewis', 'lily.lewis@gmail.com', '2109876543', '1994-01-18','/images/member/user.png', '2017-07-26'),
 ('29', 'Gabriel Martinez', 'gabriel.martinez@gmail.com', '1098765432', '1989-07-27','/images/member/user.png', '2009-09-02'),
-('30', 'Zoe Hill', 'zoe.hill@gmail.com', '0987654321', '1993-12-09','/images/member/user.png', '2012-01-05');
+('30', 'Zoe Hill', 'zoe.hill@gmail.com', '0987654321', '1993-12-09','/images/member/user.png', '2012-01-05'),
+('31','ispan6','ispanteam6@gmail.com','0919807906','1993-12-12','/images/member/user.png','2015-08-08');
 
-
-INSERT INTO "reservation" ("account", "numberOfPeople", "reservationName","phone","reservationTime", reservationDate  ,reservationStatus,"note","checkInStatus","fk_maid")
-VALUES ('Jane9609', '3','測試用1','0919807906', '12:30','2024-05-02','3', '3','0','2');
+INSERT INTO "reservation" ("account", "numberOfPeople", "reservationName","phone","reservationTime", reservationDate  ,reservationStatus,"note","checkInStatus")
+VALUES ('Jane9609', '3','測試用1','0919807906', '12:30','2024-05-02','3', '3','0');
 
 /*
 reservationStatus
@@ -126,7 +129,7 @@ drop table memberAccount;
 
 
 
-
+SELECT * FROM reservation WHERE YEAR(reservationDate) = 2024 AND MONTH(reservationDate) = 5;
 SELECT * FROM reservation WHERE CAST(reservationDate AS DATE) = DATEADD(day, 1, CAST(GETDATE() AS DATE)) and reservationStatus=1;
 
 

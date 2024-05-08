@@ -297,8 +297,16 @@ public class ReserveController {
 		String month = yearAndMonth[1];
 		List<Reserve> historyReservation = reserveService.selectHistoryReservation(year,month);
 		model.addAttribute("historyReservation",historyReservation);
+		model.addAttribute("year",year);
+		model.addAttribute("month",month);
 		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
 	}
 
+	//匯出歷史訂位(依年月)成csv
+	@GetMapping("/saveDetailToCSV")
+	public String saveDetailToCSV(@RequestParam(value = "yearSelect") String yearSelect,@RequestParam(value = "monthSelect") String monthSelect) {
+		reserveService.saveDetailToCSV(yearSelect, monthSelect);
+	    return "redirect:selectByMonthAndYear?monthSelect=" + yearSelect+"-"+monthSelect;
+	}
 }
 

@@ -59,8 +59,11 @@ public class Reserve {
 	@Column(name= "MAIL")
 	private String mail;
 	
-	
-
+	//匯出csv
+	public String saveToCsv() {
+		String csv = reservationUuid +","+ account+","+reservationName+","+phone+","+mail+","+numberOfPeople+","+reservationDate+","+reservationTime+","+reservationStatus+","+note;
+		return csv;
+	}
 
 
 	public Reserve(String account, String reservationName, String phone, int numberOfPeople, String reservationTime,

@@ -142,12 +142,7 @@ table {
 			</div>
 			
 		</div>
-<!-- 		<div style="margin-left: 200px;"> -->
-<!-- 				<div id="Seat" style="margin: 0; overflow: hidden;"> -->
-<!-- 					<iframe src="./reservationPage.html" -->
-<!-- 						style="width: 25vw; height: 50vh;"></iframe> -->
-<!-- 				</div>		 -->
-<!-- 		</div>		 -->
+
 		<div style="margin-top:500px">					
 			<a href="/member/MemberGoBackToIndex"><button>回主頁</button></a> 
 		</div>
