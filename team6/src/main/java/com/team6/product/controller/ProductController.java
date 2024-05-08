@@ -125,11 +125,11 @@ public class ProductController {
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
 //			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 			
-			String productImg_url = "/product/images/" + fileName;
+			String productImg_url = "/images/product/" + fileName;
 			ProductBean productBean = new ProductBean(productId, categoryId, productName, productDesc, productImg_url, productPrice, productState, productQuantity, oldproductCreateDate);
 			productService.UpdateProduct(productBean);
 			
@@ -187,12 +187,11 @@ public class ProductController {
 		
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
-//			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/product/images";
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);
 
-			String productImg_url = "/product/images/" + fileName;
+			String productImg_url = "/images/product/" + fileName;
 			
 			ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
 					productPrice, productStateDefault, productQuantity, productCreateDate);
@@ -240,35 +239,7 @@ public class ProductController {
 	public ResponseEntity<List<ProductBean>> productTestSelectAll(Model model) {
 
 		List<ProductBean> selectAll = productService.SelectAll();
-		List<ProductBeanDto> selectAllDto = new ArrayList<>();
-		
-		for (ProductBean pBean : selectAll) {
-			
-			ProductCategoryDto pCategoryDto = new ProductCategoryDto(
-					pBean.getProductCategory().getCategoryId(),
-					pBean.getProductCategory().getCategoryName()
-					);
-			
-			ProductStateDto pStateDto = new ProductStateDto(
-					pBean.getProductState().getProductStateId(),
-					pBean.getProductState().getProductStateName());
-			
-			ProductBeanDto pBeanDto = new ProductBeanDto(
-					pBean.getProductId(),
-					pBean.getCategoryId(),
-					pBean.getProductName(),
-					pBean.getProductDesc(),
-					pBean.getProductImg_url(),
-					pBean.getProductPrice(),
-					pBean.getProductQuantity(),
-					pBean.getProductCreateDate(),
-					pCategoryDto,
-					pStateDto
-					);
-			
-			selectAllDto.add(pBeanDto);		
-		}
-		
+//		
 		List<ProductCategory> findAllProductCategory = pCategoryService.findAllProductCategory();
 		model.addAttribute("findAllProductCategory", findAllProductCategory);
 		
@@ -318,7 +289,6 @@ public class ProductController {
 				return ResponseEntity.ok(newPbean);
 			} else {
 				
-//				ProductBean productBeanNoImg = new ProductBean(productId, categoryId, productName, productDesc, oldProductBean.getProductImg_url(), productPrice, productState, productQuantity, oldproductCreateDate);
 				ProductBean productBeanNoImg = new ProductBean(
 						productId, categoryId, productName, 
 						productDesc, oldProductBean.getProductImg_url(), 
@@ -334,7 +304,48 @@ public class ProductController {
 			
 		}
 		
-	
+		// 測試套版新增
+		@PostMapping("/product_Test_Create")
+		public ResponseEntity<ProductBean> product_Test_Insert(
+				@RequestParam("categoryId") Integer categoryId,
+				@RequestParam("productName") String productName, 
+				@RequestParam("productDesc") String productDesc,
+				@RequestPart(value = "productImg_url", required = false) MultipartFile mf, 
+				@RequestParam("productPrice") Integer productPrice,
+				@RequestParam("productQuantity") Integer productQuantity) throws IllegalStateException, IOException {
+			// 加入產品狀態預設值為1(已上架)
+			ProductState productStateDefault = pStateService.findProductStateById(1);
+			// 找產品類別的bean
+			ProductCategory productCategory = pCategoryService.findProductCategoryById(categoryId);
+			// 加一個現在的日期(商品上架日期)
+			LocalDate productCreateDate = LocalDate.now();
+			System.out.println("商品上架日期: " + productCreateDate);
+			
+			if (mf != null && !mf.isEmpty()) {
+				String fileName = mf.getOriginalFilename();
+				String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
+				File fileDirPath = new File(fileDir, fileName);
+				mf.transferTo(fileDirPath);
+
+				String productImg_url = "/images/product/" + fileName;
+				
+				ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productImg_url,
+						productPrice, productStateDefault, productQuantity, productCreateDate);
+				productBean.setProductCategory(productCategory);
+				
+				ProductBean insertProduct = productService.InsertProduct(productBean);
+				
+				return ResponseEntity.ok(insertProduct);
+			} else {
+
+				ProductBean productBean = new ProductBean(categoryId, productName, productDesc, productPrice,
+						productStateDefault, productQuantity, productCreateDate);
+				productBean.setProductCategory(productCategory);
+				ProductBean insertProduct = productService.InsertProduct(productBean);
+				return ResponseEntity.ok(insertProduct);
+			}
+
+		}
 	
 	
 	

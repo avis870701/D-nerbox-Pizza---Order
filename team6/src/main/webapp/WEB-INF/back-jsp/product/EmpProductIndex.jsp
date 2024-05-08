@@ -295,7 +295,7 @@
                 <div class="card-body p-4">
                   <h5 class="card-title fw-semibold mb-4 me-5" style="display : inline-block">所有產品資料</h5>
                   <button type="button" class="btn btn-secondary btn-sm editBtn fs-3" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">新增產品</button><!-- modal紐 -->
+                    data-bs-target="#productModal">新增產品</button><!-- modal紐 -->
                   <div class="table-responsive">
                     <table id="example" class="table table-striped" style="width:100%">
                       <thead>
@@ -323,24 +323,20 @@
           </div>
           <!-- DataTable -->
           <!-- modal -->
-          <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="productModal" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="productModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title mt-3" id="exampleModalLabel"><b>新增產品資料</b>
+                  <h5 class="modal-title mt-3" id="productModalLabel"><b>新增產品資料</b>
                   </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <form id="editForm">
                     <div class="mb-3">
-                      <label for="productId" class="form-label">產品編號:</label> <input type="text" id="productId"
-                        name="productId" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                      <label for="categoryId" class="form-label">產品類別:</label>
-                      <select id="categoryId" name="categoryId" class="form-select">
+                      <label for="createcategoryId" class="form-label">產品類別:</label>
+                      <select id="createcategoryId" name="categoryId" class="form-select">
                         <option value="1">披薩</option>
                         <option value="2">焗烤</option>
                         <option value="3">炸物</option>
@@ -349,42 +345,29 @@
                       </select>
                     </div>
                     <div class="mb-3">
-                      <label for="productName" class="form-label">產品名稱:</label> <input type="text" id="productName"
-                        name="productName" class="form-control" required>
+                      <label for="createproductName" class="form-label">產品名稱:</label> <input type="text"
+                        id="createproductName" name="productName" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                      <label for="productDesc" class="form-label">產品介紹:</label> <input type="text" id="productDesc"
-                        name="productDesc" class="form-control" required>
+                      <label for="createproductDesc" class="form-label">產品介紹:</label> <input type="text"
+                        id="createproductDesc" name="productDesc" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                      <label for="productImg_url" class="form-label">圖片:</label> <input type="file" id="productImg_url"
-                        name="productImg_url" class="form-control" onchange="previewFile()">
+                      <label for="modal-productImg_url" class="form-label">圖片:</label> <input type="file"
+                        id="modal-productImg_url" name="productImg_url" class="form-control"
+                        onchange="previewFile('modal')">
                     </div>
                     <div class="mb-3">
-                      <img src="" id="previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
+                      <img src="" id="modal-previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
                     </div>
                     <div class=" mb-3">
-                      <label for="productPrice" class="form-label">產品價格:</label> <input type="text" id="productPrice"
-                        name="productPrice" class="form-control" required>
+                      <label for="createproductPrice" class="form-label">產品價格:</label> <input type="text"
+                        id="createproductPrice" name="productPrice" class="form-control" required>
                     </div>
                     <div class=" mb-3">
-                      <label for="productQuantity" class="form-label">產品數量:</label> <input type="text"
-                        id="productQuantity" name="productQuantity" class="form-control" required>
+                      <label for="createproductQuantity" class="form-label">產品數量:</label> <input type="text"
+                        id="createproductQuantity" name="productQuantity" class="form-control" required>
                     </div>
-                    <div class="mb-3">
-                      <label for="productStateId" class="form-label">產品狀態:</label>
-                      <select id="productStateId" name="productStateId" class="form-select">
-                        <option value="">修改狀態</option>
-                        <option value="1">上架中</option>
-                        <option value="0">已下架</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="productCreateDate" class="form-label">上架時間:</label> <input type="text"
-                        id="productCreateDate" name="productCreateDate" class="form-control" readonly>
-                    </div>
-
-
                     <div class="modal-footer mb-3 d-flex justify-content-between">
                       <button type="button" class="btn btn-dark-light " data-bs-dismiss="modal">取消</button>
                       <button type="button" class="btn btn-primary" id="saveCreateBtn" data-bs-dismiss="modal"
@@ -395,14 +378,14 @@
 
               </div>
             </div>
-          </div> -->
-
+          </div>
           <!-- modal -->
+
           <!-- Offcanvas -->
           <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-              <h5 id="offcanvasRightLabel">修改產品資料</h5>
+              <h5 class="offcanvas-title mt-3" id="offcanvasRightLabel"><b>修改產品資料</b></h5>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
             </div>
@@ -433,11 +416,12 @@
                     name="productDesc" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                  <label for="productImg_url" class="form-label">圖片:</label> <input type="file" id="productImg_url"
-                    name="productImg_url" class="form-control" onchange="previewFile()">
+                  <label for="offcanvas-productImg_url" class="form-label">圖片:</label> <input type="file"
+                    id="offcanvas-productImg_url" name="productImg_url" class="form-control"
+                    onchange="previewFile('offcanvas')">
                 </div>
                 <div class="mb-3">
-                  <img src="" id="previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
+                  <img src="" id="offcanvas-previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
                 </div>
                 <div class=" mb-3">
                   <label for="productPrice" class="form-label">產品價格:</label> <input type="text" id="productPrice"
@@ -486,6 +470,7 @@
 
             $(document).ready(function () {
               $('#example').DataTable({
+                "order": [[8, "desc"], [0, "asc"]], // 先按上架日期遞減排序,再按產品ID遞增排序
                 language: {
                   "lengthMenu": "顯示 _MENU_ 筆資料",
                   "sProcessing": "處理中...",
@@ -505,7 +490,6 @@
                     "sNext": "下一頁",
                     "sLast": "末頁"
                   },
-                  "order": [[8, "desc"], [0, "asc"]], // 先按上架日期遞減排序,再按產品ID遞增排序
                   "oAria": {
                     "sSortAscending": ": 以升序排列此列",
                     "sSortDescending": ": 以降序排列此列"
@@ -611,7 +595,7 @@
               formData.append('categoryId', $('#categoryId').val());
               formData.append('productName', $('#productName').val());
               formData.append('productDesc', $('#productDesc').val());
-              formData.append('productImg_url', $('#productImg_url')[0].files[0]);
+              formData.append('productImg_url', $('#offcanvas-productImg_url')[0].files[0]);
               formData.append('productPrice', $('#productPrice').val());
               formData.append('productQuantity', $('#productQuantity').val());
               formData.append('productStateId', $('#productStateId').val());
@@ -645,15 +629,61 @@
                   }
                 }
               })
-            }
+            };
+
+            // 新增產品的方法
+            function productDoCreate() {
+
+              console.log('進入productDoCreate');
+              // A.先取到modal內所有欄位的資料,這邊用formData因為我要傳檔案QAQ
+              let formData = new FormData();
+              formData.append('categoryId', $('#createcategoryId').val());
+              formData.append('productName', $('#createproductName').val());
+              formData.append('productDesc', $('#createproductDesc').val());
+              formData.append('productImg_url', $('#modal-productImg_url')[0].files[0]);
+              formData.append('productPrice', $('#createproductPrice').val());
+              formData.append('productQuantity', $('#createproductQuantity').val());
+
+              // B.把productData傳到後臺處理
+              $.ajax({
+                url: "product_Test_Create",
+                method: 'Post',
+                contentType: false, // 必須設為false,才能上傳檔案
+                processData: false,  // 必須設為false,才能上傳檔案
+                data: formData,
+                success: function (response) {
+                  console.log("response:");
+                  console.log(response);
+                  // let table = $('#example').DataTable();
+                  // let row = table.row(function (index, data, node) {
+                  //   return data.productId === response.productId;
+                  // });
+                  // if (row.length) {
+                  //   row.data().productId = response.productId;
+                  //   row.data().categoryName = response.categoryName;
+                  //   row.data().productName = response.productName;
+                  //   row.data().productDesc = response.productDesc;
+                  //   row.data().productImg_url = response.productImg_url;
+                  //   row.data().productPrice = response.productPrice;
+                  //   row.data().productQuantity = response.productQuantity;
+                  //   row.data().stateId = response.stateId;
+                  //   row.data().stateName = response.stateName;
+                  //   row.data().productCreateDate = response.productCreateDate;
+                  //   row.invalidate().draw(); // 重新渲染
+                  // }
+                }
+              })
+            };
 
           </script>
           <script>
 
             // 圖片預覽
-            function previewFile() {
-              const fileInput = document.getElementById('productImg_url');
-              const previewImage = document.getElementById('previewImage');
+            function previewFile(pre) {
+
+              const fileInput = document.querySelector(`#` + pre + `-productImg_url`);
+              const previewImage = document.querySelector(`#` + pre + `-previewImage`);
+
               const file = fileInput.files[0];
 
               if (file) {
@@ -665,19 +695,22 @@
               } else {
                 previewImage.src = '';
               }
+
             }
 
             // offcanvas
-
             $('#offcanvasRight').on('show.bs.offcanvas', function (event) {
+              $('.offcanvas-body').scrollTop(0);
               const button = $(event.relatedTarget);
               const productData = button.data('product-data');
+
               // console.log(productData);
               // 填充表單欄位
               $('#productId').val(productData.productId);
               $('#categoryId').val(productData.categoryId);
               $('#productName').val(productData.productName);
               $('#productDesc').val(productData.productDesc);
+              $('#offcanvas-productImg_url').val('');
               $('#productPrice').val(productData.productPrice);
               $('#productQuantity').val(productData.productQuantity);
               $('#productStateId').val(productData.stateId);
@@ -685,10 +718,20 @@
 
               // 如果有圖片網址，顯示圖片預覽
               if (productData.productImg_url) {
-                $('#previewImage').attr('src', productData.productImg_url);
+                $('#offcanvas-previewImage').attr('src', productData.productImg_url);
               } else {
-                $('#previewImage').attr('src', '');
+                $('#offcanvas-previewImage').attr('src', '');
               }
+            });
+
+            // modal
+            $('#productModal').on('show.bs.modal', function (event) {
+              // 預設值,等於一鍵輸入
+              $('#createproductName').val('測測');
+              $('#createproductDesc').val('測測測測');
+              $('#modal-productImg_url').val('');
+              $('#createproductPrice').val('100');
+              $('#createproductQuantity').val('10');
             });
 
           </script>
