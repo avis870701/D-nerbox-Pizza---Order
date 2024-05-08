@@ -293,7 +293,9 @@
             <div class="col-lg-12 d-flex align-items-stretch">
               <div class="card w-100">
                 <div class="card-body p-4">
-                  <h5 class="card-title fw-semibold mb-4">所有產品資料</h5>
+                  <h5 class="card-title fw-semibold mb-4 me-5" style="display : inline-block">所有產品資料</h5>
+                  <button type="button" class="btn btn-secondary btn-sm editBtn fs-3" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">新增產品</button><!-- modal紐 -->
                   <div class="table-responsive">
                     <table id="example" class="table table-striped" style="width:100%">
                       <thead>
@@ -320,6 +322,82 @@
             </div>
           </div>
           <!-- DataTable -->
+          <!-- modal -->
+          <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title mt-3" id="exampleModalLabel"><b>新增產品資料</b>
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editForm">
+                    <div class="mb-3">
+                      <label for="productId" class="form-label">產品編號:</label> <input type="text" id="productId"
+                        name="productId" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label for="categoryId" class="form-label">產品類別:</label>
+                      <select id="categoryId" name="categoryId" class="form-select">
+                        <option value="1">披薩</option>
+                        <option value="2">焗烤</option>
+                        <option value="3">炸物</option>
+                        <option value="4">甜點</option>
+                        <option value="5">飲料</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productName" class="form-label">產品名稱:</label> <input type="text" id="productName"
+                        name="productName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productDesc" class="form-label">產品介紹:</label> <input type="text" id="productDesc"
+                        name="productDesc" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productImg_url" class="form-label">圖片:</label> <input type="file" id="productImg_url"
+                        name="productImg_url" class="form-control" onchange="previewFile()">
+                    </div>
+                    <div class="mb-3">
+                      <img src="" id="previewImage" alt="圖片預覽" style="width: 12vw; height: 12vw;">
+                    </div>
+                    <div class=" mb-3">
+                      <label for="productPrice" class="form-label">產品價格:</label> <input type="text" id="productPrice"
+                        name="productPrice" class="form-control" required>
+                    </div>
+                    <div class=" mb-3">
+                      <label for="productQuantity" class="form-label">產品數量:</label> <input type="text"
+                        id="productQuantity" name="productQuantity" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productStateId" class="form-label">產品狀態:</label>
+                      <select id="productStateId" name="productStateId" class="form-select">
+                        <option value="">修改狀態</option>
+                        <option value="1">上架中</option>
+                        <option value="0">已下架</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="productCreateDate" class="form-label">上架時間:</label> <input type="text"
+                        id="productCreateDate" name="productCreateDate" class="form-control" readonly>
+                    </div>
+
+
+                    <div class="modal-footer mb-3 d-flex justify-content-between">
+                      <button type="button" class="btn btn-dark-light " data-bs-dismiss="modal">取消</button>
+                      <button type="button" class="btn btn-primary" id="saveCreateBtn" data-bs-dismiss="modal"
+                        aria-label="Close" onclick="productDoCreate()">確認新增</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div> -->
+
+          <!-- modal -->
           <!-- Offcanvas -->
           <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel">
@@ -388,7 +466,8 @@
                   <button type="button" class="btn btn-primary" id="saveChangesBtn" data-bs-dismiss="offcanvas"
                     aria-label="Close" onclick="productDoUpdate()">確認更新</button>
                 </div>
-                <!-- 放東西 -->
+              </form>
+              <!-- 放東西 -->
 
             </div>
           </div>
@@ -402,6 +481,7 @@
           <script src="/back/libs/simplebar/dist/simplebar.js"></script>
           <script src="/back/js/dashboard.js"></script>
           <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
           <script>
 
             $(document).ready(function () {
