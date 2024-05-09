@@ -9,8 +9,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
-<link rel="shortcut icon" type="image/png"
-	href="/images/member/pizzaQ.png" />
+<link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
 
 <!-- Favicon -->
 <link href="/front/img/favicon.ico" rel="icon">

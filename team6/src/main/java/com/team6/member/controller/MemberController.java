@@ -91,14 +91,6 @@ public class MemberController {
 		session.setAttribute("member", bean);
 		return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
 	}
-	
-	// 進入忘記密碼頁(登入後)
-	@RequestMapping(path = "/forgot", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberGoToForgotPwd(HttpSession session) {
-		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
-		session.setAttribute("member", bean);
-		return "forward:/WEB-INF/front-jsp/ForgotPwd.jsp";
-	}
 
 	// ===================================================================================================
 
@@ -234,7 +226,7 @@ public class MemberController {
 	
 	// ===================================================================================================
 
-	// 新增會員(無登入)(註冊會員)
+	// 新增會員(無登入)(註冊會員) ok
 	@RequestMapping(path = "/MemberGoToInsert", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToInsert() {
 		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
@@ -242,10 +234,11 @@ public class MemberController {
 
 	@PostMapping("/Member.Insert") 
 	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword,
-			@RequestParam("mEmail") String mEmail, Model model) throws ParseException {
+			@RequestParam("mEmail") String mEmail, Model model,HttpSession session) throws ParseException {
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
 		LocalDate nowDate = LocalDate.now();
+//		String photo = "/images/member/user.png";
 		MemberAccountBean bean = new MemberAccountBean();
 		bean.setmAccount(mAccount);
 		bean.setmPassword(mPassword);
@@ -261,15 +254,17 @@ public class MemberController {
 		detailBean.setRegistrationDate(nowDate);
 		returnBean.setDetailBean(detailBean);
 		MemberAccountBean result = service.insertDetail(returnBean);
-		// 加自動寄信
-		String receivers = "ispanteam6@gmail.com";
-		String subject ="訂位成功通知信";
+		session.setAttribute("member", result);
+		// 加自動寄信 ok
+		String receivers = detailBean.getmEmail();
+		String subject ="成為會員通知信";
 		String content = "親愛的" + detailBean.getmName() + "會員，您好！\n感謝您成為 DonerPizza 的會員。\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
 		String from = "DonerPizza<h60915@gmail.com>";
 		service.sendPlainText(receivers, subject, content,from);
 		//-------------------------------------------------------
 		if (result != null) {
-			return "redirect:Member.SelectAll";
+			return "redirect:MemberIndex";
+//			return "redirect:Member.SelectAll/1";
 		}
 		model.addAttribute("err", "新增失敗!!");
 		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
@@ -284,26 +279,6 @@ public class MemberController {
 //		model.addAttribute("bean", bean);
 		session.setAttribute("member", bean);
 		return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
-	}
-	
-	// 去更新會員資料畫面(登入後)
-	@RequestMapping(path = "/MemberGoToUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberGoToUpdate(/*@RequestParam("account") String account,*/HttpSession session) {
-		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
-//		MemberAccountBean accountBean = service.findAccountByAccount(account);
-//		model.addAttribute("bean", bean);
-		session.setAttribute("member", bean);
-		return "forward:/WEB-INF/front-jsp/member/MemberUpdate.jsp";
-	}
-	
-	// 去更新密碼畫面(登入後)
-	@RequestMapping(path = "/MemberGoToUpdatePwd", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberGoToUpdatePwd(/*@RequestParam("member") MemberAccountBean accountBean,*/HttpSession session,Model model) {
-		MemberAccountBean accountBean=(MemberAccountBean) session.getAttribute("member");
-//		MemberAccountBean bean = service.findAccountByAccount(accountBean.getmAccount());
-//		model.addAttribute("bean", bean);
-		session.setAttribute("member", accountBean);
-		return "forward:/WEB-INF/front-jsp/member/MemberUpdatePwd.jsp";
 	}
 
 	// 更新會員密碼
@@ -358,7 +333,7 @@ public class MemberController {
 		service.saveDetailToXML();
 		service.saveAccountToJSON();
 		service.saveDetailToJSON();
-		return "redirect:Member.SelectAll";
+		return "redirect:Member.SelectAll/1";
 	}
 }
 
@@ -373,4 +348,32 @@ public class MemberController {
 //		model.addAttribute("beans", beans);
 //		model.addAttribute("totalElements", beans.size());
 //		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+//	}
+
+// 進入忘記密碼頁(登入後)
+//	@RequestMapping(path = "/forgot", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String MemberGoToForgotPwd(HttpSession session) {
+//		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
+//		session.setAttribute("member", bean);
+//		return "forward:/WEB-INF/front-jsp/ForgotPwd.jsp";
+//	}
+
+// 去更新會員資料畫面(登入後)
+//	@RequestMapping(path = "/MemberGoToUpdate", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String MemberGoToUpdate(/*@RequestParam("account") String account,*/HttpSession session) {
+//		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
+////		MemberAccountBean accountBean = service.findAccountByAccount(account);
+////		model.addAttribute("bean", bean);
+//		session.setAttribute("member", bean);
+//		return "forward:/WEB-INF/front-jsp/member/MemberUpdate.jsp";
+//	}
+
+// 去更新密碼畫面(登入後)
+//	@RequestMapping(path = "/MemberGoToUpdatePwd", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String MemberGoToUpdatePwd(/*@RequestParam("member") MemberAccountBean accountBean,*/HttpSession session,Model model) {
+//		MemberAccountBean accountBean=(MemberAccountBean) session.getAttribute("member");
+////		MemberAccountBean bean = service.findAccountByAccount(accountBean.getmAccount());
+////		model.addAttribute("bean", bean);
+//		session.setAttribute("member", accountBean);
+//		return "forward:/WEB-INF/front-jsp/member/MemberUpdatePwd.jsp";
 //	}
