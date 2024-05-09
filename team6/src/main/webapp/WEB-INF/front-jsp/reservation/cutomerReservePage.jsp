@@ -79,6 +79,9 @@
             <label for="date">訂位日期：</label>
             <input type="date" id="date" name="date" required>
 
+			<label for="email">電子信箱：</label>
+			<input type="text" id="email" name="email" required>
+
             <label for="time">訂位時間：</label>
             <select id="time" name="time" required>
                 <option value="">未選擇</option>
@@ -182,6 +185,7 @@
                 document.getElementById("time").value = "12:00";
                 document.getElementById("people").value = "2";
                 document.getElementById("note").value = "吃素";
+                document.getElementById("email").value = "ispanteam6@gmail.com";
             }
 
             var currentDate = new Date();//現在日期

@@ -142,12 +142,7 @@ table {
 			</div>
 			
 		</div>
-<!-- 		<div style="margin-left: 200px;"> -->
-<!-- 				<div id="Seat" style="margin: 0; overflow: hidden;"> -->
-<!-- 					<iframe src="./reservationPage.html" -->
-<!-- 						style="width: 25vw; height: 50vh;"></iframe> -->
-<!-- 				</div>		 -->
-<!-- 		</div>		 -->
+
 		<div style="margin-top:500px">					
 			<a href="/member/MemberGoBackToIndex"><button>回主頁</button></a> 
 		</div>
@@ -160,6 +155,16 @@ table {
 					<div>
 						<button value="selectByDate" name="checkin">查詢</button>
 			</form>
+
+			<h3>依月份查詢預訂訊息</h3>
+			<form method="get" action="/reservation/selectByMonthAndYear/1">
+				<div id="reservationStatus">
+					<input id="monthSelect" type="month" name="monthSelect" required="required"
+						style="background-color: #b8f083;">
+					<div>
+						<button value="selectByMonth" name="checkin">查詢</button>
+			</form>
+
 		</div>
 
 	</div>

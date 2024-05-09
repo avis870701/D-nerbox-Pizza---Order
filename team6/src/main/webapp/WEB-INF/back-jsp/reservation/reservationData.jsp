@@ -108,6 +108,11 @@ button:hover {
 					id="dateInput<%= reservation.getReservationId() %>">
 					<button type="button"
 						onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
+					
+					<input type="text"
+					id="rsInput<%= reservation.getReservationId() %>" style="width: 30px;">
+					<button type="button" 
+						onclick="updateRSto3('<%= reservation.getReservationId() %>')">預訂狀態修改</button>
 				</td>
 				<td><button type="button" onclick="deleteReservation('<%= reservation.getReservationId() %>')">刪除</button></td>
             </tr>
@@ -149,6 +154,11 @@ button:hover {
                 alert("請輸入有效的日期");
             }    
     }
+		function updateRSto3(reservationId) {  	    
+		    var rsSelect = document.getElementById('rsInput' + reservationId);
+		    var rs = rsSelect.value;
+		    updateReservationStatusTo3(reservationId, rs)	    
+    }
 		
 
 		
@@ -156,9 +166,8 @@ button:hover {
 		    var xhr = new XMLHttpRequest();
 		    xhr.open('PUT', '/reservation/updateNumberOfPeople', true);
 		    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		    xhr.send('action=updateNumberOfPeople&reservationId=' + encodeURIComponent(reservationId) + '&newNumberOfPeople=' + encodeURIComponent(newNumberOfPeople));
+		    xhr.send('action=updateNumberOfPeople&reservationId=' + encodeURIComponent(reservationId) + '&newNumberOfPeople=' + encodeURIComponent(newNumberOfPeople));	
 			location.reload();
-	
 		}
 		
 		function updateReservationDate(reservationId, newDate) {
@@ -186,6 +195,16 @@ button:hover {
 		        xhr.send('action=deleteReservation&reservationId=' + encodeURIComponent(reservationId));
 		        location.reload();
 
+		    }
+		}
+
+		function updateReservationStatusTo3(reservationId, reservationStatus) {
+		    if (confirm("確定要修改客人預訂狀態嗎？")) {
+		        var xhr = new XMLHttpRequest();
+		        xhr.open('GET', '/reservation/autoUpdateReservationStatus?reservationStatus=' + encodeURIComponent(reservationStatus) + '&reservationId=' + encodeURIComponent(reservationId), true);
+		        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		        xhr.send();
+		        location.reload();
 		    }
 		}
 

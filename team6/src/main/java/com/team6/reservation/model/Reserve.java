@@ -56,8 +56,16 @@ public class Reserve {
 	private String note;
 	@Column(name = "CHECKINSTATUS")
 	private int checkInStatus;
+	@Column(name= "MAIL")
+	private String mail;
 	
-	
+	//匯出csv
+	public String saveToCsv() {
+		String csv = reservationUuid +","+ account+","+reservationName+","+phone+","+mail+","+numberOfPeople+","+reservationDate+","+reservationTime+","+reservationStatus+","+note;
+		return csv;
+	}
+
+
 	public Reserve(String account, String reservationName, String phone, int numberOfPeople, String reservationTime,
 			String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.account = account;
@@ -72,7 +80,7 @@ public class Reserve {
 	}
 
 
-	public Reserve(int reservationId, UUID reservationUuid,String account, String reservationName, String phone, int numberOfPeople,
+	public Reserve(int reservationId,UUID reservationUuid ,String account, String reservationName, String phone, int numberOfPeople,
 			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.reservationId = reservationId;
 		this.reservationUuid = reservationUuid;
@@ -98,16 +106,13 @@ public class Reserve {
 	}
 	
 	
-
 	public UUID getReservationUUID() {
 		return reservationUuid;
 	}
 
-
-	public void setReservationUUID(UUID reservationUUID) {
-		this.reservationUuid = reservationUUID;
+	public void setReservationUUID(UUID reservationUuid) {
+		this.reservationUuid = reservationUuid;
 	}
-
 
 	public String getAccount() {
 		return account;
@@ -198,6 +203,13 @@ public class Reserve {
 		this.checkInStatus = checkInStatus;
 	}
 
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 
 	public Reserve() {
 	}
