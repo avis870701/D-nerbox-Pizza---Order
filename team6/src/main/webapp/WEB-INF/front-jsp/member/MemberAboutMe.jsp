@@ -155,7 +155,7 @@
 						</div>
 						<div class="col-lg-8 d-flex align-items-stretch">
 							<div class="card w-100">
-								<div class="card-body p-4">
+								<div class="card-body p-5">
 									<div class="row tab-content" id="changeIndex">
 										<div class="col-50 fade tab-pane show active" id="aboutme" role="tabpanel"
 											aria-labelledby="aboutmeTab" tabindex="0">
