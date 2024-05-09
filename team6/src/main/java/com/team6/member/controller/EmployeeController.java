@@ -13,6 +13,8 @@ import com.team6.member.model.EmployeeAccountBean;
 import com.team6.member.model.EmployeeService;
 import com.team6.member.model.MemberAccountBean;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/emp")
 public class EmployeeController {
@@ -22,38 +24,55 @@ public class EmployeeController {
 
 	// 登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String EmpMain(SessionStatus status) {
+	public String EmpMain(SessionStatus status,HttpSession session) {
 		status.isComplete();
-		return "forward:/WEB-INF/EmpLogin.jsp";
+		session.removeAttribute("emp");
+		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
+	}
+	@RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
+	public String EmpOutMain(SessionStatus status,HttpSession session) {
+		status.isComplete();
+		session.removeAttribute("emp");
+		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 	}
 
 	@PostMapping("/emplogin.controller")
-	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model,HttpSession session) {
 		EmployeeAccountBean bean = eService.login(account, pwd);
 		if (bean != null) {
 			switch (bean.getEmpPermissions()) {
 			case "0": {
 				model.addAttribute("err", "此帳號已無權限!!");
-				return "forward:/WEB-INF/EmpLogin.jsp";
+				return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 			}
 			case "1": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 老闆大人");
-				return "forward:/WEB-INF/EmpIndex.jsp";
+				session.setAttribute("emp", bean);
+				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
 			case "2": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 主管");
-				return "forward:/WEB-INF/EmpIndex.jsp";
+				session.setAttribute("emp", bean);
+				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
 			case "3": {
 				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 員工");
-				return "forward:/WEB-INF/EmpIndex.jsp";
+				session.setAttribute("emp", bean);
+				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
 			default:
 			}
 		}
 		model.addAttribute("err", "帳號或密碼不正確!!");
-		return "forward:/WEB-INF/EmpLogin.jsp";
+		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 	}
+	// ===================================================================================================
+	
+	// 後台從會員功能返回主頁
+		@RequestMapping(path = "/EmpGoBackToEmpIndex", method = { RequestMethod.GET, RequestMethod.POST })
+		public String EmpGoBackToEmpIndex() {
+			return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
+		}	
 	// ===================================================================================================
 
 	// 單筆查詢

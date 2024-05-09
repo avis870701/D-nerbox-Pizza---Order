@@ -1,12 +1,13 @@
 package com.team6.reservation.model;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 
@@ -73,25 +74,45 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	
 	//customerConfirm.html(客人點選:明天會報到)
 	@Modifying
-	@Query(value = "update Reserve SET reservationStatus = 3 WHERE reservationId= ?1 and reservationStatus = 1")
-	public void updateReservationStatusTo3(int reservationId);
+	@Query(value = "update Reserve SET reservationStatus = 3 WHERE reservationUuid= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo3(UUID reservationUuid);
 	
 	//customerConfirm.html(客人點選:明天不會報到或無回應)
 	@Modifying
-	@Query(value = "update Reserve SET reservationStatus = 2 WHERE reservationId= ?1 and reservationStatus = 1")
-	public void updateReservationStatusTo2(int reservationId);
+	@Query(value = "update Reserve SET reservationStatus = 2 WHERE reservationUuid= ?1 and reservationStatus = 1")
+	public void updateReservationStatusTo2(UUID reservationUuid);
 	
 	//customerConfirm.html(客人點選:明天要更改人數而且會報到)
 	@Modifying
-	@Query(value = "update Reserve set numberOfPeople = ?2 , reservationStatus = 3 WHERE reservationId = ?1" )
-	public void updateNumberOfPeopleAndReservationStatusTo3(int reservationId, int newNumberOfPeople);
+	@Query(value = "update Reserve set numberOfPeople = ?2 , reservationStatus = 3 WHERE reservationUuid = ?1" )
+	public void updateNumberOfPeopleAndReservationStatusTo3(UUID reservationUuid, int newNumberOfPeople);
 		
 	//comfirm.html(呈現客人訂位資訊讓客人確認)
-	@Query(value = "from Reserve where reservationId = ?1 and reservationStatus = 1 and checkInStatus = 0 ")
-	public Reserve selectCustomerTommorowComeOrNot(int reservationId);
+	@Query(value = "from Reserve where reservationUuid = ?1 and reservationStatus = 1 and checkInStatus = 0 ")
+	public Reserve selectCustomerTommorowComeOrNot(UUID reservationUuid);
 	
 	//系統掃描rs=1,cs=0的客人是否有 reservationDate - localdate = 1 的客人
 	@Query(value = "FROM Reserve WHERE CAST(reservationDate AS DATE) = DATEADD(day, 1, CAST(GETDATE() AS DATE)) and reservationStatus=1")	
 	public List<Reserve> selectCustomerTommorowReservation();
 	
+	//customerReserveCheck.jsp(讓客人看到自己的訂位狀態和用餐狀態)
+	@Query(value = "FROM Reserve WHERE reservationUuid = ?1 ")
+	public Reserve customerReserveCheck(UUID reservationUuid);
+	
+	//查詢歷史訂單(利用年跟月)用來匯出CSV，來自ReserveIndex.html
+	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate ASC, reservationTime ASC")
+	public List<Reserve> selectHistoryReservation(String year,String month);
+	
+	//分頁:查詢歷史訂單(利用年跟月)，來自ReserveIndex.html，日期由小到大
+	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate ASC, reservationTime ASC")
+	public Page<Reserve> selectPageHistoryReservation(String year,String month,Pageable pageable );
+	
+	//分頁:查詢歷史訂單(利用年跟月)，來自ReserveIndex.html，日期由大到小(未用)
+	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate DESC, reservationTime DESC")
+	public Page<Reserve> selectPageHistoryReservationByDESC(String year,String month,Pageable pageable );
+	
+	//手動修改客人預訂狀態碼
+	@Modifying
+	@Query(value = "update Reserve SET reservationStatus = ?1 WHERE reservationId= ?2")
+	public void autoUpdateReservationStatus(int reservationStatus,int reservationId );
 }

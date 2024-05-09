@@ -22,11 +22,14 @@ public class Reserve {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RESERVATIONID")
 	private int  reservationId;
-	/*@Id
-	@GeneratedValue(generator = "UUID")
-	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	
+//	//外來鍵(FK到Member的id)
+//	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+//	@JoinColumn(name= "fk_maid")
+//	private MemberAccountBean memberAccountBean;
+	
 	@Column(name = "RESERVATIONUUID", columnDefinition = "BINARY(16)")
-	private UUID reservationUUID;*/
+	private UUID reservationUuid;
 	@Column(name = "ACCOUNT")
 	private String account;
 	@Column(name = "RESERVATIONNAME")
@@ -45,8 +48,16 @@ public class Reserve {
 	private String note;
 	@Column(name = "CHECKINSTATUS")
 	private int checkInStatus;
+	@Column(name= "MAIL")
+	private String mail;
 	
-	
+	//匯出csv
+	public String saveToCsv() {
+		String csv = reservationUuid +","+ account+","+reservationName+","+phone+","+mail+","+numberOfPeople+","+reservationDate+","+reservationTime+","+reservationStatus+","+note;
+		return csv;
+	}
+
+
 	public Reserve(String account, String reservationName, String phone, int numberOfPeople, String reservationTime,
 			String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.account = account;
@@ -61,10 +72,10 @@ public class Reserve {
 	}
 
 
-	public Reserve(int reservationId, /*UUID reservationUuid,*/String account, String reservationName, String phone, int numberOfPeople,
+	public Reserve(int reservationId,UUID reservationUuid ,String account, String reservationName, String phone, int numberOfPeople,
 			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.reservationId = reservationId;
-		/*this.reservationUUID = reservationUuid;*/
+		this.reservationUuid = reservationUuid;
 		this.account = account;
 		this.reservationName = reservationName;
 		this.phone = phone;
@@ -87,16 +98,13 @@ public class Reserve {
 	}
 	
 	
-
-	/*public UUID getReservationUUID() {
-		return reservationUUID;
+	public UUID getReservationUUID() {
+		return reservationUuid;
 	}
 
-
-	public void setReservationUUID(UUID reservationUUID) {
-		this.reservationUUID = reservationUUID;
-	}*/
-
+	public void setReservationUUID(UUID reservationUuid) {
+		this.reservationUuid = reservationUuid;
+	}
 
 	public String getAccount() {
 		return account;
@@ -187,6 +195,13 @@ public class Reserve {
 		this.checkInStatus = checkInStatus;
 	}
 
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 
 	public Reserve() {
 	}

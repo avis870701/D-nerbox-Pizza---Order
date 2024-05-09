@@ -3,6 +3,8 @@ package com.team6.order.model;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,16 +19,13 @@ public class Order {
 
 	@Id
 	@Column(name = "ORDERID")
-	private Integer orderId;
+	private String orderId;
 
 	@Column(name = "ORDERTIME")
 	private String orderTime;
 
 	@Column(name = "ACCOUNT")
 	private String account;
-
-	@Column(name = "MEMAIL")
-	private String mEmail;
 
 	@Column(name = "ORIAMOUNT")
 	private Integer oriAmount;
@@ -55,11 +54,118 @@ public class Order {
 	@Column(name = "HIDE")
 	private Integer hide;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@JsonIgnore
 	private Set<OrderDetails> details = new LinkedHashSet<>();
 	
 	public Order() {
 		
 	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(String orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public Integer getOriAmount() {
+		return oriAmount;
+	}
+
+	public void setOriAmount(Integer oriAmount) {
+		this.oriAmount = oriAmount;
+	}
+
+	public String getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(String discount) {
+		this.discount = discount;
+	}
+
+	public Integer getDiscountPrice() {
+		return discountPrice;
+	}
+
+	public void setDiscountPrice(Integer discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+
+	public Integer getPaidAmount() {
+		return paidAmount;
+	}
+
+	public void setPaidAmount(Integer paidAmount) {
+		this.paidAmount = paidAmount;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+
+	public String getPickup() {
+		return pickup;
+	}
+
+	public void setPickup(String pickup) {
+		this.pickup = pickup;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public String getCancelNote() {
+		return cancelNote;
+	}
+
+	public void setCancelNote(String cancelNote) {
+		this.cancelNote = cancelNote;
+	}
+
+	public Integer getHide() {
+		return hide;
+	}
+
+	public void setHide(Integer hide) {
+		this.hide = hide;
+	}
+
+	public Set<OrderDetails> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Set<OrderDetails> details) {
+		this.details = details;
+	}
+	
+	
 
 }

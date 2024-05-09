@@ -16,8 +16,9 @@ public class ProductService {
 	private ProductRepository pRespository;
 	
 	// 新增
-	public void InsertProduct(ProductBean productBean) {
-		pRespository.save(productBean);
+	public ProductBean InsertProduct(ProductBean productBean) {
+		ProductBean insert = pRespository.save(productBean);
+		return insert;
 	}
 	
 	// Delete
