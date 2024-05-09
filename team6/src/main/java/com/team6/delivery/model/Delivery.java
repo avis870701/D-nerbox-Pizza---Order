@@ -1,6 +1,5 @@
 package com.team6.delivery.model;
 
-import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Component
 @Table(name = "Delivery")
 public class Delivery {
 	
@@ -23,7 +21,6 @@ public class Delivery {
 	private String date;
 	private String address;
 	private int status = 1;
-	
 
 
 	public Delivery() {

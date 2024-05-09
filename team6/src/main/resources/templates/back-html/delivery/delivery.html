@@ -2,283 +2,386 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>外送訂單資料</title>
+    <title>外送單資料</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/back/css/delivery/delivery.css">
+    <link rel="stylesheet" href="../../static/back/css/styles.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-	<style>
-    #addDeliveryForm {
-            display: none; /* 初始設置為隱藏 */
-                    }
-
-    </style>
 </head>
 <body>
-<div align="center">
-    <h2>外送訂單資料</h2>
-    <br>
-    <table id="table_id" class="display" style="width:100%">
-        <thead>
-        <tr style="background-color:#8E8E8E">
-            <th>訂單編號</th>
-            <th>顧客姓名</th>
-            <th>電話</th>
-            <th>產品</th>
-            <th>數量</th>
-            <th>價格</th>
-            <th>外送員工</th>
-            <th>外送地址</th>
-            <th>外送時間</th>
-            <th>刪除</th>
-            <th>修改</th>
-        </tr>
-        </thead>
-        <tbody>
-		<th:if="${delivery.state}">
-        <tr th:each="delivery : ${delivery}">
-            <td id="did" th:text="${delivery.id}"></td>
-            <td id="dcname" th:text="${delivery.cname}"></td>
-            <td id="dphone" th:text="${delivery.phone}"></td>
-            <td id="dproduct" th:text="${delivery.product}"></td>
-            <td id="dnum"   th:text="${delivery.num}"></td>
-            <td id="dprice" th:text="${delivery.price}"></td>
-            <td id="dename"  th:text="${delivery.ename}"></td>
-            <td id="daddress" th:text="${delivery.address}"></td>
-            <td id="dtime"    th:text="${delivery.time} + '分鐘'"></td>
-			<!--<td th:text="${delivery.state}"></td> -->
-            <td>
-				<button th:onclick="'Delete(\'' + ${delivery.id} + '\');'">刪除</button>
-            </td>
-            <td>
-                <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
-                    <button>修改</button></a>
-            </td>
-			</th:if>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <div id="addDeliveryForm" class="mt-4">
-        <form>
-            <h3 class="mt-4">新增外送訂單</h3>
-            <div class="mb-3">
-                <label for="cname" class="form-label">顧客姓名:</label>
-                <input type="text" class="form-control" id="cname" name="cname" required>
-            </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">電話:</label>
-                <input type="text" class="form-control" id="phone" name="phone" required>
-            </div>
-            <div class="mb-3">
-                <label for="product" class="form-label">產品:</label>
-                <select name="product" id="product" class="form-control" required> 
-                    <option value="夏威夷德國披薩">夏威夷德國披薩</option>
-                    <option value="海鮮德國披薩">海鮮德國披薩</option>
-                    <option value="牛肉k吧德國披薩">牛肉k吧德國披薩</option>
-                    <option value="義大利雞肉焗烤麵">義大利雞肉焗烤麵</option>
-                    <option value="牛肉k吧焗烤薯條">牛肉k吧焗烤薯條</option>
-                    <option value="炸物拼盤">炸物拼盤</option>
-                    <option value="蘋果肉桂德國烤餅">蘋果肉桂德國烤餅</option>
-                    <option value="原味布丁">原味布丁</option>
-                    <option value="可口可樂">可口可樂</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="num" class="form-label">數量:</label>
-                <input type="number" class="form-control" id="num" name="num" required>
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">價格:</label>
-                <input type="number" class="form-control" id="price" name="price" required>
-            </div>
-            <div class="mb-3">
-                <label for="ename" class="form-label">外送員工:</label>
-                <input type="text" class="form-control" id="ename" name="ename" required>
-            </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">外送地址:</label>
-                <select name="address" id="address" class="form-control">
-                    <option value="中原大學">中原大學</option>
-                    <option value="健行科技大學">健行科技大學</option>
-                    <option value="中壢運動園區">中壢運動園區</option>
-                    <option value="中壢火車站">中壢火車站</option>
-                    <option value="內壢火車站">內壢火車站</option>
-                    <option value="家樂福中壢店">家樂福 中壢店</option>
-                    <option value="家樂福內壢店">家樂福 內壢店</option>
-                    <option value="桃園市立龍興國民中學">桃園市立龍興國民中學</option>
-                    <option value="莒光環保公園">莒光環保公園</option>
-                    <option value="天晟醫院">天晟醫院</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="time" class="form-label">外送時間 (分鐘):</label>
-                <input type="number" class="form-control" id="time" name="time" required>
-            </div>
-        </form>
-        <button id="ClickButton" class="btn btn-secondary mt-4">一鍵輸入</button>
-        <button type="button" class="btn btn-primary" onclick="addDelivery()">送出訂單</button>
-    </div>
-    <button id="add" class="btn btn-secondary mt-4">新增</button>
-    <button id="history" class="btn btn-secondary mt-4">刪除的訂單</button>
-	<a href="/member/MemberGoBackToIndex"><button class="btn btn-secondary mt-4">返回後台管理</button></a>
-</div>
-<!-- <div>
-    <h3>新增外送訂單</h3>
-    <div id="addDeliveryForm">
-        <label for="cname">顧客姓名:</label>
-        <input type="text" id="cname" name="cname" required><br><br>
-        <label for="phone">電話:</label>
-        <input type="text" id="phone" name="phone" required><br><br>
-        <label for="product">產品:</label>
-        <input type="text" id="product" name="product" required><br><br>
-        <label for="num">數量:</label>
-        <input type="number" id="num" name="num" required><br><br>
-        <label for="price">價格:</label>
-        <input type="number" id="price" name="price" required><br><br>
-        <label for="ename">外送員工:</label>
-        <input type="text" id="ename" name="ename" required><br><br>
-        <label for="address">外送地址:</label>
-        <input type="text" id="address" name="address" required><br><br>
-        <label for="time">外送時間 (分鐘):</label>
-        <input type="number" id="time" name="time" required><br><br>
-        <button type="button" onclick="addDelivery()">新增</button>
-    </div>
-    <button id="ClickButton">一鍵輸入</button>
-</div> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function() {
-        $('#table_id').DataTable();
-    });
-	
-    $('#addDeliveryForm').hide();
+     <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <!-- Sidebar Start -->
+  <aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div>
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <a href="./index.html" class="text-nowrap logo-img">
+          <img src="../../static/back/images/logos/dark-logo.svg" width="180" alt="" />
+        </a>
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-8"></i>
+        </div>
+      </div>
+      <!-- Sidebar navigation-->
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
 
-    $('#add').click(function() {
-        $('#addDeliveryForm').show();
-        $('#add').hide();
+
+            <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">後臺功能</span>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-article"></i>
+        </span>
+                    <span class="hide-menu">會員</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-alert-circle"></i>
+        </span>
+                    <span class="hide-menu">產品</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-cards"></i>
+        </span>
+                    <span class="hide-menu">訂單</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-file-description"></i>
+        </span>
+                    <span class="hide-menu">訂位</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/delivery/" aria-expanded="false">
+        <span>
+          <i class="ti ti-file-description"></i>
+        </span>
+                    <span class="hide-menu">外送</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/promotions/promotionsMain" aria-expanded="false">
+        <span>
+          <i class="ti ti-typography"></i>
+        </span>
+                    <span class="hide-menu">活動</span>
+                </a>
+            </li>
+            <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">AUTH</span>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-login"></i>
+        </span>
+                    <span class="hide-menu">Login</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-user-plus"></i>
+        </span>
+                    <span class="hide-menu">Register</span>
+                </a>
+            </li>
+            <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">EXTRA</span>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-mood-happy"></i>
+        </span>
+                    <span class="hide-menu">Icons</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+        <span>
+          <i class="ti ti-aperture"></i>
+        </span>
+                    <span class="hide-menu">Sample Page</span>
+                </a>
+            </li>
+        </ul>
+        <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+            <div class="d-flex">
+                <div class="unlimited-access-title me-3">
+                    <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
+                    <a href="https://adminmart.com/product/modernize-bootstrap-5-admin-template/"
+                       target="_blank" class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a>
+                </div>
+                <div class="unlimited-access-img">
+                    <img src="../../../static/back/images/backgrounds/rocket.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>
+  <!--  Sidebar End -->
+  <!--  Main wrapper -->
+  <div class="body-wrapper">
+    <!--  Header Start -->
+    <header class="app-header">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item d-block d-xl-none">
+            <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+              <i class="ti ti-menu-2"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+              <i class="ti ti-bell-ringing"></i>
+              <div class="notification bg-primary rounded-circle"></div>
+            </a>
+          </li>
+        </ul>
+        <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+            <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="../../static/back/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-user fs-6"></i>
+                    <p class="mb-0 fs-3">My Profile</p>
+                  </a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-mail fs-6"></i>
+                    <p class="mb-0 fs-3">My Account</p>
+                  </a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-list-check fs-6"></i>
+                    <p class="mb-0 fs-3">My Task</p>
+                  </a>
+                  <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!--  Header End -->
+    <!-- Button trigger modal -->
+
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+            <div align="center">
+                <h2>外送單資料</h2>
+                <br>
+                <table id="table_id" class="display" style="width:100%">
+                  <div style="text-align: left;"> <!-- 使用样式使内容靠左对齐 -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <i class="fa-regular fa-square-plus"></i>添加
+                    </button>
+                    <button type="button" id="json"  class="btn btn-primary">
+                      匯出JSON
+                    </button>
+                    <button type="button" id="xml" class="btn btn-primary">
+                      匯出XML
+                    </button>
+                    <button type="button" id="excel" class="btn btn-primary">
+                      匯出<i class="far fa-file-excel"></i>
+                  </button>
+                </div>
+                <br>
+                    <thead>
+                    <tr style="background-color:white">
+                        <th>日期</th>
+                        <th>外送訂單</th>
+                        <th>外送明細</th>
+                        <th>外送地址</th>
+                        <th>外送單狀態</th>
+                        <th>刪除</th>
+                        <th>修改</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="delivery : ${delivery}">
+                            <td th:text="${delivery.date}"></td>
+                            <td id="did" th:text="${delivery.id}"></td>
+                            <!-- <td th:text="${delivery.orderid}"></td> -->
+                            <td>
+                            <a th:href="@{'/delivery/findbyorderid' + ${delivery.orderid}}"> <!--未完成 -->
+                              <span th:text="${delivery.orderid}"></span>
+                            </a>
+                            </td>
+                            <td th:text="${delivery.address}"></td>
+                            <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
+                            <td>
+                                <button th:onclick="'Delete(\'' + ${delivery.id} + '\')'">刪除</button>
+                            </td>
+                            <td>
+                                <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
+                                <button id="update">修改</button></a>
+                            </td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    <!-- 新增外送單-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <h3 class="mt-4">新增外送單</h3>
+              <div>
+                <input type="date" id="date" name="trip-start" min="2018-01-01" max="2100-12-31" />
+              </div>
+              <div class="mb-3">
+                <label for="orderid" class="form-label">外送明細</label>
+                <input type="text" class="form-control" id="orderid" name="orderid">
+            </div>
+              <div class="mb-3">
+              <label for="address" class="form-label">外送地址:</label>
+                <select id="address"  name="address" class="form-select form-select-sm" aria-label="Small select example">
+                  <option disabled selected>請選擇景點</option>
+                  <option value="桃園市中壢區中北路200號">中原大學</option>
+                  <option value="桃園市中壢區健行路229號">健行科技大學</option>
+                  <option value="桃園市中壢區中和路139號">中壢火車站</option>
+                  <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
+                  <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
+                  <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
+                  <option value="桃園市中壢區遠東路135號">元智大學</option>
+                </select>
+              </div>
+              <div>
+                <input type="text" aria-label="Last name" id="address" class="form-control" placeholder="请輸入外送地址">
+            </div>
+              
+          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary" onclick="addDelivery()">新增</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../../static/back/js/delivery/data.js"></script>
+    <script src="../../../static/back/js/delivery/CRUD.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="../assets/js/sidebarmenu.js"></script> -->
+    <!-- <script src="../assets/js/app.min.js"></script> -->
+    <!-- <script src="../assets/libs/simplebar/dist/simplebar.js"></script> -->
+    <script>
+     $(document).ready(function() {
+        $('#table_id').DataTable({
+        language: {
+        "lengthMenu": "顯示 _MENU_ 筆資料",
+        "sInfo": "目前有 _MAX_ 筆資料",
+        "sSearch": "搜尋:",
+        "sEmptyTable": "尚未有資料紀錄存在",
+        "oPaginate": {
+            "sFirst": "首頁",
+            "sPrevious": "上一頁",
+            "sNext": "下一頁",
+            "sLast": "末頁"
+        },
+        
+        }
+      })
     });
-    // $('#ClickButton').click(function() {
-    //     $('#addDeliveryForm').show();
+  // 發送刪除請求
+  //   function Delete(deliveryId) {
+  //   if (confirm("確定要刪除這筆訂單嗎？")) {
+  //       $.ajax({
+  //           type: 'DELETE',
+  //           url: '/delivery/delete/' + deliveryId,
+  //           success: function(result) {
+  //               console.log('刪除成功:', result);
+  //               // 找到对应的表格行并隐藏
+  //               $('#table_id').find('tr').each(function() {
+  //                   if ($(this).find('#did').text() === deliveryId.toString()) {
+  //                       $(this).hide(); 
+  //                       return false; 
+  //                   }
+  //               });
+  //           },
+  //           error: function(xhr, status, error) {
+  //               console.error('刪除失敗:', error);
+  //               alert('刪除訂單失敗，請稍後再試。');
+  //           }
+  //       });
+  //     }
+  // }
+    //發送新增請求
+    // function addDelivery() {
+    // let orderid = $('#orderid').val();
+    // let date = $('#date').val();
+    // let address= $('#address').val();
+
+    // let Data = {
+    //     orderid: orderid,
+    //     date: date,
+    //     address: address
+    // };  
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/delivery/insert', 
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(Data),
+    //     success: function(response) {
+    //         console.log('新增成功:', response);
+    //         window.location.href = "/delivery/home";
+          
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.error('新增失敗:', error);
+    //     }
     // });
 
-    $('#ClickButton').click(function() {
-    		$('#cname').val('王浩然');
-    		$('#ename').val('Henry');
-    		$('#phone').val('0912345678');
-        	$('#num').val('1');
-    		$('#price').val('230');
-    		$('#time').val('10');
-		});
-	//刪除(未完成)
-	/*function Delete(deliveryId) {
-	    if (confirm('確定要刪除訂單 ' + deliveryId + ' 嗎？')) {
-	        $.ajax({
-	            //type: 'POST',
-	            type: 'DELETE',
-	            url: '/delivery/del/' + deliveryId,
-	            success: function(result) {
-	                location.reload();
-	             },
-	        });
-	    }
-    }
-	*/
-    $('#history').click(function(){
-            let historyURL = "http://localhost:8080/delivery/findFall";
-		    window.location.href = historyURL;
-       });
-	function Delete(deliveryId) {
-	       if (confirm("確定要刪除這筆訂單嗎？")) {
-	           // 发送 AJAX 请求删除数据
-	           $.ajax({
-	               type: 'DELETE',
-	               url: '/delivery/del/' + deliveryId,
-	               success: function(result) {
-	                   console.log('刪除成功:', result);
-	                   // 找到对应的表格行并隐藏
-	                   $('#table_id').find('tr').each(function() {
-	                       // 通过比较 deliveryId 找到相应的行
-	                       if ($(this).find('#did').text() === deliveryId.toString()) {
-	                           $(this).hide(); // 隐藏该行
-	                           return false; // 结束循环
-	                       }
-	                   });
-						   window.location.href = '/delivery/findTall';
-					   
-	               },
-	               error: function(xhr, status, error) {
-	                   console.error('刪除失敗:', error);
-	                   alert('刪除訂單失敗，請稍後再試。');
-	               }
-	           });
-	       }
-	   }
-      
-      
-        
-	/*function Delete(deliveryId) {
-	      if (confirm("確定要刪除這筆產品嗎？")) {
-	          $.ajax({
-	              type: 'DELETE',
-	              url:'/delivery/del/' + deliveryId,
-	              success: function(result) {
-				  console.log(result);
-                  //$('#table_id').find('tbody tr[data-delivery-id="' + deliveryId + '"]').remove();
-                  //window.location.href = '/delivery/findall';
-	            
-	              },
-	              error: function(xhr, status, error) {
-	                  showMessage("刪除失敗，請檢查產品是否存在，或是操作存在錯誤。");
-	                  console.error('刪除失敗', error);
-	              }
-	          });
-	      }
-	  }*/
-    function addDelivery() {
-    // 獲取表單中的資料
-    let cname = document.getElementById('cname').value;
-    let phone = document.getElementById('phone').value;
-    let product = document.getElementById('product').value;
-    let num = document.getElementById('num').value;
-    let price = document.getElementById('price').value;
-    let ename = document.getElementById('ename').value;
-    let address = document.getElementById('address').value;
-    let time = document.getElementById('time').value;
-
-    // 構建要發送的資料物件
-    let Data = {
-        cname: cname,
-        phone: phone,
-        product: product,
-        num: num,
-        price: price,
-        ename: ename,
-        address: address,
-        time: time
-    };
-
-    // 發送 POST 請求
-    $.ajax({
-        type: 'POST',
-        url: '/delivery/insert', // 請根據後端實際的路徑設定
-        contentType: 'application/json',
-        data: JSON.stringify(Data),
-        success: function(response) {
-            console.log('新增成功:', response);
-            window.location.href = '/delivery/findTall';
-
-        },
-        error: function(xhr, status, error) {
-            console.error('新增失敗:', error);
-            alert('新增外送訂單失敗，請稍後再試。');
-        }
-    });
-}
-	
-</script>
+      // function test() {
+    //     var tableBody = document.getElementById('tableBody');
+    //     var rowCount = tableBody.getElementsByTagName('tr').length;
+    //     if (rowCount === 10) {
+    //         console.log("There are 10 records.");
+    //         // You can perform further actions here if needed
+    //     } else {
+    //         console.log("There are not 10 records.");
+    //         // You can handle this case accordingly
+    //     }
+    // }
+// }
+</script>    
 </body>
 </html>
