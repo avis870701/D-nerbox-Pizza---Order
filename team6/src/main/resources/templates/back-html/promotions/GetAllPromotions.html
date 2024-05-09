@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../static/back/css/promotions/GetAll.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+
 </head>
 
 <body>
@@ -203,7 +206,7 @@
 
                     <div style="text-align: center;">
                         <h2>所有活動資料</h2>
-                        <table>
+                        <table id="promotionsTable">
                             <thead>
                             <tr>
                                 <th>活動編號</th>
@@ -246,9 +249,9 @@
                             </tr>
                             </tbody>
                         </table>
-                        <h3>
-                            共<span th:text="${promotions.size()}"></span>筆活動資料
-                        </h3>
+<!--                        <h3>-->
+<!--                            共<span th:text="${promotions.size()}"></span>筆活動資料-->
+<!--                        </h3>-->
                         <p>
                             <a class="btn" th:href="@{/promotions/promotions/insert}">新增活動</a>
                             <a class="btn" th:href="@{/MemberGoBackToIndex}">回首頁</a>
@@ -256,6 +259,24 @@
                     </div>
 
                     <script th:inline="javascript">
+
+                        $.getScript("https://cdn.datatables.net/2.0.7/js/dataTables.min.js", function () {
+                            $('#promotionsTable').DataTable({
+                                language: {
+                                    "lengthMenu": "顯示 _MENU_ 筆資料",
+                                    "sInfo": "目前有 _MAX_ 筆資料",
+                                    "sSearch": "搜尋:",
+                                    "sEmptyTable": "尚未有資料紀錄存在",
+                                    "oPaginate": {
+                                        "sFirst": "首頁",
+                                        "sPrevious": "上一頁",
+                                        "sNext": "下一頁",
+                                        "sLast": "末頁"
+                                    },
+                                }
+                            });
+                        });
+
 
                         function deletePromotions(element) {
                             var promotionsName = element.getAttribute('data-promotions-name');
@@ -290,6 +311,10 @@
 <script src="../static/back/js/sidebarmenu.js"></script>
 <script src="../static/back/js/app.min.js"></script>
 <script src="../static/back/libs/simplebar/dist/simplebar.js"></script>
+
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+
+
 </body>
 
 </html>
