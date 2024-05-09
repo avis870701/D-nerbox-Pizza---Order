@@ -37,7 +37,7 @@ import jakarta.persistence.metamodel.SetAttribute;
 @Controller
 @RequestMapping(path = "/product")
 public class ProductController {
-	
+	// 2024/5/9 marge後確定沒問題
 	@Autowired
 	private ProductService productService;
 	@Autowired
@@ -351,6 +351,7 @@ public class ProductController {
 		@DeleteMapping("/Product_Test_Delete")
 		public ResponseEntity<Integer> product__Test_Delete(@RequestParam("productId") Integer productId) {
 			productService.DeleteProduct(productId);
+			// 2024/5/9 marge後確定沒問題
 			return ResponseEntity.ok(productId);
 		}
 	
