@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ReserveService {
-	
+	//沒問題
 	@Autowired
 	private ReserveRepository reserveRepository;
 	@Autowired
