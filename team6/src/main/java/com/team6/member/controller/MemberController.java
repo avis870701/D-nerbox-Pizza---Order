@@ -39,14 +39,14 @@ public class MemberController {
 
 	// 會員自行登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberMain(SessionStatus status) {
+	public String MemberMain(SessionStatus status,HttpSession session) {
 		status.isComplete();
 		session.removeAttribute("member");
 		return "forward:/WEB-INF/front-jsp/Login.jsp";
 	}
 
 	@PostMapping("/memberlogin.controller")
-	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model,HttpSession session) {
 		MemberAccountBean bean = service.login(account, pwd);
 		if (bean != null) {
 			if (bean.getPermissions() == 1) {

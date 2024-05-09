@@ -13,6 +13,8 @@ import com.team6.member.model.EmployeeAccountBean;
 import com.team6.member.model.EmployeeService;
 import com.team6.member.model.MemberAccountBean;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/emp")
 public class EmployeeController {
@@ -22,7 +24,7 @@ public class EmployeeController {
 
 	// 登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String EmpMain(SessionStatus status) {
+	public String EmpMain(SessionStatus status,HttpSession session) {
 		status.isComplete();
 		session.removeAttribute("emp");
 		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
@@ -35,7 +37,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/emplogin.controller")
-	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model) {
+	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model,HttpSession session) {
 		EmployeeAccountBean bean = eService.login(account, pwd);
 		if (bean != null) {
 			switch (bean.getEmpPermissions()) {

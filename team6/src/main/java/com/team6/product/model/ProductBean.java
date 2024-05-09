@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "product")
@@ -52,7 +53,7 @@ public class ProductBean implements Serializable {
 	@Column(name = "PRODUCTCREATEDATE")
 	private LocalDate productCreateDate;
 
-//	@JsonIgnore order的設計不需要處理無限迴圈先註解
+	@JsonIgnore 
 	@JoinColumn(name = "CATEGORYID", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory productCategory;
@@ -66,7 +67,7 @@ public class ProductBean implements Serializable {
 		return productCategory.getCategoryName();
 	}
 
-//	@JsonIgnore order的設計不需要處理無限迴圈先註解
+	@JsonIgnore //order的設計不需要處理無限迴圈先註解
 	@JoinColumn(name = "PRODUCTSTATEID", insertable = false, updatable = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductState productState;
@@ -115,7 +116,7 @@ public class ProductBean implements Serializable {
 		this.productCreateDate = productCreateDate;
 	}
 
-//	修改用的	
+//	修改用的	old
 	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
 			String productImg_url, Integer productPrice, ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
 		this.productId = productId;
@@ -127,6 +128,22 @@ public class ProductBean implements Serializable {
 		this.productState = productState;
 		this.productQuantity = productQuantity;
 		this.productCreateDate = productCreateDate;
+	}
+
+//	修改用的	new(套版的版本)	
+	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
+			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
+			ProductCategory productCategory, ProductState productState) {
+		this.productId = productId;
+		this.CategoryId = categoryId;
+		this.productName = productName;
+		this.productDesc = productDesc;
+		this.productImg_url = productImg_url;
+		this.productPrice = productPrice;
+		this.productQuantity = productQuantity;
+		this.productCreateDate = productCreateDate;
+		this.productCategory = productCategory;
+		this.productState = productState;
 	}
 
 //	----------------------

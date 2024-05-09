@@ -2,6 +2,7 @@ package com.team6.member.model;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

@@ -3,6 +3,7 @@ package com.team6.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team6.product.dto.ProductBeanDto;
+import com.team6.product.dto.ProductCategoryDto;
+import com.team6.product.dto.ProductStateDto;
+import com.team6.product.dto.ProductTest;
 import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductCategory;
 import com.team6.product.model.ProductCategoryService;
@@ -43,37 +49,6 @@ public class ProductController {
 //	status.isComplete();
 	
 	/*因為thymeleaf會搶路徑,所以要forward:*/
-	
-	
-	
-	
-	// 測試扣產品數量
-	@GetMapping("/product.test")
-	public String testProductQuantity(Model model) {
-		// 18號測試用
-		ProductBean productBean = productService.SelectById(18);
-		model.addAttribute("productBean", productBean);
-		return "forward:/WEB-INF/product/Number.jsp";
-	}
-	
-	// 測試扣產品數量
-	@PutMapping("/Product_coQuantity")
-	@ResponseBody
-	public ResponseEntity<ProductBean> testCoProductQuantity(
-			@RequestParam("quantity") Integer quantity,
-			@RequestParam("productId") Integer productId){
-		ProductBean productBean = productService.SelectById(productId);
-		Integer pQuantity = productBean.getProductQuantity();
-		
-		pQuantity -= quantity;
-		productBean.setProductQuantity(pQuantity);
-		productService.UpdateProduct(productBean);
-		
-		return ResponseEntity.ok().body(productBean);
-	}
-	
-	
-	
 	
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
@@ -240,7 +215,7 @@ public class ProductController {
 	
 	// 刪除
 	@DeleteMapping("/Product_Delete")
-	public String Product_Delete(@RequestParam("productId") Integer productId) {
+	public String product_Delete(@RequestParam("productId") Integer productId) {
 		productService.DeleteProduct(productId);
 		return "redirect:Product_SelectAll";
 	}

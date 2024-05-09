@@ -1,5 +1,8 @@
 package com.team6.order.model;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +17,7 @@ public class OrderService {
 	private OrderRepository oRepos;
 	
 	@Autowired
-	private DetailsRepository dReops;
+	private DetailsRepository dRepos;
 	
 	//後端查詢訂單全部
 	public Page<Order> findOrderAll(Pageable pageable) {
