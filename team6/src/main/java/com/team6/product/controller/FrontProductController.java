@@ -16,7 +16,7 @@ import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductCategoryService;
 import com.team6.product.model.ProductService;
 import com.team6.product.model.ProductStateService;
-
+// 2024/5/9 marge後確定沒問題
 //@SessionAttributes(names = {})
 @Controller
 @RequestMapping(path = "/product")
