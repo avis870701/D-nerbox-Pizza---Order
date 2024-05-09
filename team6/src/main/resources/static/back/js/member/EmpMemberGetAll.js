@@ -26,13 +26,17 @@ function loadPage(indexPage) {
 					console.log(response);
 					var tr = `<tr><td class="border-bottom-0">` + n.maid + `</td>`
 						+ `<td class="border-bottom-0">` + n.mAccount + `</td>`
-						+ `<td class="border-bottom-0"><a href='Member.SelectOneByID?id=` + n.maid + "'>" + n.detailBean.mName + `</a></td>`
-						+ `<td class="border-bottom-0">` + `<img src="` + n.detailBean.mPhoto + `" class="userphoto"></td>`;
+						+ `<td class="border-bottom-0"><a href='Member.SelectOneByID?id=` + n.maid + "'>" + n.detailBean.mName + `</a></td>`;
+					if (n.detailBean.mPhoto == null) {
+						tr += `<td class="border-bottom-0"><img src="/images/member/user.png" class="userphoto"></td>`;
+					} else {
+						tr += `<td class="border-bottom-0">` + `<img src="` + n.detailBean.mPhoto + `" class="userphoto"></td>`;
+					}
 					if (n.permissions == 0) {
-						tr += `<td> <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)" checked>已封鎖</label>`
-							+ `< label > <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)">已啟用</label></td > `;
+						tr += `<td> <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)" checked>已封鎖　　　</label>`
+							+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)">已啟用</label></td > `;
 					} else if (n.permissions == 1) {
-						tr += `<td> input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)">已封鎖`
+						tr += `<td> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)">已封鎖　　　`
 							+ `<input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)" checked>已啟用</td > `;
 					}
 					// tr += `</form > `;

@@ -46,17 +46,14 @@ public class EmployeeController {
 				return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 			}
 			case "1": {
-				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 老闆大人");
 				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
 			case "2": {
-				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 主管");
 				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
 			case "3": {
-				model.addAttribute("boss", "Welcome! " + bean.getDetailBean().getEmpName() + " 員工");
 				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
@@ -70,7 +67,9 @@ public class EmployeeController {
 	
 	// 後台從會員功能返回主頁
 		@RequestMapping(path = "/EmpGoBackToEmpIndex", method = { RequestMethod.GET, RequestMethod.POST })
-		public String EmpGoBackToEmpIndex() {
+		public String EmpGoBackToEmpIndex(HttpSession session) {
+			EmployeeAccountBean bean=(EmployeeAccountBean)session.getAttribute("emp");
+			session.setAttribute("emp", bean);
 			return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 		}	
 	// ===================================================================================================
