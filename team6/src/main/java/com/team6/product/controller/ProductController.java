@@ -347,6 +347,12 @@ public class ProductController {
 
 		}
 	
+		// 刪除
+		@DeleteMapping("/Product_Test_Delete")
+		public ResponseEntity<Integer> product__Test_Delete(@RequestParam("productId") Integer productId) {
+			productService.DeleteProduct(productId);
+			return ResponseEntity.ok(productId);
+		}
 	
 	
 }
