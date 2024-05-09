@@ -137,14 +137,3 @@ public class DeliveryController {
 //		return "/back-html/delivery/update";
 }
 //}
-
-
-
-
-
-
-
-
-
-
-
