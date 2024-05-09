@@ -13,9 +13,6 @@ public interface DetailsRepository extends JpaRepository<OrderDetails, Integer> 
 	// find by orderid
 	List<OrderDetails> findByOrderId(String orderId);
 
-	// delete by orderid
-	void deleteByOrderId(String orderId);
-
 	// update product
 	@Transactional
 	@Modifying

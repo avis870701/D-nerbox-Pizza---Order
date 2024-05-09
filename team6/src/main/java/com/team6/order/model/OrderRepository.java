@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderRepository extends JpaRepository<Order, String>{
@@ -18,6 +19,10 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	//後端查詢全部
 	@Query(value = "SELECT * FROM pizzaOrder", countQuery = "SELECT count(*) FROM pizzaOrder", nativeQuery = true)
 	Page<Order> findOrderAll(Pageable pageable);
+	
+	//後端模糊查詢
+	@Query(value = "SELECT * FROM pizzaOrder WHERE LOWER(orderId) LIKE %:keyword% OR LOWER(account) LIKE %:keyword% OR LOWER(orderStatus) LIKE %:keyword% OR LOWER(pickup) LIKE %:keyword% OR LOWER(payment) LIKE %:keyword%", nativeQuery = true)
+    List<Order> findOrdersByKeyword(@Param("keyword") String keyword);
 	
 	//更新折扣碼
 	@Transactional

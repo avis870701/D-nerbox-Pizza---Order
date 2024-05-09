@@ -12,9 +12,10 @@
 	href="../../../static/images/logos/favicon.png" />
 <link rel="stylesheet" href="../../../static/back/css/styles.min.css" />
 
-<!--若有自己的css，請在此引入
-    <link rel="stylesheet" href="../../../static/back/css/promotions/GetAll.css">-->
-<link rel="stylesheet" href="../../../static/back/css/order/table.css">
+<!-- Font Awesome-->
+<script src="https://kit.fontawesome.com/60e7a8ebe3.js"
+	crossorigin="anonymous"></script>
+
 
 
 <script
@@ -260,7 +261,9 @@
 										</div>
 									</div>
 
-
+									<div
+										class="text-center bg-white font-weight-bold text-primary p-1"
+										id="totalDataCount"></div>
 									<!-- 表格内容容器 -->
 									<div class="table-responsive shadow">
 										<table
@@ -299,11 +302,10 @@
 													</th>
 												</tr>
 											</thead>
+
 											<tbody id="orderTableBody">
 
 											</tbody>
-
-
 										</table>
 									</div>
 									<!-- 显示总记录数和当前页码信息 -->
@@ -347,6 +349,54 @@
 										</div>
 									</div>
 
+									<!-- details Modal -->
+									<div class="container">
+										<div class="row">
+											<div class="col-12">
+												<div id="orderDetailsModal" class="modal fade" tabindex="-1"
+													role="dialog" aria-labelledby="orderDetailsModalLabel"
+													aria-hidden="true">
+													<div class="modal-dialog modal-lg" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title text-center"
+																	id="orderDetailsModalLabel"></h5>
+															</div>
+															<div class="modal-body">
+																<div class="table-responsive">
+																	<table id="orderDetailsTable"
+																		class="table table-border">
+																		<thead>
+																			<tr>
+																				<th class="text-nowrap">產品名稱</th>
+																				<th class="text-nowrap">單價</th>
+																				<th class="text-nowrap">數量</th>
+																				<th class="text-nowrap">小計</th>
+																				<th class="text-nowrap">餐點備註</th>
+																				<th>刪除</th>
+																			</tr>
+																		</thead>
+																		<tbody id="orderDetailsTableBody">
+																			<!-- Order details will be dynamically populated here -->
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-muted close"
+																	data-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+
 								</div>
 							</div>
 						</div>
@@ -355,6 +405,10 @@
 
 						<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
 						<script
+							src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+							integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+							crossorigin="anonymous"></script>
+						<script
 							src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 						<script src="../../../static/back/js/sidebarmenu.js"></script>
 						<script src="../../../static/back/js/app.min.js"></script>
@@ -362,7 +416,7 @@
 							src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
 
 
-						<script src="../../../static/back/js/order/orderSelect.js"></script>
+						<script src="../../../static/back/js/order/orderCRUD.js"></script>
 </body>
 
 </html>

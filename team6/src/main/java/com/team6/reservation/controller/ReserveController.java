@@ -229,7 +229,7 @@ public class ReserveController {
 	/*=====================================================前台=====================================================*/
 	
 	//客人預訂進入點
-	@RequestMapping(path = "/customerreservemain.controller", method = RequestMethod.GET)
+	@GetMapping("/customerreservemain.controller")
 	public String customerreserveMainAction() {
 		return "forward:/WEB-INF/front-jsp/reservation/cutomerReservePage.jsp";
 	}

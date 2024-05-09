@@ -24,6 +24,16 @@ public class OrderService {
 	    return oRepos.findOrderAll(pageable);
 	}
 	
+    // 後端一般查詢全部
+    public List<Order> findAllOrders() {
+        return oRepos.findAll();
+    }
+	
+	//後端模糊查詢
+    public List<Order> findOrdersByKeyword(String keyword) {
+        return oRepos.findOrdersByKeyword(keyword);
+    }
+	
 	// 查詢單筆訂單
 	public Order findOrderById(String orderId) {
 		Optional<Order> op1 = oRepos.findById(orderId);
@@ -55,4 +65,8 @@ public class OrderService {
 		return dRepos.save(orderDetails);
 	}
 	
+	// 刪除餐點明細
+	public void deleteOrderDetail(Integer detailId) {
+        dRepos.deleteById(detailId);
+    } 
 }
