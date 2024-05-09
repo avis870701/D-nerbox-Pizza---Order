@@ -1,20 +1,21 @@
 package com.team6.reservation.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/reservation")
@@ -34,6 +33,8 @@ public class ReserveController {
 	@Autowired
 	private Reserve reserve;
 
+	/*=====================================================後台=====================================================*/
+	
 	//後台進入點&店家查詢待確認預訂訊息的總數
 	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
 	public String reserveMainAction(Model model) {
@@ -41,12 +42,6 @@ public class ReserveController {
 		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
 		return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
-	}
-		
-	//客人預訂進入點
-	@RequestMapping(path = "/customerreservemain.controller", method = RequestMethod.GET)
-	public String customerreserveMainAction() {
-		return "forward:/WEB-INF/back-jsp/reservation/cutomerReservePage.jsp";
 	}
 	
 	//依姓名查詢ok
@@ -84,42 +79,7 @@ public class ReserveController {
 		model.addAttribute("selectReservationStatus", selectReservationStatus);
 		return "forward:/WEB-INF/back-jsp/reservation/reservationDataConfirm.jsp";
 	}
-	
-	
-	//客人新增預訂ok(含訂位完畢寄信功能)
-	@PostMapping("/customerReserve")
-	public String customerReserve(@RequestParam(value = "people", required = false/*可選的參數*/) int numberOfPeople,
-				@RequestParam(value = "date", required = false) String reservationDate,
-				@RequestParam(value = "phone", required = false) String phone,
-				@RequestParam(value = "time", required = false) String reservationTime,
-				@RequestParam(value = "note", required = false) String specialRequests,
-				@RequestParam(value = "name", required = false) String reservationName,
-				@RequestParam(value = "email", required = false) String mail,
-				Model model) 
-				{
-			UUID uuid = UUID.randomUUID();
-			reserve =reserveService.InsertReservation("ispan6",uuid,numberOfPeople, reservationDate, phone,mail, reservationTime,
-			specialRequests, reservationName);			
 			
-			String receivers = mail;
-			String subject ="訂位成功通知信";
-			String content = "親愛的" + reservationName + "先生/小姐，您好！\n感謝您選擇 DonerPizza，預訂時間為：" + reservationDate + " " + reservationTime + "，共計" + numberOfPeople + "位用餐。\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
-			String from = "DonerPizza<h60915@gmail.com>";
-			reserveService.sendPlainText(receivers, subject, content,from);
-						
-			model.addAttribute("insertReservation", reserve);
-			return "forward:/WEB-INF/back-jsp/reservation/reserveSuccess.jsp";
-		}
-	
-	//顯示給客人看他目前的訂位狀態
-	@GetMapping("/cutomerReserveCheck")
-	 public String customerReserveCheck(@RequestParam(value = "reservationUuid") UUID reservationUuid, Model model) {
-		Reserve customerReserveCheck = reserveService.customerReserveCheck(reservationUuid);
-		model.addAttribute("customerReserveCheck", customerReserveCheck);
-		return "forward:/WEB-INF/back-jsp/reservation/customerReserveCheck.jsp";
-	}
-	
-	
 	//店家新增現場客人ok
 	@PostMapping("/dineInCustomer")
 	public String dineInCustomer(@RequestParam(value = "people", required = false/*可選的參數*/) int numberOfPeople,
@@ -224,6 +184,89 @@ public class ReserveController {
 		return ResponseEntity.ok().body("good");
 	}
 	
+	//店家手動更改reservationStatus
+	@GetMapping("/autoUpdateReservationStatus")
+	@ResponseBody
+	public ResponseEntity autoUpdateReservationStatus(@RequestParam(value = "reservationStatus")int reservationStatus,
+							@RequestParam(value = "reservationId")int reservationId) {
+		reserveService.autoUpdateReservationStatus(reservationStatus, reservationId);	
+		return ResponseEntity.ok().body("good");
+	}
+	
+	//分頁:搜尋歷史訂位紀錄(日期時間由小到大)
+	@GetMapping("/selectByMonthAndYear/{pageNo}")
+	public String selectHistoryReservation(@PathVariable("pageNo") int pageNo,@RequestParam(value = "monthSelect") String monthSelect,Model model) {
+		int pageSize = 10;
+		if(pageNo <= 0) {
+			pageNo = 1;
+		}
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		
+		String[] yearAndMonth = monthSelect.split("-");
+		String year = yearAndMonth[0];
+		String month = yearAndMonth[1];
+		Page<Reserve> historyReservation = reserveService.selectPageHistoryReservation(year, month, pageable);
+		
+		int totalPages = historyReservation.getTotalPages();
+		long totalElements = historyReservation.getTotalElements();
+		
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("totalElements",totalElements);
+		model.addAttribute("historyReservation",historyReservation);
+		model.addAttribute("year",year);
+		model.addAttribute("month",month);
+		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
+	}
+		
+	//匯出歷史訂位(依年月)成csv
+	@GetMapping("/saveDetailToCSV")
+	public String saveDetailToCSV(@RequestParam(value = "yearSelect") String yearSelect,@RequestParam(value = "monthSelect") String monthSelect) {
+		reserveService.saveDetailToCSV(yearSelect, monthSelect);
+		return "redirect:selectByMonthAndYear/1?monthSelect=" + yearSelect + "-" + monthSelect;
+		//return "redirect:selectByMonthAndYear?monthSelect=" + yearSelect+"-"+monthSelect;
+	}
+	
+	/*=====================================================前台=====================================================*/
+	
+	//客人預訂進入點
+	@RequestMapping(path = "/customerreservemain.controller", method = RequestMethod.GET)
+	public String customerreserveMainAction() {
+		return "forward:/WEB-INF/front-jsp/reservation/cutomerReservePage.jsp";
+	}
+	
+	//客人新增預訂ok(含訂位完畢寄信功能)
+	@PostMapping("/customerReserve")
+	public String customerReserve(@RequestParam(value = "people", required = false/*可選的參數*/) int numberOfPeople,
+				@RequestParam(value = "date", required = false) String reservationDate,
+				@RequestParam(value = "phone", required = false) String phone,
+				@RequestParam(value = "time", required = false) String reservationTime,
+				@RequestParam(value = "note", required = false) String specialRequests,
+				@RequestParam(value = "name", required = false) String reservationName,
+				@RequestParam(value = "email", required = false) String mail,
+				Model model) 
+				{
+			UUID uuid = UUID.randomUUID();
+			reserve =reserveService.InsertReservation("ispan6",uuid,numberOfPeople, reservationDate, phone,mail, reservationTime,
+			specialRequests, reservationName);			
+			
+			String link = "http://localhost:8080/reservation/cutomerReserveCheck?reservationUuid=" + uuid;
+			String receivers = mail;
+			String subject ="訂位成功通知信";
+			String content = "親愛的" + reservationName + "先生/小姐，您好！\n感謝您選擇 DonerPizza，預訂時間為：" + reservationDate + " " + reservationTime + "，共計" + numberOfPeople + "位用餐。\n以下是您的訂位資訊"+link+"\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
+			String from = "DonerPizza<h60915@gmail.com>";
+			reserveService.sendPlainText(receivers, subject, content,from);
+						
+			model.addAttribute("insertReservation", reserve);
+			return "forward:/WEB-INF/front-jsp/reservation/reserveSuccess.jsp";
+		}
+	
+	//顯示給客人看他目前的訂位狀態
+	@GetMapping("/cutomerReserveCheck")
+	 public String customerReserveCheck(@RequestParam(value = "reservationUuid") UUID reservationUuid, Model model) {
+		Reserve customerReserveCheck = reserveService.customerReserveCheck(reservationUuid);
+		model.addAttribute("customerReserveCheck", customerReserveCheck);
+		return "forward:/WEB-INF/front-jsp/reservation/customerReserveCheck.jsp";
+	}
 	
 	//客人前一天點選確認,將rs由1改為3
 	@GetMapping("/customerComfirmto3")
@@ -238,17 +281,8 @@ public class ReserveController {
 				return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
 			}
 		} else {
-			return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
+			return "forward:/WEB-INF/front-jsp/reservation/fail.jsp";
 		}
-	}
-	
-	//店家手動更改reservationStatus
-	@GetMapping("/autoUpdateReservationStatus")
-	@ResponseBody
-	public ResponseEntity autoUpdateReservationStatus(@RequestParam(value = "reservationStatus")int reservationStatus,
-							@RequestParam(value = "reservationId")int reservationId) {
-		reserveService.autoUpdateReservationStatus(reservationStatus, reservationId);	
-		return ResponseEntity.ok().body("good");
 	}
 	
 	//客人前一天點選確認不會去,將rs由1改為2
@@ -260,53 +294,72 @@ public class ReserveController {
 			int reserveStatus = reserve.getReservationStatus();			
 			if(reserveStatus==1) {
 				reserveService.updateReservationStatusTo2(reservationUuid);		
-				return "forward:/WEB-INF/back-jsp/reservation/success.jsp";}
+				return "forward:/WEB-INF/front-jsp/reservation/success.jsp";}
 			else {
-				return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
+				return "forward:/WEB-INF/front-jsp/reservation/fail.jsp";
 				}
 			}	
 		else {
-			return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
+			return "forward:/WEB-INF/front-jsp/reservation/fail.jsp";
 		}
 	}
-
+	
 	//查詢客人的預訂資訊並顯示在確認信件中(rs=1,cs=0)
 	@GetMapping("/selectCustomerTommorowComeOrNot")
 	public String selectCustomerTommorowComeOrNot(@RequestParam(value = "reservationUuid") UUID reservationUuid, Model model) {
 
 		Reserve selectCustomerTommorowComeOrNot = reserveService.selectCustomerTommorowComeOrNot(reservationUuid);
 	    if (selectCustomerTommorowComeOrNot == null) {
-	    	return "forward:/WEB-INF/back-jsp/reservation/fail.jsp";
+	    	return "forward:/WEB-INF/front-jsp/reservation/fail.jsp";
 	    }
 	    model.addAttribute("selectCustomerTommorowComeOrNot", selectCustomerTommorowComeOrNot);
-	    return "forward:/WEB-INF/back-jsp/reservation/customerUpdateNumberOfPeople.jsp";    
+	    return "forward:/WEB-INF/front-jsp/reservation/customerUpdateNumberOfPeople.jsp";    
 	}
-
+	
 	//客人前一天想更改人數,並將rs由1改為3
 	@GetMapping("/updateNumberOfPeopleAndReservationStatusTo3")
 	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationUuid") UUID reservationUuid,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
 		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
-	    return "forward:/WEB-INF/back-jsp/reservation/success.jsp"; 
+	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
 	}
 	
-	@GetMapping("/selectByMonthAndYear")
-	public String selectHistoryReservation(@RequestParam(value = "monthSelect") String monthSelect,Model model) {
-		
-		String[] yearAndMonth = monthSelect.split("-");
-		String year = yearAndMonth[0];
-		String month = yearAndMonth[1];
-		List<Reserve> historyReservation = reserveService.selectHistoryReservation(year,month);
-		model.addAttribute("historyReservation",historyReservation);
-		model.addAttribute("year",year);
-		model.addAttribute("month",month);
-		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
-	}
-
-	//匯出歷史訂位(依年月)成csv
-	@GetMapping("/saveDetailToCSV")
-	public String saveDetailToCSV(@RequestParam(value = "yearSelect") String yearSelect,@RequestParam(value = "monthSelect") String monthSelect) {
-		reserveService.saveDetailToCSV(yearSelect, monthSelect);
-	    return "redirect:selectByMonthAndYear?monthSelect=" + yearSelect+"-"+monthSelect;
-	}
+	/*暫時未用到*/
+//	//分頁:搜尋歷史訂位紀錄(日期時間由大到小)
+//	@GetMapping("/selectByMonthAndYear/{pageNo}")
+//	public String selectPageHistoryReservationByDESC(@PathVariable("pageNo") int pageNo,@RequestParam(value = "monthSelect") String monthSelect,Model model) {
+//		int pageSize = 10;
+//		if(pageNo <= 0) {
+//			pageNo = 1;
+//		}
+//		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+//		
+//		String[] yearAndMonth = monthSelect.split("-");
+//		String year = yearAndMonth[0];
+//		String month = yearAndMonth[1];
+//		Page<Reserve> historyReservation = reserveService.selectPageHistoryReservationByDESC(year, month, pageable);
+//		
+//		int totalPages = historyReservation.getTotalPages();
+//		long totalElements = historyReservation.getTotalElements();
+//		
+//		model.addAttribute("totalPages",totalPages);
+//		model.addAttribute("totalElements",totalElements);
+//		model.addAttribute("historyReservation",historyReservation);
+//		model.addAttribute("year",year);
+//		model.addAttribute("month",month);
+//		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
+//	}
+	//搜尋歷史訂位紀錄
+//	@GetMapping("/selectByMonthAndYear")
+//	public String selectHistoryReservation(@RequestParam(value = "monthSelect") String monthSelect,Model model) {
+//		
+//		String[] yearAndMonth = monthSelect.split("-");
+//		String year = yearAndMonth[0];
+//		String month = yearAndMonth[1];
+//		List<Reserve> historyReservation = reserveService.selectHistoryReservation(year,month);
+//		model.addAttribute("historyReservation",historyReservation);
+//		model.addAttribute("year",year);
+//		model.addAttribute("month",month);
+//		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
+//	}
 }
 

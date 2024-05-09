@@ -4,19 +4,16 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.team6.member.model.MemberDetailBean;
 
 @Service
 @Transactional
@@ -193,17 +190,6 @@ public class ReserveService {
 	public void deleteCheckInStatus(int reservation_id) {
 		reserveRepository.deleteCheckInStatus(reservation_id);
 	}
-
-	//自動寄信用
-    public void sendPlainText(String receivers, String subject, String content, String from) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(receivers);
-        message.setSubject(subject);
-        message.setText(content);
-        message.setFrom(from);
-
-        mailSender.send(message);
-    } 
 	
 	//待確認預訂訊息-刪除:將rs=5(店家不接該筆預定)
 	public void updateReservationStatusTo5(int reservationId) {
@@ -215,34 +201,55 @@ public class ReserveService {
 		reserveRepository.deleteCheckInStatusTo2(reservation_id);
 	}
 
-	//查詢歷史訂位(依年月)
+	//查詢歷史訂位(依年月)用來匯出CSV
 	public List<Reserve> selectHistoryReservation(String year,String month){
 		return reserveRepository.selectHistoryReservation(year,month);
 	}
 	
+	//分頁:查詢歷史訂位(依年月)且日期時間由小到大
+	public Page<Reserve> selectPageHistoryReservation(String year,String month,Pageable pageable){
+	return reserveRepository.selectPageHistoryReservation(year,month,pageable);
+	}
+	
+	//分頁:查詢歷史訂位(依年月)且日期時間由大到小(未用)
+	public Page<Reserve> selectPageHistoryReservationByDESC(String year,String month,Pageable pageable ){
+	return reserveRepository.selectPageHistoryReservationByDESC(year,month,pageable);
+	}
+
 	//手動修改客人預訂狀態
 	public void autoUpdateReservationStatus(int reservationStatus,int reservationId ) {
 		reserveRepository.autoUpdateReservationStatus(reservationStatus, reservationId);
 	}
 
 	//匯出成csv
-	public void saveDetailToCSV(String year,String month) {
+	public void saveDetailToCSV(String year, String month) {
 		String file = "C:\\Users\\User\\Downloads\\historyreservation.csv";
 		String CSV = "reservationUuid,account,reservationName,phone,mail,numberOfPeople,reservationDate,reservationTime,reservationStatus,note\n";
-		
+
 		List<Reserve> reserves = reserveRepository.selectHistoryReservation(year, month);
 		try (FileOutputStream fos = new FileOutputStream(file);
-	
 				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
-		    bos.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
+			bos.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 
-			for (Reserve reserve : reserves ) {
+			for (Reserve reserve : reserves) {
 				CSV += reserve.saveToCsv() + "\n";
 			}
 			byte[] bytes = CSV.getBytes(StandardCharsets.UTF_8);
 			bos.write(bytes);
+			
 		} catch (Exception e) {
 		}
 	}
+	
+	//自動寄信用
+    public void sendPlainText(String receivers, String subject, String content, String from) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(receivers);
+        message.setSubject(subject);
+        message.setText(content);
+        message.setFrom(from);
+
+        mailSender.send(message);
+    }
 	
 }

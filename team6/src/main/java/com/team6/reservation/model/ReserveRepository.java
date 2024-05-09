@@ -1,13 +1,13 @@
 package com.team6.reservation.model;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 
@@ -99,10 +99,18 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	@Query(value = "FROM Reserve WHERE reservationUuid = ?1 ")
 	public Reserve customerReserveCheck(UUID reservationUuid);
 	
-	//查詢歷史訂單(利用年跟月)，來自ReserveIndex.html
+	//查詢歷史訂單(利用年跟月)用來匯出CSV，來自ReserveIndex.html
 	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate ASC, reservationTime ASC")
 	public List<Reserve> selectHistoryReservation(String year,String month);
-
+	
+	//分頁:查詢歷史訂單(利用年跟月)，來自ReserveIndex.html，日期由小到大
+	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate ASC, reservationTime ASC")
+	public Page<Reserve> selectPageHistoryReservation(String year,String month,Pageable pageable );
+	
+	//分頁:查詢歷史訂單(利用年跟月)，來自ReserveIndex.html，日期由大到小(未用)
+	@Query(value = "FROM Reserve WHERE SUBSTRING(str(reservationDate), 1, 4) = ?1 AND SUBSTRING(str(reservationDate), 6, 2) = ?2 ORDER BY reservationDate DESC, reservationTime DESC")
+	public Page<Reserve> selectPageHistoryReservationByDESC(String year,String month,Pageable pageable );
+	
 	//手動修改客人預訂狀態碼
 	@Modifying
 	@Query(value = "update Reserve SET reservationStatus = ?1 WHERE reservationId= ?2")

@@ -52,11 +52,73 @@
 					box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 					/* 滑鼠懸停時的陰影效果 */
 				}
+
+				.pagination {
+					display: inline-block;
+					padding-left: 0;
+					margin: 20px 0;
+					border-radius: 4px;
+				}
+
+				.pagination>li {
+					display: inline;
+				}
+
+				.pagination>li>a,
+				.pagination>li>span {
+					position: relative;
+					float: left;
+					padding: 6px 12px;
+					margin-left: -1px;
+					line-height: 1.42857143;
+					color: #337ab7;
+					text-decoration: none;
+					background-color: #fff;
+					border: 1px solid #ddd;
+				}
+
+				.pagination>li:first-child>a,
+				.pagination>li:first-child>span {
+					margin-left: 0;
+					border-top-left-radius: 4px;
+					border-bottom-left-radius: 4px;
+				}
+
+				.pagination>li:last-child>a,
+				.pagination>li:last-child>span {
+					border-top-right-radius: 4px;
+					border-bottom-right-radius: 4px;
+				}
+
+				.pagination>.active>a,
+				.pagination>.active>span,
+				.pagination>.active>a:hover,
+				.pagination>.active>span:hover,
+				.pagination>.active>a:focus,
+				.pagination>.active>span:focus {
+					z-index: 2;
+					color: #fff;
+					background-color: #337ab7;
+					border-color: #337ab7;
+					cursor: default;
+				}
+
+				.pagination>.disabled>span,
+				.pagination>.disabled>span:hover,
+				.pagination>.disabled>span:focus,
+				.pagination>.disabled>a,
+				.pagination>.disabled>a:hover,
+				.pagination>.disabled>a:focus {
+					color: #777;
+					cursor: not-allowed;
+					background-color: #fff;
+					border-color: #ddd;
+				}
 			</style>
 		</head>
 
 		<body>
-			<h1> ${year} 年 ${month } 月 歷史訂位紀錄</h1>
+			<h1>${year} 年 ${month} 月 歷史訂位紀錄</h1>
 			<table>
 				<thead>
 					<tr>
@@ -70,55 +132,67 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% List<Reserve> historyReservations = (ArrayList<Reserve>)
-							request.getAttribute("historyReservation");
-							for (Reserve historyReservation : historyReservations) {
-							%>
-							<tr>
-								<td>
-									<%=historyReservation.getReservationDate()%>
-								</td>
-								<td>
-									<%=historyReservation.getReservationTime()%>
-								</td>
-								<td>
-									<%=historyReservation.getNumberOfPeople()%>
-								</td>
-								<td>
-									<%=historyReservation.getReservationName()%>
-								</td>
-								<td>
-									<%=historyReservation.getPhone()%>
-								</td>
-								<td>
-									<%=historyReservation.getNote()%>
-								</td>
-								<td>
-									<% int status=historyReservation.getReservationStatus(); if (status==1) {
-										out.print("顧客尚未確認"); } else if (status==2) { out.print("顧客已取消"); } else if
-										(status==3) { out.print("顧客已確認"); } else if (status==4){ out.print("現場客"); }
-										else if (status==0){ out.print("店家尚未確認"); } else { out.print("其他狀態"); } %>
-								</td>
-
-							</tr>
-							<% } %>
+					<c:forEach items="${historyReservation.content}" var="reservation">
+						<tr>
+							<td>${reservation.reservationDate}</td>
+							<td>${reservation.reservationTime}</td>
+							<td>${reservation.numberOfPeople}</td>
+							<td>${reservation.reservationName}</td>
+							<td>${reservation.phone}</td>
+							<td>${reservation.note}</td>
+							<td>${reservation.reservationStatus}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+
+			<div class="pagination-container">
+				<c:if test="${historyReservation.totalPages > 1}">
+					<ul class="pagination">
+						<li class="page-item">
+							<c:if test="${!historyReservation.first}">
+								<a class="page-link"
+									href="/reservation/selectByMonthAndYear/${historyReservation.number}?monthSelect=${year}-${month}"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a>
+							</c:if>
+						</li>
+						<c:forEach begin="1" end="${historyReservation.totalPages}" varStatus="loop">
+							<li class="page-item ${loop.index == historyReservation.number + 1 ? 'active' : ''}">
+								<a class="page-link"
+									href="/reservation/selectByMonthAndYear/${loop.index}?monthSelect=${year}-${month}">${loop.index}</a>
+							</li>
+						</c:forEach>
+						<li class="page-item">
+							<c:if test="${!historyReservation.last}">
+								<a class="page-link"
+									href="/reservation/selectByMonthAndYear/${historyReservation.number + 2}?monthSelect=${year}-${month}"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a>
+							</c:if>
+						</li>
+					</ul>
+				</c:if>
+			</div>
+
 			<form action="/reservation/saveDetailToCSV" method="get">
 				<button type="submit" id="saveToCSV">匯出成CSV</button>
 				<input type="hidden" name="yearSelect" value="${year}"> <input type="hidden" name="monthSelect"
 					value="${month}">
 			</form>
+
+
 			<a href="/reservation/reservemain.controller"><button><b>回首頁</b></button></a>
 
 			<script>
-				document.addEventListener('DOMContentLoaded', function () {
-					document.getElementById('saveToCSV').addEventListener('click', function () {
-						alert("匯出成功");
-					});
+			document.addEventListener('DOMContentLoaded', function () {
+				document.getElementById('saveToCSV').addEventListener('click', function () {
+					alert("匯出成功");
 				});
+			});
+			
+			
 			</script>
-
 		</body>
 
 		</html>
