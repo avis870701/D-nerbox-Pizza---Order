@@ -34,6 +34,22 @@
 
 			<!-- Template Stylesheet -->
 			<link href="/front/css/style.css" rel="stylesheet">
+			<script>
+				console.log(member.detailBean.mPhoto);
+				var showPhoto = $('#showPhoto');
+				var img = "";
+				if (member.detailBean.mPhoto == null) {
+					img += `<img src="/images/member/user.png" alt="" width="35"
+						height="35" class="rounded-circle">`;
+					showPhoto.append(img);
+				} else {
+					img += `<img src="${member.detailBean.mPhoto}" alt="" width="35"
+						height="35" class="rounded-circle">`;
+					showPhoto.append(img);
+				}
+
+
+			</script>
 		</head>
 
 		<body>
@@ -165,8 +181,7 @@
 													<tr>
 														<td><label for="mPhoto"><i class="fa fa-user"></i>
 																會員頭貼</label></td>
-														<td><img src="${member.detailBean.mPhoto}" alt="" width="35"
-																height="35" class="rounded-circle"></td>
+														<td id="showPhoto"></td>
 													</tr>
 													<tr>
 														<td><label for="mName"><i class="fa fa-user"></i>

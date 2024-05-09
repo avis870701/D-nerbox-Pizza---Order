@@ -61,10 +61,16 @@ public class MemberService {
 	public List<MemberAccountBean> findAll() {
 		return rma.findAll();
 	}
+	public List<MemberAccountBean> findAllByNotHidden() {
+		return rma.findAllByNotHidden();
+	}
 
 	// 回傳搜尋頁面筆數
 	public Page<MemberAccountBean> findAllByPage(Pageable pageable) {
 		return rma.findAll(pageable);
+	}
+	public Page<MemberAccountBean> findAllByNotHiddenByPage(Pageable pageable) {
+		return rma.findAllByNotHiddenByPage(pageable);
 	}
 	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,/*String type,*/String name) {
 		return rma.findByNamePage(pageable,/*type,*/name);
@@ -179,7 +185,7 @@ public class MemberService {
 	// 存檔 CSV
 	public void saveDetailToCSV() {
 		String file = "C:\\Users\\User\\Downloads\\memberDetail.csv";
-		String dCSV = "maid,mAccount,mPassword,permissions\n";
+		String dCSV = "maid,mAccount,mPassword,permissions,hidden\n";
 		List<MemberDetailBean> beans = rmd.findAll();
 		try (FileOutputStream fos = new FileOutputStream(file);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
