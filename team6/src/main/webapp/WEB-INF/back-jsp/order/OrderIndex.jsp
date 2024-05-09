@@ -19,6 +19,7 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -248,19 +249,16 @@
 
 
 								<div class="card-body p-4">
-									<div class="row justify-content-end">
+									<div class="row justify-content-end p-2">
+										<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>
 										<div class="col-auto">
-											<label for="searchInput" class="col-form-label">查詢:</label>
+											<label for="searchInput" class="col-form-label">查詢：</label>
 										</div>
 										<div class="col-auto">
-											<input type="text" id="searchInput" class="form-control">
+											<input type="text" id="searchInput" class="form-control"
+												placeholder="">
 										</div>
 									</div>
-
-
-
-									<h5 class="card-title fw-semibold mb-4"></h5>
-
 
 
 									<!-- 表格内容容器 -->
@@ -309,26 +307,45 @@
 										</table>
 									</div>
 									<!-- 显示总记录数和当前页码信息 -->
-									<div class="pagination-info">
-										<span id="paginationInfo"></span>
-									</div>
-
 									<!-- 分页控件 -->
-									<div class="pagination-container">
-										<ul class="pagination justify-content-end">
-											<li class="page-item" id="firstPage"><a
-												class="page-link" href="#">«</a></li>
-											<li class="page-item" id="prevPage"><a class="page-link"
-												href="#">‹</a></li>
-											<li class="page-item" id="nextPage"><a class="page-link"
-												href="#">›</a></li>
-											<li class="page-item" id="lastPage"><a class="page-link"
-												href="#">»</a></li>
-										</ul>
+									<div class="container">
+										<div class="row">
+											<div class="col-auto">
+												<div class="d-flex flex-column align-items-end">
+													<div class="pagination-info m-2">
+														<span id="paginationInfo"></span>
+													</div>
+												</div>
+												<div class="col-auto">
+													<div class="input-group">
+														<input type="number" id="pageNumberInput"
+															class="form-control" placeholder="跳轉頁碼"
+															style="width: 120px;">
+														<div class="input-group-append">
+															<button id="goToPageBtn" class="btn btn-muted m-1">跳轉</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-7"></div>
+											<!-- 空白的 col-auto -->
+											<div class="col-auto ml-auto">
+												<!-- 要置右邊的 col-auto -->
+												<div class="pagination-container">
+													<ul class="pagination justify-content-end m-3">
+														<li class="page-item" id="firstPage"><a
+															class="page-link" href="#">«</a></li>
+														<li class="page-item" id="prevPage"><a
+															class="page-link" href="#">‹</a></li>
+														<li class="page-item" id="nextPage"><a
+															class="page-link" href="#">›</a></li>
+														<li class="page-item" id="lastPage"><a
+															class="page-link" href="#">»</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
 									</div>
-
-
-
 
 								</div>
 							</div>

@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderRepository extends JpaRepository<Order, String>{
 
+	//前端查詢全部
+	@Query(value = "SELECT o FROM Order o WHERE o.hideen = 0 ORDER BY o.orderId DESC", nativeQuery = true)
+	List<Order> findAllByHiddenEqualsZero();
 	
-	//後端查詢全部 sort:順序由大到小
+	//後端查詢全部
 	@Query(value = "SELECT * FROM pizzaOrder", countQuery = "SELECT count(*) FROM pizzaOrder", nativeQuery = true)
 	Page<Order> findOrderAll(Pageable pageable);
 	
