@@ -4,40 +4,29 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.team6.member.model.MemberAccountBean;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "reservation")
 @Component
 public class Reserve {
-
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RESERVATIONID")
 	private int  reservationId;
-	
-//	//外來鍵(FK到Member的id)
-//	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
-//	@JoinColumn(name= "fk_maid")
-//	private MemberAccountBean memberAccountBean;
-	
+	/*@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "RESERVATIONUUID", columnDefinition = "BINARY(16)")
-	private UUID reservationUuid;
+	private UUID reservationUUID;*/
 	@Column(name = "ACCOUNT")
 	private String account;
 	@Column(name = "RESERVATIONNAME")
@@ -72,10 +61,10 @@ public class Reserve {
 	}
 
 
-	public Reserve(int reservationId, UUID reservationUuid,String account, String reservationName, String phone, int numberOfPeople,
+	public Reserve(int reservationId, /*UUID reservationUuid,*/String account, String reservationName, String phone, int numberOfPeople,
 			String reservationTime, String reservationDate, int reservationStatus, String note, int checkInStatus) {
 		this.reservationId = reservationId;
-		this.reservationUuid = reservationUuid;
+		/*this.reservationUUID = reservationUuid;*/
 		this.account = account;
 		this.reservationName = reservationName;
 		this.phone = phone;
@@ -99,14 +88,14 @@ public class Reserve {
 	
 	
 
-	public UUID getReservationUUID() {
-		return reservationUuid;
+	/*public UUID getReservationUUID() {
+		return reservationUUID;
 	}
 
 
 	public void setReservationUUID(UUID reservationUUID) {
-		this.reservationUuid = reservationUUID;
-	}
+		this.reservationUUID = reservationUUID;
+	}*/
 
 
 	public String getAccount() {

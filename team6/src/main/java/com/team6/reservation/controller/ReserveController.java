@@ -7,9 +7,6 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team6.member.model.MemberDetailBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
 
@@ -82,11 +78,7 @@ public class ReserveController {
 	
 	//店家查詢尚未確認此訂位ok
 	@GetMapping("/selectByStatus")
-	public String selectByStatus(Model model/*,@RequestParam(defaultValue = "0") int page*/) {
-//		int pageSize = 5;
-//		Pageable pageable = PageRequest.of(page, pageSize);
-//		Page<Reserve> pageResult = reserveService.selectReservationStatus(pageable);
-//		model.addAttribute("selectReservationStatus", pageResult.getContent());
+	public String selectByStatus(Model model) {
 		List<Reserve> selectReservationStatus = reserveService.selectReservationStatus();
 		model.addAttribute("selectReservationStatus", selectReservationStatus);
 		return "forward:/WEB-INF/reservation/jsp/reservationDataConfirm.jsp";
@@ -259,17 +251,5 @@ public class ReserveController {
 		return "修改成功";
 	}
 	
-	//測試用(抓的到mail嗎)
-	@GetMapping("/test")
-	@ResponseBody
-	public String test() {
-		List<String> x = reserveService.test();
-		x.get(1);
-		return x.get(1);
-	}
-	
 }
-
-
-
 
