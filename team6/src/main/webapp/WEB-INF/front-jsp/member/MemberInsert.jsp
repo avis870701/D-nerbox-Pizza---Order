@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +9,7 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <link rel="shortcut icon" type="image/png"
-	href="/member/images/pizzaQ.png" />
+	href="/images/member/pizzaQ.png" />
 
 <!-- Favicon -->
 <link href="/front/img/favicon.ico" rel="icon">
@@ -57,7 +56,7 @@
 		<div class="container">
 			<nav
 				class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-				<a href="index" class="navbar-brand"> <img class="img-fluid"
+				<a href="MemberIndex" class="navbar-brand"> <img class="img-fluid"
 					src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
 				</a>
 				<button type="button" class="navbar-toggler ms-auto me-0"

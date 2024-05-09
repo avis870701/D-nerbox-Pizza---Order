@@ -1,8 +1,8 @@
 /********** Template CSS **********/
 :root {
-    --primary: #88B44E;
+    --primary: #66B3FF;
     --secondary: #FB9F38;
-    --light: #F5F8F2;
+    --light: #f2f8f8;
     --dark: #252C30;
 }
 
@@ -128,7 +128,7 @@
         height: 100px;
     }
 
-    .navbar .navbar-nav .nav-link  {
+    .navbar .navbar-nav .nav-link {
         margin-right: 0;
         padding: 10px 0;
     }
@@ -167,7 +167,7 @@
     bottom: 0;
     display: flex;
     align-items: center;
-    background: rgba(136, 180, 78, .7);
+    background: #66b3ffb3;
     z-index: 1;
 }
 
@@ -190,7 +190,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -200,7 +200,7 @@
 }
 
 .page-header {
-    background: linear-gradient(rgba(136, 180, 78, .7), rgba(136, 180, 78, .7)), url(../../images/indexImages/pizzashop02.png) center center no-repeat;
+    background: linear-gradient(#66b3ffb3, #66b3ffb3), url(../../images/indexImages/pizzashop02.png) center center no-repeat;
     background-size: cover;
 }
 
@@ -255,7 +255,7 @@
 
 /*** Products ***/
 .product {
-    background: linear-gradient(rgba(136, 180, 78, .1), rgba(136, 180, 78, .1)), url(../img/product-bg.png) left bottom no-repeat;
+    background: linear-gradient(rgba(78, 160, 180, 0.1), rgba(78, 160, 180, 0.1)), url(../img/product-bg.png) left bottom no-repeat;
     background-size: auto;
 }
 
@@ -290,7 +290,7 @@
 
 /*** About ***/
 .video {
-    background: linear-gradient(rgba(136, 180, 78, .85), rgba(136, 180, 78, .85)), url(../img/video-bg.jpg) center center no-repeat;
+    background: linear-gradient(rgba(78, 177, 180, 0.85), rgba(78, 130, 160, 0.85)), url(../img/video-bg.jpg) center center no-repeat;
     background-size: cover;
 }
 
@@ -398,7 +398,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(138, 180, 78, .3);
+    background: rgba(78, 177, 180, 0.3);
     opacity: 0;
     transition: .5s;
 }
@@ -420,7 +420,7 @@
 
 /*** Testimonial ***/
 .testimonial {
-    background: linear-gradient(rgba(136, 180, 78, .85), rgba(136, 180, 78, .85)), url(../img/testimonial-bg.jpg) center center no-repeat;
+    background: linear-gradient(rgba(78, 137, 160, 0.85), rgba(78, 130, 160, 0.85)), url(../img/testimonial-bg.jpg) center center no-repeat;
     background-size: cover;
 }
 

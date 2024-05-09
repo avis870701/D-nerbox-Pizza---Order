@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>後台系統</title>
-    <link rel="shortcut icon" type="image/png" href="/images/member/images/pizzaQ.png" />
+   <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
     <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
     <link rel="stylesheet" href="/back/css/styles.min.css" />
     <script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
