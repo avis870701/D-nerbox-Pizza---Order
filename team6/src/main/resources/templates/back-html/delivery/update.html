@@ -202,7 +202,7 @@
                         <form method="post" action="/delivery/upd">
                             <!-- <input type="hidden" name="_method" value="PUT"/> -->
                             <div class="form-group text-center"> 
-                                <input type="text" class="form-control text-center" name="id" th:value="${delivery.id}" required style="display: none;"/>
+                                <input id="id" type="text" class="form-control text-center"  name="id" th:value="${delivery.id}" required/>
                             </div>
                             <div class="form-group text-center">
                                 <label for="date" style="text-align: center;">日期</label>
@@ -210,7 +210,7 @@
                             </div>
                             <div class="form-group text-center">
                                 <label for="orderid" style="text-align: center;">外送明細</label>
-                                <input id="orderid" type="text" class="form-control text-center" name="orderid" style="width: 400px;" th:value="${delivery.orderid}"required />
+                                <input id="orderid" type="text" class="form-control text-center" name="orderid" style="width: 400px;" th:value="${delivery.orderid}" required />
                             </div>
                             <div class="form-group text-center">
                                 <label for="address" style="text-align: center;">外送地址</label>
@@ -219,9 +219,9 @@
                             <div class="form-group text-center">
                                 <label for="status" style="text-align: center;">外送單狀態</label>
                                 <select id="status" class="form-control text-center" name="status" style="width: 400px;" required>
-                                <option selected>
+                                <!-- <option selected> -->
                                 <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td>
-                                </option>
+                                <!-- </option> -->
                                 <option value="1">待處理</option>
                                     <option value="2">已接單</option>
                                     <option value="3">外送中</option>
@@ -239,39 +239,39 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script>
-        function update() {
-        // 獲取表單中的資料
-        let orderid = $('#orderid').val();
-        let date = $('#date').val();
-        let address= $('#address').val();
-        let status = $('#status').val();
+    <script src="../../../static/back/js/delivery/CRUD.js"></script>
+    <script>    
+        //發送更新請求
+        // function update() {
+      
+        // let orderid = $('#orderid').val();
+        // let date = $('#date').val();
+        // let address= $('#address').val();
+        // let status = $('#status').val();
 
-        // 建成json
-        let Data = {
-            orderid: orderid,
-            date: date,
-            address: address,
-            status: status
-        };
-        // console.log(Data);
-    
-        // 發送更新請求
-        $.ajax({
-            type: 'PUT',
-            url: '/delivery/upd', 
-            contentType: 'application/json',
-            data: JSON.stringify(Data),
-            success: function(response) {
-                console.log(response);
+       
+        // let Data = {
+        //     orderid: orderid,
+        //     date: date,
+        //     address: address,
+        //     status: status
+        // };
+
+        //     $.ajax({
+        //     type: 'PUT',
+        //     url: '/delivery/upd', 
+        //     contentType: 'application/json',
+        //     data: JSON.stringify(Data),
+        //     success: function(response) {
+        //         console.log(response);
                 // window.location.href = "/delivery/home";
             
-            },
-            error: function(xhr, status, error) {
-                console.error('更新失敗:', error);
-            }
-        });
-    }
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('更新失敗:', error);
+        //         }
+        //     });
+        // }
 
 
 

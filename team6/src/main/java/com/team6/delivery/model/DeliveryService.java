@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.team6.order.model.DetailsRepository;
+import com.team6.order.model.OrderDetails;
+import com.team6.order.model.OrderRepository;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.apache.poi.ss.usermodel.*;
@@ -30,6 +33,8 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
+	
+	
 	//查詢所有外送單資料
 	public List<Delivery> findall(){
 		return dRepos.findAll();
@@ -42,6 +47,17 @@ public class DeliveryService {
 		}
 			return null;	
 	}
+	
+	// 查詢單筆訂單明細
+//	public List<OrderDetails> findDetailsById(int orderId) {
+//		List<OrderDetails> details = dRepos.findByOrderId(orderId);
+//
+//		if (!details.isEmpty()) {
+//			return details;
+//		}
+//		return null;
+//	}
+	
 	//修改
 	public Delivery update(Delivery delivery) {
 		return dRepos.save(delivery);

@@ -205,7 +205,6 @@
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fa-regular fa-square-plus"></i>添加
                     </button>
-                    <button type="button" class="btn btn-primary" onclick="test()">測試</button>
                     <button type="button" id="json"  class="btn btn-primary">
                       匯出JSON
                     </button>
@@ -232,7 +231,12 @@
                         <tr th:each="delivery : ${delivery}">
                             <td th:text="${delivery.date}"></td>
                             <td id="did" th:text="${delivery.id}"></td>
-                            <td th:text="${delivery.orderid}"></td>
+                            <!-- <td th:text="${delivery.orderid}"></td> -->
+                            <td>
+                            <a th:href="@{'/delivery/findbyorderid' + ${delivery.orderid}}"> <!--未完成 -->
+                              <span th:text="${delivery.orderid}"></span>
+                            </a>
+                            </td>
                             <td th:text="${delivery.address}"></td>
                             <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
                             <td>
@@ -288,88 +292,96 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
             <button type="button" class="btn btn-primary" onclick="addDelivery()">新增</button>
-           
           </div>
         </div>
       </div>
     </div>
     <script src="../../../static/back/js/delivery/data.js"></script>
+    <script src="../../../static/back/js/delivery/CRUD.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- <script src="../../../static/back/js/delivery/CRUD.js"></script> -->
     <!-- <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
-<!-- <script src="../assets/js/sidebarmenu.js"></script> -->
-<!-- <script src="../assets/js/app.min.js"></script> -->
-<!-- <script src="../assets/libs/simplebar/dist/simplebar.js"></script> -->
-<script>
+    <!-- <script src="../assets/js/sidebarmenu.js"></script> -->
+    <!-- <script src="../assets/js/app.min.js"></script> -->
+    <!-- <script src="../assets/libs/simplebar/dist/simplebar.js"></script> -->
+    <script>
      $(document).ready(function() {
-        $('#table_id').DataTable();
-    });
-    
-    function test() {
-        var tableBody = document.getElementById('tableBody');
-        var rowCount = tableBody.getElementsByTagName('tr').length;
-        if (rowCount === 10) {
-            console.log("There are 10 records.");
-            // You can perform further actions here if needed
-        } else {
-            console.log("There are not 10 records.");
-            // You can handle this case accordingly
-        }
-    }
-    
-
-    // 發送刪除請求
-    function Delete(deliveryId) {
-    if (confirm("確定要刪除這筆訂單嗎？")) {
-        $.ajax({
-            type: 'DELETE',
-            url: '/delivery/delete/' + deliveryId,
-            success: function(result) {
-                console.log('刪除成功:', result);
-                // 找到对应的表格行并隐藏
-                $('#table_id').find('tr').each(function() {
-                    if ($(this).find('#did').text() === deliveryId.toString()) {
-                        $(this).hide(); 
-                        return false; 
-                    }
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('刪除失敗:', error);
-                alert('刪除訂單失敗，請稍後再試。');
-            }
-        });
-    }
-}
- 
-    function addDelivery() {
-    // 獲取表單中的資料
-    let orderid = $('#orderid').val();
-    let date = $('#date').val();
-    let address= $('#address').val();
-
-    // 建成json
-    let Data = {
-        orderid: orderid,
-        date: date,
-        address: address
-    };  
-     // 發送新增請求
-    $.ajax({
-        type: 'POST',
-        url: '/delivery/insert', 
-        contentType: 'application/json',
-        data: JSON.stringify(Data),
-        success: function(response) {
-            console.log('新增成功:', response);
-            window.location.href = "/delivery/home";
-          
+        $('#table_id').DataTable({
+        language: {
+        "lengthMenu": "顯示 _MENU_ 筆資料",
+        "sInfo": "目前有 _MAX_ 筆資料",
+        "sSearch": "搜尋:",
+        "sEmptyTable": "尚未有資料紀錄存在",
+        "oPaginate": {
+            "sFirst": "首頁",
+            "sPrevious": "上一頁",
+            "sNext": "下一頁",
+            "sLast": "末頁"
         },
-        error: function(xhr, status, error) {
-            console.error('新增失敗:', error);
+        
         }
+      })
     });
-}
+  // 發送刪除請求
+  //   function Delete(deliveryId) {
+  //   if (confirm("確定要刪除這筆訂單嗎？")) {
+  //       $.ajax({
+  //           type: 'DELETE',
+  //           url: '/delivery/delete/' + deliveryId,
+  //           success: function(result) {
+  //               console.log('刪除成功:', result);
+  //               // 找到对应的表格行并隐藏
+  //               $('#table_id').find('tr').each(function() {
+  //                   if ($(this).find('#did').text() === deliveryId.toString()) {
+  //                       $(this).hide(); 
+  //                       return false; 
+  //                   }
+  //               });
+  //           },
+  //           error: function(xhr, status, error) {
+  //               console.error('刪除失敗:', error);
+  //               alert('刪除訂單失敗，請稍後再試。');
+  //           }
+  //       });
+  //     }
+  // }
+    //發送新增請求
+    // function addDelivery() {
+    // let orderid = $('#orderid').val();
+    // let date = $('#date').val();
+    // let address= $('#address').val();
+
+    // let Data = {
+    //     orderid: orderid,
+    //     date: date,
+    //     address: address
+    // };  
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/delivery/insert', 
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(Data),
+    //     success: function(response) {
+    //         console.log('新增成功:', response);
+    //         window.location.href = "/delivery/home";
+          
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.error('新增失敗:', error);
+    //     }
+    // });
+
+      // function test() {
+    //     var tableBody = document.getElementById('tableBody');
+    //     var rowCount = tableBody.getElementsByTagName('tr').length;
+    //     if (rowCount === 10) {
+    //         console.log("There are 10 records.");
+    //         // You can perform further actions here if needed
+    //     } else {
+    //         console.log("There are not 10 records.");
+    //         // You can handle this case accordingly
+    //     }
+    // }
+// }
 </script>    
 </body>
 </html>

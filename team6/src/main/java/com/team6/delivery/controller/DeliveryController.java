@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team6.delivery.model.Delivery;
 import com.team6.delivery.model.DeliveryService;
+import com.team6.order.model.DetailsRepository;
+import com.team6.order.model.OrderDetails;
+import com.team6.order.model.OrderRepository;
+import com.team6.order.model.OrderService;
 import com.team6.promotions.model.Promotions;
 
 
@@ -30,6 +34,10 @@ public class DeliveryController {
 
 	@Autowired
 	private DeliveryService dService;
+	@Autowired
+	private DetailsRepository dRepos;
+	
+
 
 
 	//delivery後台
@@ -91,7 +99,6 @@ public class DeliveryController {
 		return "success";
 	}
 	
-	
 	//修改
 	@PutMapping("/upd")
 	public ResponseEntity<String> upddelivery(@RequestBody Delivery delivery) {
@@ -117,7 +124,18 @@ public class DeliveryController {
 		m.addAttribute("delivery",delivery);
 		return "/back-html/delivery/update";
 	}
+	
+//	查詢單筆
+//	@GetMapping("/findbyorder/{id}")
+//	public	String findbyorder(@PathVariable("id") int id ,Model m){
+//	public String findbyorder(@PathVariable("id") int id){
+//		Delivery delivery = dService.findById(id);
+//		m.addAttribute("delivery",delivery);
+//		OrderDetails orderDetails =	dRepos.findById(id);
+//		return orderDetails;
+//		return "/back-html/delivery/update";
 }
+//}
 
 
 
