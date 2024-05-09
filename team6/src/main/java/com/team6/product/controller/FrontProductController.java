@@ -1,6 +1,10 @@
 package com.team6.product.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,14 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team6.order.model.Order;
 import com.team6.product.dto.ProductBeanDto;
 import com.team6.product.dto.ProductTest;
 import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductCategoryService;
 import com.team6.product.model.ProductService;
 import com.team6.product.model.ProductStateService;
+import com.team6.product.model.TestPage;
+import com.team6.product.model.TestPageService;
 // 2024/5/9 marge後確定沒問題
 //@SessionAttributes(names = {})
 @Controller
@@ -28,6 +36,9 @@ public class FrontProductController {
 	private ProductStateService pStateService;
 	@Autowired
 	private ProductCategoryService pCategoryService;
+	
+	@Autowired
+	private TestPageService tService;
 	
 //	SessionStatus status
 //	status.isComplete();
@@ -69,6 +80,25 @@ public class FrontProductController {
 		
 		return ResponseEntity.ok().body(newPbean);
 	}
+	
+	
+	// 測試 分頁
+	@GetMapping("/TestPage")
+	public String testMain() {
+		return "forward:/WEB-INF/front-jsp/product/TestPage.jsp";
+	}
+	
+	// 測試 分頁
+	@GetMapping(path = "/TestPageSelectAll")
+	@ResponseBody
+	public Page<TestPage> orderSelectAll(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("tid").ascending());
+		return tService.findTestPageAll(pageable);
+	}
+	
+	
+	
 	
 	
 }
