@@ -114,7 +114,7 @@
 								method: 'PUT',
 								data: { "productId": productId, "productStateId": productStateId },
 								success: function (response) {
-									$('[data-product-id="' + productId + '"]').html(response)
+									$('[data-product-id="' + productId + '"]').html(response.productStateName);
 								},
 								error: (xhr, status, error) => console.log(error)
 							})

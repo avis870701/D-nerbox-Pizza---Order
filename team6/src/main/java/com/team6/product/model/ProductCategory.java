@@ -33,7 +33,7 @@ public class ProductCategory implements Serializable {
 	@Column(name = "CATEGORYNAME")
 	private String CategoryName;
 	
-//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) order的設計不需要處理無限迴圈先註解
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<ProductBean> pBeans = new LinkedHashSet<>();
 	
