@@ -2,11 +2,11 @@ package com.team6.order.model;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderRepository extends JpaRepository<Order, String>{
@@ -16,7 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	List<Order> findAllByHiddenEqualsZero();
 	
 	//後端查詢全部 sort:順序由大到小
-	List<Order> findAll(Sort sort);
+	@Query(value = "SELECT * FROM pizzaOrder", countQuery = "SELECT count(*) FROM pizzaOrder", nativeQuery = true)
+	Page<Order> findOrderAll(Pageable pageable);
 	
 	//更新折扣碼
 	@Transactional
@@ -49,8 +50,6 @@ public interface OrderRepository extends JpaRepository<Order, String>{
     void updateCancelNoteByOrderId(String orderId,String cancelNote);
 	
 	//假刪除
-	@Transactional
-    @Modifying
-    @Query(value = "UPDATE Order o SET o.hidden = :hidden WHERE o.orderId = :orderId", nativeQuery = true)
-    void hiddenToOne(String orderId,Integer hidden);
+    @Query(value = "UPDATE Order o SET o.hide = :hide WHERE o.orderId = :orderId", nativeQuery = true)
+    void hiddenToOne(String orderId,Integer hide);
 }

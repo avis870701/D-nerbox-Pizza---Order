@@ -3,6 +3,8 @@ package com.team6.order.model;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,9 +26,6 @@ public class Order {
 
 	@Column(name = "ACCOUNT")
 	private String account;
-
-	@Column(name = "MEMAIL")
-	private String mEmail;
 
 	@Column(name = "ORIAMOUNT")
 	private Integer oriAmount;
@@ -55,7 +54,8 @@ public class Order {
 	@Column(name = "HIDE")
 	private Integer hide;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@JsonIgnore
 	private Set<OrderDetails> details = new LinkedHashSet<>();
 	
 	public Order() {
