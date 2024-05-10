@@ -35,7 +35,7 @@
                 <span class="hide-menu">後台功能列表</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/member/Member.SelectAll/1" aria-expanded="false">
+                <a class="sidebar-link" href="Member.SelectAll/1" aria-expanded="false">
                   <span>
                     <i class="ti ti-user-plus"></i>
                   </span>

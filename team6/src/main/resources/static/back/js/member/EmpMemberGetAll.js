@@ -5,7 +5,7 @@ $(function () {
 function loadPage(indexPage) {
 	$.ajax({
 		type: 'get',
-		url: '/member/MemberGetAll/' + indexPage,
+		url: '/emp/MemberGetAll/' + indexPage,
 		contentType: 'application/json',
 		success: function (response) {
 			$('#showmember').empty("");
