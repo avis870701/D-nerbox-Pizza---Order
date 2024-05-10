@@ -118,12 +118,12 @@
                                     <div class="mb-4">
                                         <label for="exampleInputPassword1" class="form-label">密碼</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1"
-                                            name="password">
+                                            name="password">${err}
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mb-4">
                                         <div class="form-check">
                                             <input class="form-check-input primary" type="checkbox" value=""
-                                                id="flexCheckChecked" checked>
+                                                id="flexCheckChecked" checked> 
                                             <label class="form-check-label text-dark" for="flexCheckChecked">
                                                 記住登入
                                             </label>

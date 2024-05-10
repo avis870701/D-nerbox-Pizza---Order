@@ -1,5 +1,7 @@
 package com.team6.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.team6.member.model.MemberAccountBean;
@@ -60,15 +63,15 @@ public class MemberController {
 
 		}
 		model.addAttribute("err", "帳號或密碼不正確!!");
-		return "forward:/WEB-INF/Login.jsp";
+		return "forward:/WEB-INF/front-jsp/Login.jsp";
 	}
-	
+
 	// 進入忘記密碼頁(沒登入)
 	@RequestMapping(path = "/forgot", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoToForgotPwd() {
 		return "forward:/WEB-INF/front-jsp/ForgotPwd.jsp";
 	}
-	
+
 	@RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String Memberlogout(SessionStatus status, HttpSession session) {
 		status.isComplete();
@@ -82,7 +85,7 @@ public class MemberController {
 	public String GoToIndex() {
 		return "forward:/WEB-INF/front-jsp/Index.jsp";
 	}
-	
+
 	// 來到 後台登入畫面
 	@RequestMapping(path = "/emplogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public String EmpMain(SessionStatus status) {
@@ -90,147 +93,14 @@ public class MemberController {
 		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 	}
 	// ===================================================================================================
-	
+
 	// 進入官網(登入後)
 	@RequestMapping(path = "/MemberIndex", method = { RequestMethod.GET, RequestMethod.POST })
 	public String MemberGoBackToIndex(HttpSession session) {
-		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
+		MemberAccountBean bean = (MemberAccountBean) session.getAttribute("member");
 		session.setAttribute("member", bean);
 		return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
 	}
-
-	// ===================================================================================================
-
-	// 查詢系列--單筆
-	@GetMapping("/Member.SelectOneByID")
-	public String SelectByOne(@RequestParam("id") int id, Model model) {
-		MemberAccountBean bean = service.findById(id);
-		model.addAttribute("bean", bean);
-		return "forward:/WEB-INF/back-jsp/member/MemberGetOne.jsp";
-	}
-
-	@GetMapping("/Member.SelectOneByAccount")
-	public String SelectByOne(@RequestParam("account") String account, Model model) {
-		MemberAccountBean bean = service.findAccountByAccount(account);
-		model.addAttribute("bean", bean);
-		return "forward:/WEB-INF/back-jsp/member/MemberGetOne.jsp";
-	}
-	// ===================================================================================================
-
-	// 查詢系列--模糊
-	@GetMapping("/Member.SelectByName")
-	public String SelectByName(@RequestParam("mName") String mName, Model model, HttpSession session) {
-		List<MemberAccountBean> beans = service.findByName(mName);
-		if (beans.isEmpty()) {
-			model.addAttribute("err", "查無資料");
-			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
-		} else {
-			model.addAttribute("beans", beans);
-			model.addAttribute("totalElements", beans.size());
-			session.setAttribute("mName", mName);
-			return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
-		}
-	}
-
-	@RequestMapping(path = "/MemberSelectByName/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public List<MemberAccountBean> processQueryByNameByPage(@PathVariable("pageNo") int pageNo,
-			/* @RequestParam("type")String type, */ Model m, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String name = String.valueOf(session.getAttribute("mName"));
-		int pageSize = 10;
-		Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
-		/*
-		 * switch (type){ case "mName": { Page<MemberAccountBean> page =
-		 * service.findByNameByPage(p1,"detailBean.mName",name); } case "account":{
-		 * Page<MemberAccountBean> page = service.findByNameByPage(p1,"mAccount",name);
-		 * } default: throw new IllegalArgumentException("Unexpected value: " + type); }
-		 */
-		Page<MemberAccountBean> page = service.findByNameByPage(p1, name);
-
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-		session.setAttribute("totalPages", totalPages);
-		session.setAttribute("totalElements", totalElements);
-
-		return page.getContent();
-	}
-	// ===================================================================================================
-
-	// 查詢系列--全部(假刪除以外)
-	@GetMapping("/Member.SelectAllByNotHidden/{pageNo}")
-	public String SelectAllByNotHidden(@PathVariable("pageNo") int pageNo, Model model) {
-		int pageSize = 10;
-		if(pageNo<=0) {
-			pageNo=1;
-		}
-		Pageable pageable=PageRequest.of(pageNo-1, pageSize);
-		Page<MemberAccountBean> page = service.findAllByNotHiddenByPage(pageable);
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-		if (totalElements==0) {
-			model.addAttribute("err", "查無資料");
-			model.addAttribute("totalElements", totalElements);
-			return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-		}
-		model.addAttribute("totalPages",totalPages);
-		model.addAttribute("totalElements",totalElements);
-		model.addAttribute(page.getContent());
-		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-	}
-	@RequestMapping(path = "/MemberGetAllByNotHidden/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public List<MemberAccountBean> processQueryAllByNotHiddenByPage(@PathVariable("pageNo") int pageNo, Model m,
-			HttpServletRequest request) {
-		int pageSize = 10;
-		Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
-		Page<MemberAccountBean> page = service.findAllByNotHiddenByPage(p1);
-
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-
-		HttpSession session = request.getSession();
-		session.setAttribute("totalPages", totalPages);
-		session.setAttribute("totalElements", totalElements);
-
-		return page.getContent();
-	}
-	
-	// 查詢系列--全部
-	@RequestMapping(path = "/Member.SelectAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String GetAllByPage(@PathVariable("pageNo") int pageNo, Model m) {
-		int pageSize = 10;
-		if(pageNo<=0) {
-			pageNo=1;
-		}
-		Pageable pageable=PageRequest.of(pageNo-1, pageSize);
-		Page<MemberAccountBean> page = service.findAllByPage(pageable);
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-		m.addAttribute("totalPages",totalPages);
-		m.addAttribute("totalElements",totalElements);
-		m.addAttribute(page.getContent());
-		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
-	}
-	@RequestMapping(path = "/MemberGetAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public List<MemberAccountBean> processQueryAllByPage(@PathVariable("pageNo") int pageNo, Model m,
-			HttpServletRequest request) {
-		int pageSize = 10;
-		Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
-		Page<MemberAccountBean> page = service.findAllByPage(p1);
-
-		int totalPages = page.getTotalPages();
-		long totalElements = page.getTotalElements();
-
-		HttpSession session = request.getSession();
-		session.setAttribute("totalPages", totalPages);
-		session.setAttribute("totalElements", totalElements);
-
-		return page.getContent();
-	}
-	
 	// ===================================================================================================
 
 	// 新增會員(無登入)(註冊會員) ok
@@ -239,13 +109,12 @@ public class MemberController {
 		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
 
-	@PostMapping("/Member.Insert") 
+	@PostMapping("/Member.Insert")
 	public String Insert(@RequestParam("account") String mAccount, @RequestParam("password") String mPassword,
-			@RequestParam("mEmail") String mEmail, Model model,HttpSession session) throws ParseException {
+			@RequestParam("mEmail") String mEmail, Model model, HttpSession session) throws ParseException {
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
 		LocalDate nowDate = LocalDate.now();
-//		String photo = "/images/member/user.png";
 		MemberAccountBean bean = new MemberAccountBean();
 		bean.setmAccount(mAccount);
 		bean.setmPassword(mPassword);
@@ -256,92 +125,90 @@ public class MemberController {
 		detailBean.setBean(returnBean);
 		detailBean.setmName(returnBean.getmAccount());
 		detailBean.setmEmail(mEmail);
-		detailBean.setmPhone("");
+		detailBean.setmPhoto("/images/member/user.png");
 		detailBean.setMbirthday(nowDate);
 		detailBean.setRegistrationDate(nowDate);
 		returnBean.setDetailBean(detailBean);
 		MemberAccountBean result = service.insertDetail(returnBean);
+		
 		session.setAttribute("member", result);
 		// 加自動寄信 ok
 		String receivers = detailBean.getmEmail();
-		String subject ="成為會員通知信";
-		String content = "親愛的" + detailBean.getmName() + "會員，您好！\n感謝您成為 DonerPizza 的會員。\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
+		String subject = "成為會員通知信";
+		String content = "親愛的" + detailBean.getmName()
+				+ "會員，您好！\n感謝您成為 DonerPizza 的會員。\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
 		String from = "DonerPizza<h60915@gmail.com>";
-		service.sendPlainText(receivers, subject, content,from);
-		//-------------------------------------------------------
-		if (result != null) {
+		service.sendPlainText(receivers, subject, content, from);
+		// -------------------------------------------------------
 			return "redirect:MemberIndex";
 //			return "redirect:Member.SelectAll/1";
-		}
-		model.addAttribute("err", "新增失敗!!");
-		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
 	// ===================================================================================================
-	
+
 	// 去會員資訊畫面(登入後)
 	@RequestMapping(path = "/MemberAboutMe", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberAboutMe(/*@RequestParam("account") String account,*/HttpSession session) {
-		MemberAccountBean bean=(MemberAccountBean)session.getAttribute("member");
-//		MemberAccountBean accountBean = service.findAccountByAccount(account);
-//		model.addAttribute("bean", bean);
+	public String MemberAboutMe(HttpSession session) {
+		MemberAccountBean bean = (MemberAccountBean) session.getAttribute("member");
 		session.setAttribute("member", bean);
 		return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
 	}
 
-	// 更新會員密碼
+	// 更新會員密碼 OK
 	@PostMapping("/Member.UpdatePwd")
-	public String UpdatePwd(@RequestParam("account") String mAccount, @RequestParam("beforepwd") String beforePwd,
-			@RequestParam("afterpwd") String afterPwd, Model model) throws ParseException {
+	public String UpdatePwd(@RequestParam("account") String mAccount, @RequestParam("beforePwd") String beforePwd,
+			@RequestParam("afterPwd") String afterPwd, Model model,HttpSession session) throws ParseException {
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
 //		LocalDate nowDate = LocalDate.now();
 		MemberAccountBean bean = service.updatePwd(mAccount, beforePwd, afterPwd);
-		if (bean!=null) {
-			return "redirect:Member.SelectAll";
+		if (bean != null) {
+			// 加自動寄信 ok
+			String receivers = bean.getDetailBean().getmEmail();
+			String subject = "重置密碼通知信";
+			String content = "親愛的" + bean.getDetailBean().getmName()
+					+ "會員，您好！\n會員密碼已經重置完畢。\n若此為非您本人或有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
+			String from = "DonerPizza<h60915@gmail.com>";
+			service.sendPlainText(receivers, subject, content, from);
+			session.setAttribute("member", bean);
+			return "redirect:MemberAboutMe";
 		}
 		model.addAttribute("err", "舊密碼輸入錯誤");
 		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
-	// 更新會員細項
+
+	// 更新會員細項 ok
 	@PostMapping("/Member.UpdateDetail")
-	public String UpdateDetail(@RequestParam("account") String mAccount, @RequestParam("mName") String mName,
-			@RequestParam("mEmail") String mEmail, @RequestParam("mPhone") String mPhone, @RequestParam("mbirthday") String mbirthday, @RequestParam("mPhoto") String mPhoto, Model model) throws ParseException {
-		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		MemberAccountBean bean = service.updateDetail(mAccount, mName, mEmail, mPhone, mPhoto, LocalDate.parse(mbirthday,formatter));
-		if (bean!=null) { 
-			return "redirect:Member.SelectAll";
+	public String UpdateDetail(
+			@RequestParam("account") String mAccount, 
+			@RequestParam("mName") String mName,
+			@RequestParam("mEmail") String mEmail, 
+			@RequestParam("mPhone") String mPhone,
+			@RequestParam("mbirthday") String mbirthday,
+			@RequestParam(value = "mPhoto", required = false) MultipartFile mf, 
+			Model model,HttpSession session)
+			throws ParseException, IllegalStateException, IOException {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		MemberAccountBean bean = service.findAccountByAccount(mAccount);
+		MemberAccountBean oldbean = service.findAccountByAccount(mAccount);
+		String mPhoto = "";
+		if (  mf != null&&!mf.isEmpty()) {
+			String fileName = mf.getOriginalFilename();
+			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/member/users";
+			File fileDirPath = new File(fileDir, fileName);
+			mf.transferTo(fileDirPath);
+			mPhoto = "/images/member/users/" + fileName;
+
+			MemberAccountBean resultBean = service.updateDetail(bean, mName, mEmail, mPhone, mPhoto,LocalDate.parse(mbirthday, formatter));
+			session.setAttribute("member", resultBean);
+			return "redirect:MemberAboutMe";
+		}else {
+			mPhoto = oldbean.getDetailBean().getmPhoto();
+			MemberAccountBean resultBean = service.updateDetail(bean, mName, mEmail, mPhone, mPhoto,LocalDate.parse(mbirthday, formatter));
+			session.setAttribute("member", resultBean);
+			return "redirect:MemberAboutMe";
 		}
-		model.addAttribute("err", "修改時發生問題!");
-		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
-	// 更新權限
-	@PutMapping("/Member.UpdatePermissions")
-	public String UpdatePermissions(@RequestParam("account") String account,
-			@RequestParam("permissions") int permissions, Model model) {
-		service.updateToPermissions(account, permissions);
-		return "redirect:Member.SelectAll";
-	}
-	// ===================================================================================================
-	// 假刪除 ok
-	@DeleteMapping("/Member.Delete")
-	@ResponseBody
-	public String Delete(@RequestParam("account") String account) {
-//		System.out.println(account+"他在搞我");
-		service.delete(account);
-		return "redirect:Member.SelectAll/1";
-	}
-	// ===================================================================================================
-	// 存檔會員資料表
-	@GetMapping("/Member.Save")
-	public String Save() {
-		service.saveAccountToCSV();
-		service.saveDetailToCSV();
-		service.saveAccountToXML();
-		service.saveDetailToXML();
-		service.saveAccountToJSON();
-		service.saveDetailToJSON();
-		return "redirect:Member.SelectAll/1";
-	}
+
 }
 
 //	@GetMapping("/Member.SelectAll")
@@ -356,7 +223,6 @@ public class MemberController {
 //		model.addAttribute("totalElements", beans.size());
 //		return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
 //	}
-
 
 // 去更新會員資料畫面(登入後)
 //	@RequestMapping(path = "/MemberGoToUpdate", method = { RequestMethod.GET, RequestMethod.POST })
