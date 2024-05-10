@@ -3,6 +3,7 @@ package com.team6.promotions.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -10,6 +11,7 @@ public class PromotionsService {
 
     @Autowired
     private PromotionsRepository promotionsRepository;
+
 
     // 新增
     public Promotions insertPromotions(Promotions promotions) {
@@ -43,4 +45,12 @@ public class PromotionsService {
     public List<Promotions> selectAll() {
         return promotionsRepository.findAll();
     }
+
+
+    //查詢本月
+    public List<Promotions> getPromotionsForCurrentMonth() {
+        return promotionsRepository.findPromotionsForCurrentMonth();
+    }
+
+
 }

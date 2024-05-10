@@ -5,16 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>新增活動</title>
-    <!--     <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>-->
     <link rel="shortcut icon" type="image/png" href="../../static/images/indexImages/DönerPizza.jpg"/>
     <link rel="stylesheet" href="../../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../../static/back/css/promotions/Insert.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
-<body>
+
 <!--  Body Wrapper -->
-<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+<body class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
     <aside class="left-sidebar">
@@ -207,9 +206,12 @@
                         <form action="/promotions/promotions/insert" method="post" enctype="multipart/form-data">
 
                             <label for="Promotions_id">活動編號:</label> <input type="text"
-                                                                                id="Promotions_id" name="Promotions_id" th:required><br>
+                                                                                id="Promotions_id" name="Promotions_id"
+                                                                                th:required><br>
                             <label for="Promotions_name">活動名稱:</label> <input type="text"
-                                                                                  id="Promotions_name" name="Promotions_name" th:required><br>
+                                                                                  id="Promotions_name"
+                                                                                  name="Promotions_name"
+                                                                                  th:required><br>
                             <label for="Promotions_content">活動內容:</label>
                             <textarea id="Promotions_content" name="Promotions_content" rows="6"
                                       th:required></textarea>
@@ -218,18 +220,21 @@
                                 accept="image/gif, image/jpeg, image/png"><br> <img
                                 id="Promotions_picture_img" th:src="@{'#'}"/><br> <br> <label
                                 for="Promotions_discount">活動折扣:</label> <input type="number"
-                                                                                   id="Promotions_discount" name="Promotions_discount" min="5"
+                                                                                   id="Promotions_discount"
+                                                                                   name="Promotions_discount" min="5"
                                                                                    step="5"
                                                                                    th:required><br> <label
                                 for="Promotions_discountcode">折扣碼:</label>
                             <input type="text" id="Promotions_discountcode"
                                    name="Promotions_discountcode" th:required><br> <label
                                 for="Promotions_startdate">開始日期:</label> <input type="date"
-                                                                                    id="Promotions_startdate" name="Promotions_startdate"
+                                                                                    id="Promotions_startdate"
+                                                                                    name="Promotions_startdate"
                                                                                     th:required><br>
 
                             <label for="Promotions_enddate">結束日期:</label> <input type="date"
-                                                                                     id="Promotions_enddate" name="Promotions_enddate"
+                                                                                     id="Promotions_enddate"
+                                                                                     name="Promotions_enddate"
                                                                                      th:required><br>
 
                             <button class="btn" type="submit" value="send">確定</button>
