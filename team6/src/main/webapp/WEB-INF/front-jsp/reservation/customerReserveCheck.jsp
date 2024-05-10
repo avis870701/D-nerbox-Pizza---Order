@@ -1,126 +1,301 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>訂位資訊</title>
-<style>
-    body {
-        background-color: #f2f2f2;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+    <!DOCTYPE html>
+    <html>
 
-    .container {
-        width: 80%;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+    <head>
+        <meta charset="utf-8">
+        <title>訂位資料</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
 
-    h1 {
-        text-align: center;
-        color: #333;
-    }
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+            rel="stylesheet">
 
-    th, td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        text-align: left;
-    }
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
+        <!-- Libraries Stylesheet -->
+        <link href="/front/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    p {
-        margin-bottom: 10px;
-    }
-</style>
-<jsp:useBean id="customerReserveCheck" class="com.team6.reservation.model.Reserve" scope="request"/>
-</head>
-<body>
-<div class="container">
-    <h1>訂位資訊</h1>
-    <p>以下是您的訂位資訊，如有問題歡迎撥打電話查詢。</p>
-  <table>
-        <tr>
-            <th>項目</th>
-            <th>內容</th>
-        </tr>
-        <tr>
-            <td>訂位大名：</td>
-            <td><%= customerReserveCheck.getReservationName()%></td>
-        </tr>
-        <tr>
-            <td>訂位電話：</td>
-            <td><%= customerReserveCheck.getPhone() %></td>
-        </tr>
-        <tr>
-        	<td>人數：</td>
-        	<td><%= customerReserveCheck.getNumberOfPeople() %></td>
-        </tr>
-        <tr>
-            <td>訂位日期：</td>
-            <td><%= customerReserveCheck.getReservationDate() %></td>
-        </tr>
-        <tr>
-            <td>訂位時間：</td>
-            <td><%= customerReserveCheck.getReservationTime() %></td>
-        </tr>
-        <tr>
-        	<td>訂位狀態：</td>
-        	<td><%
-					int rstatus = customerReserveCheck.getReservationStatus();
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="/front/css/bootstrap.min.css" rel="stylesheet">
 
-					if (rstatus == 0) {
-						out.print("店家尚未確認訂位，請稍後再查看或撥打電話詢問");
-					}else if(rstatus == 1 ){
-						out.print("店家已確認訂位");
-					}else if(rstatus == 2 ){
-						out.print("您已取消訂位");
-					}else if(rstatus == 3 ){
-						out.print("您已確認訂位");
-					}else if(rstatus == 5){
-						out.print("店家已取消訂位，如有疑問請撥打電話詢問");
-					}else{
-						out.print("其他狀態");
-					}
-					%></td>
-        </tr>
-        <tr>
-        	<td>用餐狀態：</td>
-        	<td><%
-        			int cstatus	= customerReserveCheck.getCheckInStatus();
-        		
-        			if(cstatus == 1){
-        				out.print("用餐中，請享受您的餐點😎");
-        			}else if(cstatus == 2){
-        				out.print("用餐完畢");
-        			}else if(cstatus == 0){
-        				out.print("尚未報到");
-        			}
-        	
-        	%></td>
-        </tr>
-    </table>
-    
-    <p>
+        <!-- Template Stylesheet -->
+        <link href="/front/css/style.css" rel="stylesheet">
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-</div>
+            th,
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+                height: 60px;
+            }
+
+            /* th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        } */
+        </style>
+        <jsp:useBean id="customerReserveCheck" class="com.team6.reservation.model.Reserve" scope="request" />
+
+    </head>
+
+    <body>
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+        </div>
+        <!-- Spinner End -->
 
 
-</body>
-</html>
+        <!-- Navbar Start -->
+        <div class="container-fluid bg-white sticky-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+                    <a href="index.html" class="navbar-brand">
+                        <img class="img-fluid" src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
+                    </a>
+                    <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="about.html" class="nav-item nav-link">About</a>
+                            <a href="product.html" class="nav-item nav-link">Products</a>
+                            <a href="store.html" class="nav-item nav-link">Store</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu bg-light rounded-0 m-0">
+                                    <a href="feature.html" class="dropdown-item">Features</a>
+                                    <a href="blog.html" class="dropdown-item">Blog Article</a>
+                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link active">Reserve</a>
+                        </div>
+                        <div class="border-start ps-4 d-none d-lg-block">
+                            <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+
+        <!-- Page Header Start -->
+        <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container text-center py-5">
+                <h1 class="display-2 text-dark mb-4 animated slideInDown">訂位資訊</h1>
+                <!-- <nav aria-label="breadcrumb animated slideInDown">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Reserve</a></li>
+                        <li class="breadcrumb-item text-dark" aria-current="page">ReserveSuccess</li>
+                    </ol>
+                </nav> -->
+            </div>
+        </div>
+        <!-- Page Header End -->
+
+
+        <!-- Contact Start -->
+        <div class="container-xxl contact py-5">
+            <div class="container">
+                <div class="row g-5 mb-5">
+                    <!-- 
+                    <div class="col-md-6 text-center wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="btn-square mx-auto mb-3">
+                            <i class="fa fa-phone fa-2x text-white"></i>
+                        </div>
+                        <p class="mb-2">03-34567008</p>
+                    </div> -->
+                    <!-- <div class="col-md-6 text-center wow fadeInUp" data-wow-delay="0.5s">
+                        <i class="fa fa-phone fa-2x text-white"></i>
+                    </div>
+                    <p class="mb-2">大仁街51號</p>
+                    <p class="mb-0">桃園市中壢區</p> -->
+                </div>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <p class="mb-4">如有疑問請撥打電話或點選官方網站查詢。
+                    </p>
+                    <form>
+                        <div class="row g-3">
+                            <table class="table table-info table-striped table-hover">
+                                <tr>
+                                    <th>項目</th>
+                                    <th>內容</th>
+                                </tr>
+                                <tr>
+                                    <td>訂位大名：</td>
+                                    <td>
+                                        <%= customerReserveCheck.getReservationName()%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>訂位電話：</td>
+                                    <td>
+                                        <%= customerReserveCheck.getPhone() %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>人數：</td>
+                                    <td>
+                                        <%= customerReserveCheck.getNumberOfPeople() %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>訂位日期：</td>
+                                    <td>
+                                        <%= customerReserveCheck.getReservationDate() %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>訂位時間：</td>
+                                    <td>
+                                        <%= customerReserveCheck.getReservationTime() %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>訂位狀態：</td>
+                                    <td>
+                                        <% int rstatus=customerReserveCheck.getReservationStatus(); if (rstatus==0) {
+                                            out.print("店家尚未確認訂位，請稍後再查看或撥打電話詢問"); }else if(rstatus==1 ){
+                                            out.print("店家已確認訂位"); }else if(rstatus==2 ){ out.print("您已取消訂位"); }else
+                                            if(rstatus==3 ){ out.print("您已確認訂位"); }else if(rstatus==5){
+                                            out.print("店家已取消訂位，如有疑問請撥打電話詢問"); }else{ out.print("其他狀態"); } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>用餐狀態：</td>
+                                    <td>
+                                        <% int cstatus=customerReserveCheck.getCheckInStatus(); if(cstatus==1){
+                                            out.print("用餐中，請享受您的餐點😎"); }else if(cstatus==2){ out.print("用餐完畢"); }else
+                                            if(cstatus==0){ out.print("尚未報到"); } %>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.2936109452053!2d121.23877997595442!3d24.956123241421917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468234813c40c1d%3A0x48b725030c927ac!2z5b635byP5oqr6Jap!5e0!3m2!1szh-TW!2stw!4v1714369917527!5m2!1szh-TW!2stw"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Contact End -->
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-primary mb-4">Our Office</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA
+                        </p>
+                        <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
+                        <div class="d-flex pt-3">
+                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                    class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                    class="fab fa-youtube"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-primary mb-4">Quick Links</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Our Services</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                        <a class="btn btn-link" href="">Support</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-primary mb-4">Business Hours</h4>
+                        <p class="mb-1">Monday - Friday</p>
+                        <h6 class="text-light">09:00 am - 07:00 pm</h6>
+                        <p class="mb-1">Saturday</p>
+                        <h6 class="text-light">09:00 am - 12:00 pm</h6>
+                        <p class="mb-1">Sunday</p>
+                        <h6 class="text-light">Closed</h6>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-primary mb-4">Newsletter</h4>
+                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                        <div class="position-relative w-100">
+                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
+                                placeholder="Your email">
+                            <button type="button"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="fw-medium" href="#">Your Site Name</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a
+                            class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/front/lib/wow/wow.min.js"></script>
+        <script src="/front/lib/easing/easing.min.js"></script>
+        <script src="/front/lib/waypoints/waypoints.min.js"></script>
+        <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="/front/js/main.js"></script>
+    </body>
+
+    </html>

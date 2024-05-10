@@ -241,6 +241,9 @@ public class ReserveService {
 		}
 	}
 	
+	//測試用:匯出成json
+	
+	
 	//自動寄信用
     public void sendPlainText(String receivers, String subject, String content, String from) {
         SimpleMailMessage message = new SimpleMailMessage();

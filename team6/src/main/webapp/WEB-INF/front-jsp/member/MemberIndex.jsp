@@ -66,7 +66,7 @@
 					<div class="navbar-nav ms-auto">
 						<a href="#" class="nav-item nav-link active">產品</a> <a href="#"
 							class="nav-item nav-link">活動優惠</a> <a href="#"
-							class="nav-item nav-link">訂位趣</a> <a href="#"
+							class="nav-item nav-link">訂位趣</a> <a href="/reservation/test"
 							class="nav-item nav-link">線上點餐</a>
 					</div>
 					<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">

@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team6.member.model.MemberAccountBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/reservation")
@@ -321,6 +324,17 @@ public class ReserveController {
 	public String updateNumberOfPeopleAndReservationStatusTo3(@RequestParam(value = "reservationUuid") UUID reservationUuid,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
 		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
 	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
+	}
+	
+	//session測試
+	@GetMapping("/test")
+	@ResponseBody
+	public String test(HttpSession session) {
+		
+		MemberAccountBean accountBean = (MemberAccountBean)session.getAttribute("member");
+		System.out.println(accountBean.getDetailBean().getmEmail());
+		
+		return accountBean.getDetailBean().getmEmail();
 	}
 	
 	/*暫時未用到*/
