@@ -33,7 +33,7 @@ public class ProductBean implements Serializable {
 	private Integer productId;
 
 	@Column(name = "CATEGORYID")
-	private Integer CategoryId;
+	private Integer categoryId;
 
 	@Column(name = "PRODUCTNAME")
 	private String productName;
@@ -94,7 +94,7 @@ public class ProductBean implements Serializable {
 //	新增有圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, String productImg_url,
 			Integer productPrice, ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
-		this.CategoryId = categoryId;
+		this.categoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
@@ -107,7 +107,7 @@ public class ProductBean implements Serializable {
 //	新增沒圖案用的
 	public ProductBean(Integer categoryId, String productName, String productDesc, Integer productPrice,
 			ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
-		this.CategoryId = categoryId;
+		this.categoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productPrice = productPrice;
@@ -120,7 +120,7 @@ public class ProductBean implements Serializable {
 	public ProductBean(Integer productId, Integer categoryId, String productName, String productDesc,
 			String productImg_url, Integer productPrice, ProductState productState, Integer productQuantity, LocalDate productCreateDate) {
 		this.productId = productId;
-		this.CategoryId = categoryId;
+		this.categoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
@@ -135,7 +135,7 @@ public class ProductBean implements Serializable {
 			String productImg_url, Integer productPrice, Integer productQuantity, LocalDate productCreateDate,
 			ProductCategory productCategory, ProductState productState) {
 		this.productId = productId;
-		this.CategoryId = categoryId;
+		this.categoryId = categoryId;
 		this.productName = productName;
 		this.productDesc = productDesc;
 		this.productImg_url = productImg_url;
@@ -157,11 +157,11 @@ public class ProductBean implements Serializable {
 	}
 
 	public Integer getCategoryId() {
-		return CategoryId;
+		return categoryId;
 	}
 
 	public void setCategoryId(Integer categoryId) {
-		CategoryId = categoryId;
+		this.categoryId = categoryId;
 	}
 
 	public String getProductName() {
@@ -234,7 +234,7 @@ public class ProductBean implements Serializable {
 		builder.append("ProductBean [productId=");
 		builder.append(productId);
 		builder.append(", CategoryId=");
-		builder.append(CategoryId);
+		builder.append(categoryId);
 		builder.append(", productName=");
 		builder.append(productName);
 		builder.append(", productDesc=");

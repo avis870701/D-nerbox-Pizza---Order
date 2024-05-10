@@ -11,6 +11,15 @@
     <body>
         <h1 class="mb-3" align="center" style="color: blue;">TEST測試試試是噁瑞</h1>
 
+        <div class="hello">
+            <div class="d1">1aasdasdasd</div>
+            <div class="d2">2ddddddddddddddddd</div>
+            <div class="d3">3ddssasdasda</div>
+            <div class="d4">4eqweqeqweqw</div>
+            <div class="d5">5eeeeee</div>
+        </div>
+
+
         <div id="testbody">
 
         </div>
@@ -55,6 +64,9 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
+
+
+
         <script>
             $(document).ready(function () {
                 var pageSize = 5; // 顯示的筆數
@@ -64,7 +76,7 @@
                 function fetchOrders(page) {
                     console.log('page: ' + page);
                     $.ajax({
-                        url: 'TestPageSelectAll',
+                        url: 'TestPage2',
                         type: 'GET',
                         dataType: 'json',
                         data: { page: page, size: pageSize }, // 分頁參數
@@ -80,6 +92,7 @@
                                     '<div>' + order.tname4 + '</div>' +
                                     '<div>' + order.tname5 + '</div>' +
                                     '<div>' + order.tname6 + '</div>' +
+                                    '<div>' + order.tstate + '</div>' +
                                     '</div>' + '</br></br>';
                                 $('#testbody').append(row);
                             });
@@ -117,8 +130,7 @@
                     // 更新页码按钮
                     updatePageButtons(currentPageNumber, totalPages);
 
-                    // 加載當前頁上下兩筆資料
-                    loadAdjacentOrders(response.number, response.content);
+
                 }
 
                 // 上一頁按鈕點擊事件

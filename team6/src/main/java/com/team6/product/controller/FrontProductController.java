@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +37,6 @@ public class FrontProductController {
 	private ProductStateService pStateService;
 	@Autowired
 	private ProductCategoryService pCategoryService;
-	
 	@Autowired
 	private TestPageService tService;
 	
@@ -70,14 +70,6 @@ public class FrontProductController {
 		
 		ProductBean newPbean = productService.SelectById(productBean.getProductId());
 		
-//		ProductBeanDto productBeanDto = new ProductBeanDto(
-//				newPbean.getProductId(),
-//				newPbean.getProductCategory().getCategoryName(),
-//				newPbean.getProductName(), newPbean.getProductDesc(),
-//				newPbean.getProductImg_url(), newPbean.getProductPrice(),
-//				newPbean.getProductQuantity(), newPbean.getProductCreateDate(),
-//				newPbean.getProductState().getProductStateName());
-		
 		return ResponseEntity.ok().body(newPbean);
 	}
 	
@@ -96,6 +88,32 @@ public class FrontProductController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by("tid").ascending());
 		return tService.findTestPageAll(pageable);
 	}
+	
+	// 測試 分頁帶查詢
+	@GetMapping(path = "/TestPage2")
+	@ResponseBody
+	public Page<TestPage> testPageWithState(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) {
+		
+		Pageable pageable = PageRequest.of(page, size, Sort.by("tid").ascending());
+		
+		int state = 1;
+		String name = "噁";
+		
+		return tService.findTestPageWithState(state, name, pageable);
+	}
+	
+	
+	// 前端畫面main
+	@GetMapping("/product.front")
+	public String frontPageMain() {
+		return "forward:/WEB-INF/front-jsp/product/product.jsp";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

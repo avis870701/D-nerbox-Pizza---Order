@@ -17,4 +17,8 @@ public class TestPageService {
 		return tRepository.findTestPageAll(pageable);
 	}
 	
+	public Page<TestPage> findTestPageWithState(int state, String name, Pageable pageable){
+		return tRepository.findTestPageWithState(state, name, pageable);
+	}
+	
 }

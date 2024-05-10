@@ -21,6 +21,7 @@ public class TestPage {
 	private String tname4;
 	private String tname5;
 	private String tname6;
+	private int tstate;
 	
 	public Integer getTid() {
 		return tid;
@@ -63,6 +64,12 @@ public class TestPage {
 	}
 	public void setTname6(String tname6) {
 		this.tname6 = tname6;
+	}
+	public int getTstate() {
+		return tstate;
+	}
+	public void setTstate(int tstate) {
+		this.tstate = tstate;
 	}
 	
 	

@@ -116,7 +116,6 @@ function change(productId, productStateId) {
 
 // 整個產品更新的方法 
 function productDoUpdate() {
-
     console.log('進入productDoUpdate');
     // A.先取到Offcanvas內所有欄位的資料,這邊用formData因為我要傳檔案QAQ
     let formData = new FormData();
