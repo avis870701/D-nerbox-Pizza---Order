@@ -24,11 +24,11 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	@Query(value = "SELECT * FROM pizzaOrder WHERE LOWER(orderId) LIKE %:keyword% OR LOWER(account) LIKE %:keyword% OR LOWER(orderStatus) LIKE %:keyword% OR LOWER(pickup) LIKE %:keyword% OR LOWER(payment) LIKE %:keyword%", nativeQuery = true)
     List<Order> findOrdersByKeyword(@Param("keyword") String keyword);
 	
-	//更新折扣碼
+	//更新折扣碼、折扣金額
 	@Transactional
     @Modifying
     @Query("UPDATE Order o SET o.discount = :discount, o.discountPrice = :discountPrice WHERE o.orderId = :orderId")
-    void updatDiscountByOrderId(String orderId,String discount);
+    void updatDiscountByOrderId(String orderId,String discount,Integer discountPrice);
 	
 	//更新付款方式
 	@Transactional

@@ -219,7 +219,7 @@ public class Order {
 		return "Order [orderId=" + orderId + ", orderTime=" + orderTime + ", account=" + account + ", oriAmount="
 				+ oriAmount + ", discount=" + discount + ", discountPrice=" + discountPrice + ", paidAmount="
 				+ paidAmount + ", payment=" + payment + ", pickup=" + pickup + ", orderStatus=" + orderStatus
-				+ ", cancelNote=" + cancelNote + ", hide=" + hide + ", details=" + details + "]";
+				+ ", cancelNote=" + cancelNote + ", hide=" + hide + ",]";
 	}
 	
 

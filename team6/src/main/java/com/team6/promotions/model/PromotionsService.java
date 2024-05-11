@@ -43,4 +43,9 @@ public class PromotionsService {
     public List<Promotions> selectAll() {
         return promotionsRepository.findAll();
     }
+    
+    //訂單 查詢可用折扣碼
+    public List<Promotions> selectAllDiscount(){
+    	return promotionsRepository.findEfficientDiscountList();
+    }
 }

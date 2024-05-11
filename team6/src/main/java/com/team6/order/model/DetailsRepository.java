@@ -30,5 +30,11 @@ public interface DetailsRepository extends JpaRepository<OrderDetails, Integer> 
 	@Modifying
 	@Query("UPDATE OrderDetails o SET o.note = :note WHERE o.detailsId = :detailsId")
 	void updateNoteByDetailsId(Integer detailsId, String note);
+	
+	//delete
+	@Transactional
+	@Modifying
+	@Query(value = "delete from OrderDetails where detailsId = ?1", nativeQuery = true)
+	void deleteByDetailsId(Integer detailsId);
 
 }

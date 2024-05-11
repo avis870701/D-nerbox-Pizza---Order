@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.*,com.team6.order.model.Order,com.team6.order.model.OrderDetails"%>
+	import="java.util.*,com.team6.order.model.Order,com.team6.order.model.OrderDetails,com.team6.promotions.model.Promotions"%>
 <!doctype html>
 <html lang="en">
 
@@ -8,9 +8,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Order Management</title>
+
 <link rel="shortcut icon" type="image/png"
 	href="../../../static/images/logos/favicon.png" />
+
 <link rel="stylesheet" href="../../../static/back/css/styles.min.css" />
+
+
 
 <!-- Font Awesome-->
 <script src="https://kit.fontawesome.com/60e7a8ebe3.js"
@@ -188,235 +192,260 @@
 			<!--  Header End -->
 			<div class="container-fluid">
 				<div class="card">
-					<div class="card-body">
-						<div>
+					<div class="card-body"></div>
+					<div>
 
-							<!-- order div -->
+						<!-- order div -->
 
-							<div class="row">
-								<div class="col-lg-8 d-flex align-items-strech">
-									<div class="card w-100">
-										<div class="card-body">
-											<div
-												class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-												<div class="mb-3 mb-sm-0">
-													<h5 class="card-title fw-semibold">Sales Overview</h5>
-												</div>
-												<div>
-													<select class="form-select">
-														<option value="3">May 2024</option>
-													</select>
-												</div>
+						<div class="row">
+							<div class="col-lg-8 d-flex align-items-strech">
+								<div class="card w-100">
+									<div class="card-body">
+										<div
+											class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+											<div class="mb-3 mb-sm-0">
+												<h5 class="card-title fw-semibold">Sales Overview</h5>
 											</div>
-											<div id="chart"></div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4">
-									<div class="row">
-										<div class="col-lg-12">
-											<!-- Monthly Earnings -->
-											<div class="card">
-												<div class="card-body">
-													<div class="row alig n-items-start">
-														<div class="col-8">
-															<h5 class="card-title mb-9 fw-semibold">Monthly
-																Earnings</h5>
-															<h4 class="fw-semibold mb-3">$6,820</h4>
-															<div class="d-flex align-items-center pb-1">
-																<span
-																	class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
-																	<i class="ti ti-arrow-down-right text-danger"></i>
-																</span>
-																<p class="text-dark me-1 fs-3 mb-0">+9%</p>
-																<p class="fs-3 mb-0">last year</p>
-															</div>
-														</div>
-														<div class="col-4">
-															<div class="d-flex justify-content-end">
-																<div
-																	class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-																	<i class="ti ti-currency-dollar fs-6"></i>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div id="earning"></div>
+											<div>
+												<select class="form-select">
+													<option value="3">May 2024</option>
+												</select>
 											</div>
 										</div>
+										<div id="chart"></div>
 									</div>
-								</div>
-
-
-								<div class="card-body p-4">
-									<div class="row justify-content-end p-2">
-										<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>
-										<div class="col-auto">
-											<label for="searchInput" class="col-form-label">查詢：</label>
-										</div>
-										<div class="col-auto">
-											<input type="text" id="searchInput" class="form-control"
-												placeholder="">
-										</div>
-									</div>
-
-									<div
-										class="text-center bg-white font-weight-bold text-primary p-1"
-										id="totalDataCount"></div>
-									<!-- 表格内容容器 -->
-									<div class="table-responsive shadow">
-										<table
-											class="table table-striped text-nowrap mb-0 align-middle">
-											<thead class="text-dark fs-4">
-												<tr>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">訂單編號</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">訂購人</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">原始金額</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">折扣碼</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">折扣金額</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">付款金額</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">付款方式</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">取餐方式</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">訂單狀態</h6>
-													</th>
-													<th class="border-bottom-1">
-														<h6 class="fw-semibold mb-0">取消原因</h6>
-													</th>
-												</tr>
-											</thead>
-
-											<tbody id="orderTableBody">
-
-											</tbody>
-										</table>
-									</div>
-									<!-- 显示总记录数和当前页码信息 -->
-									<!-- 分页控件 -->
-									<div class="container">
-										<div class="row">
-											<div class="col-auto">
-												<div class="d-flex flex-column align-items-end">
-													<div class="pagination-info m-2">
-														<span id="paginationInfo"></span>
-													</div>
-												</div>
-												<div class="col-auto">
-													<div class="input-group">
-														<input type="number" id="pageNumberInput"
-															class="form-control" placeholder="跳轉頁碼"
-															style="width: 120px;">
-														<div class="input-group-append">
-															<button id="goToPageBtn" class="btn btn-muted m-1">跳轉</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-7"></div>
-											<!-- 空白的 col-auto -->
-											<div class="col-auto ml-auto">
-												<!-- 要置右邊的 col-auto -->
-												<div class="pagination-container">
-													<ul class="pagination justify-content-end m-3">
-														<li class="page-item" id="firstPage"><a
-															class="page-link" href="#">«</a></li>
-														<li class="page-item" id="prevPage"><a
-															class="page-link" href="#">‹</a></li>
-														<li class="page-item" id="nextPage"><a
-															class="page-link" href="#">›</a></li>
-														<li class="page-item" id="lastPage"><a
-															class="page-link" href="#">»</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<!-- details Modal -->
-									<div class="container">
-										<div class="row">
-											<div class="col-12">
-												<div id="orderDetailsModal" class="modal fade" tabindex="-1"
-													role="dialog" aria-labelledby="orderDetailsModalLabel"
-													aria-hidden="true">
-													<div class="modal-dialog modal-lg" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title text-center"
-																	id="orderDetailsModalLabel"></h5>
-															</div>
-															<div class="modal-body">
-																<div class="table-responsive">
-																	<table id="orderDetailsTable"
-																		class="table table-border">
-																		<thead>
-																			<tr>
-																				<th class="text-nowrap">產品名稱</th>
-																				<th class="text-nowrap">單價</th>
-																				<th class="text-nowrap">數量</th>
-																				<th class="text-nowrap">小計</th>
-																				<th class="text-nowrap">餐點備註</th>
-																				<th>刪除</th>
-																			</tr>
-																		</thead>
-																		<tbody id="orderDetailsTableBody">
-																			<!-- Order details will be dynamically populated here -->
-																		</tbody>
-																	</table>
-																</div>
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-muted close"
-																	data-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-
-
-
 								</div>
 							</div>
+							<div class="col-lg-4">
+								<div class="row">
+									<div class="col-lg-12">
+										<!-- Monthly Earnings -->
+										<div class="card">
+											<div class="card-body">
+												<div class="row alig n-items-start">
+													<div class="col-8">
+														<h5 class="card-title mb-9 fw-semibold">Monthly
+															Earnings</h5>
+														<h4 class="fw-semibold mb-3">$6,820</h4>
+														<div class="d-flex align-items-center pb-1">
+															<span
+																class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+																<i class="ti ti-arrow-down-right text-danger"></i>
+															</span>
+															<p class="text-dark me-1 fs-3 mb-0">+9%</p>
+															<p class="fs-3 mb-0">last year</p>
+														</div>
+													</div>
+													<div class="col-4">
+														<div class="d-flex justify-content-end">
+															<div
+																class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+																<i class="ti ti-currency-dollar fs-6"></i>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="earning"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="card-body p-4">
+								<div class="row justify-content-end p-2">
+									<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>
+									<div class="col-auto">
+										<label for="searchInput" class="col-form-label">查詢：</label>
+									</div>
+									<div class="col-auto">
+										<input type="text" id="searchInput" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+
+								<div
+									class="text-center bg-white font-weight-bold text-primary p-1"
+									id="totalDataCount"></div>
+								<!-- 表格内容容器 -->
+								<div class="table-responsive shadow">
+									<table
+										class="table table-striped text-nowrap mb-0 align-middle">
+										<thead class="text-dark fs-4">
+											<tr>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">訂單編號</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">訂購人</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">原始金額</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">折扣碼</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">折扣金額</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">付款金額</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">付款方式</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">取餐方式</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">訂單狀態</h6>
+												</th>
+												<th class="border-bottom-1">
+													<h6 class="fw-semibold mb-0">取消原因</h6>
+												</th>
+											</tr>
+										</thead>
+
+										<tbody id="orderTableBody">
+
+										</tbody>
+									</table>
+								</div>
+								<!-- 显示总记录数和当前页码信息 -->
+								<!-- 分页控件 -->
+								<div class="container">
+									<div class="row">
+										<div class="col-auto">
+											<div class="d-flex flex-column align-items-end">
+												<div class="pagination-info m-2">
+													<span id="paginationInfo"></span>
+												</div>
+											</div>
+											<div class="col-auto">
+												<div class="input-group">
+													<input type="number" id="pageNumberInput"
+														class="form-control" placeholder="跳轉頁碼"
+														style="width: 120px;">
+													<div class="input-group-append">
+														<button id="goToPageBtn" class="btn btn-muted m-1">跳轉</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-7"></div>
+										<!-- 空白的 col-auto -->
+										<div class="col-auto ml-auto">
+											<!-- 要置右邊的 col-auto -->
+											<div class="pagination-container">
+												<ul class="pagination justify-content-end m-3">
+													<li class="page-item" id="firstPage"><a
+														class="page-link" href="#">«</a></li>
+													<li class="page-item" id="prevPage"><a
+														class="page-link" href="#">‹</a></li>
+													<li class="page-item" id="nextPage"><a
+														class="page-link" href="#">›</a></li>
+													<li class="page-item" id="lastPage"><a
+														class="page-link" href="#">»</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- details Modal -->
+								<div class="container">
+									<div class="row">
+										<div class="col-12">
+											<div id="orderDetailsModal" class="modal fade" tabindex="-1"
+												role="dialog" aria-labelledby="orderDetailsModalLabel"
+												aria-hidden="true">
+												<div class="modal-dialog modal-lg" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title text-center"
+																id="orderDetailsModalLabel"></h5>
+														</div>
+														<div class="modal-body">
+															<div class="table-responsive">
+																<table id="orderDetailsTable" class="table table-border">
+																	<thead>
+																		<tr>
+																			<th class="text-nowrap">產品名稱</th>
+																			<th class="text-nowrap">單價</th>
+																			<th class="text-nowrap">數量</th>
+																			<th class="text-nowrap">小計</th>
+																			<th class="text-nowrap">餐點備註</th>
+																			<th>刪除</th>
+																		</tr>
+																	</thead>
+																	<tbody id="orderDetailsTableBody">
+																		<!-- Order details will be dynamically populated here -->
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-muted close"
+																data-dismiss="modal">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- discount modal -->
+								<div id="updateDiscountModal" class="modal" tabindex="-1"
+									role="dialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">選擇優惠折扣碼</h5>
+											</div>
+											<div class="modal-body">
+												<select id="discountSelect" class="form-control">
+
+												</select> <br>
+												<h6 id="discountPrice" style="display: none;">
+													<span class="float-right discountPrice p-3">折扣金額:</span>
+												</h6>
+											</div>
+
+											<div class="modal-footer">
+												<button type="button" class="btn btn-light"
+													id="confirmDiscountBtn">確定</button>
+												<button type="button" class="btn btn-muted close"
+													data-dismiss="modal">關閉</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+							</div>
 						</div>
+					</div>
 
 
 
-						<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
-						<script
-							src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-							integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-							crossorigin="anonymous"></script>
-						<script
-							src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-						<script src="../../../static/back/js/sidebarmenu.js"></script>
-						<script src="../../../static/back/js/app.min.js"></script>
-						<script
-							src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
+					<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
+					<script
+						src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+						integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+						crossorigin="anonymous"></script>
+					<script
+						src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+					<script src="../../../static/back/js/sidebarmenu.js"></script>
+					<script src="../../../static/back/js/app.min.js"></script>
+					<script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
 
 
-						<script src="../../../static/back/js/order/orderCRUD.js"></script>
+					<script src="../../../static/back/js/order/orderCRUD.js"></script>
 </body>
 
 </html>
