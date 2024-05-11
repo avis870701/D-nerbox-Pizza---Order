@@ -255,7 +255,7 @@
 
 							<div class="card-body p-4">
 								<div class="row justify-content-end p-2">
-									<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>
+									<!--<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>  -->
 									<div class="col-auto">
 										<label for="searchInput" class="col-form-label">查詢：</label>
 									</div>
@@ -414,7 +414,7 @@
 											</div>
 
 											<div class="modal-footer">
-												<button type="button" class="btn btn-light"
+												<button type="button" class="btn btn-muted"
 													id="confirmDiscountBtn">確定</button>
 												<button type="button" class="btn btn-muted close"
 													data-dismiss="modal">關閉</button>
@@ -422,6 +422,30 @@
 										</div>
 									</div>
 								</div>
+
+								<!-- cancelNote modal -->
+								<div class="modal fade" id="cancelNoteModal" tabindex="-1"
+									role="dialog" aria-labelledby="cancelNoteModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="cancelNoteModalLabel">請簡述取消原因(30字內)</h5>
+											</div>
+											<div class="modal-body">
+												<input type="text" id="cancelNoteInput" class="form-control">
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-muted"
+													id="confirmCancelNoteBtn">確定</button>
+												<button type="button" class="btn btn-muted close"
+													data-dismiss="modal">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
 
 
 
@@ -446,6 +470,7 @@
 
 
 					<script src="../../../static/back/js/order/orderCRUD.js"></script>
+					<script src="../../../static/back/js/order/detailsCRUD.js"></script>
 </body>
 
 </html>

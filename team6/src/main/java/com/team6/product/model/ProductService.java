@@ -59,6 +59,11 @@ public class ProductService {
 		return pRespository.findAll();
 	}
 	
+	//訂單 查詢已上架的所有商品
+	public List<ProductBean> SelectProductIsOne(){
+		return pRespository.findProductIsOn();
+	}
+	
 	
 	
 

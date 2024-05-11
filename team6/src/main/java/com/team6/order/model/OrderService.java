@@ -75,6 +75,26 @@ public class OrderService {
 	public void updateOrderStatus(String orderId, String orderStatus) {
 		oRepos.updateOrderStatusByOrderId(orderId, orderStatus);
 	}
+	
+	//後端 更新取消訂單備註
+	public void updateCancelNote(String orderId, String cancelNote) {
+		oRepos.updateCancelNoteByOrderId(orderId, cancelNote);
+	}
+	
+	//後端 更新商品
+	public void updateProduct(Integer detailsId,String productId,String product,String unitPrice) {
+		dRepos.updateProductByDetailsId(detailsId, productId, product, unitPrice);
+	}
+	
+	//後端 更新數量
+	public void updateQuantity(Integer detailsId,String quantity) {
+		dRepos.updateQuantityByDetailsId(detailsId, quantity);
+	}
+	
+	//後端 更新餐點備註
+	public void updateNote(Integer detailsId,String note) {
+		dRepos.updateNoteByDetailsId(detailsId, note);
+	}
 
 	// 後端 刪除餐點明細
 	public void deleteOrderDetail(Integer detailsId) {

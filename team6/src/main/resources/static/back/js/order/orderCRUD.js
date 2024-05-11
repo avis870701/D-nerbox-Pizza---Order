@@ -2,7 +2,9 @@ $(document).ready(function() {
 	var pageSize = 10; // 顯示的筆數
 	var currentPage = 0; // 目前頁碼
 
-	// 发送 AJAX 请求
+	// 初始化頁面 獲得第0頁的數據
+	fetchOrders(currentPage);
+
 	function fetchOrders(page) {
 		$.ajax({
 			url: 'orderSelectAll',
@@ -15,12 +17,17 @@ $(document).ready(function() {
 				// 遍歷返回的數據並將每一行添加到表格中
 				$.each(response.content, function(index, order) {
 					var discountContent = order.discount;
-					// 如果折扣包含 '已失效' 字样，将文本设置为红色
+					if (discountContent == '') {
+						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' + '<button class="btn btn-white updateDiscount-btn">' + '新增優惠' + '</button>';
+					}
+					// 如果折扣包含 '已失效',文字變紅色
 					if (discountContent.includes('已失效')) {
 						discountContent = '<span style="color: red;">' + discountContent + '</span>';
 					}
-					if (discountContent == '') {
-						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' + '<button class="btn btn-white updateDiscount-btn">' + '新增優惠' + '</button>';
+
+					var cancelNoteContent = order.cancelNote;
+					if (cancelNoteContent !== '') {
+						cancelNoteContent = '<span style="color: red;">' + cancelNoteContent + '</span>';
 					}
 
 					var row = '<tr>' +
@@ -55,7 +62,7 @@ $(document).ready(function() {
 						'<option value="訂單取消">訂單取消</option>' +
 						'</select>' +
 						'</td>' +
-						'<td>' + order.cancelNote + '</td>' +
+						'<td>' + cancelNoteContent + '</td>' +
 						'</tr>';
 					$('#orderTableBody').append(row);
 				});
@@ -162,7 +169,7 @@ $(document).ready(function() {
 		var page = parseInt($(this).text()) - 1;
 		fetchOrders(page);
 
-		// 更新当前页码
+		// 更新當前頁碼
 		currentPage = page;
 	});
 
@@ -170,20 +177,20 @@ $(document).ready(function() {
 		var pageNumber = parseInt($('#pageNumberInput').val());
 		var totalPages = parseInt($('#paginationInfo').text().split('/')[1].trim());
 
-		// 检查输入的页码是否合法
+		// 檢查輸入的頁碼是否合法
 		if (pageNumber >= 1 && pageNumber <= totalPages) {
 			var page = pageNumber - 1;
 			fetchOrders(page);
 			currentPage = page;
 
-			// 移除所有页面项上的 active 类
+			// 移除所有頁面項上的 active 類
 			$('.pagination-container .page-item').removeClass('active');
 
-			// 添加 active 类到指定的页面项
+			// 添加 active 類到指定的頁面項
 			$('#page' + pageNumber).addClass('active');
 		} else {
-			// 提示用户输入的页码无效
-			alert('Invalid page number! Please enter a number between 1 and ' + totalPages);
+			// 提示用户輸入的頁碼無效
+			alert('請輸入有效頁碼 1 到 ' + totalPages + ' 頁');
 		}
 	});
 
@@ -211,6 +218,11 @@ $(document).ready(function() {
 					// 如果折扣包含 '已失效' 字样，将文本设置为红色
 					if (discountContent.includes('已失效')) {
 						discountContent = '<span style="color: red;">' + discountContent + '</span>';
+					}
+
+					var cancelNoteContent = order.cancelNote;
+					if (cancelNoteContent !== '') {
+						cancelNoteContent = '<span style="color: red;">' + cancelNoteContent + '</span>';
 					}
 
 					var row =
@@ -246,7 +258,7 @@ $(document).ready(function() {
 						'<option value="訂單取消">訂單取消</option>' +
 						'</select>' +
 						'</td>' +
-						'<td>' + order.cancelNote + '</td>' +
+						'<td>' + cancelNoteContent + '</td>' +
 						'</tr>';
 
 					$('#orderTableBody').append(row);
@@ -299,12 +311,19 @@ $(document).ready(function() {
 
 				// 遍歷返回的訂單詳情數據並將每一行添加到表格中
 				$.each(response, function(index, detail) {
+					var noteContent = detail.note;
+					if (noteContent == '') {
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<button class="btn btn-light updateNote-btn">' + '新增備註' + '</button>';
+					}
+
+
+
 					var row = '<tr>' +
 						'<td class="text-nowrap">' + detail.product + '</td>' +
 						'<td class="text-nowrap">' + detail.unitPrice + '</td>' +
 						'<td class="text-nowrap">' + detail.quantity + '</td>' +
 						'<td class="text-nowrap">' + detail.subtotal + '</td>' +
-						'<td>' + detail.note + '</td>' +
+						'<td>' + noteContent + '</td>' +
 						'<td>' +
 						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' + // 添加隐藏字段存储 orderId
 						'<button class="btn btn-light delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
@@ -335,6 +354,8 @@ $(document).ready(function() {
 		$('#discountSelect').empty();
 		$('.discountPrice').text('');
 		$('#updateDiscountModal').modal('hide');
+		$('#cancelNoteInput').val('');
+		$('#cancelNoteModal').modal('hide');
 		var page = currentPage;
 		fetchOrders(page);
 	});
@@ -395,12 +416,17 @@ $(document).ready(function() {
 
 				// 遍歷返回的订单详情數據並將每一行添加到表格中
 				response.forEach(detail => {
+					var noteContent = detail.note;
+					if (noteContent == '') {
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<button class="btn btn-light updateNote-btn">' + '新增備註' + '</button>';
+					}
+
 					var row = '<tr>' +
 						'<td class="text-nowrap">' + detail.product + '</td>' +
 						'<td class="text-nowrap">' + detail.unitPrice + '</td>' +
 						'<td class="text-nowrap">' + detail.quantity + '</td>' +
 						'<td class="text-nowrap">' + detail.subtotal + '</td>' +
-						'<td>' + detail.note + '</td>' +
+						'<td>' + noteContent + '</td>' +
 						'<td>' +
 						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' + // 添加隐藏字段存储 orderId
 						'<button class="btn btn-light delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
@@ -420,7 +446,7 @@ $(document).ready(function() {
 			});
 	}
 
-	//update ajax
+	//update order ajax
 	//1.update discountPrice after delete all details
 	function updateDiscount(orderId) {
 		$.ajax({
@@ -465,7 +491,7 @@ $(document).ready(function() {
 
 	//將選項顯示在option裡
 	function fillDiscountOptions(discountList) {
-		var selectOptions = '<option value="">點擊下拉</option>';
+		var selectOptions = '<option value="點擊下拉">點擊下拉</option>';
 		discountList.forEach(function(promotion) {
 			selectOptions += '<option value="' + promotion.promotions_discountcode + '">' + promotion.promotions_discountcode + '</option>';
 		});
@@ -483,20 +509,23 @@ $(document).ready(function() {
 		});
 
 		$('#discountSelect').html(selectOptions);
-		
-		
-		//按下確定後更新折扣碼及價格
+
+
+		//按下確定後 更新折扣碼及價格
 		$(document).on('click', '#confirmDiscountBtn', function() {
-			// 获取订单ID、折扣码和折扣价格，假设你从某个地方获取了这些值
 			var discountCode = $('#discountSelect').val();
+
+			if (discountCode === '點擊下拉') {
+				alert("尚未選擇優惠折扣碼");
+				return;
+			}
+
 			var selectedPromotion = discountList.find(function(promotion) {
 				return promotion.promotions_discountcode === discountCode;
 			});
 			var discountPrice = selectedPromotion ? selectedPromotion.promotions_discount : '';
 			// 發送PUT请求
-			console.log(orderId);
-			console.log(discountCode);
-			console.log(discountPrice);
+
 			$.ajax({
 				url: '/order/updateDiscount',
 				type: 'PUT',
@@ -518,11 +547,85 @@ $(document).ready(function() {
 		});
 	}
 
+	// 3.update payment,pickup,orderStatus,cancelNote
+	$(document).on('change', '.payment-dropdown, .pickup-dropdown, .order-status-dropdown', function() {
+		var orderId = $(this).data('order-id');
+		var className = $(this).attr('class');
+		if (className.includes('payment-dropdown')) {
+			var field = 'payment';
+		} else if (className.includes('pickup-dropdown')) {
+			var field = 'pickup';
+		} else if (className.includes('order-status-dropdown')) {
+			var field = 'orderStatus';
+		}
+		var value = $(this).val();
+
+		//if cancel order,update cancelNote
+		if (field !== 'orderStatus' && value !== '訂單取消') {
+			sendUpdateRequest(orderId, field, value);
+		} else if (field === 'orderStatus' && value !== '訂單取消') {
+			var cancelNote = '  ';
+			updateCancelNoteRequest(orderId, cancelNote);
+			sendUpdateRequest(orderId, field, value);
+			fetchOrders(currentPage);
+		} else {
+			$('#cancelNoteModal').modal('show');
+
+			$('#confirmCancelNoteBtn').off('click').on('click', function() {
+				var cancelNote = $('#cancelNoteInput').val().trim();
+				var inputText = $(this).val();
+
+				if (cancelNote !== null && inputText.length <= 30) {
+					sendUpdateRequest(orderId, field, value);
+					updateCancelNoteRequest(orderId, cancelNote);
+					$('#cancelNoteInput').val('');
+					$('#cancelNoteModal').modal('hide');
+					fetchOrders(currentPage);
+				} else {
+					alert("請輸入正確格式的取消原因");
+				}
+			});
 
 
+		}
+		// 更新取消原因
+		function updateCancelNoteRequest(orderId, cancelNote) {
+			$.ajax({
+				url: '/order/updateCancelNote',
+				type: 'PUT',
+				data: {
+					orderId: orderId,
+					cancelNote: cancelNote
+				},
+				success: function(response) {
+					console.log("Cancel note updated successfully!");
+					fetchOrders(currentPage);
+				},
+				error: function(xhr, status, error) {
+					console.error(error);
+				}
+			});
+		}
+
+		//更新PPO的function
+		function sendUpdateRequest(orderId, field, value) {
+			$.ajax({
+				url: '/order/updatePPO',
+				type: 'PUT',
+				data: {
+					orderId: orderId,
+					[field]: value
+				},
+				success: function(response) {
+					console.log("Update successful!");
+					fetchOrders(currentPage);
+				},
+				error: function(xhr, status, error) {
+					console.error(error);
+				}
+			});
+		}
 
 
-
-	// 初始化頁面 獲得第0頁的數據
-	fetchOrders(currentPage);
+	});
 });

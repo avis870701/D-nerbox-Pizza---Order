@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -82,7 +83,8 @@ public class OrderController {
 		}
 	}
 	
-	//update // select Promotions discountList first
+	//order
+	//select Promotions discountList first,then update discount
 	@GetMapping("/getDiscountList")
 	@ResponseBody
 	 public List<Promotions> getDiscountList() {
@@ -90,10 +92,41 @@ public class OrderController {
     }
 	
 	@PutMapping("/updateDiscount")
-	@ResponseBody
 	public void updateDiscount(@RequestParam String orderId,@RequestParam String discount,Integer discountPrice) {
 		oService.updateDiscount(orderId, discount, discountPrice);
 	}
+	
+	//update payment,pickup,orderStatus
+	@PutMapping("/updatePPO")
+	public void updatePPO(@RequestParam String orderId,
+			@RequestParam(required = false) String payment,
+			@RequestParam(required = false) String pickup,
+			@RequestParam(required = false) String orderStatus) {
+		if(payment != null) {
+			oService.updatePayment(orderId, payment);
+		}else if(pickup != null){
+			oService.updatePickup(orderId, pickup);
+		}else {
+			oService.updateOrderStatus(orderId, orderStatus);
+		}
+	}
+	
+	//update cancelNote
+	@PutMapping("/updateCancelNote")
+	public void updateCancelNote(@RequestParam String orderId,@RequestParam String cancelNote) {
+		oService.updateCancelNote(orderId, cancelNote);
+	}
+	
+	//details
+	//update product
+	
+	
+	//update note
+	@PutMapping("/updateNote")
+	public void updateNote(@RequestParam String detailsId,@RequestParam String note) {
+		oService.updateNote(Integer.parseInt(detailsId), note);
+	}
+	
 
 	// deleteDetails by detailsId
 	@RequestMapping(value = "/orderDetails/{detailsId}", method = RequestMethod.DELETE)
@@ -107,7 +140,6 @@ public class OrderController {
 
 	// update discount&dprice after delete
 	@PutMapping("/clearDiscount")
-	@ResponseBody
 	public void clearDiscount(@RequestParam String orderId) {
 		Order order = oService.findOrderById(orderId);
 		if(order != null & order.getDiscount() != "") {

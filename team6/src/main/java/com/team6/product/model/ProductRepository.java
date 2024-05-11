@@ -14,5 +14,7 @@ public interface ProductRepository extends JpaRepository<ProductBean, Integer> {
 	@Query(value = "from ProductBean order by productCreateDate DESC, productId DESC")
 	public List<ProductBean> findAll();
 	
-	
+	//訂單 查詢所有上架商品
+	@Query(value = "SELECT * from Product p WHERE p.ProductStateId = 1", nativeQuery = true)
+	public List<ProductBean> findProductIsOn();
 }
