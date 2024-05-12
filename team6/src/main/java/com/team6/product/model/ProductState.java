@@ -25,10 +25,10 @@ public class ProductState {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PRODUCTSTATEID")
-	private Integer ProductStateId;
+	private Integer productStateId;
 	
 	@Column(name = "PRODUCTSTATENAME")
-	private String ProductStateName;
+	private String productStateName;
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productState", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -42,22 +42,22 @@ public class ProductState {
 
 
 	public Integer getProductStateId() {
-		return ProductStateId;
+		return productStateId;
 	}
 
 
 	public void setProductStateId(Integer productStateId) {
-		ProductStateId = productStateId;
+		this.productStateId = productStateId;
 	}
 
 
 	public String getProductStateName() {
-		return ProductStateName;
+		return productStateName;
 	}
 
 
 	public void setProductStateName(String productStateName) {
-		ProductStateName = productStateName;
+		this.productStateName = productStateName;
 	}
 
 

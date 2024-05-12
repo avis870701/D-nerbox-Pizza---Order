@@ -12,13 +12,142 @@
         <h1 class="mb-3" align="center" style="color: blue;">TEST測試試試是噁瑞</h1>
 
         <div class="hello">
-            <div class="d1">1aasdasdasd</div>
+            <button class="d1">asdasd</button>
             <div class="d2">2ddddddddddddddddd</div>
             <div class="d3">3ddssasdasda</div>
             <div class="d4">4eqweqeqweqw</div>
             <div class="d5">5eeeeee</div>
         </div>
 
+        <!-- 產品陳列範例 
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/芝麻德國比烤餅.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">黑白芝麻與酥脆薄餅
+                    </p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/666.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">
+                        asdasd黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與asdasd黑白芝麻與酥脆薄餅</p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/2222.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">
+                        aasdssds黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與sdsdsdsdsddsdsd黑白芝麻與酥脆薄餅
+                    </p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/2222.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">
+                        aasdssds黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與sdsdsdsdsddsdsd黑白芝麻與酥脆薄餅
+                    </p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/2222.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">
+                        aasdssds黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與sdsdsdsdsddsdsd黑白芝麻與酥脆薄餅
+                    </p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" id="product-item">
+            <div class="rounded position-relative">
+                <div class="product-img">
+                    <img src="/images/product/2222.jpg" class="w-100 rounded-top"
+                        alt="暫無圖片">
+                </div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                    style="top: 10px; left: 10px;">甜點</div>
+                <div
+                    class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <h5>芝麻德國比烤餅</h5>
+                    <p style="height: 100px;">
+                        aasdssds黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與黑白芝麻與sdsdsdsdsddsdsd黑白芝麻與酥脆薄餅
+                    </p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold mb-0">數量: 15</p>
+                        <p class="text-dark fs-5 fw-bold mb-0">金額: 120</p>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div>
+            <button onclick="dis()">消失</button>
+        </div>
 
         <div id="testbody">
 
@@ -112,6 +241,8 @@
                     var totalElements = response.totalElements;
                     var currentPageNumber = response.number + 1;
 
+                    console.log(response.first);
+                    console.log(response.last);
                     // 更新分頁信息顯示
                     $('#paginationInfo').text('Total Records: ' + totalElements + ', Page: ' + currentPageNumber + ' / ' + totalPages);
 
@@ -221,6 +352,9 @@
                 fetchOrders(currentPage);
             });
 
+            function dis() {
+                $('.d1').prop('disabled', true);
+            }
 
         </script>
     </body>

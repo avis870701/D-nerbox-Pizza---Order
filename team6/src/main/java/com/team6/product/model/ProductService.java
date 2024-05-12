@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -59,7 +62,18 @@ public class ProductService {
 		return pRespository.findAll();
 	}
 	
+	// 查詢全部已上架產品
+	public Page<ProductBean> findAllProductWithState(Pageable pageable){
+		return pRespository.findAllProductWithState(pageable);
+	}
 	
+	// 查詢已上架分類產品
+	public Page<ProductBean> findAllProductWithStateAndCategory(Integer categoryId,Pageable pageable){
+		return pRespository.findAllProductWithStateAndCategory(categoryId, pageable);
+	}
 	
-
+	// 模糊查詢 套版
+	public List<ProductBean> findByNameLikeWithState(String name){
+		return pRespository.findByNameLikeWithState(name);
+	}
 }

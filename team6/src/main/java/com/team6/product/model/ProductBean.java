@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.team6.product.dto.ProductCategoryDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
