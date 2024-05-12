@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team6.delivery.model.Delivery;
@@ -34,9 +35,9 @@ public class DeliveryController {
 
 	@Autowired
 	private DeliveryService dService;
-	@Autowired
-	private DetailsRepository dRepos;
 	
+	@Autowired
+	private OrderService oService;
 
 
 
@@ -68,6 +69,7 @@ public class DeliveryController {
 					.body("無法保存xml數據：" + e.getMessage());
 		}
 	}
+
 	//匯出excel
 	@PostMapping("/excel")
 	public ResponseEntity<String> saveexcel() {
@@ -81,7 +83,6 @@ public class DeliveryController {
 		}
 	}
  
-	
 	//新增
 	@PostMapping("/insert")
 	public ResponseEntity<String> addDelivery(@RequestBody Delivery delivery) {
@@ -117,6 +118,12 @@ public class DeliveryController {
 		m.addAttribute("delivery",delivery);
 		return "/back-html/delivery/delivery";
 	}
+//	@GetMapping("/home")
+//	 @ResponseBody
+//	public List<Delivery> DeliveryHome() {
+//		List<Delivery> delivery = dService.findall();
+//		return	delivery;
+//	}
 
 	//	查詢單筆
 	@GetMapping("/update/{id}")
@@ -127,13 +134,33 @@ public class DeliveryController {
 	}
 	
 //	查詢單筆
-//	@GetMapping("/findbyorder/{id}")
-//	public	String findbyorder(@PathVariable("id") int id ,Model m){
-//	public String findbyorder(@PathVariable("id") int id){
-//		Delivery delivery = dService.findById(id);
-//		m.addAttribute("delivery",delivery);
-//		OrderDetails orderDetails =	dRepos.findById(id);
-//		return orderDetails;
-//		return "/back-html/delivery/update";
+//	@PostMapping("/order/")
+//	@ResponseBody
+//	public List<OrderDetails> findbyorder(@RequestParam("id")  String id){
+//		List<OrderDetails> Details = oService.findDetailsById("20240503120214");
+//		List<OrderDetails> Details = oService.findDetailsById(id);
+//		m.addAttribute("Details",Details);
+//		return  Details;
+//	}
+	
+//	@GetMapping("/details")
+//	public String findbyorder(){
+//		return "/back-html/delivery/detail";
+//	}
+//	
+	@GetMapping("/detail/{id}")
+	@ResponseBody
+	public List<OrderDetails> findbyorder(@PathVariable("id")  String id){
+		List<OrderDetails> Details = oService.findDetailsById(id);
+		return Details;
+	}
+	
+	@GetMapping("/details/{id}")
+	public String findbyorder(@PathVariable("id")  String id,Model m){
+		List<OrderDetails> OrderDetails = oService.findDetailsById(id);
+		m.addAttribute("OrderDetails",OrderDetails);
+		return "/back-html/delivery/detail";
+	}
+		
+		
 }
-//}

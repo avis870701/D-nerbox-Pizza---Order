@@ -21,7 +21,8 @@
     <div>
       <div class="brand-logo d-flex align-items-center justify-content-between">
         <a href="./index.html" class="text-nowrap logo-img">
-          <img src="../../static/back/images/logos/dark-logo.svg" width="180" alt="" />
+          <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt="" />
+          <link rel="shortcut icon" type="image/png" href="../../../static/images/logos/favicon.png" />
         </a>
         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
           <i class="ti ti-x fs-8"></i>
@@ -224,28 +225,31 @@
                         <th>外送地址</th>
                         <th>外送單狀態</th>
                         <th>刪除</th>
-                        <th>修改</th>
+                        <!-- <th>修改</th> -->
                     </tr>
                     </thead>
                     <tbody>
                         <tr th:each="delivery : ${delivery}">
                             <td th:text="${delivery.date}"></td>
-                            <td id="did" th:text="${delivery.id}"></td>
-                            <!-- <td th:text="${delivery.orderid}"></td> -->
                             <td>
-                            <a th:href="@{'/delivery/findbyorderid' + ${delivery.orderid}}"> <!--未完成 -->
-                              <span th:text="${delivery.orderid}"></span>
-                            </a>
+                              <a th:href="@{/delivery/update/{id}(id=${delivery.id})}"> 
+                                <span th:text="${delivery.id}"></span>
+                              </a>
+                            </td>
+                            <td>
+                            <a th:href="@{/delivery/details/{orderid}(orderid=${delivery.orderid})}"> 
+                                <span th:text="${delivery.orderid}"></span>
+                              </a>
                             </td>
                             <td th:text="${delivery.address}"></td>
                             <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
                             <td>
                                 <button th:onclick="'Delete(\'' + ${delivery.id} + '\')'">刪除</button>
                             </td>
-                            <td>
-                                <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
+                            <!-- <td>
+                              <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
                                 <button id="update">修改</button></a>
-                            </td>
+                            </td> -->
                         </tr>
                       </tbody>
                 </table>
@@ -321,6 +325,9 @@
         }
       })
     });
+    // 發送查詢請求
+    // function
+
   // 發送刪除請求
   //   function Delete(deliveryId) {
   //   if (confirm("確定要刪除這筆訂單嗎？")) {

@@ -17,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.team6.order.model.DetailsRepository;
-import com.team6.order.model.OrderDetails;
-import com.team6.order.model.OrderRepository;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.apache.poi.ss.usermodel.*;
@@ -78,7 +75,8 @@ public class DeliveryService {
 	    List<Delivery> deliveries = dRepos.findAll();
 	    String json = gson.toJson(deliveries);
 
-	    String folderPath = "C:/JSON";
+//	    String folderPath = "C:/JSON";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.json";
 
 	    // 檢查並創建目標文件夾
@@ -115,7 +113,8 @@ public class DeliveryService {
 
 	    String xml = xstream.toXML(deliveries);
 
-	    String folderPath = "C:/XML";
+//	    String folderPath = "C:/XML";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.xml";
 
 	    // 檢查並創建目標文件夾
@@ -146,7 +145,8 @@ public class DeliveryService {
 	public void saveExcel() {
 	    List<Delivery> deliveries = dRepos.findAll();
 
-	    String folderPath = "C:/EXCEL";
+//	    String folderPath = "C:/EXCEL";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.xlsx";
 
 	    // 檢查並創建目標文件夾
