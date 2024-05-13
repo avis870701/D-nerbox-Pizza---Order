@@ -115,7 +115,6 @@
 						onclick="forCoQuantity('<%=productBean.getProductId()%>')">送出</button>
 				</div>
 
-
 			</div>
 
 			<script>
@@ -219,6 +218,7 @@
 
 
 			</script>
+
 		</body>
 
 		</html>

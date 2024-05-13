@@ -63,11 +63,17 @@ public class FrontProductController {
 	}
 	
 	
+	// 隨機查5筆資料
+	@GetMapping("/product.selectRandomProducts")
+	@ResponseBody
+	public List<ProductBean> selectRandomProducts() {
+		int quantity = 5;
+		Pageable pageable = PageRequest.of(0, quantity);
+		return productService.findRandomProducts(pageable);
+	}
 	
 	
 	
-	
-	// 隨機查5筆資料(未完成)
 	
 	
 	

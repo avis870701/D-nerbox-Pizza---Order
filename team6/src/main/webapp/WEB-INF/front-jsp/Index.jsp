@@ -192,41 +192,57 @@
             <div class="container py-5">
                 <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s"
                     style="max-width: 500px;">
-                    <h4 class="display-6 fw-medium fst-italic">熱門產品</h4>
+                    <h4 class="display-6 fw-medium fst-italic">猜你喜歡</h4>
                 </div>
                 <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-1.jpg" alt="">
+                        <img src="/images/product/牛K吧焗烤薯條.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Green Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">焗烤牛肉K吧焗烤薯條</h4>
+                            <span class="text-body">旋轉烤牛肉。焗烤，薯條。</span>
                         </div>
                     </a>
+
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-2.jpg" alt="">
+                        <img src="/images/product/培根德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Black Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">培根德國披薩</h4>
+                            <span class="text-body">培根。白醬，薄餅皮。</span>
                         </div>
                     </a>
+
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-3.jpg" alt="">
+                        <img src="/images/product/炸雞塊(6塊).jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Spiced Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">雞塊(6)</h4>
+                            <span class="text-body">酥酥脆脆的雞塊</span>
                         </div>
                     </a>
+
                     <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-4.jpg" alt="">
+                        <img src="/images/product/海鮮德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Organic Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">海鮮德國披薩</h4>
+                            <span class="text-body">蝦仁、魚、蟹味腿。白醬，薄餅皮。</span>
                         </div>
                     </a>
+
                 </div>
             </div>
         </div>
@@ -615,6 +631,10 @@
 
         <!-- Template Javascript -->
         <script src="/front/js/main.js"></script>
+        <!-- 載入隨機產品輪播 -->
+        <script src="/front/js/product/productRandom.js"></script>
+
+
     </body>
 
     </html>

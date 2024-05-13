@@ -76,4 +76,12 @@ public class ProductService {
 	public List<ProductBean> findByNameLikeWithState(String name){
 		return pRespository.findByNameLikeWithState(name);
 	}
+	
+	// 隨機查詢數筆產品
+	public List<ProductBean> findRandomProducts(Pageable pageable){
+		return pRespository.findRandomProducts(pageable);
+	}
+	
+	
+	
 }

@@ -27,4 +27,11 @@ public interface ProductRepository extends JpaRepository<ProductBean, Integer> {
 	@Query(value = "from ProductBean where productName like concat('%',?1,'%') AND productState.productStateId = 1 ")
 	List<ProductBean> findByNameLikeWithState(String name);
 
+	// 隨機查詢數筆產品 NEWID() -> SQL生成唯一標識(GUID) 搭配 ORDER BY 可以隨機排序
+	@Query(value = "FROM ProductBean WHERE productState.productStateId = 1 ORDER BY FUNCTION('NEWID') ")
+	List<ProductBean> findRandomProducts(Pageable pageable);
+
+	
+	
+	
 }
