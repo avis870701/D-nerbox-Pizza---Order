@@ -19,15 +19,21 @@ $(document).ready(function() {
 					var discountContent = order.discount;
 					if (discountContent == '') {
 						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' + '<button class="btn btn-white updateDiscount-btn">' + '新增優惠' + '</button>';
+					} else {
+						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' +
+							'<input type="hidden" class="paidAmount-id-input" value="' + order.paidAmount + '">' +
+							'<a href="#" class="btn btn-white updateDiscount-btn" style="color: black;">' + discountContent + '</a>';
 					}
 					// 如果折扣包含 '已失效',文字變紅色
 					if (discountContent.includes('已失效')) {
-						discountContent = '<span style="color: red;">' + discountContent + '</span>';
+						discountContent = discountContent.replace('style="color: black;"', 'style="color: red;"'); // 将按钮的颜色样式替换为红色
 					}
 
 					var cancelNoteContent = order.cancelNote;
+					var orderIdContent = order.orderId;
 					if (cancelNoteContent !== '') {
-						cancelNoteContent = '<span style="color: red;">' + cancelNoteContent + '</span>';
+						// 使用data-*屬性保存訂單ID
+						cancelNoteContent = '<input type="hidden" class="order-id-input" value="' + orderIdContent + '">' + '<a href="#" class="updateCancelNote-btn" style="text-decoration: none; color:red;">' + cancelNoteContent + '</a>';
 					}
 
 					var row = '<tr>' +
@@ -81,6 +87,34 @@ $(document).ready(function() {
 				console.error(error);
 			}
 		});
+
+		//點選文字更新取消原因
+		$(document).on('click', '.updateCancelNote-btn', function(e) {
+			console.log("Clicked updateCancelNote-btn");
+
+			e.preventDefault(); // 阻止默認行為，這樣不會跳轉到超連結的目標
+			$('#cancelNoteModal').modal('show');
+			console.log($('#cancelNoteModal'));
+
+			var orderId = $(this).closest('tr').find('.order-id-input').val(); // 獲取訂單 ID
+
+			console.log("Order ID:", orderId);
+
+			$('#confirmCancelNoteBtn').off('click').on('click', function() {
+				var cancelNote = $('#cancelNoteInput').val().trim();
+				var inputText = $(this).val();
+
+				if (cancelNote !== null && inputText.length <= 30) {
+					updateCancelNoteRequest(orderId, cancelNote);
+					$('#cancelNoteInput').val('');
+					$('#cancelNoteModal').modal('hide');
+					fetchOrders(currentPage);
+				} else {
+					alert("請輸入正確格式的取消原因");
+				}
+			});
+		});
+
 	}
 
 
@@ -215,14 +249,23 @@ $(document).ready(function() {
 				// 遍历返回的数据并将每一行添加到表格中
 				$.each(response, function(index, order) {
 					var discountContent = order.discount;
-					// 如果折扣包含 '已失效' 字样，将文本设置为红色
+					if (discountContent == '') {
+						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' + '<button class="btn btn-white updateDiscount-btn">' + '新增優惠' + '</button>';
+					} else {
+						discountContent = '<input type="hidden" class="order-id-input" value="' + order.orderId + '">' +
+							'<input type="hidden" class="paidAmount-id-input" value="' + order.paidAmount + '">' +
+							'<a href="#" class="btn btn-white updateDiscount-btn" style="color: black;">' + discountContent + '</a>';
+					}
+					// 如果折扣包含 '已失效',文字變紅色
 					if (discountContent.includes('已失效')) {
-						discountContent = '<span style="color: red;">' + discountContent + '</span>';
+						discountContent = discountContent.replace('style="color: black;"', 'style="color: red;"'); // 将按钮的颜色样式替换为红色
 					}
 
 					var cancelNoteContent = order.cancelNote;
+					var orderIdContent = order.orderId;
 					if (cancelNoteContent !== '') {
-						cancelNoteContent = '<span style="color: red;">' + cancelNoteContent + '</span>';
+						// 使用data-*屬性保存訂單ID
+						cancelNoteContent = '<input type="hidden" class="order-id-input" value="' + orderIdContent + '">' + '<a href="#" class="updateCancelNote-btn" style="text-decoration: none; color:red;">' + cancelNoteContent + '</a>';
 					}
 
 					var row =
@@ -273,6 +316,33 @@ $(document).ready(function() {
 				console.error(error);
 			}
 		});
+
+		//點選文字更新取消原因
+		$(document).on('click', '.updateCancelNote-btn', function(e) {
+			console.log("Clicked updateCancelNote-btn");
+
+			e.preventDefault(); // 阻止默認行為，這樣不會跳轉到超連結的目標
+			$('#cancelNoteModal').modal('show');
+			console.log($('#cancelNoteModal'));
+
+			var orderId = $(this).closest('tr').find('.order-id-input').val(); // 獲取訂單 ID
+
+			console.log("Order ID:", orderId);
+
+			$('#confirmCancelNoteBtn').off('click').on('click', function() {
+				var cancelNote = $('#cancelNoteInput').val().trim();
+				var inputText = $(this).val();
+
+				if (cancelNote !== null && inputText.length <= 30) {
+					updateCancelNoteRequest(orderId, cancelNote);
+					$('#cancelNoteInput').val('');
+					$('#cancelNoteModal').modal('hide');
+					fetchOrders(currentPage);
+				} else {
+					alert("請輸入正確格式的取消原因");
+				}
+			});
+		});
 	}
 
 	// 監聽 input 事件，執行模糊查詢
@@ -313,26 +383,36 @@ $(document).ready(function() {
 				$.each(response, function(index, detail) {
 					var noteContent = detail.note;
 					if (noteContent == '') {
-						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<button class="btn btn-light updateNote-btn">' + '新增備註' + '</button>';
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<a href="javascript:void(0);" class="updateNote-btn" style="text-decoration: none; color:black;">' + '新增備註' + '</a>';
+					} else {
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<a href="javascript:void(0);" class="updateNote-btn" style="text-decoration: none; color:black;">' + noteContent + '</a>';
 					}
 
+					var quantityInput = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' +
+						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' +
+						'<input type="number" class="quantity-input" style="position: relative; font-family: Arial; padding: 2px 8px 2px 8px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; color: #495057; appearance: none; -webkit-appearance: none; -moz-appearance: none;" value="' + detail.quantity + '">';
 
 
 					var row = '<tr>' +
 						'<td class="text-nowrap">' + detail.product + '</td>' +
 						'<td class="text-nowrap">' + detail.unitPrice + '</td>' +
-						'<td class="text-nowrap">' + detail.quantity + '</td>' +
+						'<td class="text-nowrap">' + quantityInput + '</td>' +
 						'<td class="text-nowrap">' + detail.subtotal + '</td>' +
 						'<td>' + noteContent + '</td>' +
 						'<td>' +
 						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' + // 添加隐藏字段存储 orderId
-						'<button class="btn btn-light delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
+						'<button class="btn btn-light border delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
 						'</td>' +
 						'</tr>';
+					console.log('detail.orderId:', detail.orderId);
+
 					$('#orderDetailsTableBody').append(row);
 				});
 
 				$('#orderDetailsModalLabel').text('Order Datail - ' + orderId);
+
+				$('#orderIdInput').val(orderId);
+
 
 				// 顯示模態框
 				$('#orderDetailsModal').modal('show');
@@ -364,11 +444,12 @@ $(document).ready(function() {
 	$(document).on('click', '.delete-btn', function() {
 
 		if (!confirm('確定要刪除嗎？')) {
-			return; // 用户取消删除操作，直接返回，不执行后续代码
+			return;
 		}
 
 		var detailsId = $(this).data('detail-id');
-		var orderId = $('.order-id-input').val();
+		var orderId = $(this).closest('tr').find('.order-id-input').val();
+		console.log('orderrrr' + orderId);
 
 		fetch('orderDetails/' + detailsId, {
 			method: 'DELETE'
@@ -401,8 +482,6 @@ $(document).ready(function() {
 					alert('已無餐點明細');
 					//加入update 將折扣碼金額變為0 金額才不會變負的
 					updateDiscount(orderId)
-					console.log('upfateeeeee');
-					console.log('update:' + orderId);
 					return; // 终止執行後續代碼
 				}
 				if (!response.ok) {
@@ -418,18 +497,24 @@ $(document).ready(function() {
 				response.forEach(detail => {
 					var noteContent = detail.note;
 					if (noteContent == '') {
-						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<button class="btn btn-light updateNote-btn">' + '新增備註' + '</button>';
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<a href="javascript:void(0);" class="updateNote-btn" style="text-decoration: none; color:black;">' + '新增備註' + '</a>';
+					} else {
+						noteContent = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' + '<a href="javascript:void(0);" class="updateNote-btn" style="text-decoration: none; color:black;">' + noteContent + '</a>';
 					}
+
+					var quantityInput = '<input type="hidden" class="details-id-input" value="' + detail.detailsId + '">' +
+						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' +
+						'<input type="number" class="quantity-input" style="position: relative; font-family: Arial; padding: 2px 8px 2px 8px; border: 1px solid #ced4da; border-radius: 4px; background-color: #fff; color: #495057; appearance: none; -webkit-appearance: none; -moz-appearance: none;" value="' + detail.quantity + '">';
 
 					var row = '<tr>' +
 						'<td class="text-nowrap">' + detail.product + '</td>' +
 						'<td class="text-nowrap">' + detail.unitPrice + '</td>' +
-						'<td class="text-nowrap">' + detail.quantity + '</td>' +
+						'<td class="text-nowrap">' + quantityInput + '</td>' +
 						'<td class="text-nowrap">' + detail.subtotal + '</td>' +
 						'<td>' + noteContent + '</td>' +
 						'<td>' +
 						'<input type="hidden" class="order-id-input" value="' + detail.orderId + '">' + // 添加隐藏字段存储 orderId
-						'<button class="btn btn-light delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
+						'<button class="btn btn-light border delete-btn" data-detail-id="' + detail.detailsId + '">刪除</button>' +
 						'</td>' +
 						'</tr>';
 					$('#orderDetailsTableBody').append(row);
@@ -469,11 +554,19 @@ $(document).ready(function() {
 
 	//2.update discount (search -> show all discount)
 	$(document).on('click', '.updateDiscount-btn', function() {
+		//新增判斷 如果總金額為0 不能增加折扣碼
+		var paidAmount = parseFloat($(this).closest('tr').find('.paidAmount-id-input').val());
+		console.log('paidAmount::' + paidAmount);
+		if (paidAmount === 0) {
+			alert('總金額為0，無法進行優惠設定！');
+		} else {
 
-		$('#updateDiscountModal').modal('show');
+			$('#updateDiscountModal').modal('show');
 
-		orderId = $(this).closest('tr').find('.order-id-input').val();
-		fetchDiscountList();
+			orderId = $(this).closest('tr').find('.order-id-input').val();
+			fetchDiscountList();
+		}
+
 	});
 
 	function fetchDiscountList() {
@@ -514,9 +607,11 @@ $(document).ready(function() {
 		//按下確定後 更新折扣碼及價格
 		$(document).on('click', '#confirmDiscountBtn', function() {
 			var discountCode = $('#discountSelect').val();
+			var alertShown = false;
 
-			if (discountCode === '點擊下拉') {
+			if (!alertShown && discountCode === '點擊下拉') {
 				alert("尚未選擇優惠折扣碼");
+				alertShown = true;
 				return;
 			}
 
@@ -585,47 +680,92 @@ $(document).ready(function() {
 					alert("請輸入正確格式的取消原因");
 				}
 			});
-
-
 		}
-		// 更新取消原因
-		function updateCancelNoteRequest(orderId, cancelNote) {
-			$.ajax({
-				url: '/order/updateCancelNote',
-				type: 'PUT',
-				data: {
-					orderId: orderId,
-					cancelNote: cancelNote
-				},
-				success: function(response) {
-					console.log("Cancel note updated successfully!");
-					fetchOrders(currentPage);
-				},
-				error: function(xhr, status, error) {
-					console.error(error);
-				}
-			});
-		}
-
-		//更新PPO的function
-		function sendUpdateRequest(orderId, field, value) {
-			$.ajax({
-				url: '/order/updatePPO',
-				type: 'PUT',
-				data: {
-					orderId: orderId,
-					[field]: value
-				},
-				success: function(response) {
-					console.log("Update successful!");
-					fetchOrders(currentPage);
-				},
-				error: function(xhr, status, error) {
-					console.error(error);
-				}
-			});
-		}
-
-
 	});
+
+	// 更新取消原因
+	function updateCancelNoteRequest(orderId, cancelNote) {
+		$.ajax({
+			url: '/order/updateCancelNote',
+			type: 'PUT',
+			data: {
+				orderId: orderId,
+				cancelNote: cancelNote
+			},
+			success: function(response) {
+				console.log("Cancel note updated successfully!");
+				fetchOrders(currentPage);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
+
+
+
+	//更新PPO的function
+	function sendUpdateRequest(orderId, field, value) {
+		$.ajax({
+			url: '/order/updatePPO',
+			type: 'PUT',
+			data: {
+				orderId: orderId,
+				[field]: value
+			},
+			success: function(response) {
+				console.log("Update successful!");
+				fetchOrders(currentPage);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
+
+
+	//更新取消原因
+	function updateCancelNoteRequest(orderId, cancelNote) {
+		$.ajax({
+			url: '/order/updateCancelNote',
+			type: 'PUT',
+			data: {
+				orderId: orderId,
+				cancelNote: cancelNote
+			},
+			success: function(response) {
+				console.log("Cancel note updated successfully!");
+				fetchOrders(currentPage);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
+
+
+	//exportCSV,EXCEL
+	//function exportCSV(){
+	//var keyword = $('#searchInput').val();
+
+	//if(keyword !== ''){
+
+	//$.ajax({
+
+	//})
+
+	//}
+
+
+	//}
+
+
+
+	//點餐按鈕
+
 });
+
+	function goToOrderByEmployee() {
+		// 使用 window.location.href 将页面重定向到指定的JSP页面
+		window.location.href = '/order/orderByEmployee';
+	}

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import org.openxmlformats.schemas.officeDocument.x2006.customProperties.impl.PropertiesDocumentImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +31,10 @@ import com.team6.order.model.DetailsRepository;
 import com.team6.order.model.Order;
 import com.team6.order.model.OrderDetails;
 import com.team6.order.model.OrderService;
+import com.team6.product.model.ProductBean;
+import com.team6.product.model.ProductCategory;
+import com.team6.product.model.ProductCategoryService;
+import com.team6.product.model.ProductService;
 import com.team6.promotions.model.Promotions;
 import com.team6.promotions.model.PromotionsRepository;
 import com.team6.promotions.model.PromotionsService;
@@ -41,12 +48,24 @@ public class OrderController {
 	private OrderService oService;
 
 	@Autowired
-	private PromotionsService pService;
+	private PromotionsService promotionsService;
 
-	// 後段進入點 http://localhost:8080/order/order.action
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private ProductCategoryService productCategoryService;
+
+	// 後端進入點 http://localhost:8080/order/order.action
 	@RequestMapping(path = "/order.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String orderMainprocess() {
 		return "forward:/WEB-INF/back-jsp/order/OrderIndex.jsp";
+	}
+	
+	// 後端員工點餐進入點 http://localhost:8080/order/orderByEmployee
+	@RequestMapping(path = "/orderByEmployee", method = { RequestMethod.GET, RequestMethod.POST })
+	public String orderByEmployee() {
+		return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
 	}
 
 	// select all
@@ -82,51 +101,98 @@ public class OrderController {
 			return ResponseEntity.notFound().build(); // no information back to 404 Not Found
 		}
 	}
-	
-	//order
-	//select Promotions discountList first,then update discount
+
+	// order
+	// select Promotions discountList first,then update discount
 	@GetMapping("/getDiscountList")
 	@ResponseBody
-	 public List<Promotions> getDiscountList() {
-        return pService.selectAllDiscount();
-    }
-	
-	@PutMapping("/updateDiscount")
-	public void updateDiscount(@RequestParam String orderId,@RequestParam String discount,Integer discountPrice) {
-		oService.updateDiscount(orderId, discount, discountPrice);
+	public List<Promotions> getDiscountList() {
+		return promotionsService.selectAllDiscount();
 	}
-	
-	//update payment,pickup,orderStatus
+
+	@PutMapping("/updateDiscount")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updateDiscount(@RequestParam String orderId,
+			@RequestParam String discount, Integer discountPrice) {
+		oService.updateDiscount(orderId, discount, discountPrice);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Order discount updated successfully.");
+		return ResponseEntity.ok(response);
+	}
+
+	// update payment,pickup,orderStatus
 	@PutMapping("/updatePPO")
-	public void updatePPO(@RequestParam String orderId,
-			@RequestParam(required = false) String payment,
-			@RequestParam(required = false) String pickup,
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updatePPO(@RequestParam String orderId,
+			@RequestParam(required = false) String payment, @RequestParam(required = false) String pickup,
 			@RequestParam(required = false) String orderStatus) {
-		if(payment != null) {
+		if (payment != null) {
 			oService.updatePayment(orderId, payment);
-		}else if(pickup != null){
+		} else if (pickup != null) {
 			oService.updatePickup(orderId, pickup);
-		}else {
+		} else {
 			oService.updateOrderStatus(orderId, orderStatus);
 		}
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Order PPO updated successfully.");
+		return ResponseEntity.ok(response);
 	}
-	
-	//update cancelNote
+
+	// update cancelNote
 	@PutMapping("/updateCancelNote")
-	public void updateCancelNote(@RequestParam String orderId,@RequestParam String cancelNote) {
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updateCancelNote(@RequestParam String orderId,
+			@RequestParam String cancelNote) {
 		oService.updateCancelNote(orderId, cancelNote);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Order cancelNote updated successfully.");
+		return ResponseEntity.ok(response);
 	}
-	
-	//details
-	//update product
-	
-	
-	//update note
-	@PutMapping("/updateNote")
-	public void updateNote(@RequestParam String detailsId,@RequestParam String note) {
-		oService.updateNote(Integer.parseInt(detailsId), note);
+
+	// details
+	// update quantity
+	@PutMapping("/updateQuantity")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updateQuantity(@RequestParam Integer detailsId,
+			@RequestParam String quantity) {
+		oService.updateQuantity(detailsId, quantity);
+		System.out.println("detailsId::" + detailsId);
+		System.out.println("quantity::" + quantity);
+
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Details quantity updated successfully.");
+		return ResponseEntity.ok(response);
 	}
-	
+
+	// update note
+	@PutMapping("/updateDetailsNote")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updateNote(@RequestParam Integer detailsId, @RequestParam String note) {
+		oService.updateNote(detailsId, note);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Details note updated successfully.");
+		return ResponseEntity.ok(response);
+	}
+
+	// insert one detail
+	// select product information first
+	@GetMapping("/findProduct")
+	@ResponseBody
+	public Map<String, Object> findProduct() {
+		List<ProductCategory> categories = productCategoryService.findAllProductCategory();
+		List<ProductBean> product = productService.SelectAll();
+		Map<String, Object> response = new HashMap<>();
+		response.put("categories", categories);
+		response.put("product", product);
+		return response;
+	}
+
+	// after select, insert detail
+	@PostMapping("/addDetail")
+	@ResponseBody
+	public OrderDetails insertDetail(@RequestBody OrderDetails orderDetails) {
+		return oService.insertDetails(orderDetails);
+	}
 
 	// deleteDetails by detailsId
 	@RequestMapping(value = "/orderDetails/{detailsId}", method = RequestMethod.DELETE)
@@ -138,15 +204,19 @@ public class OrderController {
 		return ResponseEntity.ok(response);
 	}
 
-	// update discount&dprice after delete
+	// update discount & dprice after delete
 	@PutMapping("/clearDiscount")
-	public void clearDiscount(@RequestParam String orderId) {
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> clearDiscount(@RequestParam String orderId) {
 		Order order = oService.findOrderById(orderId);
-		if(order != null & order.getDiscount() != "") {
+		if (order != null & order.getDiscount().length() > 0) {
 			String discount = order.getDiscount() + " 已失效";
 			Integer discountPrice = 0;
 			oService.updateDiscount(orderId, discount, discountPrice);
 		}
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "After deleted details updated discount successfully.");
+		return ResponseEntity.ok(response);
 	}
 
 }

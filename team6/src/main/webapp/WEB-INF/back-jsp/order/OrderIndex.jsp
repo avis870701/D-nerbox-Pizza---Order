@@ -14,7 +14,15 @@
 
 <link rel="stylesheet" href="../../../static/back/css/styles.min.css" />
 
+<style>
+.updateNote-btn:hover {
+	font-weight: bold;
+}
 
+.updateDiscount-btn:hover {
+	font-weight: blod;
+}
+</style>
 
 <!-- Font Awesome-->
 <script src="https://kit.fontawesome.com/60e7a8ebe3.js"
@@ -192,7 +200,9 @@
 			<!--  Header End -->
 			<div class="container-fluid">
 				<div class="card">
-					<div class="card-body"></div>
+					<div class="card-body">
+					<button class="btn btn-dark employeeOrder-btn" onclick="goToOrderByEmployee()"><i class="fa-solid fa-utensils">點餐</i></button>
+					</div>
 					<div>
 
 						<!-- order div -->
@@ -256,20 +266,38 @@
 							<div class="card-body p-4">
 								<div class="row justify-content-end p-2">
 									<!--<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>  -->
-									<div class="col-auto">
-										<label for="searchInput" class="col-form-label">查詢：</label>
-									</div>
-									<div class="col-auto">
-										<input type="text" id="searchInput" class="form-control"
-											placeholder="">
+
+									<div
+										class="text-center bg-white font-weight-bold text-primary p-1"
+										id="totalDataCount"></div>
+									<div class="row">
+										<div class="col-auto">
+											<label for="searchInput" class="col-form-label">查詢：</label>
+										</div>
+										<div class="col-auto">
+											<input type="text" id="searchInput" class="form-control"
+												placeholder="">
+										</div>
+										<div class="col-1">
+											<button class="btn btn-white border">
+												<h4>
+													<i class="fa-solid fa-file-csv"></i>
+												</h4>
+											</button>
+										</div>
+										<div class="col-1">
+											<button class="btn btn-white border">
+												<h4>
+													<i class="fa-regular fa-file-excel"></i>
+												</h4>
+											</button>
+										</div>
+
 									</div>
 								</div>
-
-								<div
-									class="text-center bg-white font-weight-bold text-primary p-1"
-									id="totalDataCount"></div>
 								<!-- 表格内容容器 -->
 								<div class="table-responsive shadow">
+
 									<table
 										class="table table-striped text-nowrap mb-0 align-middle">
 										<thead class="text-dark fs-4">
@@ -328,7 +356,7 @@
 														class="form-control" placeholder="跳轉頁碼"
 														style="width: 120px;">
 													<div class="input-group-append">
-														<button id="goToPageBtn" class="btn btn-muted m-1">跳轉</button>
+														<button id="goToPageBtn" class="btn btn-dark m-1">跳轉</button>
 													</div>
 												</div>
 											</div>
@@ -386,7 +414,13 @@
 															</div>
 														</div>
 														<div class="modal-footer">
-															<button type="button" class="btn btn-muted close"
+															<button type="button" class="btn btn-dark newDetails"
+																id="showAddDetailsModal" data-toggle="modal"
+																data-target="#addDetailsModal">
+																新增餐點 <input type="hidden" id="orderIdInput">
+															</button>
+
+															<button type="button" class="btn btn-dark border close"
 																data-dismiss="modal">Close</button>
 														</div>
 													</div>
@@ -414,9 +448,9 @@
 											</div>
 
 											<div class="modal-footer">
-												<button type="button" class="btn btn-muted"
+												<button type="button" class="btn btn-dark"
 													id="confirmDiscountBtn">確定</button>
-												<button type="button" class="btn btn-muted close"
+												<button type="button" class="btn btn-dark close"
 													data-dismiss="modal">關閉</button>
 											</div>
 										</div>
@@ -430,21 +464,79 @@
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="cancelNoteModalLabel">請簡述取消原因(30字內)</h5>
+												<h5 class="modal-title" id="cancelNoteModalLabel">請簡述取消原因(30字內)：</h5>
 											</div>
 											<div class="modal-body">
 												<input type="text" id="cancelNoteInput" class="form-control">
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-muted"
+												<button type="button" class="btn btn-dark"
 													id="confirmCancelNoteBtn">確定</button>
-												<button type="button" class="btn btn-muted close"
+												<button type="button" class="btn btn-dark close"
 													data-dismiss="modal">取消</button>
 											</div>
 										</div>
 									</div>
 								</div>
 
+								<!-- insert detail -->
+								<div class="modal fade" id="addDetailsModal" tabindex="-1"
+									role="dialog" aria-labelledby="addDetailsModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="addDetailsModalLabel">新增餐點</h5>
+											</div>
+											<div class="modal-body">
+												<div class="form-group">
+													<label for="productCategorySelect" class="p-1">餐點類別：</label> <select
+														class="form-control" id="productCategorySelect">
+													</select>
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="orderProductSelect" class="p-1">選擇餐點：</label> <select
+														class="form-control" id="orderProductSelect" disabled>
+													</select>
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="quantityInput" class="p-1">數量：</label> <input type="number"
+														class="form-control" id="quantityInput" placeholder=""
+														min="1" max="10">
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="noteInput" class="p-1" disabled>餐點備註：</label> <input
+														type="text" class="form-control" id="noteInput"
+														placeholder="">
+												</div>
+												<br>
+												<div>
+													<label>醬料選擇：</label> <input type="radio" name="sauce"
+														value="紅醬" disabled> 紅醬 <input type="radio"
+														name="sauce" value="白醬" disabled> 白醬
+												</div>
+												<br>
+												<div>
+													<label>加料選擇：</label> <input type="checkbox" id="cheese"
+														value="加起司" disabled> 加起司 <input type="checkbox"
+														id="mushroom" value="加洋菇" disabled> 加洋菇
+												</div>
+
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-dark"
+													id="addDetailsBtn">確定</button>
+												<button type="button"
+													class="btn btn-dark closeInsertDetails"
+													data-dismiss="modal">關閉</button>
+											</div>
+										</div>
+									</div>
+								</div>
 
 
 
@@ -471,6 +563,7 @@
 
 					<script src="../../../static/back/js/order/orderCRUD.js"></script>
 					<script src="../../../static/back/js/order/detailsCRUD.js"></script>
+					<script src="../../../static/back/js/order/employeeOrder.js"></script>
 </body>
 
 </html>

@@ -74,6 +74,17 @@ public class OrderDetails {
 		this.order = order;
 	}
 
+	public OrderDetails(String orderId, String productId, String product, String unitPrice, String quantity,
+			String subtotal, String note) {
+		this.orderId = orderId;
+		this.productId = productId;
+		this.product = product;
+		this.unitPrice = unitPrice;
+		this.quantity = quantity;
+		this.subtotal = subtotal;
+		this.note = note;
+	}
+	
 	public OrderDetails() {
 		
 	}

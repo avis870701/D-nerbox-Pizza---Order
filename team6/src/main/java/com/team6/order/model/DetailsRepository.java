@@ -13,12 +13,6 @@ public interface DetailsRepository extends JpaRepository<OrderDetails, Integer> 
 	// find by orderid
 	List<OrderDetails> findByOrderId(String orderId);
 
-	// update product
-	@Transactional
-	@Modifying
-	@Query("UPDATE OrderDetails o SET o.productId = :productId, o.product = :product, o.unitPrice = :unitPrice WHERE o.detailsId = :detailsId")
-	void updateProductByDetailsId(Integer detailsId, String productId, String product, String unitPrice);
-
 	// update quantity
 	@Transactional
 	@Modifying

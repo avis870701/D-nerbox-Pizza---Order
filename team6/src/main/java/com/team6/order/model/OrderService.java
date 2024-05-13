@@ -80,12 +80,7 @@ public class OrderService {
 	public void updateCancelNote(String orderId, String cancelNote) {
 		oRepos.updateCancelNoteByOrderId(orderId, cancelNote);
 	}
-	
-	//後端 更新商品
-	public void updateProduct(Integer detailsId,String productId,String product,String unitPrice) {
-		dRepos.updateProductByDetailsId(detailsId, productId, product, unitPrice);
-	}
-	
+
 	//後端 更新數量
 	public void updateQuantity(Integer detailsId,String quantity) {
 		dRepos.updateQuantityByDetailsId(detailsId, quantity);
