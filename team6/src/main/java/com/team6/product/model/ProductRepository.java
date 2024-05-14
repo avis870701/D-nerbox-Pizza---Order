@@ -12,7 +12,8 @@ public interface ProductRepository extends JpaRepository<ProductBean, Integer> {
 	@Query(value = "from ProductBean where productName like concat('%',?1,'%') order by productCreateDate DESC, productId DESC")
 	List<ProductBean> findByNameLike(String name);
 	
-	@Query(value = "from ProductBean order by productCreateDate DESC, productId DESC")
+//	@Query(value = "from ProductBean order by productCreateDate DESC, productId DESC")
+	@Query(value = "from ProductBean")
 	List<ProductBean> findAll();
 	
 	//查詢已上架產品

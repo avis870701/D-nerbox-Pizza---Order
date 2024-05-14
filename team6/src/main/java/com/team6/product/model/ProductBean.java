@@ -253,7 +253,11 @@ public class ProductBean implements Serializable {
 		return builder.toString();
 	}
 
-
+	//匯出csv
+	public String saveToCsv() {
+		String csv = productId + "," + productCategory.getCategoryName() + "," + productName + "," + productDesc + "," + productImg_url + "," + productQuantity + "," + productPrice + "," + productCreateDate + "," + productState.getProductStateName();
+		return csv;
+	}
 
 
 

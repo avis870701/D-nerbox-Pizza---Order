@@ -195,7 +195,7 @@
                     <h4 class="display-6 fw-medium fst-italic">猜你喜歡</h4>
                 </div>
                 <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
-                    <a href="" class="d-block product-item rounded">
+                    <a href="/product/product.front" class="d-block product-item rounded">
                         <img src="/images/product/牛K吧焗烤薯條.jpg" alt="">
 
                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
@@ -207,7 +207,7 @@
                         </div>
                     </a>
 
-                    <a href="" class="d-block product-item rounded">
+                    <a href="/product/product.front" class="d-block product-item rounded">
                         <img src="/images/product/培根德國比薩.jpg" alt="">
 
                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
@@ -219,7 +219,7 @@
                         </div>
                     </a>
 
-                    <a href="" class="d-block product-item rounded">
+                    <a href="/product/product.front" class="d-block product-item rounded">
                         <img src="/images/product/炸雞塊(6塊).jpg" alt="">
 
                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
@@ -231,7 +231,7 @@
                         </div>
                     </a>
 
-                    <a href="" class="d-block product-item rounded">
+                    <a href="/product/product.front" class="d-block product-item rounded">
                         <img src="/images/product/海鮮德國比薩.jpg" alt="">
 
                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"

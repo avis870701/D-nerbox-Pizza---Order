@@ -349,5 +349,13 @@ public class ProductController {
 			return ResponseEntity.ok(productId);
 		}
 	
+		// 匯出 CSV
+		@GetMapping("/saveProductsToCSV")
+		@ResponseBody
+		public ResponseEntity<String> saveProductsToCSV() {
+			productService.saveProductsToCSV();
+			return ResponseEntity.ok("成功匯出 CSV");
+		}
+		
 	
 }
