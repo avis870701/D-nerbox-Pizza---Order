@@ -64,24 +64,24 @@
 
 /* 左邊第一個區塊 */
 .left div.one{
-    background-color: #FC7C7B;
+    background-color: #08ebda;
 }
 
 /* 左邊第二個區塊 */
 .left div.two{
-    background-color: #F59462;
+    background-color: rgba(237, 169, 141, 0.98);
     transform:rotate(-45deg); /* 逆時針旋轉45度 */
 }
 
 /* 左邊第三個區塊 */
 .left div.three{
-    background-color: #FC7C7B;
+    background-color: #08ebda;
     transform:rotate(-90deg); /* 逆時針旋轉90度 */
 }
 
 /* 左邊第四個區塊 */
 .left div.four{
-    background-color: #F59462;
+    background-color: rgba(237, 169, 141, 0.98);
     transform:rotate(-135deg); /* 逆時針旋轉135度 */
 }
 
@@ -97,24 +97,24 @@
 
 /* 右邊第一個區塊 */
 .right div.one{
-    background-color: #F59462;
+    background-color: rgba(237, 169, 141, 0.98);
 }
 
 /* 右邊第二個區塊 */
 .right div.two{
-    background-color: #FC7C7B;
+    background-color: #08ebda;
     transform:rotate(45deg); /* 順時針旋轉45度 */
 }
 
 /* 右邊第三個區塊 */
 .right div.three{
-    background-color: #F59462;
+    background-color: rgba(237, 169, 141, 0.98);
     transform:rotate(90deg); /* 順時針旋轉90度 */
 }
 
 /* 右邊第四個區塊 */
 .right div.four{
-    background-color: #FC7C7B;
+    background-color: #08ebda;
     transform:rotate(135deg); /* 順時針旋轉135度 */
 }
 

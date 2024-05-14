@@ -41,7 +41,7 @@
         }    
         hasPlayed = true;
     } else {
-            alert("您已经抽過了,不能重複抽獎!"); // 提示用户
+            alert("您已经抽過了,不能重複抽獎!");
         }
     
     
@@ -56,7 +56,7 @@
             if(begin > (basic+angle)){
                 isFlag = true;
                 clearInterval(timer);
-                alert("抽到了:" + text); // 在这里显示提示窗口
+                alert("恭喜您抽到了 : " + text);
             }
             wapper.style.transform="rotate("+(begin)+"deg)";
             begin+=Math.ceil(basic+angle-begin)*0.1;

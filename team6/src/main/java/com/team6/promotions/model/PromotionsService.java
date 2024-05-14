@@ -1,5 +1,6 @@
 package com.team6.promotions.model;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +53,14 @@ public class PromotionsService {
         return promotionsRepository.findPromotionsForCurrentMonth();
     }
 
+
+    //獲取折扣碼
+    public String getDiscountCode(String promotionsName) {
+        Promotions promotions = promotionsRepository.findPromotionsByPromotionsName(promotionsName);
+        if (promotions != null) {
+            return promotions.getPromotions_discountcode();
+        }
+        return null;
+    }
 
 }
