@@ -14,7 +14,7 @@ pickup NVARCHAR(50) not null,
 orderStatus NVARCHAR(50) DEFAULT '訂單待處理(未付款)',
 --訂單待處理(未付款)、訂單待處理(已付款)、餐點製作中、餐點完成、待取餐、外送中、訂單完成、訂單取消
 cancelNote NVARCHAR(50) DEFAULT '',
-hide INT DEFAULT 0 not null);	
+hide INT DEFAULT 0);	
 
 
 create table orderDetails(

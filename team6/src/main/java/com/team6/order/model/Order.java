@@ -62,27 +62,23 @@ public class Order {
 		
 	}
 
-	public Order(String orderId, String account, Integer oriAmount, String discount, Integer discountPrice,
-			String payment, String pickup, Set<OrderDetails> details) {
+	public Order(String orderId, String account, String payment, String pickup, String orderStatus) {
 		this.orderId = orderId;
 		this.account = account;
-		this.oriAmount = oriAmount;
+		this.payment = payment;
+		this.pickup = pickup;
+		this.orderStatus = orderStatus;
+	}
+
+	public Order(String orderId, String account, String discount, Integer discountPrice, String payment, String pickup,
+			String orderStatus) {
+		this.orderId = orderId;
+		this.account = account;
 		this.discount = discount;
 		this.discountPrice = discountPrice;
 		this.payment = payment;
 		this.pickup = pickup;
-		this.details = details;
-	}
-	
-	public Order(String orderId, String account, Integer oriAmount, String payment, String pickup, String orderStatus,
-			Set<OrderDetails> details) {
-		this.orderId = orderId;
-		this.account = account;
-		this.oriAmount = oriAmount;
-		this.payment = payment;
-		this.pickup = pickup;
 		this.orderStatus = orderStatus;
-		this.details = details;
 	}
 
 	public String getOrderId() {

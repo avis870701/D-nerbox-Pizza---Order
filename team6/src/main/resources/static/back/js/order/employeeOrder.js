@@ -5,6 +5,8 @@ function goToOrderIndex() {
 }
 
 var productPrice = 0;
+var discountPrice = 0;
+
 $(document).ready(function() {
 
 	$.ajax({
@@ -118,9 +120,13 @@ $(document).ready(function() {
 		}
 	});
 
-});
-function addOrder() {
 
+
+
+});
+
+function addOrder() {
+	var productId = $('#orderProductSelect').val();
 	var productName = $('#orderProductSelect option:selected').text();
 	var quantity = $('#quantityInput').val();
 	var unitPrice = productPrice;
@@ -141,6 +147,8 @@ function addOrder() {
 		}
 	});
 
+
+
 	if (!$('input[name="sauce"]').prop('disabled') && !sauceSelected) {
 		alert('請選擇一種醬料！');
 		return; // 中止函數執行
@@ -151,12 +159,12 @@ function addOrder() {
 
 		// 創建新的訂單明細行
 		var newRow = $('<tr>');
+		newRow.append('<td><input type="hidden" name="productId[]" value="' + productId + '">' + productId + '</td>'); // 添加 productId
 		newRow.append('<td><input type="hidden" name="productName[]" value="' + productName + '">' + productName + '</td>');
 		newRow.append('<td><input type="hidden" name="quantity[]" value="' + quantity + '">' + quantity + '</td>');
 		newRow.append('<td><input type="hidden" name="unitPrice[]" value="' + unitPrice + '">' + unitPrice + '</td>');
 		newRow.append('<td><input type="hidden" name="note[]" value="' + note + '">' + note + '</td>');
 		newRow.append('<td><button type="button" class="btn btn-light border delete-row fw-semibold mb-0">刪除</button></td>');
-
 		// 添加新行到表格中
 		$('#orderDetailsTable').append(newRow);
 
@@ -169,30 +177,149 @@ function addOrder() {
 		$('input[name="sauce"]').prop('checked', false);
 		$('#productCategorySelect').val('');
 		$('#orderProductSelect').empty().prop('disabled', true);
+		$('#cheese').prop('checked', false);
+		$('#mushroom').prop('checked', false);
 
-		// 計算並更新總金額
-		calculateTotalAmount();
+
 	}
+
 }
 
 function bindDeleteButton() {
 	$('.delete-row').unbind('click').click(function() {
 		$(this).closest('tr').remove(); // 刪除所在行
-		calculateTotalAmount(); // 重新計算總金額
 	});
 }
 
 
-function calculateTotalAmount() {
-	var totalAmount = 0;
+function fillDiscountOptions(data) {
+	var select = $('select[name="discount"]');
+	var discountInput = $('input[name="discountAmount"]');
+
+	// 清空现有的选项
+	select.empty();
+
+	// 添加默认选项
+	select.append($('<option>', {
+		value: '',
+		text: ''
+	}));
+
+	// 将获取到的数据填充到选项中
+	data.forEach(function(promotion) {
+		select.append($('<option>', {
+			value: promotion.promotions_discountcode, // 使用折扣码的编码作为值
+			text: promotion.promotions_name // 使用折扣码的名称作为文本
+		}));
+	});
+
+	// 当选择了折扣码时，设置隐藏的 input 的值为选中折扣码的金额
+	select.change(function() {
+		var selectedDiscountCode = $(this).val();
+		var selectedDiscount = data.find(function(promotion) {
+			return promotion.promotions_discountcode === selectedDiscountCode;
+		});
+		if (selectedDiscount) {
+			discountInput.val(selectedDiscount.promotions_discount); // 将折扣金额填充到隐藏的 input 中
+
+		} else {
+			discountInput.val('');
+		}
+	});
+}
+
+
+function fetchDiscountList() {
+	$.ajax({
+		url: 'getDiscountList',
+		type: 'GET',
+		success: function(data) {
+			fillDiscountOptions(data);
+		},
+		error: function(xhr, status, error) {
+			console.error(error);
+		}
+	});
+}
+
+// 在页面加载完成后调用 fetchDiscountList()，以便加载折扣码列表
+$(document).ready(function() {
+	fetchDiscountList();
+});
+
+
+function sendOrder() {
+
+	// 收集页面数据
+	var account = $('select[name="customerName"]').val();
+	var discount = $('select[name="discount"]').val();
+	var discountPrice = parseFloat($('#discountAmount').val());
+	var payment = $('select[name="payment"]').val();
+	var pickup = $('select[name="pickup"]').val();
+	var orderStatus = $('input[name="orderStatus"]').val();
+
+	var productIds = [];
+	var products = [];
+	var unitPrices = [];
+	var quantities = [];
+	var notes = [];
+
 	$('#orderDetailsTable tr').each(function() {
-		var quantity = parseFloat($(this).find('input[name="quantity[]"]').val());
-		var unitPrice = parseFloat($(this).find('input[name="unitPrice[]"]').val());
-		totalAmount += quantity * unitPrice;
+		var productId = $(this).find('input[name="productId[]"]').val(); // 获取产品ID
+		var productName = $(this).find('input[name="productName[]"]').val();
+		var unitPrice = ($(this).find('input[name="unitPrice[]"]').val());
+		var quantity = ($(this).find('input[name="quantity[]"]').val());
+		var note = $(this).find('input[name="note[]"]').val(); // 获取笔记
+
+
+		productIds.push(productId);
+		products.push(productName);
+		unitPrices.push(unitPrice);
+		quantities.push(quantity);
+		notes.push(note);
 	});
 
-	totalAmount = Math.floor(totalAmount); // 將總金額向下取整
-	$('input[name="amount"]').val(totalAmount);
-	console.log(totalAmount);
+	var orderDetailsList = [];
+	for (var i = 0; i < productIds.length; i++) {
+		var detailData = {
+			productId: productIds[i],
+			productName: products[i],
+			unitPrice: unitPrices[i],
+			quantity: quantities[i],
+			note: notes[i]
+		};
+		orderDetailsList.push(detailData);
+	}
+
+	// 构造订单数据
+	var orderData = {
+		account: account,
+		discount: discount,
+		discountPrice: discountPrice,
+		payment: payment,
+		pickup: pickup,
+		orderStatus: orderStatus,
+		orderDetails: orderDetailsList
+	};
+
+
+	// 发送 AJAX 请求
+	$.ajax({
+		url: '/order/employeeOrder',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(orderData),
+		success: function(response) {
+			console.log(response);
+		},
+		error: function(xhr, status, error) {
+			// 处理错误
+			console.error(error);
+		}
+	});
 }
 
+// 假设你有一个按钮或其他元素来触发发送订单的操作
+$('.employeeOrder-btn').click(function() {
+	sendOrder(); // 调用发送订单的函数
+});

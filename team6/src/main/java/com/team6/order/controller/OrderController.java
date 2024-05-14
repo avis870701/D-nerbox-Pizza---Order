@@ -1,22 +1,18 @@
 package com.team6.order.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-import org.openxmlformats.schemas.officeDocument.x2006.customProperties.impl.PropertiesDocumentImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team6.order.model.DetailsRepository;
 import com.team6.order.model.Order;
 import com.team6.order.model.OrderDetails;
 import com.team6.order.model.OrderService;
@@ -36,7 +31,6 @@ import com.team6.product.model.ProductCategory;
 import com.team6.product.model.ProductCategoryService;
 import com.team6.product.model.ProductService;
 import com.team6.promotions.model.Promotions;
-import com.team6.promotions.model.PromotionsRepository;
 import com.team6.promotions.model.PromotionsService;
 
 //後段
@@ -61,7 +55,7 @@ public class OrderController {
 	public String orderMainprocess() {
 		return "forward:/WEB-INF/back-jsp/order/OrderIndex.jsp";
 	}
-	
+
 	// 後端員工點餐進入點 http://localhost:8080/order/orderByEmployee
 	@RequestMapping(path = "/orderByEmployee", method = { RequestMethod.GET, RequestMethod.POST })
 	public String orderByEmployee() {
@@ -192,6 +186,52 @@ public class OrderController {
 	@ResponseBody
 	public OrderDetails insertDetail(@RequestBody OrderDetails orderDetails) {
 		return oService.insertDetails(orderDetails);
+	}
+
+	// employee order
+	@PostMapping("/employeeOrder")
+	@ResponseBody
+	public ResponseEntity<String> handleEmployeeOrder(@RequestBody Map<String, Object> orderData) {
+		String orderId = generateOrderId();
+		String account = (String) orderData.get("account");
+		String discount = (String) orderData.get("discount");
+		Integer discountPrice = (Integer) orderData.get("discountPrice");
+		String payment = (String) orderData.get("payment");
+		String pickup = (String) orderData.get("pickup");
+		String orderStatus = (String) orderData.get("orderStatus");
+
+		if (discount == "") {
+			oService.insertOrderWithoutDiscount(orderId, account, payment, pickup, orderStatus);
+		} else {
+			oService.insertOrderWithDiscount(orderId, account, discount, discountPrice, payment, pickup, orderStatus);
+		}
+
+		// 如果订单插入成功，则处理订单详情
+		List<Map<String, Object>> orderDetailsList = (List<Map<String, Object>>) orderData.get("orderDetails");
+		if (orderDetailsList != null) {
+		    for (Map<String, Object> detailData : orderDetailsList) {
+		        OrderDetails detail = new OrderDetails();
+		        detail.setOrderId(orderId);
+		        detail.setProductId((String) detailData.get("productId"));
+		        detail.setProduct((String) detailData.get("productName"));
+		        detail.setUnitPrice((String) detailData.get("unitPrice"));
+		        detail.setQuantity((String) detailData.get("quantity"));
+		        detail.setNote((String) detailData.get("note"));
+
+		        // 在这里进行订单详情的处理
+		        oService.insertDetails(detail); // 确保 insertDetails 方法正常运行
+		    }
+		    return ResponseEntity.ok("Order inserted successfully.");
+		} else {
+		    // 如果订单详情列表为空，可以返回相应的错误消息或者进行其他处理
+		    return ResponseEntity.badRequest().body("Order details list is null or empty.");
+		}
+	}
+
+// 生成订单ID的方法
+	private String generateOrderId() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		return sdf.format(new Date());
 	}
 
 	// deleteDetails by detailsId
