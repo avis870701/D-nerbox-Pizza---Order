@@ -30,12 +30,11 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
-	
-	
 	//查詢所有外送單資料
 	public List<Delivery> findall(){
 		return dRepos.findAll();
 	}
+	
 	//查詢單筆
 	public Delivery findById(Integer id) {
 		Optional<Delivery> op1 = dRepos.findById(id);
@@ -44,22 +43,10 @@ public class DeliveryService {
 		}
 			return null;	
 	}
-	
-	// 查詢單筆訂單明細
-//	public List<OrderDetails> findDetailsById(int orderId) {
-//		List<OrderDetails> details = dRepos.findByOrderId(orderId);
-//
-//		if (!details.isEmpty()) {
-//			return details;
-//		}
-//		return null;
-//	}
-	
 	//修改
 	public Delivery update(Delivery delivery) {
 		return dRepos.save(delivery);
 	}
-	
 	
 	//刪除單筆
 	public void DelDelivery(int id) {
@@ -68,6 +55,10 @@ public class DeliveryService {
 	//新增
 	public Delivery insert(Delivery delivery){
 		 return dRepos.save(delivery);
+	}
+	//新增
+	public void add(String orderid,String address){
+		 dRepos.add(orderid,address);
 	}
 	//創建JSON檔案
 	public void saveJson() {
@@ -195,6 +186,40 @@ public class DeliveryService {
 	        e.printStackTrace();
 	    }
 	}
-	 
+// ==================================上面是好的不要修改==============================//
+	
+		//查詢狀態!=0
+		public List<Delivery> findnotZero(){
+			return dRepos.findallnotZero();
+		}
+		//查詢狀態為1
+		public List<Delivery> findallone(){
+			return dRepos.findallOne();
+		}
+		//查詢狀態為2
+		public List<Delivery> findalltwo(){
+			return dRepos.findallTwo();
+		}
+		//查詢狀態為3
+		public List<Delivery> findallthree(){
+			return dRepos.findallThree();
+		}
+		//查詢狀態為4
+		public List<Delivery> findallfour(){
+			return dRepos.findallFour();
+		}
+		//查詢狀態為0
+		public List<Delivery> findallzero(){
+			return dRepos.findallZero();
+		}
+		//修改已接單
+		public void UpdState(Integer id) {
+			 dRepos.upddeliverystate(id);
+			 
+		}
+		public void UpdStateZero(Integer id) {
+			dRepos.upddeliverystatezero(id);
+			
+		}
 	
 }

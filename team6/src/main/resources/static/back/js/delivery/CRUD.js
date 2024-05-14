@@ -13,15 +13,35 @@
                 //         $(this).hide(); 
                 //         return false; 
                 //     }
-                // });
-            },
+                },
+            
             error: function(xhr, status, error) {
                 console.error('刪除失敗:', error);
                 alert('刪除訂單失敗，請稍後再試。');
             }
+        })
+    }
+    }
+
+    
+    // 發送取消請求
+    function Cancel(deliveryId) {
+        if (confirm("確定要取消這筆訂單嗎？")) {
+        $.ajax({
+            type: 'PUT',
+            url: '/delivery/delete/' + deliveryId,
+            success: function(result) {
+                alert('取消成功');
+                window.location.href = '/delivery/home';
+            },
+            error: function(xhr, status, error) {
+                console.error('取消失敗:', error);
+                alert('取消訂單失敗，請稍後再試。');
+            }
         });
     }
     }
+
     //發送新增請求
     function addDelivery() {
         let orderid = $('#orderid').val();

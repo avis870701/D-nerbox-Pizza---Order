@@ -223,9 +223,9 @@
                                 <label for="status" style="text-align: center;">外送單狀態</label>
                                 <select id="status" class="form-control text-center" name="status" style="width: 400px;" required>
                                 <!-- <option selected> -->
-                                <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td>
-                                <!-- </option> -->
-                                <option value="1">待處理</option>
+                                <!-- <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td> -->
+                                <option th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></option>
+                                    <option value="1">待處理</option>
                                     <option value="2">已接單</option>
                                     <option value="3">外送中</option>
                                     <option value="4">已送達</option>
@@ -234,12 +234,8 @@
                             </div>
                         </form>
                         <br>
-                        <button type="button" id="back" class="btn btn-secondary">
-                        回上一頁
-                        </button>
-                        </button>
-                          <button onclick="update()" class="btn btn-secondary">更新
-                        </button>
+                        <button onclick="update()" class="btn btn-success">更新</button>
+                        <button type="button" id="back" class="btn btn-secondary">回上頁</button>
                     </div>
                 </div>
             </div>

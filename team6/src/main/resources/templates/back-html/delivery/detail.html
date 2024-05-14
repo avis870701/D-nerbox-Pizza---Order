@@ -39,21 +39,22 @@ th, td {
     background-color: #fff;
 }
 
-th {
+/* th {
     background-color: #4CAF50;
+    color: white;
+} */
+
+th {
+    background-color: blue;
     color: white;
 }
 
-a {
-    text-decoration: none;
-    color: blue;
+th {
+    background-color: blue;
+    color: white;
 }
 
-a:hover {
-    color: darkblue;
-}
-
-.btn {
+/* .btn {
     padding: 8px 20px;
     background-color: #4CAF50;
     color: white;
@@ -74,12 +75,12 @@ a:hover {
 
 .btn-danger:hover {
     background-color: #cc0000;
-}
+} */
 
-.pimg {
+/* .pimg {
     width: 12vw;
     height: 12vw;
-}
+} */
 </style>
 
 <body>
@@ -275,38 +276,42 @@ a:hover {
                                 <tr>
                                     <th>明細編號</th>
                                     <th>產品</th>
-                                    <th>價格</th>
+                                    <th>單價</th>
                                     <th>數量</th>
+                                    <th>總價</th>
                                     <th>時間</th>
                                 </tr>
+                                顧客姓名:<span th:text="${customer}"></span>
                             </thead>
                             <tbody>
+                          
                             <tr th:each="OrderDetails : ${OrderDetails}">
                                 <td th:text="${OrderDetails.orderId}"></td>
                                 <td th:text="${OrderDetails.product}"></td>
-                                <td th:text="${OrderDetails.quantity}"></td>
                                 <td th:text="${OrderDetails.unitPrice}"></td>
-                                <td th:text="${OrderDetails.order.orderTime}"></td>
-                                <!-- <td th:text="${#dates.format(OrderDetails.order.orderTime, 'yyyy-MM-dd')}"></td> -->
+                                <td th:text="${OrderDetails.quantity}"></td>
+                                <td th:text="${OrderDetails.unitPrice} * ${OrderDetails.quantity}"></td>
+                                <td th:text="${#strings.substring(OrderDetails.order.orderTime, 0, 19)}"></td>
                             </tr>
                         </table>
-                        <!-- <div>
-                            金額:<span th:text="${OrderDetails.order.paidAmount}"></span>
-                        </div>  -->
-                        
+                        <div>
+                            總金額:<span th:text="${total}"></span>
                         </div>
+                        <button id="back">回上頁</button>
                     </div>
                 </div>
-            </div>
+          </div>
         </div>
-    </div>
   <script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
   <script src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../../static/back/js/sidebarmenu.js"></script>
   <script src="../../../static/back/js/app.min.js"></script>
   <script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
   <script>
-    console.log();
+    $('#back').click(function(){
+      let url = '/delivery/home';
+      location.href= url ;
+    })
   </script>
 </body>
 

@@ -25,12 +25,19 @@ public class Delivery {
 
 	public Delivery() {
 	}
+		
+//	public Delivery(String orderid,String address) {
+//		this.orderid = orderid;
+//		this.address = address;
+//		this.status = 1;
+//		
+//	}
 
-	
 	public int getId() {
 		return id;
 	}
 
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -66,6 +73,11 @@ public class Delivery {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Delivery [id=" + id + ", orderid=" + orderid + ", date=" + date + ", address=" + address + ", status="
+				+ status + "]";
+	}
 	
 }
