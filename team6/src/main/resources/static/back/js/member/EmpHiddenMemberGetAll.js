@@ -1,12 +1,14 @@
 var indexPage = 1;
 $(function () {
-	loadPage(indexPage);
+	loadHiddenPage(indexPage);
 });
 
-function loadPage(indexPage) {
+
+
+function loadHiddenPage(indexPage) {
 	$.ajax({
 		type: 'get',
-		url: '/emp/MemberGetAll/' + indexPage,
+		url: '/emp/MemberGetAllByNotHidden/' + indexPage,
 		contentType: 'application/json',
 		success: function (response) {
 			$('#showmember').empty("");
@@ -66,10 +68,11 @@ function deleteAccount(account) {
 			data: { "account": account },
 			success: function () {
 				alert("已刪除!");
-				window.location.href = "/emp/MemberGetAll/1";
+				window.location.href = "/emp/Member.SelectAllByNotHidden/1"
 			},
 			error: function () {
 				alert("已取消刪除!");
+				
 			}
 		});
 	}
@@ -82,11 +85,11 @@ function change(account, permissions) {
 		data: {
 			"account": account,
 			"permissions": permissions,
-			"empPermissions": 0
+			"empPermissions": 1
 		},
 		success: function () {
 			alert("已更改權限成功!")
-			//window.location.href = "/MemberGetAll/1";
+			//window.location.href = "/emp/Member.SelectAllByNotHidden/1";
 		}
 
 	});

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -125,6 +126,7 @@ public class EmployeeController {
 		public List<MemberAccountBean> processQueryByNameByPage(@PathVariable("pageNo") int pageNo,
 				/* @RequestParam("type")String type, */ Model m, HttpServletRequest request) {
 			HttpSession session = request.getSession();
+			EmployeeAccountBean bean = (EmployeeAccountBean)session.getAttribute("emp");
 			String name = String.valueOf(session.getAttribute("mName"));
 			int pageSize = 10;
 			Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
@@ -140,14 +142,15 @@ public class EmployeeController {
 			long totalElements = page.getTotalElements();
 			session.setAttribute("totalPages", totalPages);
 			session.setAttribute("totalElements", totalElements);
+			session.setAttribute("emp", bean);
 
 			return page.getContent();
 		}
 		// ===================================================================================================
 
 		// 查詢系列--全部(假刪除以外)
-		@GetMapping("/Member.SelectAllByNotHidden/{pageNo}")
-		public String SelectAllByNotHidden(@PathVariable("pageNo") int pageNo, Model model) {
+		@RequestMapping(path = "/Member.SelectAllByNotHidden/{pageNo}",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+		public String SelectAllByNotHidden(@PathVariable("pageNo") int pageNo, Model model,HttpSession session) {
 			int pageSize = 10;
 			if (pageNo <= 0) {
 				pageNo = 1;
@@ -159,12 +162,16 @@ public class EmployeeController {
 			if (totalElements == 0) {
 				model.addAttribute("err", "查無資料");
 				model.addAttribute("totalElements", totalElements);
-				return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+				return "forward:/WEB-INF/back-jsp/member/EmpHiddenMemberGetAll.jsp";
 			}
 			model.addAttribute("totalPages", totalPages);
 			model.addAttribute("totalElements", totalElements);
 			model.addAttribute(page.getContent());
-			return "forward:/WEB-INF/back-jsp/member/EmpMemberGetAll.jsp";
+			
+			EmployeeAccountBean bean = (EmployeeAccountBean)session.getAttribute("emp");
+			session.setAttribute("emp", bean);
+			
+			return "forward:/WEB-INF/back-jsp/member/EmpHiddenMemberGetAll.jsp";
 		}
 
 		@RequestMapping(path = "/MemberGetAllByNotHidden/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -179,6 +186,9 @@ public class EmployeeController {
 			long totalElements = page.getTotalElements();
 
 			HttpSession session = request.getSession();
+			EmployeeAccountBean bean = (EmployeeAccountBean)session.getAttribute("emp");
+			session.setAttribute("emp", bean);
+			
 			session.setAttribute("totalPages", totalPages);
 			session.setAttribute("totalElements", totalElements);
 
@@ -186,8 +196,8 @@ public class EmployeeController {
 		}
 
 		// 查詢系列--全部
-		@RequestMapping(path = "/Member.SelectAll/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-		public String GetAllByPage(@PathVariable("pageNo") int pageNo, Model m) {
+		@RequestMapping(path = "/Member.SelectAll/{pageNo}",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+		public String GetAllByPage(@PathVariable("pageNo") int pageNo, Model m,HttpSession session) {
 			int pageSize = 10;
 			if (pageNo <= 0) {
 				pageNo = 1;
@@ -196,6 +206,10 @@ public class EmployeeController {
 			Page<MemberAccountBean> page = mService.findAllByPage(pageable);
 			int totalPages = page.getTotalPages();
 			long totalElements = page.getTotalElements();
+			
+			EmployeeAccountBean bean = (EmployeeAccountBean)session.getAttribute("emp");
+			session.setAttribute("emp", bean);
+			
 			m.addAttribute("totalPages", totalPages);
 			m.addAttribute("totalElements", totalElements);
 			m.addAttribute(page.getContent());
@@ -214,6 +228,10 @@ public class EmployeeController {
 			long totalElements = page.getTotalElements();
 
 			HttpSession session = request.getSession();
+			
+			EmployeeAccountBean bean = (EmployeeAccountBean)session.getAttribute("emp");
+			session.setAttribute("emp", bean);
+			
 			session.setAttribute("totalPages", totalPages);
 			session.setAttribute("totalElements", totalElements);
 
@@ -223,8 +241,9 @@ public class EmployeeController {
 
 		// 更新權限
 		@PutMapping("/Member.UpdatePermissions")
+		@ResponseBody
 		public String UpdatePermissions(@RequestParam("account") String account,
-				@RequestParam("permissions") int permissions, Model model) {
+				@RequestParam("permissions") int permissions, @RequestParam("empPermissions")int empPermissions, Model model) {
 			mService.updateToPermissions(account, permissions);
 			return "redirect:Member.SelectAll/1";
 		}
@@ -234,7 +253,6 @@ public class EmployeeController {
 		@DeleteMapping("/Member.Delete")
 		@ResponseBody
 		public String Delete(@RequestParam("account") String account) {
-//			System.out.println(account+"他在搞我");
 			mService.delete(account);
 			return "redirect:Member.SelectAll/1";
 		}
