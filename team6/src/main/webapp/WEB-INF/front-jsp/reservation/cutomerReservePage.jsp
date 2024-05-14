@@ -35,6 +35,8 @@
         <!-- Template Stylesheet -->
         <link href="/front/css/style.css" rel="stylesheet">
 
+
+
     </head>
 
     <body>
@@ -101,7 +103,8 @@
 
 
         <!-- Contact Start -->
-        <div class="container-xxl contact py-5">
+        <div class="container-xxl contact py-5"
+            style="background-image: url(/front/img/product-bg.png);background-size:auto ;">
             <div class="container">
                 <div class="row g-5 mb-5">
                     <!-- 
