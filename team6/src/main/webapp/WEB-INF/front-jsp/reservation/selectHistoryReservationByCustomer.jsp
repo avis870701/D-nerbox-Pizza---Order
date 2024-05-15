@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>報到資訊(CheckIn)</title>
+        <title>歷史訂位紀錄</title>
         <link rel="shortcut icon" type="image/png" href="/images/member/pizzaQ.png" />
         <link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
         <link rel="stylesheet" href="/back/css/styles.min.css" />
@@ -120,53 +120,56 @@
             <div class="body-wrapper">
                 <!--  Header Start -->
                 <header class="app-header">
-                    <h2 style="text-align: start;">報到資訊</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>預訂姓名</th>
-                                <th>預訂日期</th>
-                                <th>預訂時間</th>
-                                <th>電話號碼</th>
-                                <th>人數</th>
-                                <th>備註</th>
-                                <th>報到完成</th>
-                                <th>刪除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <% List<Reserve> selectPhone = (ArrayList<Reserve>) request.getAttribute("selectPhone");
-                                        for (Reserve selectPhones : selectPhone) {
-                                        %>
-                                        <td>
-                                            <%= selectPhones.getReservationName() %>
-                                        </td>
-                                        <td>
-                                            <%= selectPhones.getReservationDate() %>
-                                        </td>
-                                        <td>
-                                            <%= selectPhones.getReservationTime() %>
-                                        </td>
-                                        <td>
-                                            <%= selectPhones.getPhone() %>
-                                        </td>
-                                        <td>
-                                            <%= selectPhones.getNumberOfPeople() %>
-                                        </td>
-                                        <td>
-                                            <%= selectPhones.getNote() %>
-                                        </td>
-                                        <td><button type="button"
-                                                onclick="checkInSuccess('<%= selectPhones.getReservationId() %>')">報到完成</button>
-                                        </td>
-                                        <td><button type="button"
-                                                onclick="deleteCheckIn('<%= selectPhones.getReservationId() %>')">刪除</button>
-                                        </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                    <h2 style="text-align: start;">歷史訂位紀錄</h2>
+<table>
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>預訂姓名</th>
+            <th>預訂日期</th>
+            <th>預訂時間</th>
+            <th>電話號碼</th>
+            <th>人數</th>
+            <th>備註</th>
+            <th>狀態</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+        List<Reserve> selectHistoryReservationByCustomer = (ArrayList<Reserve>) request.getAttribute("selectHistoryReservationByCustomer");
+        int i = 1; // 初始化編號從 1 開始
+        for (Reserve selectNames : selectHistoryReservationByCustomer) { 
+        %>
+        <tr>
+            <td>
+                <%= i++ %>
+            </td>
+            <td>
+                <%= selectNames.getReservationName() %>
+            </td>
+            <td>
+                <%= selectNames.getReservationDate() %>
+            </td>
+            <td>
+                <%= selectNames.getReservationTime() %>
+            </td>
+            <td>
+                <%= selectNames.getPhone() %>
+            </td>
+            <td>
+                <%= selectNames.getNumberOfPeople() %>
+            </td>
+            <td>
+                <%= selectNames.getNote() %>
+            </td>
+            <td>
+                <%= selectNames.getReservationStatus() %>
+            </td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+
                 </header>
                 <!--  Header End -->
             </div>
@@ -205,28 +208,7 @@
         <script src="/back/libs/simplebar/dist/simplebar.js"></script>
         <script src="/back/js/dashboard.js"></script>
         <script src="/back/js/member/EmpMemberGetAll.js"></script>
-        <script>
-            function checkInSuccess(reservationId) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('PUT', '/reservation/checkInSuccess', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    location.reload();
-                };
-                xhr.send('action=checkInSuccess&reservationId=' + encodeURIComponent(reservationId));
-            }
 
-            function deleteCheckIn(reservationId) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('PUT', '/reservation/deleteCheckIn', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    location.reload();
-                };
-                xhr.send('action=deleteCheckIn&reservationId=' + encodeURIComponent(reservationId));
-            }
-
-        </script>
     </body>
 
     </html>

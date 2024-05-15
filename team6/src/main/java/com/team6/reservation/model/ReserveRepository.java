@@ -115,4 +115,8 @@ public interface ReserveRepository extends JpaRepository<Reserve, Integer> {
 	@Modifying
 	@Query(value = "update Reserve SET reservationStatus = ?1 WHERE reservationId= ?2")
 	public void autoUpdateReservationStatus(int reservationStatus,int reservationId );
+	
+	//會員端:提供客人查詢自己的訂位紀錄
+	@Query(value = "FROM Reserve WHERE account =?1")
+	public List<Reserve> selectHistoryReservationByCustomer(String account);
 }

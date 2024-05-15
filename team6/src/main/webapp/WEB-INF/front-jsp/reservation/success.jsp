@@ -30,7 +30,7 @@
 <body>
     <div class="container">
         <h1>修改成功</h1>
-        <p>感謝您的確認，即將為您導向google</p>
+        <p>感謝您的確認，即將為您導向首頁</p>
     </div>
 </body>
 

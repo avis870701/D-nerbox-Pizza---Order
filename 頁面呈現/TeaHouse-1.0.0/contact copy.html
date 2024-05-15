@@ -153,49 +153,37 @@
                                 <tr>
                                     <td>訂位大名：</td>
                                     <td>
-                                        <%= customerReserveCheck.getReservationName()%>
+                                        <%= selectCustomerTommorowComeOrNot.getReservationName()%>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>訂位電話：</td>
                                     <td>
-                                        <%= customerReserveCheck.getPhone() %>
+                                        <%= selectCustomerTommorowComeOrNot.getPhone() %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>人數：</td>
                                     <td>
-                                        <%= customerReserveCheck.getNumberOfPeople() %>
+                                        <%= selectCustomerTommorowComeOrNot.getNumberOfPeople() %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>訂位日期：</td>
                                     <td>
-                                        <%= customerReserveCheck.getReservationDate() %>
+                                        <%= selectCustomerTommorowComeOrNot.getReservationDate() %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>訂位時間：</td>
                                     <td>
-                                        <%= customerReserveCheck.getReservationTime() %>
+                                        <%= selectCustomerTommorowComeOrNot.getReservationTime() %>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>訂位狀態：</td>
+                                    <td>UUID：</td>
                                     <td>
-                                        <% int rstatus=customerReserveCheck.getReservationStatus(); if (rstatus==0) {
-                                            out.print("店家尚未確認訂位，請稍後再查看或撥打電話詢問"); }else if(rstatus==1 ){
-                                            out.print("店家已確認訂位"); }else if(rstatus==2 ){ out.print("您已取消訂位"); }else
-                                            if(rstatus==3 ){ out.print("您已確認訂位"); }else if(rstatus==5){
-                                            out.print("店家已取消訂位，如有疑問請撥打電話詢問"); }else{ out.print("其他狀態"); } %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>用餐狀態：</td>
-                                    <td>
-                                        <% int cstatus=customerReserveCheck.getCheckInStatus(); if(cstatus==1){
-                                            out.print("用餐中，請享受您的餐點😎"); }else if(cstatus==2){ out.print("用餐完畢"); }else
-                                            if(cstatus==0){ out.print("尚未報到"); } %>
+                                        <%= selectCustomerTommorowComeOrNot.getReservationUUID() %>
                                     </td>
                                 </tr>
                             </table>

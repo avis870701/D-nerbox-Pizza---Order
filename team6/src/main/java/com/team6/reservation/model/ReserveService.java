@@ -241,6 +241,9 @@ public class ReserveService {
 		}
 	}
 	
+	//測試用:匯出成json
+	
+	
 	//自動寄信用
     public void sendPlainText(String receivers, String subject, String content, String from) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -251,5 +254,11 @@ public class ReserveService {
 
         mailSender.send(message);
     }
+    
+	//會員端:提供客人查詢自己的訂位紀錄
+	public List<Reserve> selectHistoryReservationByCustomer(String account){
+		return reserveRepository.selectHistoryReservationByCustomer(account);
+	}
+
 	
 }

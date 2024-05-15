@@ -1,6 +1,7 @@
 package com.team6.reservation.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team6.member.model.MemberAccountBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/reservation")
@@ -322,6 +326,34 @@ public class ReserveController {
 		reserveService.updateNumberOfPeopleAndReservationStatusTo3(reservationUuid, newNumberOfPeople);
 	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
 	}
+	
+	//會員端:給客人查詢歷史地位紀錄
+	@GetMapping("/selectHistoryReservationByCustomer")
+	public String selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
+	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
+	    
+	        account = accountBean.getmAccount();   
+	        System.out.println(account);
+	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+	        
+	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+	        return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
+	
+	    
+	}
+	
+	//session測試
+	@GetMapping("/test")
+	@ResponseBody
+	public String test(HttpSession session) {
+		
+		MemberAccountBean accountBean = (MemberAccountBean)session.getAttribute("member");
+		System.out.println(accountBean.getDetailBean().getmEmail());
+		
+		return accountBean.getDetailBean().getmEmail();
+	}
+	
+	
 	
 	/*暫時未用到*/
 //	//分頁:搜尋歷史訂位紀錄(日期時間由大到小)
