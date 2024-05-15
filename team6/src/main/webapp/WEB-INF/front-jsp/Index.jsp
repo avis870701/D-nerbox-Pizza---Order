@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Döner Pizza  德氏披薩</title>
+        <title>Döner Pizza 德氏披薩</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -57,7 +57,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
-                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="/product/product.front" class="nav-item nav-link active">產品</a>
                             <a href="#" class="nav-item nav-link">活動優惠</a>
                             <a href="#" class="nav-item nav-link">訂位趣</a>
                             <a href="#" class="nav-item nav-link">線上點餐</a>
@@ -72,7 +72,8 @@
                             </div>
                         </div>
                         <div class="border-start ps-4 d-none d-lg-block">
-                           <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a> 
+                            <a href="login"><button type="button"
+                                    class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
                         </div>
                     </div>
                 </nav>
@@ -191,42 +192,57 @@
             <div class="container py-5">
                 <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s"
                     style="max-width: 500px;">
-                    <p class="fs-5 fw-medium fst-italic text-primary">Our Products</p>
-                    <h1 class="display-6">Tea has a complex positive effect on the body</h1>
+                    <h4 class="display-6 fw-medium fst-italic">猜你喜歡</h4>
                 </div>
                 <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
-                    <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-1.jpg" alt="">
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/牛K吧焗烤薯條.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Green Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">焗烤牛肉K吧焗烤薯條</h4>
+                            <span class="text-body">旋轉烤牛肉。焗烤，薯條。</span>
                         </div>
                     </a>
-                    <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-2.jpg" alt="">
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/培根德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Black Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">培根德國披薩</h4>
+                            <span class="text-body">培根。白醬，薄餅皮。</span>
                         </div>
                     </a>
-                    <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-3.jpg" alt="">
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/炸雞塊(6塊).jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Spiced Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">雞塊(6)</h4>
+                            <span class="text-body">酥酥脆脆的雞塊</span>
                         </div>
                     </a>
-                    <a href="" class="d-block product-item rounded">
-                        <img src="/front/img/product-4.jpg" alt="">
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/海鮮德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
                         <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-                            <h4 class="text-primary">Organic Tea</h4>
-                            <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                                ipsum</span>
+                            <h4 class="text-primary">海鮮德國披薩</h4>
+                            <span class="text-body">蝦仁、魚、蟹味腿。白醬，薄餅皮。</span>
                         </div>
                     </a>
+
                 </div>
             </div>
         </div>
@@ -266,7 +282,8 @@
                     <div class="col-lg-6 py-5 wow fadeIn" data-wow-delay="0.1s">
                         <div class="py-5">
                             <h1 class="display-6 mb-4">Tea is a drink of <span class="text-white">health</span> and
-                                <span class="text-white">beauty</span></h1>
+                                <span class="text-white">beauty</span>
+                            </h1>
                             <h5 class="fw-normal lh-base fst-italic text-white mb-5">Tempor erat elitr rebum at clita.
                                 Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit
                             </h5>
@@ -539,8 +556,8 @@
                         <div class="d-flex pt-3">
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/donerzhongli/"><i
-                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle me-2"
+                                href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-youtube"></i></a>
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
@@ -585,12 +602,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
+                        &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a
+                            class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a
-                            class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
+                        設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium"
+                            href="https://themewagon.com">ThemeWagon</a>
                     </div>
                 </div>
             </div>
@@ -613,6 +631,10 @@
 
         <!-- Template Javascript -->
         <script src="/front/js/main.js"></script>
+        <!-- 載入隨機產品輪播 -->
+        <script src="/front/js/product/productRandom.js"></script>
+
+
     </body>
 
     </html>

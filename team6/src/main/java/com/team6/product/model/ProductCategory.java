@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,10 +28,10 @@ public class ProductCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CATEGORYID")
-	private Integer CategoryId;
+	private Integer categoryId;
 	
 	@Column(name = "CATEGORYNAME")
-	private String CategoryName;
+	private String categoryName;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
@@ -44,19 +43,19 @@ public class ProductCategory implements Serializable {
 //	--------------------------
 
 	public Integer getCategoryId() {
-		return CategoryId;
+		return categoryId;
 	}
 
 	public void setCategoryId(Integer categoryId) {
-		CategoryId = categoryId;
+		this.categoryId = categoryId;
 	}
 
 	public String getCategoryName() {
-		return CategoryName;
+		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
-		CategoryName = categoryName;
+		this.categoryName = categoryName;
 	}
 
 	public Set<ProductBean> getpBeans() {

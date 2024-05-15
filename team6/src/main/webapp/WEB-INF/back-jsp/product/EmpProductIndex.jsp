@@ -296,7 +296,8 @@
                   <h5 class="card-title fw-semibold mb-4 me-5" style="display : inline-block">所有產品資料</h5>
                   <button type="button" class="btn btn-secondary btn-sm editBtn fs-3 me-3" data-bs-toggle="modal"
                     data-bs-target="#productModal">新增產品</button><!-- modal紐 -->
-
+                  <button type="button" class="btn btn-success btn-sm editBtn fs-3 ms-3"
+                    onclick="saveProductsToCSV()">匯出 CSV</button>
                   <div class="table-responsive">
                     <table id="example" class="table table-striped" style="width:100%">
                       <thead>
@@ -476,7 +477,23 @@
           <!-- modal -->
           <script src="/back/js/product/productModal.js"></script>
 
+          <script>
 
+            function saveProductsToCSV() {
+              $.ajax({
+                url: "saveProductsToCSV",
+                method: 'GET',
+                success: function (response) {
+                  alert('匯出成功');
+                },
+                error: function (xhr, status, error) {
+                  console.log(error);
+                }
+
+              });
+            }
+
+          </script>
 
 
   </body>

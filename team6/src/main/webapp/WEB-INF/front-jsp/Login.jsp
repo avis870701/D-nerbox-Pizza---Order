@@ -57,7 +57,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
-                            <a href="#" class="nav-item nav-link active">產品</a>
+                            <a href="/product/product.front" class="nav-item nav-link active">產品</a>
                             <a href="#" class="nav-item nav-link">活動優惠</a>
                             <a href="#" class="nav-item nav-link">訂位趣</a>
                             <a href="#" class="nav-item nav-link">線上點餐</a>
