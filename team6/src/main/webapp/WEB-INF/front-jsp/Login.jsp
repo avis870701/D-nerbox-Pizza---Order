@@ -33,6 +33,10 @@
 
         <!-- Template Stylesheet -->
         <link href="/front/css/style.css" rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -111,24 +115,45 @@
                                 <p class="text-center">會員登入</p>
                                 <form action="memberlogin.controller" method="post">
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">使用者帳號</label>
+                                        <i class="fa fa-user icon"></i> <label for="exampleInputEmail1"
+                                            class="form-label">使用者帳號</label>
                                         <input type="text" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" name="account">
+                                            aria-describedby="emailHelp" name="account" required>
                                     </div>
+
                                     <div class="mb-4">
-                                        <label for="exampleInputPassword1" class="form-label">密碼</label>
+                                        <i class="fa fa-key icon"></i><label for="exampleInputPassword1"
+                                            class="form-label">密碼</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1"
-                                            name="password">${err}
+                                            name="password" required>${err}
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mb-4">
                                         <div class="form-check">
                                             <input class="form-check-input primary" type="checkbox" value=""
-                                                id="flexCheckChecked" checked> 
+                                                id="flexCheckChecked" checked>
                                             <label class="form-check-label text-dark" for="flexCheckChecked">
                                                 記住登入
                                             </label>
                                         </div>
                                         <a class="text-primary fw-bold" href="/member/forgot">忘記密碼 ?</a>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-4 text-center row ">
+                                        <div class="col">
+                                            <a href="#" class="google btn btn-danger w-60 py-8 fs-4 mb-4 rounded-2"><i
+                                                    class="fa fa-google fa-fw">
+                                                </i> <span style="font-family: 微軟正黑體; font-size: 20px;">以 Google+
+                                                    登入</span>
+                                            </a>
+                                        </div>
+                                        <!-- <a href="#" class="fb btn btn-primary w-60 py-8 fs-4 mb-4 rounded-2">
+                                            <i class="fa fa-facebook fa-fw"></i> 以
+                                                Facebook 登入
+                                        </a>
+                                        <a href="#" class="twitter btn btn-info w-60 py-8 fs-4 mb-4 rounded-2">
+                                            <i class="fa fa-twitter fa-fw"></i> 以 Twitter 登入
+                                        </a> -->
+
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">登
                                         入</button>

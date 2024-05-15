@@ -1,4 +1,5 @@
 USE team6;
+DROP TABLE forgot_pwd;
 DROP TABLE memberDetail;
 DROP TABLE memberAccount;
 DROP TABLE EmployeeDetail;
@@ -24,6 +25,12 @@ CREATE TABLE memberDetail(
 	mbirthday date,
 	mPhoto nvarchar(max),
 	RegistrationDate date not null,
+)
+CREATE TABLE forgot_pwd(
+	id int identity(1,1) primary key,
+	maid nvarchar(max)  not null ,
+	token varchar(max) not null,
+	RegistrationDate date not null
 )
 
 INSERT INTO memberAccount(mAccount,mPassword,permissions,hidden)

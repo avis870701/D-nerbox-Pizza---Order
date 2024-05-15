@@ -75,7 +75,7 @@
 								</a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
 									<p class="mb-0 dropdown-item">優惠券</p>
 								</a> <a href="/member/logout"
-									class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
+									class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
 							</div>
 						</div>
 					</nav>

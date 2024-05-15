@@ -90,10 +90,6 @@
 							</ul>
 							<div class="navbar-collapse justify-content-end px-0" id="navbarNav">
 								<ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-									<li class="nav-item dropdown"><button
-											onclick="document.getElementById('memberInsert').style.display='block'"
-											style="width: auto;" class="btn btn-primary">新憎會員</button></li>
-
 									<li class="nav-item dropdown"><a class="nav-link nav-icon-hover"
 											href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
 											aria-expanded="false">
@@ -227,7 +223,9 @@
 							<div class="col-lg-12 d-flex align-items-stretch">
 								<div class="card w-100">
 									<div class="card-body p-4">
-										<h5 class="card-title fw-semibold mb-4">所有會員</h5>
+										<span class="card-title fw-semibold mb-4">所有會員</span>
+										<button onclick="document.getElementById('memberInsert').style.display='block'"
+											style="width: auto;" class="btn btn-primary mx-5">新憎會員</button>
 										<div class="table-responsive">
 											<!-- table -->
 											<table class="table text-nowrap mb-0 align-middle" id="showmember">

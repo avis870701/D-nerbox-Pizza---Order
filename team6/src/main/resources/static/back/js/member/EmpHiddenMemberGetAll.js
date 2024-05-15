@@ -56,7 +56,7 @@ function loadHiddenPage(indexPage) {
 
 function page(page) {
 	indexPage = page;
-	loadPage(indexPage);
+	loadHiddenPage(indexPage);
 }
 
 function deleteAccount(account) {
@@ -72,7 +72,7 @@ function deleteAccount(account) {
 			},
 			error: function () {
 				alert("已取消刪除!");
-				
+
 			}
 		});
 	}
