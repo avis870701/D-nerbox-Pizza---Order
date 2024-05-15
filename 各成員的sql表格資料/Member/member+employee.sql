@@ -1,4 +1,5 @@
 USE team6;
+DROP TABLE forgot_pwd;
 DROP TABLE memberDetail;
 DROP TABLE memberAccount;
 DROP TABLE EmployeeDetail;
@@ -24,6 +25,12 @@ CREATE TABLE memberDetail(
 	mbirthday date,
 	mPhoto nvarchar(max),
 	RegistrationDate date not null,
+)
+CREATE TABLE forgot_pwd(
+	id int identity(1,1) primary key,
+	maid nvarchar(max)  not null ,
+	token varchar(max) not null,
+	RegistrationDate date not null
 )
 
 INSERT INTO memberAccount(mAccount,mPassword,permissions,hidden)
@@ -58,36 +65,36 @@ VALUES('John1001', '123456', '1', '1'),
 ('Gabriel', '123456', '1', '1'),
 ('Zoe48098', '123456', '1', '1');
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,mPhoto,RegistrationDate)
-VALUES ('1', 'John Doe', 'john.doe@gmail.com', '1234567890', '1995-08-15','/images/member/user.png', '2004-03-26'),
-('2', 'Jane Smith', 'jane.smith@gmail.com', '2345678901', '1990-06-25','/images/member/user.png', '1997-10-20'),
-('3', 'Michael Johnson', 'michael.johnson@gmail.com', '3456789012', '1988-12-10','/images/member/user.png', '2001-07-11'),
-('4', 'Emily Brown', 'emily.brown@gmail.com', '4567890123', '1992-03-30','/images/member/user.png', '1993-02-05'),
-('5', 'William Wilson', 'william.wilson@gmail.com', '5678901234', '1987-11-20','/images/member/user.png', '2018-09-14'),
-('6', 'Sophia Lee', 'sophia.lee@gmail.com', '6789012345', '1998-09-05','/images/member/user.png', '1994-06-02'),
-('7', 'Matthew Kim', 'matthew.kim@gmail.com', '7890123456', '1993-07-12','/images/member/user.png', '2006-12-30'),
-('8', 'Olivia Garcia', 'olivia.garcia@gmail.com', '8901234567', '1996-04-18','/images/member/user.png', '2015-08-01'),
-('9', 'Daniel Martinez', 'daniel.martinez@gmail.com', '9012345678', '1991-02-28', '/images/member/user.png','1999-11-25'),
-('10', 'Ava Rodriguez', 'ava.rodriguez@gmail.com', '0123456789', '1994-10-08','/images/member/user.png', '2008-04-19'),
-('11', 'Ethan Hernandez', 'ethan.hernandez@gmail.com', '0987654321', '1985-05-20', '/images/member/user.png','2012-03-17'),
-('12', 'Isabella Lopez', 'isabella.lopez@gmail.com', '9876543210', '1989-01-15', '/images/member/user.png','2019-02-22'),
-('13', 'James Perez', 'james.perez@gmail.com', '8765432109', '1997-06-02','/images/member/user.png', '2017-11-08'),
-('14', 'Mia Gonzalez', 'mia.gonzalez@gmail.com', '7654321098', '1990-11-25', '/images/member/user.png','2010-10-10'),
-('15', 'Alexander Wilson', 'alexander.wilson@gmail.com', '6543210987', '1986-04-05','/images/member/user.png', '1995-04-01'),
-('16', 'Charlotte Taylor', 'charlotte.taylor@gmail.com', '5432109876', '1999-08-18', '/images/member/user.png','2000-12-18'),
-('17', 'Liam Brown', 'liam.brown@gmail.com', '4321098765', '1993-03-15','/images/member/user.png', '2013-06-09'),
-('18', 'Emma Johnson', 'emma.johnson@gmail.com', '3210987654', '1998-01-28','/images/member/user.png', '2014-07-30'),
-('19', 'Noah Smith', 'noah.smith@gmail.com', '2109876543', '1994-07-10','/images/member/user.png', '1996-09-05'),
-('20', 'Sophie Anderson', 'sophie.anderson@gmail.com', '1098765432', '1990-09-12','/images/member/user.png', '1999-08-12'),
-('21', 'Benjamin Martin', 'benjamin.martin@gmail.com', '9876543210', '1997-10-01','/images/member/user.png', '2003-05-28'),
-('22', 'Avery Thomas', 'avery.thomas@gmail.com', '8765432109', '1988-12-08', '/images/member/user.png','2011-02-14'),
-('23', 'Chloe White', 'chloe.white@gmail.com', '7654321098', '1992-06-30', '/images/member/user.png','2016-10-03'),
-('24', 'Jackson Clark', 'jackson.clark@gmail.com', '6543210987', '1995-04-15','/images/member/user.png', '2005-08-27'),
-('25', 'Grace Hall', 'grace.hall@gmail.com', '5432109876', '1991-08-24', '/images/member/user.png','2018-04-09'),
-('26', 'Lucas Thompson', 'lucas.thompson@gmail.com', '4321098765', '1996-03-05','/images/member/user.png', '2010-12-21'),
-('27', 'Aubrey Rodriguez', 'aubrey.rodriguez@gmail.com', '3210987654', '1987-11-03','/images/member/user.png', '1998-11-14'),
-('28', 'Lily Lewis', 'lily.lewis@gmail.com', '2109876543', '1994-01-18','/images/member/user.png', '2017-07-26'),
-('29', 'Gabriel Martinez', 'gabriel.martinez@gmail.com', '1098765432', '1989-07-27','/images/member/user.png', '2009-09-02'),
-('30', 'Zoe Hill', 'zoe.hill@gmail.com', '0987654321', '1993-12-09','/images/member/user.png', '2012-01-05');
+VALUES ('1', 'John Doe', 'john.doe@gmail.com', '1234567890', '1995-08-15','/images/member/users/user01.jpg', '2004-03-26'),
+('2', 'Jane Smith', 'jane.smith@gmail.com', '2345678901', '1990-06-25','/images/member/users/user02.jpg', '1997-10-20'),
+('3', 'Michael Johnson', 'michael.johnson@gmail.com', '3456789012', '1988-12-10','/images/member/users/user03.jpg', '2001-07-11'),
+('4', 'Emily Brown', 'emily.brown@gmail.com', '4567890123', '1992-03-30','/images/member/users/user04.jpg', '1993-02-05'),
+('5', 'William Wilson', 'william.wilson@gmail.com', '5678901234', '1987-11-20','/images/member/users/user05.jpg', '2018-09-14'),
+('6', 'Sophia Lee', 'sophia.lee@gmail.com', '6789012345', '1998-09-05','/images/member/users/user06.jpg', '1994-06-02'),
+('7', 'Matthew Kim', 'matthew.kim@gmail.com', '7890123456', '1993-07-12','/images/member/users/user01.jpg', '2006-12-30'),
+('8', 'Olivia Garcia', 'olivia.garcia@gmail.com', '8901234567', '1996-04-18','/images/member/users/user02.jpg', '2015-08-01'),
+('9', 'Daniel Martinez', 'daniel.martinez@gmail.com', '9012345678', '1991-02-28', '/images/member/users/user03.jpg','1999-11-25'),
+('10', 'Ava Rodriguez', 'ava.rodriguez@gmail.com', '0123456789', '1994-10-08','/images/member/users/user04.jpg', '2008-04-19'),
+('11', 'Ethan Hernandez', 'ethan.hernandez@gmail.com', '0987654321', '1985-05-20', '/images/member/users/user05.jpg','2012-03-17'),
+('12', 'Isabella Lopez', 'isabella.lopez@gmail.com', '9876543210', '1989-01-15', '/images/member/users/user06.jpg','2019-02-22'),
+('13', 'James Perez', 'james.perez@gmail.com', '8765432109', '1997-06-02','/images/member/users/user01.jpg', '2017-11-08'),
+('14', 'Mia Gonzalez', 'mia.gonzalez@gmail.com', '7654321098', '1990-11-25', '/images/member/users/user02.jpg','2010-10-10'),
+('15', 'Alexander Wilson', 'alexander.wilson@gmail.com', '6543210987', '1986-04-05','/images/member/users/user03.jpg', '1995-04-01'),
+('16', 'Charlotte Taylor', 'charlotte.taylor@gmail.com', '5432109876', '1999-08-18', '/images/member/users/user04.jpg','2000-12-18'),
+('17', 'Liam Brown', 'liam.brown@gmail.com', '4321098765', '1993-03-15','/images/member/users/user05.jpg', '2013-06-09'),
+('18', 'Emma Johnson', 'emma.johnson@gmail.com', '3210987654', '1998-01-28','/images/member/users/user06.jpg', '2014-07-30'),
+('19', 'Noah Smith', 'noah.smith@gmail.com', '2109876543', '1994-07-10','/images/member/users/user01.jpg', '1996-09-05'),
+('20', 'Sophie Anderson', 'sophie.anderson@gmail.com', '1098765432', '1990-09-12','/images/member/users/user02.jpg', '1999-08-12'),
+('21', 'Benjamin Martin', 'benjamin.martin@gmail.com', '9876543210', '1997-10-01','/images/member/users/user03.jpg', '2003-05-28'),
+('22', 'Avery Thomas', 'avery.thomas@gmail.com', '8765432109', '1988-12-08', '/images/member/users/user04.jpg','2011-02-14'),
+('23', 'Chloe White', 'chloe.white@gmail.com', '7654321098', '1992-06-30', '/images/member/users/user05.jpg','2016-10-03'),
+('24', 'Jackson Clark', 'jackson.clark@gmail.com', '6543210987', '1995-04-15','/images/member/users/user06.jpg', '2005-08-27'),
+('25', 'Grace Hall', 'grace.hall@gmail.com', '5432109876', '1991-08-24', '/images/member/users/user01.jpg','2018-04-09'),
+('26', 'Lucas Thompson', 'lucas.thompson@gmail.com', '4321098765', '1996-03-05','/images/member/users/user02.jpg', '2010-12-21'),
+('27', 'Aubrey Rodriguez', 'aubrey.rodriguez@gmail.com', '3210987654', '1987-11-03','/images/member/users/user03.jpg', '1998-11-14'),
+('28', 'Lily Lewis', 'lily.lewis@gmail.com', '2109876543', '1994-01-18','/images/member/users/user04.jpg', '2017-07-26'),
+('29', 'Gabriel Martinez', 'gabriel.martinez@gmail.com', '1098765432', '1989-07-27','/images/member/users/user05.jpg', '2009-09-02'),
+('30', 'Zoe Hill', 'zoe.hill@gmail.com', '0987654321', '1993-12-09','/images/member/users/user06.jpg', '2012-01-05');
 
 
 ----------------------------------------------------------------------------------------

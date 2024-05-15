@@ -112,18 +112,18 @@
 							<p class="text-center">請填寫下列資訊</p>
 							<form method="POST" action="Member.Insert">
 								<div class="mb-3">
-									<label for="exampleInputtext1" class="form-label">使用者帳號</label>
+									<i class="fa fa-user icon"></i><label for="exampleInputtext1" class="form-label">使用者帳號</label>
 									<input type="text" class="form-control" id="exampleInputtext1"
 										aria-describedby="textHelp" name="account" required>
 								</div>
 								<div class="mb-3">
-									<label for="exampleInputEmail1" class="form-label">電子信箱</label>
+									<i class="fa fa-envelope icon"></i><label for="exampleInputEmail1" class="form-label">電子信箱</label>
 									<input type="email" class="form-control"
 										id="exampleInputEmail1" aria-describedby="emailHelp"
-										name="mEmail">
+										name="mEmail" required>
 								</div>
 								<div class="mb-4">
-									<label for="exampleInputPassword1" class="form-label">密碼</label>
+									 <i class="fa fa-key icon"></i><label for="exampleInputPassword1" class="form-label">密碼</label>
 									<input type="password" class="form-control"
 										id="exampleInputPassword1" name="password" required>
 								</div>

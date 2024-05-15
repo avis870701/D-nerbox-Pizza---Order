@@ -126,7 +126,7 @@ public class MemberService {
 	public MemberAccountBean updatePwd(String account, String beforePwd, String afterPwd) {
 		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
 		MemberAccountBean bean =optional.get();
-		if (beforePwd == bean.getmPassword()) {
+		if (beforePwd.equals(bean.getmPassword())) {
 			bean.setmPassword(afterPwd);
 			rma.save(bean);
 			return bean;
@@ -135,10 +135,8 @@ public class MemberService {
 	}
 	
 	// 更改細項
-	public MemberAccountBean updateDetail(String account, String name, String email, String phone, String photo, LocalDate birthday) {
-		Optional<MemberAccountBean> optional=rma.findAccountByAccount(account);
-		if(!optional.isEmpty()) {
-			MemberAccountBean accountBean = optional.get();
+	public MemberAccountBean updateDetail(MemberAccountBean accountBean, String name, String email, String phone, String photo, LocalDate birthday) {
+		if(accountBean!=null) {
 			accountBean.getDetailBean().setmName(name);
 			accountBean.getDetailBean().setmEmail(email);
 			accountBean.getDetailBean().setmPhone(phone);

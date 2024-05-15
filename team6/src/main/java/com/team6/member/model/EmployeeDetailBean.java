@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +28,7 @@ public class EmployeeDetailBean {
 	private int empdid;
 	
 	// 外來建:接 EmployeeAccount 的 empid
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "fk_empid")
 	private EmployeeAccountBean empAccountBean;
@@ -53,6 +56,7 @@ public class EmployeeDetailBean {
 	@Column(name = "comm")
 	private String comm;
 	
+	@JsonIgnore
 	@Column(name = "fk_deptno")
 	@Transient
 	private int deptno;
