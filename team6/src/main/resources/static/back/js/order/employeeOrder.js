@@ -156,10 +156,9 @@ function addOrder() {
 
 	if (productName !== '' && quantity >= 1 && quantity <= 10) {
 
-
 		// 創建新的訂單明細行
 		var newRow = $('<tr>');
-		newRow.append('<td><input type="hidden" name="productId[]" value="' + productId + '">' + productId + '</td>'); // 添加 productId
+		newRow.append('<input type="hidden" name="productId[]" value="' + productId + '">'); // 添加 productId
 		newRow.append('<td><input type="hidden" name="productName[]" value="' + productName + '">' + productName + '</td>');
 		newRow.append('<td><input type="hidden" name="quantity[]" value="' + quantity + '">' + quantity + '</td>');
 		newRow.append('<td><input type="hidden" name="unitPrice[]" value="' + unitPrice + '">' + unitPrice + '</td>');
@@ -265,11 +264,11 @@ function sendOrder() {
 	var notes = [];
 
 	$('#orderDetailsTable tr').each(function() {
-		var productId = $(this).find('input[name="productId[]"]').val(); // 获取产品ID
+		var productId = $(this).find('input[name="productId[]"]').val();
 		var productName = $(this).find('input[name="productName[]"]').val();
 		var unitPrice = ($(this).find('input[name="unitPrice[]"]').val());
 		var quantity = ($(this).find('input[name="quantity[]"]').val());
-		var note = $(this).find('input[name="note[]"]').val(); // 获取笔记
+		var note = $(this).find('input[name="note[]"]').val();
 
 
 		productIds.push(productId);
@@ -291,7 +290,11 @@ function sendOrder() {
 		orderDetailsList.push(detailData);
 	}
 
-	// 构造订单数据
+	console.log("Order details list length: " + orderDetailsList.length);
+	console.log("productId: " + productIds);
+
+
+	// 訂單數據
 	var orderData = {
 		account: account,
 		discount: discount,
@@ -303,7 +306,6 @@ function sendOrder() {
 	};
 
 
-	// 发送 AJAX 请求
 	$.ajax({
 		url: '/order/employeeOrder',
 		type: 'POST',
@@ -311,15 +313,56 @@ function sendOrder() {
 		data: JSON.stringify(orderData),
 		success: function(response) {
 			console.log(response);
+			displayOrderDetails(orderData);
 		},
 		error: function(xhr, status, error) {
-			// 处理错误
 			console.error(error);
 		}
 	});
 }
 
+// 在订单插入成功后调用该函数显示订单详情
+function displayOrderDetails(orderData) {
+	// 獲取訂單總金額
+	var totalAmount = 0;
+	var orderDetails = orderData.orderDetails;
+
+	// 創建表格元素
+	var table = $('<table>').attr('width', '100%').attr('border', '1').attr('cellspacing', '0').attr('cellpadding', '5').css('border-collapse', 'collapse');
+
+	// 創建表格標題行
+	var headerRow = $('<tr>').appendTo(table);
+	$('<th>').css('text-align', 'left').text('商品').appendTo(headerRow);
+	$('<th>').css('text-align', 'left').text('數量').appendTo(headerRow); // 新增數量列
+	$('<th>').css('text-align', 'left').text('金額').appendTo(headerRow);
+	$('<th>').css('text-align', 'center').text('備註').appendTo(headerRow); // 新增備註列
+
+	// 遍歷訂單詳細並創建表格行
+	orderDetails.forEach(function(detail) {
+		var row = $('<tr>').appendTo(table);
+		$('<td>').css('text-align', 'left').text(detail.productName).appendTo(row); // 修改這裡以反映訂單詳細的產品名稱
+		$('<td>').css('text-align', 'left').text(detail.quantity).appendTo(row); // 顯示數量
+		$('<td>').css('text-align', 'left').text('$' + (parseFloat(detail.unitPrice) * parseInt(detail.quantity)).toFixed(2)).appendTo(row); // 修改這裡以計算產品的總價格
+		$('<td>').css('text-align', 'center').text(detail.note).appendTo(row); // 顯示備註
+		totalAmount += parseFloat(detail.unitPrice) * parseInt(detail.quantity); // 累加總金額
+	});
+
+	// 創建小計行
+	var subtotalRow = $('<tr>').appendTo(table);
+	$('<td>').css('text-align', 'left').text('小計').attr('colspan', '2').appendTo(subtotalRow);
+	$('<td>').css('text-align', 'left').text('$' + totalAmount.toFixed(2)).appendTo(subtotalRow); // 顯示總金額
+	$('<td>').css('text-align', 'left').text('').appendTo(subtotalRow); // 小計行不顯示備註
+
+	// 在頁面中顯示表格
+	$('#orderDetailsModal .modal-body').empty().append(table);
+
+	// 顯示模態框
+	$('#orderDetailsModal').modal('show');
+}
+
+
+
 // 假设你有一个按钮或其他元素来触发发送订单的操作
 $('.employeeOrder-btn').click(function() {
-	sendOrder(); // 调用发送订单的函数
+	sendOrder();
 });

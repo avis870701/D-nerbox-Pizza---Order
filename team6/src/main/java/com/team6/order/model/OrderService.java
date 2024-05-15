@@ -1,14 +1,27 @@
 package com.team6.order.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 @Service
 @Transactional
@@ -107,14 +120,105 @@ public class OrderService {
 		oRepos.insertOrderWithDiscount(orderId, account, discount, discountPrice, payment, pickup, orderStatus);
 	}
 
-	// 新增訂單
-	public Order insertOrder(Order order) {
-		return oRepos.save(order);
-	}
-
 	// 新增餐點
 	public OrderDetails insertDetails(OrderDetails orderDetails) {
 		return dRepos.save(orderDetails);
 	}
 
+	// 匯出 excel
+	public void saveExcel(List<Order> orders, String fileName) {
+		String folderPath = "C:/EXCEL";
+
+		try {
+			Path path = Paths.get(folderPath);
+			if (!Files.exists(path)) {
+				Files.createDirectories(path);
+			}
+
+			String filePath = folderPath + "/" + fileName;
+			Workbook workbook = new XSSFWorkbook();
+			Sheet sheet = workbook.createSheet("Order Data");
+
+			// 创建标题行
+			Row headerRow = sheet.createRow(0);
+			headerRow.createCell(0).setCellValue("Order ID");
+			headerRow.createCell(1).setCellValue("Account");
+			headerRow.createCell(2).setCellValue("Original Amount");
+			headerRow.createCell(3).setCellValue("Discount");
+			headerRow.createCell(4).setCellValue("Discount Price");
+			headerRow.createCell(5).setCellValue("Paid Amount");
+			headerRow.createCell(6).setCellValue("Payment");
+			headerRow.createCell(7).setCellValue("Pickup");
+			headerRow.createCell(8).setCellValue("Order Status");
+			headerRow.createCell(9).setCellValue("Cancel Note");
+
+			// 填入订单数据
+			int rowNum = 1;
+			for (Order order : orders) {
+				Row row = sheet.createRow(rowNum++);
+				row.createCell(0).setCellValue(order.getOrderId());
+				row.createCell(1).setCellValue(order.getAccount());
+				row.createCell(2).setCellValue(order.getOriAmount());
+				row.createCell(3).setCellValue(order.getDiscount());
+				row.createCell(4).setCellValue(order.getDiscountPrice());
+				row.createCell(5).setCellValue(order.getPaidAmount());
+				row.createCell(6).setCellValue(order.getPayment());
+				row.createCell(7).setCellValue(order.getPickup());
+				row.createCell(8).setCellValue(order.getOrderStatus());
+				row.createCell(9).setCellValue(order.getCancelNote());
+			}
+
+			try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+				workbook.write(outputStream);
+				System.out.println("Excel file has been successfully saved: " + filePath);
+			} catch (IOException e) {
+				System.err.println("Failed to write Excel file: " + filePath);
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			System.err.println("Failed to create target folder: " + folderPath);
+			e.printStackTrace();
+		}
+	}
+
+	// export json
+	public void saveJson(List<Order> orders, String fileName) {
+		String folderPath = "C:/JSON";
+
+		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+
+			String filePath = folderPath + "/" + fileName;
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.writeValue(new File(filePath), orders);
+			System.out.println("JSON file has been successfully saved: " + filePath);
+		} catch (IOException e) {
+			System.err.println("Failed to write JSON file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	// export xml
+	public void saveXml(List<Order> orders, String fileName) {
+		String folderPath = "C:/XML";
+
+		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+
+			String filePath = folderPath + "/" + fileName;
+			XStream xstream = new XStream(new DomDriver());
+			xstream.alias("order", Order.class);
+			xstream.toXML(orders, new FileOutputStream(filePath));
+			System.out.println("XML file has been successfully saved: " + filePath);
+		} catch (IOException e) {
+			System.err.println("Failed to write XML file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

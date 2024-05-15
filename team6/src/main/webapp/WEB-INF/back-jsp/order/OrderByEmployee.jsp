@@ -252,95 +252,118 @@
 											<div class="form-group">
 												<label class="fw-semibold mb-0">折扣碼：</label> <select
 													id="discountSelect" name="discount" class="form-select">
-													<option value="">
-													</option>
-												</select>
-													<input type="hidden" name="discountAmount" id="discountAmount" value="">
+													<option value=""></option>
+												</select> <input type="hidden" name="discountAmount"
+													id="discountAmount" value="">
 											</div>
 										</div>
 									</div>
-				
-								<div class="form-container shadow p-3">
-									<h4>
-										<i class="fa-solid fa-utensils"></i>
-									</h4>
-									<div class="form-group">
-										<label for="productCategorySelect"
-											class="p-1 fw-semibold mb-0">餐點類別：</label> <select
-											class="form-control" id="productCategorySelect">
-										</select>
+
+									<div class="form-container shadow p-3">
+										<h4>
+											<i class="fa-solid fa-utensils"></i>
+										</h4>
+										<div class="form-group">
+											<label for="productCategorySelect"
+												class="p-1 fw-semibold mb-0">餐點類別：</label> <select
+												class="form-control" id="productCategorySelect">
+											</select>
+										</div>
+										<br>
+										<div class="form-group">
+											<label for="orderProductSelect" class="p-1 fw-semibold mb-0">選擇餐點：</label>
+											<select class="form-control" id="orderProductSelect" disabled>
+											</select>
+										</div>
+										<br>
+										<div class="form-group">
+											<label for="quantityInput" class="p-1 fw-semibold mb-0">數量：</label>
+											<input type="number" class="form-control" id="quantityInput"
+												placeholder="" min="1" max="10">
+										</div>
+										<br>
+										<div class="form-group">
+											<label for="noteInput" class="p-1 fw-semibold mb-0" disabled>餐點備註：</label>
+											<input type="text" class="form-control" id="noteInput"
+												placeholder="">
+										</div>
+										<br>
+										<div>
+											<label class="fw-semibold mb-0">醬料選擇：</label> <input
+												type="radio" name="sauce" value="紅醬" disabled> 紅醬 <input
+												type="radio" name="sauce" value="白醬" disabled> 白醬
+										</div>
+										<br>
+										<div>
+											<label class="fw-semibold mb-0">加料選擇：</label> <input
+												type="checkbox" id="cheese" value="加起司" disabled>
+											加起司 <input type="checkbox" id="mushroom" value="加洋菇" disabled>
+											加洋菇
+										</div>
+										<button onclick="addOrder()" class="btn btn-dark"
+											style="float: right">新增餐點</button>
+										<br> <br> <br>
 									</div>
-									<br>
-									<div class="form-group">
-										<label for="orderProductSelect" class="p-1 fw-semibold mb-0">選擇餐點：</label>
-										<select class="form-control" id="orderProductSelect" disabled>
-										</select>
-									</div>
-									<br>
-									<div class="form-group">
-										<label for="quantityInput" class="p-1 fw-semibold mb-0">數量：</label>
-										<input type="number" class="form-control" id="quantityInput"
-											placeholder="" min="1" max="10">
-									</div>
-									<br>
-									<div class="form-group">
-										<label for="noteInput" class="p-1 fw-semibold mb-0" disabled>餐點備註：</label>
-										<input type="text" class="form-control" id="noteInput"
-											placeholder="">
-									</div>
-									<br>
-									<div>
-										<label class="fw-semibold mb-0">醬料選擇：</label> <input
-											type="radio" name="sauce" value="紅醬" disabled> 紅醬 <input
-											type="radio" name="sauce" value="白醬" disabled> 白醬
-									</div>
-									<br>
-									<div>
-										<label class="fw-semibold mb-0">加料選擇：</label> <input
-											type="checkbox" id="cheese" value="加起司" disabled> 加起司
-										<input type="checkbox" id="mushroom" value="加洋菇" disabled>
-										加洋菇
-									</div>
-									<button onclick="addOrder()" class="btn btn-dark"
-										style="float: right">新增餐點</button>
-									<br> <br> <br>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<!-- 右边的容器，放置餐点明细 -->
-							<div class="right-container">
+							<div class="col-md-6">
+								<!-- 右边的容器，放置餐点明细 -->
+								<div class="right-container">
 
 
-								<input type="hidden" name="amount" value="${orderBean.amount}">
-								<div class="table-responsive shadow m-3">
-									<table
-										class="table table-striped text-nowrap mb-0 align-middle">
-										<thead class="text-dark fs-4">
-											<tr>
-												<td class="fw-semibold mb-0">餐點</td>
-												<td class="fw-semibold mb-0">數量</td>
-												<td class="fw-semibold mb-0">單價</td>
-												<td class="fw-semibold mb-0">備註</td>
-												<!-- 这里继续添加其他表头 -->
-											</tr>
-										</thead>
-										<tbody id="orderDetailsTable">
-											<!-- 这里是用JavaScript添加的行 -->
-										</tbody>
-									</table>
-									<button type="submit" class="btn btn-dark m-3 employeeOrder-btn"
-										style="float: right">
-										<b>點餐結束</b>
-									</button>
+									<input type="hidden" name="amount" value="${orderBean.amount}">
+									<div class="table-responsive shadow m-3">
+										<table
+											class="table table-striped text-nowrap mb-0 align-middle">
+											<thead class="text-dark fs-4">
+												<tr>
+													<td class="fw-semibold mb-0">餐點</td>
+													<td class="fw-semibold mb-0">數量</td>
+													<td class="fw-semibold mb-0">單價</td>
+													<td class="fw-semibold mb-0">備註</td>
+													<!-- 这里继续添加其他表头 -->
+												</tr>
+											</thead>
+											<tbody id="orderDetailsTable">
+												<!-- 这里是用JavaScript添加的行 -->
+											</tbody>
+										</table>
+										<button type="submit"
+											class="btn btn-dark m-3 employeeOrder-btn"
+											style="float: right">
+											<b>點餐結束</b>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<!-- orderFinish Modal -->
+					<div class="modal fade" id="orderDetailsModal" tabindex="-1"
+						role="dialog" aria-labelledby="orderDetailsModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="orderDetailsModalLabel">订单详情</h5>
+								</div>
+								<div class="modal-body">
+									<!-- 這裡插入訂單明細的表格 -->
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">關閉</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
 				</div>
 			</div>
 		</div>
-	</div>
 
 
 
@@ -352,19 +375,19 @@
 
 
 
-	<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-		crossorigin="anonymous"></script>
-	<script
-		src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="../../../static/back/js/sidebarmenu.js"></script>
-	<script src="../../../static/back/js/app.min.js"></script>
-	<script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
+		<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"></script>
+		<script
+			src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="../../../static/back/js/sidebarmenu.js"></script>
+		<script src="../../../static/back/js/app.min.js"></script>
+		<script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
 
 
-	<script src="../../../static/back/js/order/employeeOrder.js"></script>
+		<script src="../../../static/back/js/order/employeeOrder.js"></script>
 </body>
 
 </html>

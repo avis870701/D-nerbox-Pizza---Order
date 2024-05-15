@@ -43,7 +43,6 @@ $(document).on('click', '.updateNote-btn', function() {
 				note: userInput
 			},
 			success: function(response) {
-				// 成功更新注释后刷新订单详情页面
 				loadOrderDetails(orderId);
 			},
 			error: function(xhr, status, error) {

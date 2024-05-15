@@ -201,7 +201,10 @@
 			<div class="container-fluid">
 				<div class="card">
 					<div class="card-body">
-					<button class="btn btn-dark employeeOrder-btn" onclick="goToOrderByEmployee()"><i class="fa-solid fa-utensils">點餐</i></button>
+						<button class="btn btn-dark"
+							onclick="goToOrderByEmployee()">
+							<i class="fa-solid fa-utensils">點餐</i>
+						</button>
 					</div>
 					<div>
 
@@ -267,9 +270,6 @@
 								<div class="row justify-content-end p-2">
 									<!--<h5 class="card-title fw-semibold mb-4">DönerPizza 訂單管理</h5>  -->
 
-									<div
-										class="text-center bg-white font-weight-bold text-primary p-1"
-										id="totalDataCount"></div>
 									<div class="row">
 										<div class="col-auto">
 											<label for="searchInput" class="col-form-label">查詢：</label>
@@ -279,21 +279,16 @@
 												placeholder="">
 										</div>
 										<div class="col-1">
-											<button class="btn btn-white border">
+											<button class="btn btn-white border export-btn">
 												<h4>
-													<i class="fa-solid fa-file-csv"></i>
+													<i class="fa-solid fa-file-export"></i>
 												</h4>
 											</button>
 										</div>
-										<div class="col-1">
-											<button class="btn btn-white border">
-												<h4>
-													<i class="fa-regular fa-file-excel"></i>
-												</h4>
-											</button>
-										</div>
-
 									</div>
+									<div
+										class="text-center bg-white font-weight-bold text-primary col-12"
+										id="totalDataCount"></div>
 								</div>
 								<!-- 表格内容容器 -->
 								<div class="table-responsive shadow">
@@ -490,8 +485,8 @@
 											</div>
 											<div class="modal-body">
 												<div class="form-group">
-													<label for="productCategorySelect" class="p-1">餐點類別：</label> <select
-														class="form-control" id="productCategorySelect">
+													<label for="productCategorySelect" class="p-1">餐點類別：</label>
+													<select class="form-control" id="productCategorySelect">
 													</select>
 												</div>
 												<br>
@@ -502,9 +497,9 @@
 												</div>
 												<br>
 												<div class="form-group">
-													<label for="quantityInput" class="p-1">數量：</label> <input type="number"
-														class="form-control" id="quantityInput" placeholder=""
-														min="1" max="10">
+													<label for="quantityInput" class="p-1">數量：</label> <input
+														type="number" class="form-control" id="quantityInput"
+														placeholder="" min="1" max="10">
 												</div>
 												<br>
 												<div class="form-group">
@@ -539,31 +534,54 @@
 								</div>
 
 
+								<!-- export modal -->
+								<div class="modal" id="exportModal" tabindex="-1" role="dialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title"><b>選擇匯出格式</b></h5>
+											</div>
+											<div class="modal-body">
+												<button class="btn btn-primary export-format-btn m-2"
+													data-format="excel">EXCEL</button>
+												<button class="btn btn-primary export-format-btn m-2"
+													data-format="json">JSON</button>
+												<button class="btn btn-primary export-format-btn m-2"
+													data-format="xml">XML</button>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-dark closeExport"
+													data-dismiss="modal"><b>關閉</b></button>
+											</div>
+										</div>
+									</div>
 
 
 
 
+
+								</div>
 							</div>
 						</div>
-					</div>
 
 
 
-					<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
-					<script
-						src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-						integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-						crossorigin="anonymous"></script>
-					<script
-						src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-					<script src="../../../static/back/js/sidebarmenu.js"></script>
-					<script src="../../../static/back/js/app.min.js"></script>
-					<script src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
+						<script src="../../../static/back/libs/jquery/dist/jquery.min.js"></script>
+						<script
+							src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+							integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+							crossorigin="anonymous"></script>
+						<script
+							src="../../../static/back/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+						<script src="../../../static/back/js/sidebarmenu.js"></script>
+						<script src="../../../static/back/js/app.min.js"></script>
+						<script
+							src="../../../static/back/libs/simplebar/dist/simplebar.js"></script>
 
 
-					<script src="../../../static/back/js/order/orderCRUD.js"></script>
-					<script src="../../../static/back/js/order/detailsCRUD.js"></script>
-					<script src="../../../static/back/js/order/employeeOrder.js"></script>
+						<script src="../../../static/back/js/order/orderCRUD.js"></script>
+						<script src="../../../static/back/js/order/detailsCRUD.js"></script>
+						<script src="../../../static/back/js/order/employeeOrder.js"></script>
 </body>
 
 </html>

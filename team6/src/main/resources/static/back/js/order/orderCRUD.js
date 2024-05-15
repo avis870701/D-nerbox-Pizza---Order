@@ -743,29 +743,101 @@ $(document).ready(function() {
 		});
 	}
 
-
 	//exportCSV,EXCEL
-	//function exportCSV(){
-	//var keyword = $('#searchInput').val();
+	//點擊之後,選擇格式
+	$('.export-btn').click(function() {
+		$('#exportModal').modal('show');
+	});
 
-	//if(keyword !== ''){
+	// 点击导出格式按钮触发相应操作
+	$('.export-format-btn').click(function() {
+		var format = $(this).data('format');
+		var keyword = $('#searchInput').val().trim();
+		if (keyword != '') {
+			if (format === 'excel') {
+				exportExcel();
+			} else if (format === 'json') {
+				exportJson();
+			} else {
+				exportXml();
+			}
 
-	//$.ajax({
+		} else {
+			alert('請先 "查詢" 想要匯出的資料！');
+		}
 
-	//})
+		console.log('匯出格式：' + format);
 
-	//}
-
-
-	//}
+		$('#exportModal').modal('hide');
+	});
 
 
+	function exportExcel() {
+		var keyword = $('#searchInput').val().trim();
+		$.ajax({
+			url: '/order/exportExcel',
+			type: 'POST',
+			data: {
+				keyword: keyword
+			},
+			success: function(response) {
+				console.log(response);
+				alert('匯出成功！');
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
 
-	//點餐按鈕
+	function exportJson() {
+		var keyword = $('#searchInput').val().trim();
+		$.ajax({
+			url: '/order/exportJson',
+			type: 'POST',
+			data: {
+				keyword: keyword
+			},
+			success: function(response) {
+				console.log(response);
+				alert('匯出成功！');
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
+
+	function exportXml() {
+		var keyword = $('#searchInput').val().trim();
+		$.ajax({
+			url: '/order/exportXml',
+			type: 'POST',
+			data: {
+				keyword: keyword,
+			},
+			success: function(response) {
+				console.log(response);
+				alert('匯出成功！');
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
+
+
+	$('.closeExport').click(function() {
+		$('#exportModal').modal('hide');
+	});
+
+
+
+
 
 });
 
-	function goToOrderByEmployee() {
-		// 使用 window.location.href 将页面重定向到指定的JSP页面
-		window.location.href = '/order/orderByEmployee';
-	}
+function goToOrderByEmployee() {
+	// 使用 window.location.href 将页面重定向到指定的JSP页面
+	window.location.href = '/order/orderByEmployee';
+}

@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 	Page<Order> findOrderAll(Pageable pageable);
 
 	// 後端模糊查詢
-	@Query(value = "SELECT * FROM pizzaOrder WHERE LOWER(orderId) LIKE %:keyword% OR LOWER(account) LIKE %:keyword% OR LOWER(orderStatus) LIKE %:keyword% OR LOWER(pickup) LIKE %:keyword% OR LOWER(payment) LIKE %:keyword%", nativeQuery = true)
+	@Query(value = "SELECT * FROM pizzaOrder WHERE LOWER(orderId) LIKE %:keyword% OR LOWER(account) LIKE %:keyword% OR LOWER(discount) LIKE %:keyword% OR LOWER(orderStatus) LIKE %:keyword% OR LOWER(pickup) LIKE %:keyword% OR LOWER(payment) LIKE %:keyword%", nativeQuery = true)
 	List<Order> findOrdersByKeyword(@Param("keyword") String keyword);
 
 	// 更新折扣碼、折扣金額

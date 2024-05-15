@@ -1,6 +1,8 @@
 package com.team6.order.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +63,11 @@ public class OrderController {
 	@RequestMapping(path = "/orderByEmployee", method = { RequestMethod.GET, RequestMethod.POST })
 	public String orderByEmployee() {
 		return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
+	}
+	
+	@RequestMapping(path = "/orderByEmployeeView", method = { RequestMethod.GET, RequestMethod.POST })
+	public String orderByEmployeeView() {
+		return "forward:/WEB-INF/back-jsp/order/ShowEmployeeOrder.jsp";
 	}
 
 	// select all
@@ -209,26 +217,28 @@ public class OrderController {
 		// 如果订单插入成功，则处理订单详情
 		List<Map<String, Object>> orderDetailsList = (List<Map<String, Object>>) orderData.get("orderDetails");
 		if (orderDetailsList != null) {
-		    for (Map<String, Object> detailData : orderDetailsList) {
-		        OrderDetails detail = new OrderDetails();
-		        detail.setOrderId(orderId);
-		        detail.setProductId((String) detailData.get("productId"));
-		        detail.setProduct((String) detailData.get("productName"));
-		        detail.setUnitPrice((String) detailData.get("unitPrice"));
-		        detail.setQuantity((String) detailData.get("quantity"));
-		        detail.setNote((String) detailData.get("note"));
+			for (Map<String, Object> detailData : orderDetailsList) {
+				OrderDetails detail = new OrderDetails();
+				detail.setOrderId(orderId);
+				detail.setProductId((String) detailData.get("productId"));
+				detail.setProduct((String) detailData.get("productName"));
+				detail.setUnitPrice((String) detailData.get("unitPrice"));
+				detail.setQuantity((String) detailData.get("quantity"));
+				detail.setNote((String) detailData.get("note"));
 
-		        // 在这里进行订单详情的处理
-		        oService.insertDetails(detail); // 确保 insertDetails 方法正常运行
-		    }
-		    return ResponseEntity.ok("Order inserted successfully.");
+				oService.insertDetails(detail);
+			}
+			
+			oService.findOrderById(orderId);
+			oService.findDetailsById(orderId);
+			
+			return ResponseEntity.ok("Order inserted successfully.");
 		} else {
-		    // 如果订单详情列表为空，可以返回相应的错误消息或者进行其他处理
-		    return ResponseEntity.badRequest().body("Order details list is null or empty.");
+			return ResponseEntity.badRequest().body("Order details list is null or empty.");
 		}
 	}
 
-// 生成订单ID的方法
+    //生成orderId
 	private String generateOrderId() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		return sdf.format(new Date());
@@ -257,6 +267,75 @@ public class OrderController {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", "After deleted details updated discount successfully.");
 		return ResponseEntity.ok(response);
+	}
+
+	// export excel
+	@PostMapping("/exportExcel")
+	public ResponseEntity<String> exportExcel(@RequestParam String keyword) {
+
+		System.out.println("keyword:"+keyword);
+		try {
+			List<Order> orders = oService.findOrdersByKeyword(keyword);
+
+			LocalDateTime currentTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+			String timestamp = currentTime.format(formatter);
+
+			// 拼接新的文件名
+			String fileName = "order_data" + timestamp + ".xlsx";
+
+			// 调用匯出Excel的方法
+			oService.saveExcel(orders, fileName);
+
+			return ResponseEntity.ok("Excel已成功匯出！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法匯出Excel：" + e.getMessage());
+		}
+	}
+
+	// export json
+	@PostMapping("/exportJson")
+	public ResponseEntity<String> exportJson(@RequestParam String keyword) {
+		try {
+			List<Order> orders = oService.findOrdersByKeyword(keyword);
+
+			LocalDateTime currentTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+			String timestamp = currentTime.format(formatter);
+
+			// 拼接新的文件名
+			String fileName = "order_data_" + timestamp + ".json";
+
+			// 调用导出 JSON 的方法
+			oService.saveJson(orders, fileName);
+
+			return ResponseEntity.ok("JSON 已成功匯出！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法匯出 JSON：" + e.getMessage());
+		}
+	}
+
+	@PostMapping("/exportXml")
+	public ResponseEntity<String> exportXml(@RequestParam String keyword) {
+		try {
+			List<Order> orders = oService.findOrdersByKeyword(keyword);
+
+			LocalDateTime currentTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+			String timestamp = currentTime.format(formatter);
+
+			// 拼接新的文件名
+			String fileName = "order_data_" + timestamp + ".xml";
+
+			oService.saveXml(orders, fileName);
+
+			return ResponseEntity.ok("XML 已成功匯出！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法匯出 XML：" + e.getMessage());
+		}
 	}
 
 }
