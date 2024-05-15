@@ -2,8 +2,8 @@ USE team6;
 
 CREATE TABLE DeliveryEmp (
     id INT IDENTITY(1,1)  PRIMARY KEY　,
-	Dorder NVARCHAR(MAX) ,
-    Dname NVARCHAR(100),
+	Did NVARCHAR(MAX) ,
+    Emp NVARCHAR(100),
 	Starttime DATETIME, -- 外送開始時間
     Endtime DATETIME, -- 外送結束時間
 	address　NVARCHAR(100),

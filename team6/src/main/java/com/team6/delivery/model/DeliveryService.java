@@ -17,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.team6.order.model.DetailsRepository;
-import com.team6.order.model.OrderDetails;
-import com.team6.order.model.OrderRepository;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.apache.poi.ss.usermodel.*;
@@ -33,12 +30,11 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
-	
-	
 	//查詢所有外送單資料
 	public List<Delivery> findall(){
 		return dRepos.findAll();
 	}
+	
 	//查詢單筆
 	public Delivery findById(Integer id) {
 		Optional<Delivery> op1 = dRepos.findById(id);
@@ -47,22 +43,10 @@ public class DeliveryService {
 		}
 			return null;	
 	}
-	
-	// 查詢單筆訂單明細
-//	public List<OrderDetails> findDetailsById(int orderId) {
-//		List<OrderDetails> details = dRepos.findByOrderId(orderId);
-//
-//		if (!details.isEmpty()) {
-//			return details;
-//		}
-//		return null;
-//	}
-	
 	//修改
 	public Delivery update(Delivery delivery) {
 		return dRepos.save(delivery);
 	}
-	
 	
 	//刪除單筆
 	public void DelDelivery(int id) {
@@ -72,13 +56,18 @@ public class DeliveryService {
 	public Delivery insert(Delivery delivery){
 		 return dRepos.save(delivery);
 	}
+	//新增
+	public void add(String orderid,String address){
+		 dRepos.add(orderid,address);
+	}
 	//創建JSON檔案
 	public void saveJson() {
 	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	    List<Delivery> deliveries = dRepos.findAll();
 	    String json = gson.toJson(deliveries);
 
-	    String folderPath = "C:/JSON";
+//	    String folderPath = "C:/JSON";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.json";
 
 	    // 檢查並創建目標文件夾
@@ -115,7 +104,8 @@ public class DeliveryService {
 
 	    String xml = xstream.toXML(deliveries);
 
-	    String folderPath = "C:/XML";
+//	    String folderPath = "C:/XML";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.xml";
 
 	    // 檢查並創建目標文件夾
@@ -146,7 +136,8 @@ public class DeliveryService {
 	public void saveExcel() {
 	    List<Delivery> deliveries = dRepos.findAll();
 
-	    String folderPath = "C:/EXCEL";
+//	    String folderPath = "C:/EXCEL";
+	    String folderPath = "C:/Users/User/Downloads";
 	    String fileName = "外送單資料.xlsx";
 
 	    // 檢查並創建目標文件夾
@@ -195,6 +186,40 @@ public class DeliveryService {
 	        e.printStackTrace();
 	    }
 	}
-	 
+// ==================================上面是好的不要修改==============================//
+	
+		//查詢狀態!=0
+		public List<Delivery> findnotZero(){
+			return dRepos.findallnotZero();
+		}
+		//查詢狀態為1
+		public List<Delivery> findallone(){
+			return dRepos.findallOne();
+		}
+		//查詢狀態為2
+		public List<Delivery> findalltwo(){
+			return dRepos.findallTwo();
+		}
+		//查詢狀態為3
+		public List<Delivery> findallthree(){
+			return dRepos.findallThree();
+		}
+		//查詢狀態為4
+		public List<Delivery> findallfour(){
+			return dRepos.findallFour();
+		}
+		//查詢狀態為0
+		public List<Delivery> findallzero(){
+			return dRepos.findallZero();
+		}
+		//修改已接單
+		public void UpdState(Integer id) {
+			 dRepos.upddeliverystate(id);
+			 
+		}
+		public void UpdStateZero(Integer id) {
+			dRepos.upddeliverystatezero(id);
+			
+		}
 	
 }

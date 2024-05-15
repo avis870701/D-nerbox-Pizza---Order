@@ -21,7 +21,8 @@
     <div>
       <div class="brand-logo d-flex align-items-center justify-content-between">
         <a href="./index.html" class="text-nowrap logo-img">
-          <img src="../../static/back/images/logos/dark-logo.svg" width="180" alt="" />
+          <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt="" />
+          <link rel="shortcut icon" type="image/png" href="../../../static/images/logos/favicon.png" />
         </a>
         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
           <i class="ti ti-x fs-8"></i>
@@ -30,8 +31,6 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
         <ul id="sidebarnav">
-
-
             <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">後臺功能</span>
@@ -201,19 +200,23 @@
                 <h2>外送單資料</h2>
                 <br>
                 <table id="table_id" class="display" style="width:100%">
-                  <div style="text-align: left;"> <!-- 使用样式使内容靠左对齐 -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      <i class="fa-regular fa-square-plus"></i>添加
-                    </button>
-                    <button type="button" id="json"  class="btn btn-primary">
+                  <div style="text-align: left"> <!-- 使用样式使内容靠左对齐 -->
+                    <button type="button" id="json"  class="btn btn-dark">
                       匯出JSON
                     </button>
                     <button type="button" id="xml" class="btn btn-primary">
                       匯出XML
                     </button>
-                    <button type="button" id="excel" class="btn btn-primary">
-                      匯出<i class="far fa-file-excel"></i>
+                    <button type="button" id="excel" class="btn btn-success">
+                      匯出EXCEL
                   </button>
+                  <button id="cancel" class="btn btn-danger">
+                    取消的訂單
+                  </button>
+
+                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <i class="fa-regular fa-square-plus"></i>添加
+                    </button>
                 </div>
                 <br>
                     <thead>
@@ -223,28 +226,26 @@
                         <th>外送明細</th>
                         <th>外送地址</th>
                         <th>外送單狀態</th>
-                        <th>刪除</th>
-                        <th>修改</th>
+                        <th>取消訂單</th>
                     </tr>
                     </thead>
                     <tbody>
                         <tr th:each="delivery : ${delivery}">
                             <td th:text="${delivery.date}"></td>
-                            <td id="did" th:text="${delivery.id}"></td>
-                            <!-- <td th:text="${delivery.orderid}"></td> -->
                             <td>
-                            <a th:href="@{'/delivery/findbyorderid' + ${delivery.orderid}}"> <!--未完成 -->
-                              <span th:text="${delivery.orderid}"></span>
-                            </a>
+                              <a th:href="@{/delivery/update/{id}(id=${delivery.id})}"> 
+                                <span th:text="${delivery.id}"></span>
+                              </a>
+                            </td>
+                            <td>
+                            <a th:href="@{/delivery/details/{orderid}(orderid=${delivery.orderid})}"> 
+                                <span th:text="${delivery.orderid}"></span>
+                              </a>
                             </td>
                             <td th:text="${delivery.address}"></td>
                             <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
                             <td>
-                                <button th:onclick="'Delete(\'' + ${delivery.id} + '\')'">刪除</button>
-                            </td>
-                            <td>
-                                <a th:href="@{/delivery/update/{id}(id=${delivery.id})}">
-                                <button id="update">修改</button></a>
+                                <button th:onclick="'Cancel(\'' + ${delivery.id} + '\')'" class="btn btn-danger">取消</button>
                             </td>
                         </tr>
                       </tbody>
@@ -320,30 +321,37 @@
         
         }
       })
-    });
-  // 發送刪除請求
-  //   function Delete(deliveryId) {
-  //   if (confirm("確定要刪除這筆訂單嗎？")) {
-  //       $.ajax({
-  //           type: 'DELETE',
-  //           url: '/delivery/delete/' + deliveryId,
-  //           success: function(result) {
-  //               console.log('刪除成功:', result);
-  //               // 找到对应的表格行并隐藏
-  //               $('#table_id').find('tr').each(function() {
-  //                   if ($(this).find('#did').text() === deliveryId.toString()) {
-  //                       $(this).hide(); 
-  //                       return false; 
-  //                   }
-  //               });
-  //           },
-  //           error: function(xhr, status, error) {
-  //               console.error('刪除失敗:', error);
-  //               alert('刪除訂單失敗，請稍後再試。');
-  //           }
-  //       });
-  //     }
-  // }
+
+      $('#cancel').click(function(){
+        let  url =  'http://127.0.0.1:8080/delivery/state/0';
+        window.location.href=url; 
+      })
+    })
+    // 發送外送請求
+    // function Emp(deliveryId) {
+    //     if (confirm("確定要外送這筆訂單嗎？")) {
+    //     $.ajax({
+    //         type: 'PUT',
+    //         url: '/delivery/updstate/' + deliveryId,
+    //         success: function(result) {
+    //             alert('更改成功');
+    //             // window.location.href = '/delivery/home';
+    //             // 找到对应的表格行并隐藏
+    //             // $('#table_id').find('tr').each(function() {
+    //             //     if ($(this).find('#did').text() === deliveryId.toString()) {
+    //             //         $(this).hide(); 
+    //             //         return false; 
+    //             //     }
+    //             // });
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('刪除失敗:', error);
+    //             alert('刪除訂單失敗，請稍後再試。');
+    //         }
+    //     });
+    //   }
+    // }
+ 
     //發送新增請求
     // function addDelivery() {
     // let orderid = $('#orderid').val();
@@ -370,18 +378,6 @@
     //     }
     // });
 
-      // function test() {
-    //     var tableBody = document.getElementById('tableBody');
-    //     var rowCount = tableBody.getElementsByTagName('tr').length;
-    //     if (rowCount === 10) {
-    //         console.log("There are 10 records.");
-    //         // You can perform further actions here if needed
-    //     } else {
-    //         console.log("There are not 10 records.");
-    //         // You can handle this case accordingly
-    //     }
-    // }
-// }
 </script>    
 </body>
 </html>
