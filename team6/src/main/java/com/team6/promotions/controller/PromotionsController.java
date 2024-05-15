@@ -3,6 +3,7 @@ package com.team6.promotions.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -33,6 +34,7 @@ public class PromotionsController {
         return "back-html/promotions/GetAllPromotions";
     }
 
+
     // 查詢單筆
     @GetMapping("/promotions/{id}")
     public String getPromotionsById(@PathVariable("id") String promotionsId, Model model) {
@@ -48,7 +50,7 @@ public class PromotionsController {
 
 
     @PostMapping("/promotions/insert")
-    public String insertPromotions(@RequestParam("Promotions_id") String Promotions_id, @RequestParam("Promotions_name") String Promotions_name, @RequestParam("Promotions_content") String Promotions_content, @RequestParam("Promotions_picture") MultipartFile mf, @RequestParam("Promotions_discount") String Promotions_discount, @RequestParam("Promotions_discountcode") String Promotions_discountcode, @RequestParam("Promotions_startdate") String Promotions_startdate, @RequestParam("Promotions_enddate") String Promotions_enddate) {
+    public String insertPromotions(@RequestParam("Promotions_id") String Promotions_id, @RequestParam("Promotions_name") String Promotions_name, @RequestParam("Promotions_content") String Promotions_content, @RequestParam("Promotions_picture") MultipartFile mf, @RequestParam("Promotions_discount") String Promotions_discount, @RequestParam("Promotions_discountcode") String Promotions_discountcode, @RequestParam("Promotions_startdate") LocalDate Promotions_startdate, @RequestParam("Promotions_enddate") LocalDate Promotions_enddate) {
 
         if (!mf.isEmpty()) {
             try {
@@ -97,4 +99,14 @@ public class PromotionsController {
         boolean isSuccess = promotionsService.deletePromotions(promotionsId);
         return "success";
     }
+
+    //查詢本月活動
+
+    @GetMapping("/promotionsFront")
+    public String getPromotionsDate(Model model) {
+        List<Promotions> promotions = promotionsService.getPromotionsForCurrentMonth();
+        model.addAttribute("promotions", promotions);
+        return "front-html/promotions/monthPromotions";
+    }
+
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "Promotions")
 public class Promotions {
@@ -29,21 +31,19 @@ public class Promotions {
     @Column(name = "Promotions_discountcode")
     private String Promotions_discountcode;
 
+
     @Column(name = "Promotions_startdate")
-    private String Promotions_startdate;
+    private LocalDate Promotions_startdate;
 
     @Column(name = "Promotions_enddate")
-    private String Promotions_enddate;
-
+    private LocalDate Promotions_enddate;
 //	----------------------
 
 
     public Promotions() {
     }
-//	----------------------
 
-
-    public Promotions(String promotions_id, String promotions_name, String promotions_content, String promotions_picture, String promotions_discount, String promotions_discountcode, String promotions_startdate, String promotions_enddate) {
+    public Promotions(String promotions_id, String promotions_name, String promotions_content, String promotions_picture, String promotions_discount, String promotions_discountcode, LocalDate promotions_startdate, LocalDate promotions_enddate) {
         Promotions_id = promotions_id;
         Promotions_name = promotions_name;
         Promotions_content = promotions_content;
@@ -53,6 +53,9 @@ public class Promotions {
         Promotions_startdate = promotions_startdate;
         Promotions_enddate = promotions_enddate;
     }
+
+    //	----------------------
+
 
     public String getPromotions_id() {
         return Promotions_id;
@@ -102,19 +105,19 @@ public class Promotions {
         Promotions_discountcode = promotions_discountcode;
     }
 
-    public String getPromotions_startdate() {
+    public LocalDate getPromotions_startdate() {
         return Promotions_startdate;
     }
 
-    public void setPromotions_startdate(String promotions_startdate) {
+    public void setPromotions_startdate(LocalDate promotions_startdate) {
         Promotions_startdate = promotions_startdate;
     }
 
-    public String getPromotions_enddate() {
+    public LocalDate getPromotions_enddate() {
         return Promotions_enddate;
     }
 
-    public void setPromotions_enddate(String promotions_enddate) {
+    public void setPromotions_enddate(LocalDate promotions_enddate) {
         Promotions_enddate = promotions_enddate;
     }
 }

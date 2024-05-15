@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>所有活動資料</title>
-<!--     <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>-->
     <link rel="shortcut icon" type="image/png" href="../static/images/indexImages/DönerPizza.jpg"/>
     <link rel="stylesheet" href="../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../static/back/css/promotions/GetAll.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+
 </head>
 
 <body>
@@ -31,7 +33,7 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                 <ul id="sidebarnav">
-                    
+
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">後臺功能</span>
@@ -203,7 +205,7 @@
 
                     <div style="text-align: center;">
                         <h2>所有活動資料</h2>
-                        <table>
+                        <table id="promotionsTable">
                             <thead>
                             <tr>
                                 <th>活動編號</th>
@@ -224,7 +226,7 @@
                                 <td><a th:href="@{/promotions/promotions/{id}(id=${promotions.promotions_id})}"
                                        th:text="${promotions.promotions_name}"></a></td>
                                 <td th:text="${promotions.promotions_content}"></td>
-                                <td><img class="pimg" th:src="${promotions.promotions_picture}" alt="無圖片"></td>
+                                <td><img class="pimg" th:src="${promotions.promotions_picture}" alt="暫無圖片"></td>
                                 <td th:text="${promotions.promotions_discount}"></td>
                                 <td th:text="${promotions.promotions_discountcode}"></td>
                                 <td th:text="${promotions.promotions_startdate}"></td>
@@ -232,7 +234,6 @@
                                 <td><a class="btn"
                                        th:href="@{/promotions/promotions/update/{id}(id=${promotions.promotions_id})}">修改</a>
                                 </td>
-                                <!--            <td><a class="btn btn-danger" href="javascript:void(0);" th:onclick="'deletePromotions(\'' + ${promotions.promotions_name} + '\', \'' + ${promotions.promotions_id} + '\')'">刪除</a></td>-->
                                 <td>
                                     <a class="btn btn-danger" href="javascript:void(0);"
                                        th:attr="data-promotions-name=${promotions.promotions_name},
@@ -246,9 +247,6 @@
                             </tr>
                             </tbody>
                         </table>
-                        <h3>
-                            共<span th:text="${promotions.size()}"></span>筆活動資料
-                        </h3>
                         <p>
                             <a class="btn" th:href="@{/promotions/promotions/insert}">新增活動</a>
                             <a class="btn" th:href="@{/MemberGoBackToIndex}">回首頁</a>
@@ -256,6 +254,24 @@
                     </div>
 
                     <script th:inline="javascript">
+
+                        $.getScript("https://cdn.datatables.net/2.0.7/js/dataTables.min.js", function () {
+                            $('#promotionsTable').DataTable({
+                                language: {
+                                    "lengthMenu": "顯示 _MENU_ 筆資料",
+                                    "sInfo": "目前有 _MAX_ 筆資料",
+                                    "sSearch": "搜尋:",
+                                    "sEmptyTable": "尚未有資料紀錄存在",
+                                    "oPaginate": {
+                                        "sFirst": "首頁",
+                                        "sPrevious": "上一頁",
+                                        "sNext": "下一頁",
+                                        "sLast": "末頁"
+                                    },
+                                }
+                            });
+                        });
+
 
                         function deletePromotions(element) {
                             var promotionsName = element.getAttribute('data-promotions-name');
@@ -290,6 +306,10 @@
 <script src="../static/back/js/sidebarmenu.js"></script>
 <script src="../static/back/js/app.min.js"></script>
 <script src="../static/back/libs/simplebar/dist/simplebar.js"></script>
+
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+
+
 </body>
 
 </html>

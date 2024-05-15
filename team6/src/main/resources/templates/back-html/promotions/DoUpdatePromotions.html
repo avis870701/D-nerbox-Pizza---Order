@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>更新活動資料</title>
-    <!--     <link rel="shortcut icon" type="image/png" href="../../../static/back/images/logos/favicon.png"/>-->
     <link rel="shortcut icon" type="image/png" href="../../../static/images/indexImages/DönerPizza.jpg"/>
     <link rel="stylesheet" href="../../../static/back/css/styles.min.css"/>
     <link rel="stylesheet" href="../../../static/back/css/promotions/GetAll.css">
@@ -22,7 +21,7 @@
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
                 <a href="./index.html" class="text-nowrap logo-img">
-                    <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt=""/>                </a>
+                    <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt=""/> </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
                 </div>
@@ -208,38 +207,45 @@
                             <table>
                                 <tr>
                                     <td>活動編號</td>
-                                    <td><input type="text" name="promotions_id" th:value="${promotions.promotions_id}" readonly></td>
+                                    <td><input type="text" name="promotions_id" th:value="${promotions.promotions_id}"
+                                               readonly></td>
                                 </tr>
                                 <tr>
                                     <td>活動名稱</td>
-                                    <td><input type="text" name="promotions_name" th:value="${promotions.promotions_name}"></td>
+                                    <td><input type="text" name="promotions_name"
+                                               th:value="${promotions.promotions_name}"></td>
                                 </tr>
                                 <tr>
                                     <td>活動內容</td>
-                                    <td><textarea name="promotions_content" th:text="${promotions.promotions_content}" cols="22"
-                                        rows="3"></textarea></td>
+                                    <td><textarea name="promotions_content" th:text="${promotions.promotions_content}"
+                                                  cols="22"
+                                                  rows="3"></textarea></td>
 
-                                    <!--                                    <td><input type="text" name="promotions_content" th:value="${promotions.promotions_content}"></td>-->
                                 </tr>
                                 <tr>
                                     <td>活動圖片</td>
-                                    <td><input type="text" name="promotions_picture" th:value="${promotions.promotions_picture}"></td>
+                                    <td><input type="text" name="promotions_picture"
+                                               th:value="${promotions.promotions_picture}"></td>
                                 </tr>
                                 <tr>
                                     <td>活動折扣</td>
-                                    <td><input type="text" name="promotions_discount" th:value="${promotions.promotions_discount}"></td>
+                                    <td><input type="text" name="promotions_discount"
+                                               th:value="${promotions.promotions_discount}"></td>
                                 </tr>
                                 <tr>
                                     <td>折扣碼</td>
-                                    <td><input type="text" name="promotions_discountcode" th:value="${promotions.promotions_discountcode}"></td>
+                                    <td><input type="text" name="promotions_discountcode"
+                                               th:value="${promotions.promotions_discountcode}"></td>
                                 </tr>
                                 <tr>
                                     <td>開始日期</td>
-                                    <td><input type="text" name="promotions_startdate" th:value="${promotions.promotions_startdate}"></td>
+                                    <td><input type="text" name="promotions_startdate"
+                                               th:value="${promotions.promotions_startdate}"></td>
                                 </tr>
                                 <tr>
                                     <td>結束日期</td>
-                                    <td><input type="text" name="promotions_enddate" th:value="${promotions.promotions_enddate}"></td>
+                                    <td><input type="text" name="promotions_enddate"
+                                               th:value="${promotions.promotions_enddate}"></td>
                                 </tr>
                             </table>
                             <button class="btn" type="submit">更新</button>
