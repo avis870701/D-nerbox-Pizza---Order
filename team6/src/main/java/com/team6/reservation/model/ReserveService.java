@@ -254,5 +254,11 @@ public class ReserveService {
 
         mailSender.send(message);
     }
+    
+	//會員端:提供客人查詢自己的訂位紀錄
+	public List<Reserve> selectHistoryReservationByCustomer(String account){
+		return reserveRepository.selectHistoryReservationByCustomer(account);
+	}
+
 	
 }

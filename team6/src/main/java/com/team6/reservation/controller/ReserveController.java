@@ -1,6 +1,7 @@
 package com.team6.reservation.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -326,6 +327,21 @@ public class ReserveController {
 	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
 	}
 	
+	//會員端:給客人查詢歷史地位紀錄
+	@GetMapping("/selectHistoryReservationByCustomer")
+	public String selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
+	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
+	    
+	        account = accountBean.getmAccount();   
+	        System.out.println(account);
+	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+	        
+	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+	        return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
+	
+	    
+	}
+	
 	//session測試
 	@GetMapping("/test")
 	@ResponseBody
@@ -336,6 +352,8 @@ public class ReserveController {
 		
 		return accountBean.getDetailBean().getmEmail();
 	}
+	
+	
 	
 	/*暫時未用到*/
 //	//分頁:搜尋歷史訂位紀錄(日期時間由大到小)
