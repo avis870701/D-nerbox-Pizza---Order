@@ -48,6 +48,12 @@ public class DeliveryService {
 		return dRepos.save(delivery);
 	}
 	
+	//修改
+	public void  updateall() {
+		dRepos.upddeliveyall();;
+	}
+		
+	
 	//刪除單筆
 	public void DelDelivery(int id) {
 		dRepos.deleteById(id);
@@ -57,8 +63,8 @@ public class DeliveryService {
 		 return dRepos.save(delivery);
 	}
 	//新增
-	public void add(String orderid,String address){
-		 dRepos.add(orderid,address);
+	public Delivery add(String orderid,String date){
+		return  dRepos.add(orderid,date);
 	}
 	//創建JSON檔案
 	public void saveJson() {
@@ -215,11 +221,19 @@ public class DeliveryService {
 		//修改已接單
 		public void UpdState(Integer id) {
 			 dRepos.upddeliverystate(id);
-			 
 		}
 		public void UpdStateZero(Integer id) {
 			dRepos.upddeliverystatezero(id);
-			
+		}
+		
+		public void Updename(String ename,Integer id) {
+			dRepos.upddeliveryename(ename,id);
+		}
+		public void UpdEnd(Integer id) {
+			dRepos.upddeliveryEnd(id);
+		}
+		public void EndAll() {
+			dRepos.endall();
 		}
 	
 }

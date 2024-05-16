@@ -43,7 +43,7 @@
     </style>
 </head>
 <body background="../../../static/front/img/1.jpg">
-<!-- <body> -->
+	
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-3">
@@ -79,9 +79,6 @@
                         <span id="enter" class="input-group-text">自行輸入地址*</span>
                         <input type="text" aria-label="Last name" id="catchbar" class="form-control" placeholder="请輸入外送地址">
                     </div>
-                    <div>
-                        <input type="date" id="date" name="trip-start" min="2018-01-01" max="2100-12-31" />
-                    </div>
             </div>
 
                 <div class="text-center mt-3">
@@ -91,6 +88,47 @@
                 <div>
             </div>
 
+            <!-- <div class="container">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-3">
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-primary"><a href="https://www.google.com.tw/?hl=zh_TW">外帶</a></button>
+                            <button type="button" id="delivery" class="btn btn-outline-primary mr-2">外送</button>
+                            <button type="button" id="Attractions" class="btn btn-outline-primary">景點直送</button>
+                        </div>
+                        <br>
+                        <form action="/save" method="post"> 
+                            <h2 align="center">選擇景點</h2>
+                            <select id="Attraction1" class="form-select form-select-sm" aria-label="Small select example" name="address">
+                                <option selected>請選擇景點</option>
+                                <option value="桃園市中壢區中北路200號">中原大學</option>
+                                <option value="桃園市中壢區健行路229號">健行科技大學</option>
+                                <option value="桃園市中壢區中和路139號">中壢火車站</option>
+                                <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
+                                <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
+                                <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
+                                <option value="桃園市中壢區遠東路135號">元智大學</option>
+                            </select>
+                            <input type="date" id="date" name="date" min="2018-01-01" max="2100-12-31" />
+                            <button type="submit" id="Attraction2" class="btn btn-primary">確定</button>
+                        </form>
+                        <br>
+                        <br>
+                        <div class="input-group mt-3">
+                            <h2 id="deliveryaddress" class="text-center">輸入外送地址</h2>
+                            <form action="/save" method="post"> 
+                                <span id="enter" class="input-group-text">自行輸入地址*</span>
+                                <input type="text" aria-label="Address" name="address" class="form-control" placeholder="请輸入外送地址">
+                                <button type="submit" class="btn btn-primary">確定</button>
+                            </form>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="catch" onclick="getLocation()" class="btn btn-outline-primary"><i class="fas fa-map-marker-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             -->
             <div class="text-center mt-6">
                 <div id="iframe1">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.256463818154!2d121.23820147367306!3d24.957387541375393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468221447a0f021%3A0x2b86d2650bb8bcff!2z5Lit5Y6f5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714618377967!5m2!1szh-TW!2stw" width="480" height="450" style="border:0;" allowfullscreen="" loading="lazy"  referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -113,8 +151,7 @@
                         <div id="iframe7" class="iframe-container">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.876323700467!2d121.26086727367353!3d24.970322140855902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681f5490d43fcd%3A0x186eb5a7e52b332b!2z5YWD5pm65aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714623641605!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
-          
-        </div> 
+                    </div> 
 
         
     
@@ -129,21 +166,24 @@
 
     $('#submit').click(function(){
         const catchval =  $('#catchbar').val()
+        const date =  $('#date').val()
         console.log(catchval);
+        console.log(date);
         const matchesPattern = checkAddressFormat(catchval);
         let data = {
-            address : catchval
+            address : catchval,
+            date : date
         }
         
         if (matchesPattern) {
                 $.ajax({
                 type: 'POST',
-                url: '/address',
+                url: '/save',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function(result) {
                     alert('输入的字符串符合指定的模式。');
-                    window.location.href = '/delivery/home';   
+                    // window.location.href = '/delivery/home';   
                 },
             })
         } else {
@@ -160,7 +200,9 @@
 
     $('#Attraction2').click(function(){
         let Attraction1 = $('#Attraction1').val();
+        let date =  $('#date').val()
         console.log(Attraction1);
+        console.log(date);
     })
 
 </script>

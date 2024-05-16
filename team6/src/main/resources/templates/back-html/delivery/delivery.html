@@ -68,7 +68,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/delivery/" aria-expanded="false">
+                <a class="sidebar-link" href="/delivery/home" aria-expanded="false">
         <span>
           <i class="ti ti-file-description"></i>
         </span>
@@ -199,8 +199,11 @@
             <div align="center">
                 <h2>外送單資料</h2>
                 <br>
-                <table id="table_id" class="display" style="width:100%">
+                <table id="table_id" class="display" style="width:101%">
                   <div style="text-align: left"> <!-- 使用样式使内容靠左对齐 -->
+                    <div>
+                      <h2>功能</h2>
+                    </div>
                     <button type="button" id="json"  class="btn btn-dark">
                       匯出JSON
                     </button>
@@ -210,13 +213,27 @@
                     <button type="button" id="excel" class="btn btn-success">
                       匯出EXCEL
                   </button>
+                  <div>
+                    <h2>外送單管理</h2>
+                  </div>
                   <button id="cancel" class="btn btn-danger">
                     取消的訂單
                   </button>
-
-                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fa-regular fa-square-plus"></i>添加
-                    </button>
+                  </button>
+                  <div>
+                    <h2>外送員管理</h2>
+                  </div>
+                  <button id="accept" class="btn btn-danger">
+                  已接受
+                  </button>
+                  <button id="start" class="btn btn-danger">
+                  外送中
+                  </button>
+                  <button id="end" class="btn btn-danger">
+                  已送達
+                  </button>
                 </div>
                 <br>
                     <thead>
@@ -225,7 +242,9 @@
                         <th>外送訂單</th>
                         <th>外送明細</th>
                         <th>外送地址</th>
+                        <th>外送員工</th>
                         <th>外送單狀態</th>
+                        <th>員工外送</th>
                         <th>取消訂單</th>
                     </tr>
                     </thead>
@@ -243,7 +262,18 @@
                               </a>
                             </td>
                             <td th:text="${delivery.address}"></td>
-                            <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
+                            <td th:text="${delivery.ename}">
+                            <!-- <select id="ename">
+                              <option th:text="${delivery.ename}"></option>
+                              <option th:each="employeeList : ${employeeList}"
+                                th:text="${employeeList}">
+                              </select> -->
+                            </td>
+                            
+                            <td id="status" th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}">
+                            <td>
+                                <button th:onclick="'accept(\'' + ${delivery.id} + '\')'" class="btn btn-primary">接單</button>
+                            </td>
                             <td>
                                 <button th:onclick="'Cancel(\'' + ${delivery.id} + '\')'" class="btn btn-danger">取消</button>
                             </td>
@@ -272,7 +302,7 @@
                 <input type="text" class="form-control" id="orderid" name="orderid">
             </div>
               <div class="mb-3">
-              <label for="address" class="form-label">外送地址:</label>
+              <!-- <label for="address" class="form-label">外送地址:</label>
                 <select id="address"  name="address" class="form-select form-select-sm" aria-label="Small select example">
                   <option disabled selected>請選擇景點</option>
                   <option value="桃園市中壢區中北路200號">中原大學</option>
@@ -282,7 +312,7 @@
                   <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
                   <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
                   <option value="桃園市中壢區遠東路135號">元智大學</option>
-                </select>
+                </select> -->
               </div>
               <div>
                 <input type="text" aria-label="Last name" id="address" class="form-control" placeholder="请輸入外送地址">
@@ -293,6 +323,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
             <button type="button" class="btn btn-primary" onclick="addDelivery()">新增</button>
+            <button type="button" id="add" class="btn btn-primary" >一鍵新增</button>
           </div>
         </div>
       </div>
@@ -312,6 +343,7 @@
         "sInfo": "目前有 _MAX_ 筆資料",
         "sSearch": "搜尋:",
         "sEmptyTable": "尚未有資料紀錄存在",
+        "sInfoEmpty": "目前共有 0 筆紀錄",
         "oPaginate": {
             "sFirst": "首頁",
             "sPrevious": "上一頁",
@@ -326,32 +358,47 @@
         let  url =  'http://127.0.0.1:8080/delivery/state/0';
         window.location.href=url; 
       })
+
+      $('#accept').click(function(){
+        let  url =  'http://127.0.0.1:8080/delivery/state/2';
+        window.location.href=url; 
+      })
+
+      $('#start').click(function(){
+        let  url =  'http://127.0.0.1:8080/delivery/state/3';
+        window.location.href=url; 
+      })
+      $('#end').click(function(){
+        let  url =  'http://127.0.0.1:8080/delivery/state/4';
+        window.location.href=url; 
+      })
+
+      $('#add').click(function(){
+        $('#orderid').val('20240515111100');
+        $('#address').val('桃園市中壢區新生路二段421號');
+        $('#date').val('2024-5-15');
+
     })
+
+  })
+  
     // 發送外送請求
-    // function Emp(deliveryId) {
-    //     if (confirm("確定要外送這筆訂單嗎？")) {
-    //     $.ajax({
-    //         type: 'PUT',
-    //         url: '/delivery/updstate/' + deliveryId,
-    //         success: function(result) {
-    //             alert('更改成功');
-    //             // window.location.href = '/delivery/home';
-    //             // 找到对应的表格行并隐藏
-    //             // $('#table_id').find('tr').each(function() {
-    //             //     if ($(this).find('#did').text() === deliveryId.toString()) {
-    //             //         $(this).hide(); 
-    //             //         return false; 
-    //             //     }
-    //             // });
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error('刪除失敗:', error);
-    //             alert('刪除訂單失敗，請稍後再試。');
-    //         }
-    //     });
-    //   }
-    // }
- 
+    function accept(deliveryId) {
+        if (confirm("確定要接受這筆訂單嗎？")) {
+        $.ajax({
+            type: 'PUT',
+            url: '/delivery/updstate/' + deliveryId,
+            success: function(result) {
+                alert('接受成功');
+                window.location.href = '/delivery/state/2';
+            },
+            error: function(xhr, status, error) {
+                console.error('接受失敗:', error);
+                alert('接受訂單失敗，請稍後再試。');
+            }
+        });
+      }
+    }
     //發送新增請求
     // function addDelivery() {
     // let orderid = $('#orderid').val();

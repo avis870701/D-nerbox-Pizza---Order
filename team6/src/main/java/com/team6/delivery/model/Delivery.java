@@ -21,16 +21,23 @@ public class Delivery {
 	private String date;
 	private String address;
 	private int status = 1;
+	private String ename;
+	private String starttime;
+	private String endtime;
 
 
 	public Delivery() {
 	}
 		
-//	public Delivery(String orderid,String address) {
+	public Delivery(String address,String date) {
+		this.address = address;
+		this.date = date;
+		
+	}
+//	public Delivery(String orderid,String address,String date) {
 //		this.orderid = orderid;
 //		this.address = address;
-//		this.status = 1;
-//		
+//		this.date = date;
 //	}
 
 	public int getId() {
@@ -73,11 +80,37 @@ public class Delivery {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
+	public String getEname() {
+		return ename;
+	}
+
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+
 	@Override
 	public String toString() {
 		return "Delivery [id=" + id + ", orderid=" + orderid + ", date=" + date + ", address=" + address + ", status="
-				+ status + "]";
+				+ status + ", ename=" + ename + ", starttime=" + starttime + ", endtime=" + endtime + "]";
 	}
+	
+	
 	
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team6.delivery.model.Delivery;
 import com.team6.order.model.Order;
 import com.team6.order.model.OrderDetails;
 import com.team6.order.model.OrderService;
@@ -35,6 +36,8 @@ import com.team6.product.model.ProductCategoryService;
 import com.team6.product.model.ProductService;
 import com.team6.promotions.model.Promotions;
 import com.team6.promotions.model.PromotionsService;
+
+import jakarta.servlet.http.HttpSession;
 
 //後段
 @Controller
@@ -337,5 +340,7 @@ public class OrderController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法匯出 XML：" + e.getMessage());
 		}
 	}
+	
 
+	
 }

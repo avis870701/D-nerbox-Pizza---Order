@@ -15,13 +15,33 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	@Transactional
 	@Query(value = "UPDATE Delivery SET status = 2 WHERE delivery_id = ?", nativeQuery = true)
 	public void upddeliverystate(Integer id);
+	//修改外送員工姓名和外送狀態
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE Delivery SET status = 3, ename = ?  ,starttime = GETDATE() WHERE delivery_id =?", nativeQuery = true)
+	public void upddeliveryename(String ename,Integer id);
 	//修改為已取消
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE Delivery SET status = 0 WHERE delivery_id = ?", nativeQuery = true)
 	public void upddeliverystatezero(Integer id);
+	//修改為外送結束
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE Delivery  SET status = 4, endtime = GETDATE()  WHERE delivery_id = ?", nativeQuery = true)
+	public void upddeliveryEnd(Integer id);
 	
-	
+	//一次修改多筆
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE Delivery SET status = 2 ,starttime = GETDATE()  WHERE status = 3;", nativeQuery = true)
+	public void upddeliveyall();
+	//一次修改多筆外送結束
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE Delivery SET status = 4 ,endtime = GETDATE()  WHERE status = 3;", nativeQuery = true)
+	public void endall();
+//	===============================下面是查詢====================================================//
 	//查詢 狀態!=0
 	@Transactional
 	@Query(value = "SELECT * FROM Delivery WHERE status != 0", nativeQuery = true)
@@ -49,5 +69,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	
 	@Transactional
 	@Query(value = "INSERT INTO Delivery(order_id,date,address) VALUES ('?',GETDATE(),'?')", nativeQuery = true)
-	public void  add(String orderid,String address);
+	public Delivery  add(String orderid,String address);
 }
