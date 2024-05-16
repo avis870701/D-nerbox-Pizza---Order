@@ -11,8 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 @Transactional
@@ -87,12 +92,14 @@ public class MemberService {
 	}
 	
 	//自動寄信用
-    public void sendPlainText(String receivers, String subject, String content, String from) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(receivers);
-        message.setSubject(subject);
-        message.setText(content);
-        message.setFrom(from);
+    public void sendPlainText(String receivers, String subject, String content, String from) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
+        
+        helper.setTo(receivers);
+        helper.setSubject(subject);
+        helper.setText(content,true);
+        helper.setFrom(from);
 
         mailSender.send(message);
     } 
@@ -115,9 +122,12 @@ public class MemberService {
 		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
 		if (!optional.isEmpty()) {
 			MemberAccountBean accountBean = optional.get();
-			accountBean.setPermissions(permissions);
-			rma.save(accountBean);
-			return true;
+			if(accountBean.getHidden()==1) {
+				accountBean.setPermissions(permissions);
+				rma.save(accountBean);
+				return true;
+				
+			}
 		}
 		return false;
 	}
@@ -152,15 +162,26 @@ public class MemberService {
 	// 假刪除: 藏起來
 	public void delete(String account) {
 		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
-		System.out.println("account:"+account);
-		System.out.println("server:1");
+//		System.out.println("account:"+account);
+//		System.out.println("server:1");
 		if(!optional.isEmpty()) {
 			MemberAccountBean bean = optional.get();
 			bean.setPermissions(0);
 			bean.setHidden(0);
-			System.out.println("server:2");
+//			System.out.println("server:2");
 			rma.save(bean);
 		}
+	}
+	// 復原 假刪除
+	public void Reback(String account) {
+		Optional<MemberAccountBean> optional = rma.findAccountByAccount(account);
+		if(!optional.isEmpty()) {
+			MemberAccountBean bean = optional.get();
+			bean.setHidden(1);
+//			System.out.println("server:2");
+			rma.save(bean);
+		}
+		
 	}
 	// =================================================================
 
@@ -263,4 +284,5 @@ public class MemberService {
 		} catch (Exception e) {
 		}
 	}
+
 }

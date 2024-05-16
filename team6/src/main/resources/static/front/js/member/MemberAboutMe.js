@@ -16,7 +16,7 @@ function off() {
 
 
 // (登入後)會員更改密碼
-function updatePwd() {
+function updatePwd(account) {
 	let beforePwd = $('#beforePwd').val();
 	let afterPwd = $('#afterPwd').val();
 	let againPwd = $('#againPwd').val();
@@ -26,10 +26,10 @@ function updatePwd() {
 			type: 'post',
 			url: '/member/Member.UpdatePwd',
 			data: {
-				"account": `${member.mAccount}`,
+				"account": account,
 				"beforePwd": beforePwd,
-				"afterPwd": afterPwd,
-				"member": `${member}`
+				"afterPwd": afterPwd
+				
 			},
 			success: function () {
 				alert("修改成功!");

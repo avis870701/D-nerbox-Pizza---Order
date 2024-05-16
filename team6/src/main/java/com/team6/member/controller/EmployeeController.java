@@ -107,6 +107,7 @@ public class EmployeeController {
 
 		// 查詢系列--模糊
 		@GetMapping("/Member.SelectByName")
+		@ResponseBody
 		public String SelectByName(@RequestParam("mName") String mName, Model model, HttpSession session) {
 			List<MemberAccountBean> beans = mService.findByName(mName);
 			if (beans.isEmpty()) {
@@ -244,8 +245,11 @@ public class EmployeeController {
 		@ResponseBody
 		public String UpdatePermissions(@RequestParam("account") String account,
 				@RequestParam("permissions") int permissions, @RequestParam("empPermissions")int empPermissions, Model model) {
-			mService.updateToPermissions(account, permissions);
-			return "redirect:Member.SelectAll/1";
+			boolean result =mService.updateToPermissions(account, permissions);
+			if(result) {
+				return "redirect:Member.SelectAll/1";
+			}
+			return null;
 		}
 
 		// ===================================================================================================
@@ -254,6 +258,12 @@ public class EmployeeController {
 		@ResponseBody
 		public String Delete(@RequestParam("account") String account) {
 			mService.delete(account);
+			return "redirect:Member.SelectAll/1";
+		}
+		@PutMapping("/Member.Reback")
+		@ResponseBody
+		public String Reback(@RequestParam("account") String account) {
+			mService.Reback(account);
 			return "redirect:Member.SelectAll/1";
 		}
 
