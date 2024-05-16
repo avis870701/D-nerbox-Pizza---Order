@@ -121,7 +121,7 @@
                <p class="mb-0">桃園市中壢區</p> -->
                 </div>
             </div>
-            <div class="row g-5">
+            <div class="row g-5" style=" margin-left: 440px;">
                 <div class=" wow fadeInUp" data-wow-delay="0.1s">
                     <form method="post" action="/reservation/customerReserve" id="reservationForm">
                         <input type="hidden" name="_method" value="POST" />
@@ -181,7 +181,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" style="margin-top: 5px;">
                             <div class="col-sm-6">
                                 <button type="submit" name="checkin" value="customerReserve"
                                     class="btn btn-primary">送出</button>
@@ -191,10 +191,8 @@
                                         class="btn btn-primary"><b>訂位系統管理後台</b></button></a>
 
                             </div>
-
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -340,15 +338,6 @@
                 var y = document.getElementById('time').value;//選擇的時間
                 var selectHour = parseInt(y.split(":")[0]);
                 var selectMinutes = parseInt(y.split(":")[1])
-
-                console.log('nowhour' + nowHour);
-                console.log('nowminute' + nowMinutes);
-
-                console.log('selecthour' + selectHour);
-                console.log('selectminute' + selectMinutes);
-
-                console.log(Boolean(nowHour == selectHour));
-
             });
 
             document.getElementById('reservationForm').addEventListener('submit', displayDateTime);

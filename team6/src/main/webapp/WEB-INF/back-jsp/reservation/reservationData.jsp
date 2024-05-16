@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="/back/css/member/EmpIndexGoToInsertMember.css" />
 		<link rel="stylesheet" href="/back/css/styles.min.css" />
 		<script src="/back/js/member/EmpIndexGoToInsertMember.js"></script>
+
 		<style>
 			table {
 				width: 100%;
@@ -128,16 +129,15 @@
 					<table>
 						<thead>
 							<tr>
-								<th>編號</th>
-								<th>日期</th>
-								<th>時間</th>
-								<th>人數</th>
-								<th>姓名</th>
-								<th>電話</th>
-								<th>備註</th>
-								<th>預定狀態</th>
-								<th>修改</th>
-								<th>刪除</th>
+								<th style="width: 50px;">編號</th>
+								<th style="width: 100px; text-align: center;">日期</th>
+								<th style="width: 100px; text-align: center;">時間</th>
+								<th style="width: 50px;">人數</th>
+								<th style="width: 100px; text-align: center;">姓名</th>
+								<th style="width: 120px; text-align: center;">電話</th>
+								<th style="width: auto; text-align: center;">備註</th>
+								<th style="width: 120px; text-align: center;">預定狀態</th>
+								<th style="width: 120px; text-align: center;">刪除</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -146,49 +146,51 @@
 									for (Reserve reservation : reservations) {
 									%>
 									<tr>
-										<td>
+										<td style="text-align: center;">
 											<%=index++%>
 										</td>
 										<td>
-											<%=reservation.getReservationDate()%>
+											<input type="date" value="<%=reservation.getReservationDate()%>"
+												id="dateInput<%= reservation.getReservationId() %>"
+												onchange="updateDate('<%= reservation.getReservationId() %>')">
 										</td>
 										<td>
-											<%=reservation.getReservationTime()%>
+											<input type="time" id="timeInput<%= reservation.getReservationId() %>"
+												value="<%=reservation.getReservationTime()%>"
+												onchange="updateTime('<%= reservation.getReservationId() %>')">
 										</td>
 										<td>
-											<%=reservation.getNumberOfPeople()%>
+											<input type="number" id="peopleInput<%=reservation.getReservationId()%>"
+												value="<%=reservation.getNumberOfPeople()%>"
+												onchange="updatePeople('<%= reservation.getReservationId() %>')"
+												style="width: 40px; text-align: center;" max="20">
 										</td>
-										<td>
+										<td style="width: 100px; text-align: center;">
 											<%=reservation.getReservationName()%>
 										</td>
-										<td>
+										<td style="width: 120px; text-align: center;">
 											<%=reservation.getPhone()%>
 										</td>
-										<td>
+										<td style="width: auto; text-align: center;">
 											<%=reservation.getNote()%>
 										</td>
-										<td>
-											<% int status=reservation.getReservationStatus(); if (status==1) {
-												out.print("未確認"); } else if (status==2) { out.print("不會來"); } else if
-												(status==3) { out.print("會來"); } else { out.print("其他狀態"); } %>
+										<td style="width: 120px; text-align: center;">
+											<select id="rsInput<%= reservation.getReservationId() %>"
+												data-initial-value="<%= reservation.getReservationId() %>"
+												onchange="updateRSto3('<%= reservation.getReservationId() %>')">
+												<option value="1" <% if (reservation.getReservationStatus()==1) { %>
+													selected <% } %>>未確認</option>
+												<option value="2" <% if (reservation.getReservationStatus()==2) { %>
+													selected <% } %>>不會來</option>
+												<option value="3" <% if (reservation.getReservationStatus()==3) { %>
+													selected <% } %>>會來</option>
+												<option value="0" <% if (reservation.getReservationStatus() !=1 &&
+													reservation.getReservationStatus() !=2 &&
+													reservation.getReservationStatus() !=3) { %> selected <% } %>>其他狀態
+												</option>
+											</select>
 										</td>
-										<td><input type="text" id="peopleInput<%=reservation.getReservationId()%>"
-												style="width: 55px;" placeholder="人數修改">
-											<button type="button"
-												onclick="updatePeople('<%= reservation.getReservationId() %>')">人數修改</button>
-											<input type="time" id="timeInput<%= reservation.getReservationId() %>">
-											<button type="button"
-												onclick="updateTime('<%= reservation.getReservationId() %>')">時間修改</button>
-											<input type="date" id="dateInput<%= reservation.getReservationId() %>">
-											<button type="button"
-												onclick="updateDate('<%= reservation.getReservationId() %>')">日期修改</button>
-
-											<input type="text" id="rsInput<%= reservation.getReservationId() %>"
-												style="width: 30px;">
-											<button type="button"
-												onclick="updateRSto3('<%= reservation.getReservationId() %>')">預訂狀態修改</button>
-										</td>
-										<td><button type="button"
+										<td style="width: 120px; text-align: center;"><button type="button"
 												onclick="deleteReservation('<%= reservation.getReservationId() %>')">刪除</button>
 										</td>
 									</tr>
@@ -207,7 +209,7 @@
 							<h5 class="card-title fw-semibold mb-4">所有會員</h5>
 							<div class="table-responsive">
 
-
+								123132
 							</div>
 						</div>
 					</div>
@@ -216,11 +218,7 @@
 
 		</div>
 		<div class="py-6 px-6 text-center">
-			<p class="mb-0 fs-4">
-				Design and Developed by <a href="https://adminmart.com/" target="_blank"
-					class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>
-				Distributed by <a href="https://themewagon.com">ThemeWagon</a>
-			</p>
+
 		</div>
 		</div>
 		</div>
@@ -234,6 +232,8 @@
 		<script src="/back/libs/simplebar/dist/simplebar.js"></script>
 		<script src="/back/js/dashboard.js"></script>
 		<script src="/back/js/member/EmpMemberGetAll.js"></script>
+
+
 		<script>
 			function updatePeople(reservationId) {
 				var peopleSelect = document.getElementById('peopleInput' + reservationId);
@@ -248,7 +248,7 @@
 			function updateTime(reservationId) {
 				var timeSelect = document.getElementById('timeInput' + reservationId);
 				var newTime = timeSelect.value;
-
+				console.log(newTime);
 				if (newTime !== null && newTime !== '') {
 					updateReservationTime(reservationId, newTime);
 				} else {
@@ -318,6 +318,8 @@
 					location.reload();
 				}
 			}
+
+
 
 		</script>
 	</body>

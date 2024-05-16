@@ -49,6 +49,20 @@
                 height: 60px;
             }
 
+            button {
+                padding: 2px 4px;
+                border: none;
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+                width: auto;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
             /* th {
             background-color: #f2f2f2;
             font-weight: bold;
@@ -142,63 +156,54 @@
                 <div class=" wow fadeInUp" data-wow-delay="0.1s">
                     <p class="mb-4">如有疑問請撥打電話或點選官方網站查詢。
                     </p>
-                    <form>
-                        <div class="row g-3">
-                            <table class="table table-info table-striped table-hover">
-                                <tr>
-                                    <th>項目</th>
-                                    <th>內容</th>
-                                </tr>
-                                <tr>
-                                    <td>訂位大名：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getReservationName()%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位電話：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getPhone() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>人數：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getNumberOfPeople() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位日期：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getReservationDate() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位時間：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getReservationTime() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>UUID：</td>
-                                    <td>
-                                        <%= selectCustomerTommorowComeOrNot.getReservationUUID() %>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </form>
+                    <div class="row g-3">
+                        <table class="table  table-striped table-hover">
+                            <tr>
+                                <th>項目</th>
+                                <th>內容</th>
+                            </tr>
+                            <tr>
+                                <td>訂位大名：</td>
+                                <td>
+                                    <%= selectCustomerTommorowComeOrNot.getReservationName()%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>訂位電話：</td>
+                                <td>
+                                    <%= selectCustomerTommorowComeOrNot.getPhone() %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>人數：</td>
+                                <td>
+                                    <%= selectCustomerTommorowComeOrNot.getNumberOfPeople() %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>訂位日期：</td>
+                                <td>
+                                    <%= selectCustomerTommorowComeOrNot.getReservationDate() %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>訂位時間：</td>
+                                <td>
+                                    <%= selectCustomerTommorowComeOrNot.getReservationTime() %>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 10px;">
+                        <form action="/reservation/updateNumberOfPeopleAndReservationStatusTo3" method="GET">
+                            <input type="hidden" name="reservationUuid"
+                                value="<%= selectCustomerTommorowComeOrNot.getReservationUUID() %>">
+                            <input type="number" name="newNumberOfPeople" placeholder="更改人數" style="width: auto;">
+                            <button type="submit"><b>更改人數</b></button>
+                        </form>
+                        </p>
+                    </div>
                 </div>
-                <form action="/reservation/updateNumberOfPeopleAndReservationStatusTo3" method="GET">
-                    <input type="hidden" name="reservationUuid"
-                        value="<%= selectCustomerTommorowComeOrNot.getReservationUUID() %>">
-                    <input type="number" name="newNumberOfPeople" placeholder="輸入新的人數">
-                    <button type="submit"><b>更新人數</b></button>
-                </form>
-                </table>
-                <p>
             </div>
-        </div>
         </div>
         <!-- Contact End -->
 

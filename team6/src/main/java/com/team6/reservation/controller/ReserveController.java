@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.compress.archivers.zip.X000A_NTFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -327,20 +329,37 @@ public class ReserveController {
 	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
 	}
 	
-	//會員端:給客人查詢歷史地位紀錄
-	@GetMapping("/selectHistoryReservationByCustomer")
-	public String selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
-	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
-	    
-	        account = accountBean.getmAccount();   
-	        System.out.println(account);
-	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
-	        
-	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
-	        return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
+//	//會員端:給客人查詢歷史地位紀錄
+//	@GetMapping("/selectHistoryReservationByCustomer")
+//	@ResponseBody
+//	public List<Reserve> selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
+//	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");	    	
+//	        account = accountBean.getmAccount();
+//	        
+//	        System.out.println("印啦"+account);
+//	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+//	        
+//	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+//	        return selectHistoryReservationByCustomer;
+//	}
 	
-	    
+	// 會員端:給客人查詢歷史地位紀錄(測試accountBean=null)
+	@GetMapping("/selectHistoryReservationByCustomer")
+	@ResponseBody
+	public ResponseEntity<?> selectHistoryReservationByCustomer(HttpSession session, Model model) {
+	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
+	    if (accountBean == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("777");
+	    }
+
+	    String account = accountBean.getmAccount();
+	    System.out.println("印啦:" + account);
+
+	    List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+	    model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+	    return ResponseEntity.ok(selectHistoryReservationByCustomer);
 	}
+
 	
 	//session測試
 	@GetMapping("/test")
