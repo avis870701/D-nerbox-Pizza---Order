@@ -64,11 +64,6 @@ public class OrderController {
 	public String orderByEmployee() {
 		return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
 	}
-	
-	@RequestMapping(path = "/orderByEmployeeView", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderByEmployeeView() {
-		return "forward:/WEB-INF/back-jsp/order/ShowEmployeeOrder.jsp";
-	}
 
 	// select all
 	@GetMapping(path = "/orderSelectAll")
