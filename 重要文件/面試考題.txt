@@ -1,0 +1,16 @@
+1.何謂物件導向?
+2.請說明Final、Finally不同?
+3.請說明String字串中== 與equals不同?
+4.throw與throws的區別?
+5.Int以及Integer差異?
+6.a++與++a差異?
+7.抽象類別與介面有什麼區別?
+8.說明集合List與Set區別?
+9.覆寫Overriding 過載Overloading的區別
+10.MVC 是什麼?以及MVC架構的優點與缺點?
+11.aop,ioc在做什麼的
+12.RESTful API?
+13.如何查詢兩張表的結果(假設兩張表有關連,用sql)
+14.如何用子查詢?
+15.group by, order by 用處?
+16.sql 去重複?

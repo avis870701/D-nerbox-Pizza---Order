@@ -13,7 +13,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -32,7 +34,8 @@
 
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
@@ -42,20 +45,21 @@
     <div class="container-fluid bg-white sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-                <a href="index" class="navbar-brand">
+                <a href="/member/MemberIndex" class="navbar-brand">
                     <img class="img-fluid" src="../../../static/images/indexImages/DonerPizzaLogo.png" alt="Logo">
                 </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="#" class="nav-item nav-link active">產品</a>
-                        <a href="#" class="nav-item nav-link">活動優惠</a>
-                        <a href="#" class="nav-item nav-link">訂位趣</a>
-                        <a href="#" class="nav-item nav-link">線上點餐</a>
+                        <a href="/product/product.front" class="nav-item nav-link active">產品</a>
+                        <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
+                        <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
+                        <a href="/test" class="nav-item nav-link">線上點餐</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
                             <div class="dropdown-menu bg-light rounded-0 m-0">
                                 <a href="#" class="dropdown-item">Features</a>
                                 <a href="#" class="dropdown-item">Blog Article</a>
@@ -65,7 +69,8 @@
                         </div>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
-                        <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
+                        <a href="/member/login"><button type="button"
+                                class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
                     </div>
                 </div>
             </nav>
@@ -123,11 +128,11 @@
                                     <a class="text-primary fw-bold ms-2" href="/member/MemberGoToInsert">加入會員</a>
                                 </div>
                             </form>-->
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Article End -->
 
@@ -142,10 +147,14 @@
                     <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>0966 464 603</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>kebabtaiwan@gmail.com</p>
                     <div class="d-flex pt-3">
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2"
+                            href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -169,8 +178,10 @@
                     <h4 class="text-primary mb-4">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative w-100">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
+                            placeholder="Your email">
+                        <button type="button"
+                            class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                     </div>
                 </div>
             </div>
@@ -184,10 +195,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
+                    &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium"
+                        href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
+                    設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium"
+                        href="https://themewagon.com">ThemeWagon</a>
                 </div>
             </div>
         </div>
@@ -196,7 +209,8 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

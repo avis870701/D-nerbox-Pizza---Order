@@ -75,11 +75,11 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
                             <a href="/product/product.front" class="nav-item nav-link active">產品</a>
-                            <a href="#" class="nav-item nav-link">活動優惠</a>
-                            <a href="#" class="nav-item nav-link">訂位趣</a>
-                            <a href="#" class="nav-item nav-link">線上點餐</a>
+                            <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
+                            <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
+                            <a href="/test" class="nav-item nav-link">線上點餐</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
                                 <div class="dropdown-menu bg-light rounded-0 m-0">
                                     <a href="#" class="dropdown-item">Features</a>
                                     <a href="#" class="dropdown-item">Blog Article</a>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="border-start ps-4 d-none d-lg-block">
-                            <a href="login"><button type="button"
+                            <a href="/member/login"><button type="button"
                                     class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
                         </div>
                     </div>
@@ -102,7 +102,8 @@
         <!-- Page Header Start -->
         <div class="container-fluid page-header py-5">
             <div class="container text-center py-5">
-                <h3 class="display-2 text-dark mb-4 animated zoomIn fw-medium fst-italic fs-1">我們的產品</h3>
+                <h3 class="display-2 text-dark mb-4 animated zoomIn fw-medium fst-italic fs-1" id="ourProducts">我們的產品
+                </h3>
             </div>
         </div>
         <!-- Page Header End -->
@@ -227,21 +228,20 @@
 
 
         <!-- Footer Start -->
-        <div class="container-fluid bg-dark footer py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">Our Office</h4>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York,
-                            USA
+                        <h4 class="text-primary mb-4">聯絡資訊</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>320桃園市中壢區大仁街51號1F
                         </p>
-                        <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>0966 464 603</p>
+                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>kebabtaiwan@gmail.com</p>
                         <div class="d-flex pt-3">
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary rounded-circle me-2"
+                                href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
                                     class="fab fa-youtube"></i></a>
                             <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
@@ -249,21 +249,21 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">Quick Links</h4>
-                        <a class="btn btn-link" href="">About Us</a>
-                        <a class="btn btn-link" href="">Contact Us</a>
-                        <a class="btn btn-link" href="">Our Services</a>
-                        <a class="btn btn-link" href="">Terms & Condition</a>
-                        <a class="btn btn-link" href="">Support</a>
+                        <h4 class="text-primary mb-4">快速連結</h4>
+                        <a class="btn btn-link" href="">關於我們</a>
+                        <a class="btn btn-link" href="">聯絡我們</a>
+                        <a class="btn btn-link" href="">我們的服務</a>
+                        <a class="btn btn-link" href="">條款與協議</a>
+                        <a class="btn btn-link" href="">支援</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-primary mb-4">Business Hours</h4>
-                        <p class="mb-1">Monday - Friday</p>
-                        <h6 class="text-light">09:00 am - 07:00 pm</h6>
-                        <p class="mb-1">Saturday</p>
-                        <h6 class="text-light">09:00 am - 12:00 pm</h6>
-                        <p class="mb-1">Sunday</p>
-                        <h6 class="text-light">Closed</h6>
+                        <h4 class="text-primary mb-4">營業 時間</h4>
+                        <p class="mb-1">禮拜一 到 禮拜五</p>
+                        <h6 class="text-light">11:00 am - 9:00 pm</h6>
+                        <p class="mb-1">禮拜六 禮拜日</p>
+                        <h6 class="text-light">11:00 am - 9:00 pm</h6>
+                        <p class="mb-1">禮拜三</p>
+                        <h6 class="text-light">休息</h6>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h4 class="text-primary mb-4">Newsletter</h4>
@@ -286,12 +286,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="fw-medium" href="#">Your Site Name</a>, All Right Reserved.
+                        &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a
+                            class="fw-medium" href="/member/emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> Distributed By
-                        <a class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
+                        設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium"
+                            href="https://themewagon.com">ThemeWagon</a>
                     </div>
                 </div>
             </div>

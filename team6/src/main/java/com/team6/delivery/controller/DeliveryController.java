@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.team6.delivery.model.Delivery;
 import com.team6.delivery.model.DeliveryService;
+import com.team6.member.model.EmployeeAccountBean;
 import com.team6.order.model.OrderDetails;
 import com.team6.order.model.OrderService;
-
 
 @Controller
 @RequestMapping("/delivery")
 public class DeliveryController {
-
 
 	@Autowired
 	private DeliveryService dService;
@@ -45,10 +45,9 @@ public class DeliveryController {
 		employeeList.add("John");
 	}
 
-
-	//delivery後台
-	//網址 http://127.0.0.1:8080/delivery/home
-	//匯出json
+	// delivery後台
+	// 網址 http://127.0.0.1:8080/delivery/home
+	// 匯出json
 	@PostMapping("/json")
 	public ResponseEntity<String> saveJson() {
 		try {
@@ -56,11 +55,11 @@ public class DeliveryController {
 			return ResponseEntity.ok("JSON數據已成功寫入");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("無法保存JSON數據：" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法保存JSON數據：" + e.getMessage());
 		}
 	}
-	//匯出xml
+
+	// 匯出xml
 	@PostMapping("/xml")
 	public ResponseEntity<String> savexml() {
 		try {
@@ -68,12 +67,11 @@ public class DeliveryController {
 			return ResponseEntity.ok("xml數據已成功寫入");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("無法保存xml數據：" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法保存xml數據：" + e.getMessage());
 		}
 	}
 
-	//匯出excel
+	// 匯出excel
 	@PostMapping("/excel")
 	public ResponseEntity<String> saveexcel() {
 		try {
@@ -81,12 +79,11 @@ public class DeliveryController {
 			return ResponseEntity.ok("Excel數據已成功寫入");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("無法保存Excel數據：" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("無法保存Excel數據：" + e.getMessage());
 		}
 	}
 
-	//新增
+	// 新增
 	@PostMapping("/insert")
 	public ResponseEntity<String> addDelivery(@RequestBody Delivery delivery) {
 		try {
@@ -97,22 +94,24 @@ public class DeliveryController {
 			return new ResponseEntity<>("新增外送訂單失敗: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//刪除
+
+	// 刪除
 	@DeleteMapping("/delete/{id}")
 	@ResponseBody
-	public  String 	DelDelivery(@PathVariable("id") int id) {
+	public String DelDelivery(@PathVariable("id") int id) {
 		dService.DelDelivery(id);
 		return "success";
 	}
-	//軟刪除
+
+	// 軟刪除
 	@PutMapping("/delete/{id}")
 	@ResponseBody
-	public  String delDelivery(@PathVariable("id") int id) {
+	public String delDelivery(@PathVariable("id") int id) {
 		dService.UpdStateZero(id);
 		return "success";
 	}
 
-	//修改
+	// 修改
 	@PutMapping("/upd")
 	public ResponseEntity<String> upddelivery(@RequestBody Delivery delivery) {
 		try {
@@ -123,41 +122,46 @@ public class DeliveryController {
 		}
 	}
 
-	//查詢全部
-	//	@GetMapping("/home")
-	//	public String DeliveryHome(Model m) {
-	//		List<Delivery> delivery = dService.findall();
-	//		m.addAttribute("delivery",delivery);
-	//		return "/back-html/delivery/delivery";
-	//	}
-	//查詢狀態 != 0 全部
+	// 查詢全部
+	// @GetMapping("/home")
+	// public String DeliveryHome(Model m) {
+	// List<Delivery> delivery = dService.findall();
+	// m.addAttribute("delivery",delivery);
+	// return "/back-html/delivery/delivery";
+	// }
+	// 查詢狀態 != 0 全部
 	@GetMapping("/home")
-	public String Home(Model m) {
-		List<Delivery> delivery = dService.findnotZero();
-		m.addAttribute("delivery",delivery);
-		return "/back-html/delivery/delivery";
+	public String Home(@SessionAttribute(value = "emp", required = false) EmployeeAccountBean bean, Model m) {
+		if (bean != null) {
+			List<Delivery> delivery = dService.findnotZero();
+			m.addAttribute("delivery", delivery);
+			m.addAttribute("emp",bean);
+			return "/back-html/delivery/delivery";
+		}
+		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 	}
 
-	//查詢單筆
+	// 查詢單筆
 	@GetMapping("/update/{id}")
-	public	String Update(@PathVariable("id") int id ,Model m){
+	public String Update(@PathVariable("id") int id, Model m) {
 		Delivery delivery = dService.findById(id);
-		m.addAttribute("delivery",delivery);
+		m.addAttribute("delivery", delivery);
 		return "/back-html/delivery/update";
 	}
 
-	//查詢明細
+	// 查詢明細
 	@GetMapping("/details/{id}")
-	public String findbyorder(@PathVariable("id")  String id,Model m){
+	public String findbyorder(@PathVariable("id") String id, Model m) {
 		List<OrderDetails> OrderDetails = oService.findDetailsById(id);
-		m.addAttribute("OrderDetails",OrderDetails);
-		m.addAttribute("total",OrderDetails.get(0).getOrder().getPaidAmount());
-		m.addAttribute("customer",OrderDetails.get(0).getOrder().getAccount());
+		m.addAttribute("OrderDetails", OrderDetails);
+		m.addAttribute("total", OrderDetails.get(0).getOrder().getPaidAmount());
+		m.addAttribute("customer", OrderDetails.get(0).getOrder().getAccount());
 		return "/back-html/delivery/detail";
 	}
-	// ================================上面是好的不要修改========================================= //	
+	// ================================上面是好的不要修改=========================================
+	// //
 
-	//修改已接單
+	// 修改已接單
 	@PutMapping("/updstate/{id}")
 	public ResponseEntity<String> upddelivery(@PathVariable("id") int id) {
 		try {
@@ -167,8 +171,8 @@ public class DeliveryController {
 			return new ResponseEntity<>("更新狀態失敗: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	//修改外送中~外送結束
+
+	// 修改外送中~外送結束
 	@PutMapping("/end/all")
 	public ResponseEntity<String> Endall() {
 		try {
@@ -179,19 +183,20 @@ public class DeliveryController {
 		}
 	}
 
-	//修改員工接單和開始外送
+	// 修改員工接單和開始外送
 	@PutMapping("/update/ename")
 	public ResponseEntity<String> deliveryename(@RequestBody Delivery delivery) {
 		try {
 			String ename = delivery.getEname();
 			int id = delivery.getId();
-			dService.Updename(ename,id);
+			dService.Updename(ename, id);
 			return new ResponseEntity<>("開始外送", HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>("開始外送失敗: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//修改外送結束
+
+	// 修改外送結束
 	@PutMapping("/update/end/{id}")
 	public ResponseEntity<String> deliveryEnd(@PathVariable("id") int id) {
 		try {
@@ -202,36 +207,36 @@ public class DeliveryController {
 		}
 	}
 
-	//查詢取消的訂單
+	// 查詢取消的訂單
 	@GetMapping("/state/0")
 	public String cancelorder(Model m) {
 		List<Delivery> delivery = dService.findallzero();
-		m.addAttribute("delivery",delivery);
+		m.addAttribute("delivery", delivery);
 		return "/back-html/delivery/cancelorder";
 	}
 
-	//查詢接受的訂單
+	// 查詢接受的訂單
 	@GetMapping("/state/2")
 	public String acceptorder(Model m) {
 		List<Delivery> delivery = dService.findalltwo();
-		m.addAttribute("employeeList",employeeList);
-		m.addAttribute("delivery",delivery);
+		m.addAttribute("employeeList", employeeList);
+		m.addAttribute("delivery", delivery);
 		return "/back-html/delivery/accept";
 	}
 
-	//查詢外送中的訂單
+	// 查詢外送中的訂單
 	@GetMapping("/state/3")
 	public String startorder(Model m) {
 		List<Delivery> delivery = dService.findallthree();
-		m.addAttribute("delivery",delivery);
+		m.addAttribute("delivery", delivery);
 		return "/back-html/delivery/start";
 	}
 
-	//查詢結束外送的訂單
+	// 查詢結束外送的訂單
 	@GetMapping("/state/4")
 	public String endorder(Model m) {
 		List<Delivery> delivery = dService.findallfour();
-		m.addAttribute("delivery",delivery);
+		m.addAttribute("delivery", delivery);
 		return "/back-html/delivery/end";
 	}
 

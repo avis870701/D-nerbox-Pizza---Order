@@ -110,7 +110,7 @@ $(document).ready(function () {
     // 分頁按鈕點擊事件
     $('.pagination li a').click(function (e) {
         e.preventDefault();
-        window.scrollTo({ top: $('#products-header').offset().top, behavior: 'smooth' });
+        window.scrollTo({ top: $('#ourProducts').offset().top, behavior: 'smooth' });
 
         var target = $(this);
         var categoryId = $('.categoryFilter:checked').val(); // 獲取當前選中的類別ID

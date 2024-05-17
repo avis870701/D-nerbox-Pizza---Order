@@ -13,7 +13,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -28,27 +30,29 @@
 
     <!-- Template Stylesheet -->
     <link href="../../../static/front/css/style.css" rel="stylesheet">
-    <link rel="stylesheet"  href="../../../static/front/css/delivery/deliverystyle.css">
+    <link rel="stylesheet" href="../../../static/front/css/delivery/deliverystyle.css">
 </head>
 <style>
     .fixed-top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1030; /* 確保導覽列在其他元素之上 */
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1030;
+        /* 確保導覽列在其他元素之上 */
+    }
 </style>
 
-<body >
+<body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-   
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
-    
-    
+
+
     <!-- Navbar Start -->
     <!-- <div class="container-fluid bg-white sticky-top">
         <div class="container">
@@ -88,17 +92,18 @@
                 <a href="index" class="navbar-brand">
                     <img class="img-fluid" src="../../../static/images/indexImages/DonerPizzaLogo.png" alt="Logo">
                 </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="#" class="nav-item nav-link active">產品</a>
-                        <a href="#" class="nav-item nav-link">活動優惠</a>
-                        <a href="#" class="nav-item nav-link">訂位趣</a>
-                        <a href="#" class="nav-item nav-link">線上點餐</a>
+                        <a href="/product/product.front" class="nav-item nav-link active">產品</a>
+                        <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
+                        <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
+                        <a href="/test" class="nav-item nav-link">線上點餐</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
                             <div class="dropdown-menu bg-light rounded-0 m-0">
                                 <a href="#" class="dropdown-item">Features</a>
                                 <a href="#" class="dropdown-item">Blog Article</a>
@@ -108,7 +113,8 @@
                         </div>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
-                        <a href="login"><button type="button" class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
+                        <a href="/member/login"><button type="button"
+                                class="btn btn-sm p-0 btn-primary py-2 px-2">會員登入</button></a>
                     </div>
                 </div>
             </nav>
@@ -116,10 +122,10 @@
     </div>
     <!-- Navbar End -->
 
-   <!-- 原Page  -->
+    <!-- 原Page  -->
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5"> 
+        <div class="container text-center py-5">
             <!-- <h1 class="display-2 text-dark mb-4 animated slideInDown">會員登入</h1> -->
             <nav aria-label="breadcrumb animated slideInDown">
                 <!-- <ol class="breadcrumb justify-content-center mb-0">
@@ -127,10 +133,10 @@
                     <li class="breadcrumb-item"><a href="#">會員</a></li>
                     <li class="breadcrumb-item text-dark" aria-current="page">會員登入</li>
                 </ol> -->
-            </nav> 
+            </nav>
         </div>
-    </div> 
-   
+    </div>
+
 
 
     <!-- Article Start -->
@@ -139,7 +145,7 @@
             <div class="row g-5 justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <!-- <div class="card mb-0"> -->
-                        <!-- <div class="card-body">
+                    <!-- <div class="card-body">
                             <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                                 <img src="/images/member/DonerPizzaSmall.png" width="180" alt="">
                             </a>
@@ -166,74 +172,102 @@
                                     <a class="text-primary fw-bold ms-2" href="/member/MemberGoToInsert">加入會員</a>
                                 </div>
                             </form>-->
-                            <h2>請先選擇日期</h2>
-                            <input class="mt-5" type="date" id="date" name="trip-start" min="2018-01-01" max="2100-12-31" required/>
-                            <h2>選擇取餐方式</h2>
-                            <div class="container">
-                                <div class="justify-content-center mt-5">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            
-                                            <button type="button" style="width: 234px; height: 76px;" class="btn btn-outline-primary"><a href="https://www.google.com.tw/?hl=zh_TW">外帶</a></button>
-                                            <button type="button" id="delivery" class="btn btn-outline-primary mr-2" style="width: 234px; height: 76px;">外送</button>
-                                            <button type="button"  id="Attractions" class="btn btn-outline-primary" style="width: 234px; height: 76px;">景點直送</button>
-                                            <!-- <h2 align="center">選擇景點</h2> -->
-                                            <select  id="Attraction1" class="form-select form-select-sm " aria-label="Small select example">
-                                                <option selected>請選擇景點</option>
-                                                <option value="桃園市中壢區中北路200號">中原大學</option>
-                                                <option value="桃園市中壢區健行路229號">健行科技大學</option>
-                                                <option value="桃園市中壢區中和路139號">中壢火車站</option>
-                                                <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
-                                                <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
-                                                <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
-                                                <option value="桃園市中壢區遠東路135號">元智大學</option>
-                                            </select>
-                                            <button id="Attraction2" class="btn btn-primary">確定</button>
+                    <h2>請先選擇日期</h2>
+                    <input class="mt-5" type="date" id="date" name="trip-start" min="2018-01-01" max="2100-12-31"
+                        required />
+                    <h2>選擇取餐方式</h2>
+                    <div class="container">
+                        <div class="justify-content-center mt-5">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                                    <button type="button" style="width: 234px; height: 76px;"
+                                        class="btn btn-outline-primary"><a
+                                            href="https://www.google.com.tw/?hl=zh_TW">外帶</a></button>
+                                    <button type="button" id="delivery" class="btn btn-outline-primary mr-2"
+                                        style="width: 234px; height: 76px;">外送</button>
+                                    <button type="button" id="Attractions" class="btn btn-outline-primary"
+                                        style="width: 234px; height: 76px;">景點直送</button>
+                                    <!-- <h2 align="center">選擇景點</h2> -->
+                                    <select id="Attraction1" class="form-select form-select-sm "
+                                        aria-label="Small select example">
+                                        <option selected>請選擇景點</option>
+                                        <option value="桃園市中壢區中北路200號">中原大學</option>
+                                        <option value="桃園市中壢區健行路229號">健行科技大學</option>
+                                        <option value="桃園市中壢區中和路139號">中壢火車站</option>
+                                        <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
+                                        <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
+                                        <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
+                                        <option value="桃園市中壢區遠東路135號">元智大學</option>
+                                    </select>
+                                    <button id="Attraction2" class="btn btn-primary">確定</button>
+                                </div>
+                                <br>
+                                <h2 id="deliveryaddress" class="text-center">輸入外送地址</h2>
+                                <div class="input-group mt-3">
+                                    <div>
+                                    </div>
+                                    <br>
+                                    <div id="enter" class="input-group-text">自行輸入地址*</div>
+                                    <input type="text" aria-label="Last name" id="catchbar" class="form-control"
+                                        placeholder="请輸入外送地址">
+
+                                    <!-- <button id="catch" onclick="getLocation()" class="btn btn-outline-primary"><i class="fas fa-map-marker-alt"></i></button> -->
+                                    <button id="submit" class="btn btn-primary">確定</button>
+                                </div>
+                                <h2 id="point">確認外送景點</h2>
+                                <div style="height: 342px;">
+                                    <div class="text-center mt-6">
+                                        <div id="iframe1">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.256463818154!2d121.23820147367306!3d24.957387541375393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468221447a0f021%3A0x2b86d2650bb8bcff!2z5Lit5Y6f5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714618377967!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
-                                        <br>
-                                        <h2 id="deliveryaddress" class="text-center">輸入外送地址</h2>
-                                        <div class="input-group mt-3">
-                                        <div>
+                                        <div id="iframe2">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.555785535697!2d121.22654517367268!3d24.947198441784487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468224f87c71751%3A0x6c3205000735ed1d!2z5YGl6KGM56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714619132073!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
-                                            <br>
-                                                <div id="enter" class="input-group-text">自行輸入地址*</div>
-                                                    <input type="text" aria-label="Last name" id="catchbar" class="form-control" placeholder="请輸入外送地址">
-                                                
-                                                <!-- <button id="catch" onclick="getLocation()" class="btn btn-outline-primary"><i class="fas fa-map-marker-alt"></i></button> -->
-                                        <button id="submit" class="btn btn-primary">確定</button>
+                                        <div id="iframe3">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14469.462824194185!2d121.20713658626295!3d24.953669318369634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346823f620af7c8b%3A0xb2ea3ac8ba632176!2z5Lit5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621334190!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
-                                        <h2 id="point">確認外送景點</h2>
-                                       <div style="height: 342px;">
-                                        <div class="text-center mt-6">
-                                            <div id="iframe1">
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.256463818154!2d121.23820147367306!3d24.957387541375393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468221447a0f021%3A0x2b86d2650bb8bcff!2z5Lit5Y6f5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714618377967!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy"  referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            </div>
-                                                    <div id="iframe2">
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.555785535697!2d121.22654517367268!3d24.947198441784487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468224f87c71751%3A0x6c3205000735ed1d!2z5YGl6KGM56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714619132073!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                    <div id="iframe3">
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14469.462824194185!2d121.20713658626295!3d24.953669318369634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346823f620af7c8b%3A0xb2ea3ac8ba632176!2z5Lit5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621334190!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                    <div id="iframe4">
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.802670190146!2d121.25567347367371!3d24.97282754075522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821ff2247e46d%3A0x629926233052db00!2z5YWn5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621369010!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                    <div id="iframe5" >
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.55891941995!2d121.24213877367265!3d24.94709174178881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346822695ba82b0d%3A0xa64bad4fe99d1b89!2z5a625qiC56aPIOS4reWjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623400444!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                    <div id="iframe6" >
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.8143504390578!2d121.25110247367361!3d24.97243024077114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821f8791fe543%3A0x66a64f7a04ad5200!2z5a625qiC56aPIOWFp-WjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623526141!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                    <!-- <div id="iframe7" class="iframe-container"> -->
-                                                    <div id="iframe7">
-                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.876323700467!2d121.26086727367353!3d24.970322140855902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681f5490d43fcd%3A0x186eb5a7e52b332b!2z5YWD5pm65aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714623641605!5m2!1szh-TW!2stw" width="480" height="390" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                    </div>
-                                                </div> 
-                                            </div>
+                                        <div id="iframe4">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.802670190146!2d121.25567347367371!3d24.97282754075522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821ff2247e46d%3A0x629926233052db00!2z5YWn5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621369010!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                        <div id="iframe5">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.55891941995!2d121.24213877367265!3d24.94709174178881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346822695ba82b0d%3A0xa64bad4fe99d1b89!2z5a625qiC56aPIOS4reWjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623400444!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                        <div id="iframe6">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.8143504390578!2d121.25110247367361!3d24.97243024077114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821f8791fe543%3A0x66a64f7a04ad5200!2z5a625qiC56aPIOWFp-WjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623526141!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                        <!-- <div id="iframe7" class="iframe-container"> -->
+                                        <div id="iframe7">
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.876323700467!2d121.26086727367353!3d24.970322140855902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681f5490d43fcd%3A0x186eb5a7e52b332b!2z5YWD5pm65aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714623641605!5m2!1szh-TW!2stw"
+                                                width="480" height="390" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Article End -->
@@ -249,10 +283,14 @@
                     <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>0966 464 603</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>kebabtaiwan@gmail.com</p>
                     <div class="d-flex pt-3">
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2"
+                            href="https://www.facebook.com/donerzhongli/"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -276,8 +314,10 @@
                     <h4 class="text-primary mb-4">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative w-100">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
+                            placeholder="Your email">
+                        <button type="button"
+                            class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                     </div>
                 </div>
             </div>
@@ -291,10 +331,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
+                    &copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>, <a class="fw-medium"
+                        href="emplogin">Döner Pizza德氏披薩</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium" href="https://themewagon.com">ThemeWagon</a>
+                    設計由 <a class="fw-medium" href="https://htmlcodex.com">HTML Codex</a> 發行由 <a class="fw-medium"
+                        href="https://themewagon.com">ThemeWagon</a>
                 </div>
             </div>
         </div>
@@ -303,7 +345,8 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->
@@ -319,72 +362,72 @@
 
     <!-- Template Javascript -->
     <script src="../../../static/front/js/main.js"></script>
-<script>
-     $('#submit').click(function(){
-        let catchval =  $('#catchbar').val()
-        let date =  $('#date').val()
-        console.log(catchval.length);
-        console.log(date);
-        // if(date === undefined) {
+    <script>
+        $('#submit').click(function () {
+            let catchval = $('#catchbar').val()
+            let date = $('#date').val()
+            console.log(catchval.length);
+            console.log(date);
+            // if(date === undefined) {
             // alert("日期不能為空")
-        // }
-        // const lengthPattern = checkAddresslength(catchval);
-        const matchesPattern = checkAddressFormat(catchval);
-        
-        let data = {
-            address : catchval,
-            date : date
-        }
-        if(catchval.length > 6){
-            // alert('输入字串長度符合。');
-            if (matchesPattern) {
-                $.ajax({
-                type: 'POST',
-                url: '/save',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function(result) {
-                    alert('输入的字符串符合指定的模式。');
-                    // window.location.href = '/delivery/home';   
-                },
-            })
-        } else {
-            alert('输入字串長度太少。');
-        }
+            // }
+            // const lengthPattern = checkAddresslength(catchval);
+            const matchesPattern = checkAddressFormat(catchval);
+
+            let data = {
+                address: catchval,
+                date: date
+            }
+            if (catchval.length > 6) {
+                // alert('输入字串長度符合。');
+                if (matchesPattern) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/save',
+                        contentType: 'application/json',
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            alert('输入的字符串符合指定的模式。');
+                            // window.location.href = '/delivery/home';   
+                        },
+                    })
+                } else {
+                    alert('输入字串長度太少。');
+                }
             } else {
-            alert('請输入桃園市中壢區及路名。');
-        }
-    });
+                alert('請输入桃園市中壢區及路名。');
+            }
+        });
 
-     // 使用正则表达式的 test() 方法检查输入字符串是否符合模式
-     function checkAddressFormat(inputString) {
-        const pattern = /桃園市|中壢區/;
-        return pattern.test(inputString);
-    }
-   
- 
-
-    $('#Attraction2').click(function(){
-        let Attraction1 = $('#Attraction1').val();
-        let date =  $('#date').val()
-        console.log(Attraction1);
-        console.log(date);
-        let data = {
-            address : Attraction1,
-            date : date
+        // 使用正则表达式的 test() 方法检查输入字符串是否符合模式
+        function checkAddressFormat(inputString) {
+            const pattern = /桃園市|中壢區/;
+            return pattern.test(inputString);
         }
-        $.ajax({
+
+
+
+        $('#Attraction2').click(function () {
+            let Attraction1 = $('#Attraction1').val();
+            let date = $('#date').val()
+            console.log(Attraction1);
+            console.log(date);
+            let data = {
+                address: Attraction1,
+                date: date
+            }
+            $.ajax({
                 type: 'POST',
                 url: '/save',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
-                success: function(result) {
+                success: function (result) {
                     // alert('输入的字符串符合指定的模式。');
-                    window.location.href = '/delivery/home';   
+                    window.location.href = '/delivery/home';
                 },
             })
-    })
-</script>
+        })
+    </script>
 </body>
 
 </html>

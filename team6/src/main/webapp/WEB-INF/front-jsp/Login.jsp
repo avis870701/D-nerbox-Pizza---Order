@@ -61,12 +61,14 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto">
+
                             <a href="/product/product.front" class="nav-item nav-link active">產品</a>
-                            <a href="#" class="nav-item nav-link">活動優惠</a>
-                            <a href="#" class="nav-item nav-link">訂位趣</a>
-                            <a href="#" class="nav-item nav-link">線上點餐</a>
+                            <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
+                            <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
+                            <a href="/test" class="nav-item nav-link">線上點餐</a>
+
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於?</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
                                 <div class="dropdown-menu bg-light rounded-0 m-0">
                                     <a href="#" class="dropdown-item">Features</a>
                                     <a href="#" class="dropdown-item">Blog Article</a>

@@ -45,7 +45,6 @@ public class ReserveController {
 	//後台進入點&店家查詢待確認預訂訊息的總數
 	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
 	public String reserveMainAction(Model model) {
-		
 		int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
 		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信(html)
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		

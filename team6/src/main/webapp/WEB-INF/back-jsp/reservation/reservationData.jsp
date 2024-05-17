@@ -81,30 +81,33 @@
 						<ul id="sidebarnav">
 							<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 									class="hide-menu">後台功能列表</span></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="/member/Member.SelectAll"
-									aria-expanded="false"> <span>
-										<i class="ti ti-layout-dashboard"></i>
-									</span> <span class="hide-menu">會員管理功能</span>
-								</a></li>
-							<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
-									class="hide-menu">其他功能列表</span></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
-										<i class="ti ti-article"></i>
-									</span> <span class="hide-menu">產品管理功能</span>
-								</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
-										<i class="ti ti-alert-circle"></i>
-									</span> <span class="hide-menu">訂單管理功能</span>
-								</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="/reservation/reservemain.controller"
 									aria-expanded="false"> <span> <i class="ti ti-cards"></i>
 									</span> <span class="hide-menu">訂位管理功能</span>
 								</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./ui-forms.html"
+							<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+									class="hide-menu">其他功能列表</span></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/emp/Member.SelectAll/1"
+									aria-expanded="false"> <span>
+										<i class="ti ti-layout-dashboard"></i>
+									</span> <span class="hide-menu">會員管理功能</span>
+								</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/product/Product_Test_Main"
+									aria-expanded="false"> <span>
+										<i class="ti ti-article"></i>
+									</span> <span class="hide-menu">產品管理功能</span>
+								</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/order/order.action"
+									aria-expanded="false"> <span>
+										<i class="ti ti-alert-circle"></i>
+									</span> <span class="hide-menu">訂單管理功能</span>
+								</a></li>
+
+							<li class="sidebar-item"><a class="sidebar-link" href="/delivery/home"
 									aria-expanded="false"> <span> <i class="ti ti-file-description"></i>
 									</span> <span class="hide-menu">外送管理功能</span>
 								</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="./ui-typography.html"
+							<li class="sidebar-item"><a class="sidebar-link" href="/promotions/promotionsMain"
 									aria-expanded="false"> <span>
 										<i class="ti ti-typography"></i>
 									</span> <span class="hide-menu">活動管理功能</span>
@@ -266,7 +269,7 @@
 					alert("請選擇有效的時間");
 				}
 			}
-			
+
 			function updateDate(reservationId) {
 				var dateSelect = document.getElementById('dateInput' + reservationId);
 				var newDate = dateSelect.value;
@@ -309,7 +312,7 @@
 				xhr.send('action=updateReservationDate&reservationId=' + encodeURIComponent(reservationId) + '&newDate=' + encodeURIComponent(newDate));
 				location.reload();
 			}
-			
+
 			function updateReservationTime(reservationId, newTime) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('PUT', '/reservation/updateReservationTime', true);
