@@ -218,6 +218,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <button id="back">回外送單</button>
             </div>
         </div>
     </div>
@@ -244,6 +245,10 @@
         
         }
       })
+    })
+    $('#back').click(function(){
+      let url = '/delivery/home';
+      location.href= url ;
     })
 </script>    
 </body>

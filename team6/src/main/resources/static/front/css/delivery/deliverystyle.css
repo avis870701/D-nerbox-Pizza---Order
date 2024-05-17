@@ -11,46 +11,32 @@
 #iframe4,
 #iframe5,
 #iframe6,
-#iframe7 
-{ 
+#iframe7,
+#point { 
    display: none;
    
 } 
 
-  #iframe1,
+  
+#iframe1,
   #iframe2,
   #iframe3,
   #iframe4,
   #iframe5,
   #iframe6,
   #iframe7{   
-    position: fixed;   
+    /* position: absolute;    */
     left:0;   
-    top:200px;             
+    top:100px;             
     right:0;   
     bottom:0;   
     border:none;   
     }   
-  
-     /* #iframe1,
-  #iframe2,
-  #iframe3,
-  #iframe4,
-  #iframe5,
-  #iframe6,
-  #iframe7{   
-    position: fixed;   
-    left:0;   
-    top:190px;             
-    right:0;   
-    bottom:0;   
-    border:none;   
-    }    */
-    iframe{   
-        width:50%;   
-        height: 75%;   
-        border:none;       
-    }  
+/* iframe{   
+    width:50%;   
+    height: 75%;   
+    border:none;       
+    }   */
 
 
 body 

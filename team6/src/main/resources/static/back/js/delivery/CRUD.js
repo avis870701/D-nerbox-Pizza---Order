@@ -76,6 +76,7 @@
         let date = $('#date').val();
         let address= $('#address').val();
         let status = $('#status').val();
+        let ename = $('#ename').val();
 
         // 建成json
         let Data = {
@@ -83,7 +84,8 @@
             orderid: orderid,
             date: date,
             address: address,
-            status: status
+            status: status,
+            ename: ename
         };
         // console.log(Data);
     

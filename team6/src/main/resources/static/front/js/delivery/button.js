@@ -24,10 +24,12 @@ let Attractions = false;
 
 $('#Attractions').click(function(){
     if (!deliveryVisible) {
+        $('#point').show();
         $('#Attraction1').show();
         $('#Attraction2').show();
     deliveryVisible = true;
     } else {
+        $('#point').hide();
         $('#Attraction1').hide();
         $('#Attraction2').hide();
     deliveryVisible = false;

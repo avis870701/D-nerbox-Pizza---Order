@@ -34,7 +34,7 @@ public class DeliveryOrderController {
 //	http://localhost:8080/test
 	@GetMapping("/test")
 	public String home() {
-		return "/front-html/delivery/test1";
+		return "/front-html/delivery/20240517";
 	}
 	
 	@PostMapping("/save")

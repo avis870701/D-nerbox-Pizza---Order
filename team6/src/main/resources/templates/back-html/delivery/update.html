@@ -219,19 +219,23 @@
                                 <label for="address" style="text-align: center;">外送地址</label>
                                 <input id="address" type="text" class="form-control text-center" name="address" style="width: 400px;" th:value="${delivery.address}" required/>
                             </div>
-                            <div class="form-group text-center">
-                                <label for="status" style="text-align: center;">外送單狀態</label>
-                                <select id="status" class="form-control text-center" name="status" style="width: 400px;" required>
-                                <!-- <option selected> -->
-                                <!-- <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td> -->
-                                <option th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></option>
-                                    <option value="1">待處理</option>
-                                    <option value="2">已接單</option>
-                                    <option value="3">外送中</option>
-                                    <option value="4">已送達</option>
-                                    <option value="0">已取消</option>
-                                </select>
+                            <div class="form-group text-center" style="display: none;">
+                                <label for="ename" style="text-align: center;">外送員工</label>
+                                <input id="ename" type="text" class="form-control text-center" name="address" style="width: 400px;" th:value="${delivery.ename}" required/>
                             </div>
+                            <div class="form-group text-center">
+                              <label for="status" style="text-align: center;">外送單狀態</label>
+                              <select id="status" class="form-control text-center" name="status" style="width: 400px;" required>
+                              <!-- <option selected> -->
+                              <!-- <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td> -->
+                              <option th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></option>
+                                  <option value="1">待處理</option>
+                                  <option value="2">已接單</option>
+                                  <option value="3">外送中</option>
+                                  <option value="4">已送達</option>
+                                  <option value="0">已取消</option>
+                              </select>
+                          </div>
                         </form>
                         <br>
                         <button onclick="update()" class="btn btn-success">更新</button>
@@ -249,6 +253,8 @@
             let homeURL = "http://localhost:8080/delivery/home";
 		        window.location.href = homeURL;
        });
+
+     
         //發送更新請求
         // function update() {
       
