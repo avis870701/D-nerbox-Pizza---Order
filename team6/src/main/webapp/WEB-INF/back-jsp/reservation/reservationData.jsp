@@ -163,7 +163,7 @@
 											<input type="number" id="peopleInput<%=reservation.getReservationId()%>"
 												value="<%=reservation.getNumberOfPeople()%>"
 												onchange="updatePeople('<%= reservation.getReservationId() %>')"
-												style="width: 40px; text-align: center;" max="20">
+												style="width: 40px; text-align: center;" max="20" ,min="1">
 										</td>
 										<td style="width: 100px; text-align: center;">
 											<%=reservation.getReservationName()%>
@@ -238,8 +238,14 @@
 			function updatePeople(reservationId) {
 				var peopleSelect = document.getElementById('peopleInput' + reservationId);
 				var newNumberOfPeople = peopleSelect.value;
+
 				if (newNumberOfPeople !== null && newNumberOfPeople !== '') {
-					updateNumberOfPeople(reservationId, newNumberOfPeople);
+					if (newNumberOfPeople < 20 && newNumberOfPeople > 1) {
+						updateNumberOfPeople(reservationId, newNumberOfPeople);
+					} else {
+						alert("請輸入有效的人數")
+						location.reload();
+					}
 				} else {
 					alert("請輸入有效的人數");
 				}
@@ -248,37 +254,52 @@
 			function updateTime(reservationId) {
 				var timeSelect = document.getElementById('timeInput' + reservationId);
 				var newTime = timeSelect.value;
-				console.log(newTime);
+
 				if (newTime !== null && newTime !== '') {
-					updateReservationTime(reservationId, newTime);
+					if (confirm("確定要更改時間嗎？")) {
+						updateReservationTime(reservationId, newTime);
+					}
+					else {
+						location.reload();
+					}
 				} else {
 					alert("請選擇有效的時間");
 				}
 			}
+			
 			function updateDate(reservationId) {
 				var dateSelect = document.getElementById('dateInput' + reservationId);
 				var newDate = dateSelect.value;
 
 				if (newDate !== null && newDate !== '') {
-					updateReservationDate(reservationId, newDate);
+					if (confirm("確定要更改日期嗎？")) {
+						updateReservationDate(reservationId, newDate);
+					} else {
+						location.reload();
+					}
 				} else {
 					alert("請輸入有效的日期");
 				}
 			}
+
 			function updateRSto3(reservationId) {
 				var rsSelect = document.getElementById('rsInput' + reservationId);
 				var rs = rsSelect.value;
 				updateReservationStatusTo3(reservationId, rs)
 			}
 
-
-
 			function updateNumberOfPeople(reservationId, newNumberOfPeople) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('PUT', '/reservation/updateNumberOfPeople', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+
+					} else if (xhr.readyState === 4 && xhr.status !== 200) {
+						alert("更新失敗！")
+					}
+				};
 				xhr.send('action=updateNumberOfPeople&reservationId=' + encodeURIComponent(reservationId) + '&newNumberOfPeople=' + encodeURIComponent(newNumberOfPeople));
-				location.reload();
 			}
 
 			function updateReservationDate(reservationId, newDate) {
@@ -287,15 +308,14 @@
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				xhr.send('action=updateReservationDate&reservationId=' + encodeURIComponent(reservationId) + '&newDate=' + encodeURIComponent(newDate));
 				location.reload();
-
 			}
+			
 			function updateReservationTime(reservationId, newTime) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('PUT', '/reservation/updateReservationTime', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				xhr.send('action=updateReservationTime&reservationId=' + encodeURIComponent(reservationId) + '&newTime=' + encodeURIComponent(newTime));
 				location.reload();
-
 			}
 
 			function deleteReservation(reservationId) {
@@ -305,7 +325,6 @@
 					xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 					xhr.send('action=deleteReservation&reservationId=' + encodeURIComponent(reservationId));
 					location.reload();
-
 				}
 			}
 
@@ -318,9 +337,6 @@
 					location.reload();
 				}
 			}
-
-
-
 		</script>
 	</body>
 
