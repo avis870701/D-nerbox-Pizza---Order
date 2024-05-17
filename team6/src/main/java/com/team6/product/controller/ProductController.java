@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team6.member.model.EmployeeAccountBean;
 import com.team6.product.dto.ProductBeanDto;
 import com.team6.product.dto.ProductCategoryDto;
 import com.team6.product.dto.ProductStateDto;
@@ -52,8 +54,9 @@ public class ProductController {
 	// Product_Index主進入點
 	@GetMapping("/product.atcion")
 	public String productMainprocess() {
+
 		return "forward:/WEB-INF/back-jsp/product/Product_Index.jsp";
-		
+
 	}
 	
 	// 查全部
@@ -223,8 +226,12 @@ public class ProductController {
 	
 	//進入主畫面
 	@GetMapping("/Product_Test_Main")
-	public String productTestMain() {
-		return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
+	public String productTestMain(@SessionAttribute(value = "emp", required = false) EmployeeAccountBean empBean) {
+		
+		if (empBean != null) {
+			return "forward:/WEB-INF/back-jsp/product/EmpProductIndex.jsp";
+		}
+		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 	}
 	
 	
