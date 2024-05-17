@@ -28,9 +28,9 @@ CREATE TABLE memberDetail(
 )
 CREATE TABLE forgot_pwd(
 	id int identity(1,1) primary key,
-	maid nvarchar(max)  not null ,
+	maid int  not null ,
 	token varchar(max) not null,
-	RegistrationDate date not null
+	registration_date datetime2 not null
 )
 
 INSERT INTO memberAccount(mAccount,mPassword,permissions,hidden)
@@ -196,6 +196,7 @@ SELECT * FROM EmployeeDept
 SELECT * FROM EmployeeAccount
 SELECT * FROM EmployeeDetail
 SELECT * FROM EmployeeDetail edt join EmployeeAccount ea on ea.empid = edt.fk_empId join EmployeeDept edp on edt.fk_deptno=edp.deptno Where empPermissions=1 or empPermissions=2
+SELECT * FROM forgot_pwd
 
 --================================================================================
 -----------------------------------------╬ч╖@еч©Х--------------

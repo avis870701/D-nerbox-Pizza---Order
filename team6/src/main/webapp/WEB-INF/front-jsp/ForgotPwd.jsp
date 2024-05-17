@@ -109,14 +109,14 @@
 								<img src="/images/member/DonerPizzaSmall.png" width="180" alt="">
 							</a>
 							<p class="text-center">請填寫下列資訊</p>
-							<form method="POST" action="Member.UpdatePwd">
+							<form method="POST" action="ForgotPwd">
 								<div class="mb-3">
 									<i class="fa fa-envelope icon"></i><label for="exampleInputEmail1" class="form-label">電子信箱</label>
 									<input type="email" class="form-control"
 										id="exampleInputEmail1" aria-describedby="emailHelp"
 										name="mEmail" required>
 								</div>
-								<div>${err}</div>
+								<div style="color:red;">${err}</div><br>
 								<button type="submit"
 									class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">確定</button>
 							</form>

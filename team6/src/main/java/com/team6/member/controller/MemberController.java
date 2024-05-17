@@ -3,18 +3,27 @@ package com.team6.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.swing.text.AbstractDocument.Content;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +33,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import com.team6.member.model.ForgotPwdBean;
 import com.team6.member.model.MemberAccountBean;
 import com.team6.member.model.MemberDetailBean;
 import com.team6.member.model.MemberService;
@@ -162,12 +172,84 @@ public class MemberController {
 	}
 	// ===================================================================================================
 
+	// 忘記密碼: 新增一筆忘記密碼 ok
+	@PostMapping("/ForgotPwd")
+	public String insertForgotPwd(@RequestParam("mEmail") String email, Model model) throws MessagingException {
+		String token = UUID.randomUUID().toString();
+		Optional<MemberAccountBean> optional = service.findAccountByEmail(email);
+		if (optional.isPresent()) {
+			MemberAccountBean accountBean = optional.get();
+			int maid = accountBean.getMaid();
+			ForgotPwdBean bean = new ForgotPwdBean(maid, token, LocalDateTime.now());
+			service.insertForgotPwd(bean);
+
+			// 加自動寄信 ok
+			String receivers = email;
+			String subject = "忘記密碼需重置通知信";
+			String content = mailContent("",
+					"您好，請在五分鐘內前往這個連結。 <p><a href=\"http://localhost:8080/member/checkToken?token=" + token + "&maid="
+							+ maid
+							+ "\" style=\"font-family:'Google Sans',Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:16px;color:#ffffff;font-weight:400;text-decoration:none;font-size:14px;display:inline-block;padding:10px 24px;background-color:#4184f3;border-radius:5px;\">重置密碼</a></p>");
+			String from = "DonerPizza<h60915@gmail.com>";
+			service.sendPlainText(receivers, subject, content, from);
+			model.addAttribute("err", "信件已發送，後續請在信箱中完成動作。");
+			return "forward:/WEB-INF/front-jsp/ForgotPwd.jsp";
+		}
+		model.addAttribute("err", "此信箱並未註冊過");
+		return "forward:/WEB-INF/front-jsp/ForgotPwd.jsp";
+	}
+
+	// 忘記密碼: 檢查token ok
+	@GetMapping("/checkToken")
+	public String chtckTokenForForgotPwd(@RequestParam("token") String token, @RequestParam("maid") int maid,
+			HttpSession session, Model model) {
+		Optional<ForgotPwdBean> optional = service.checkForgotPwd(maid, token);
+		LocalDateTime nowTime = LocalDateTime.now();
+		if (optional.isPresent()) {
+			ForgotPwdBean bean = optional.get();
+			LocalDateTime tokenTime = bean.getRegistrationDate();
+			Long minutesBetween = ChronoUnit.MINUTES.between(tokenTime, nowTime);
+			if (minutesBetween < 5) {
+				String beanToken = bean.getToken().toString();
+				if (token.equals(beanToken)) {
+					session.setAttribute("maid", maid);
+					return "forward:/WEB-INF/front-jsp/member/MemberResetPwd.jsp";
+				}
+				model.addAttribute("err", "憑證有誤，請重新再試一次。");
+				return "forward:/WEB-INF/front-jsp/Err.jsp";
+			}
+			model.addAttribute("err", "有效時間已過，請重新再試一次。");
+			return "forward:/WEB-INF/front-jsp/Err.jsp";
+		}
+		model.addAttribute("err", "查無此帳號，請重新再試一次。");
+		return "forward:/WEB-INF/front-jsp/Err.jsp";
+	}
+
+	@PostMapping("/changePwdByToken")
+	public String changePwdByToken(@SessionAttribute("maid") int maid, @RequestParam("pwd") String pwd,
+			HttpSession session, Model model) {
+		MemberAccountBean bean = service.findById(maid);
+		if (bean != null) {
+			bean.setmPassword(pwd);
+			service.insertAccount(bean);
+			session.removeAttribute("maid");
+			session.setAttribute("member", bean);
+			return "redirect:MemberIndex";
+		}
+		model.addAttribute("err", "查無此帳號，請重新再試一次。");
+		return "forward:/WEB-INF/front-jsp/Err.jsp";
+	}
+	// ===================================================================================================
+
 	// 進入官網(登入後)
 	@RequestMapping(path = "/MemberIndex", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberGoBackToIndex(HttpSession session) {
-		MemberAccountBean bean = (MemberAccountBean) session.getAttribute("member");
-		session.setAttribute("member", bean);
-		return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+	public String MemberGoBackToIndex(
+			@SessionAttribute(value = "member", required = false) MemberAccountBean accountBean, HttpSession session) {
+		if (accountBean != null) {
+			session.setAttribute("member", accountBean);
+			return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+		}
+		return "forward:/WEB-INF/front-jsp/Index.jsp";
 	}
 	// ===================================================================================================
 
@@ -182,113 +264,122 @@ public class MemberController {
 			@RequestParam("mEmail") String mEmail, Model model, HttpSession session) throws MessagingException {
 //		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		bean.setBirthday(LocalDate.parse(birthday,formatter));
-		LocalDate nowDate = LocalDate.now();
-		MemberAccountBean bean = new MemberAccountBean();
-		bean.setmAccount(mAccount);
-		bean.setmPassword(mPassword);
-		bean.setPermissions(1);
-		bean.setHidden(1);
-		MemberAccountBean returnBean = service.insertAccount(bean);
-		MemberDetailBean detailBean = new MemberDetailBean();
-		detailBean.setBean(returnBean);
-		detailBean.setmName(returnBean.getmAccount());
-		detailBean.setmEmail(mEmail);
-		detailBean.setmPhoto("/images/member/user.png");
-		detailBean.setMbirthday(nowDate);
-		detailBean.setRegistrationDate(nowDate);
-		returnBean.setDetailBean(detailBean);
-		MemberAccountBean result = service.insertDetail(returnBean);
+		Optional<MemberAccountBean> optional = service.findAccountByEmail(mEmail);
+		if (optional.isEmpty()) {
+			LocalDate nowDate = LocalDate.now();
+			MemberAccountBean bean = new MemberAccountBean();
+			bean.setmAccount(mAccount);
+			bean.setmPassword(mPassword);
+			bean.setPermissions(1);
+			bean.setHidden(1);
+			MemberAccountBean returnBean = service.insertAccount(bean);
+			MemberDetailBean detailBean = new MemberDetailBean();
+			detailBean.setBean(returnBean);
+			detailBean.setmName(returnBean.getmAccount());
+			detailBean.setmEmail(mEmail);
+			detailBean.setmPhoto("/images/member/user.png");
+			detailBean.setMbirthday(nowDate);
+			detailBean.setRegistrationDate(nowDate);
+			returnBean.setDetailBean(detailBean);
+			MemberAccountBean result = service.insertDetail(returnBean);
 
-		session.setAttribute("member", result);
-		// 加自動寄信 ok
-		String receivers = detailBean.getmEmail();
-		String subject = "成為會員通知信";
-		String content = mailContent(detailBean.getmName(),	"感謝您成為 DonerPizza 的會員。");
-		String from = "DonerPizza<h60915@gmail.com>";
-		service.sendPlainText(receivers, subject, content, from);
-		// -------------------------------------------------------
-		return "redirect:MemberIndex";
-//			return "redirect:Member.SelectAll/1";
+			session.setAttribute("member", result);
+			// 加自動寄信 ok
+			String receivers = detailBean.getmEmail();
+			String subject = "成為會員通知信";
+			String content = mailContent(detailBean.getmName(), "感謝您成為 DonerPizza 的會員。");
+			String from = "DonerPizza<h60915@gmail.com>";
+			service.sendPlainText(receivers, subject, content, from);
+			// -------------------------------------------------------
+			return "redirect:MemberIndex";
+		}
+		model.addAttribute("err", "此信箱已被註冊。");
+		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 	}
 	// ===================================================================================================
 
 	// 去會員資訊畫面(登入後)
 	@RequestMapping(path = "/MemberAboutMe", method = { RequestMethod.GET, RequestMethod.POST })
-	public String MemberAboutMe(HttpSession session) {
-		MemberAccountBean bean = (MemberAccountBean) session.getAttribute("member");
-		session.setAttribute("member", bean);
-		return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
+	public String MemberAboutMe(@SessionAttribute(value = "member", required = false) MemberAccountBean accountBean,
+			HttpSession session) {
+		if (accountBean != null) {
+			session.setAttribute("member", accountBean);
+			return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
+		}
+		return "forward:/WEB-INF/front-jsp/Index.jsp";
 	}
 
 	// 更新會員密碼 OK
 	@PostMapping("/Member.UpdatePwd")
-	public String UpdatePwd(@SessionAttribute("member") MemberAccountBean accountBean,
+	public String UpdatePwd(@SessionAttribute(value = "member", required = false) MemberAccountBean accountBean,
 			@RequestParam("beforePwd") String beforePwd, @RequestParam("afterPwd") String afterPwd, Model model,
 			HttpSession session) throws MessagingException {
-//		DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//		bean.setBirthday(LocalDate.parse(birthday,formatter));
-//		LocalDate nowDate = LocalDate.now();
-//		MemberAccountBean bean = service.updatePwd(mAccount, beforePwd, afterPwd);
-		MemberAccountBean bean = service.updatePwd(accountBean.getmAccount(), beforePwd, afterPwd);
-		if (bean != null) {
-			// 加自動寄信 ok
-			String receivers = bean.getDetailBean().getmEmail();
-			String subject = "重置密碼通知信";
-			String content = mailContent(bean.getDetailBean().getmName(), "會員密碼已經重置完畢。");
-			String from = "DonerPizza<h60915@gmail.com>";
-			service.sendPlainText(receivers, subject, content, from);
-			session.setAttribute("member", bean);
-			return "redirect:MemberAboutMe";
+		if (accountBean != null) {
+			MemberAccountBean bean = service.updatePwd(accountBean.getmAccount(), beforePwd, afterPwd);
+			if (bean != null) {
+				// 加自動寄信 ok
+				String receivers = bean.getDetailBean().getmEmail();
+				String subject = "重置密碼通知信";
+				String content = mailContent(bean.getDetailBean().getmName(), "會員密碼已經重置完畢。");
+				String from = "DonerPizza<h60915@gmail.com>";
+				service.sendPlainText(receivers, subject, content, from);
+				session.setAttribute("member", bean);
+				return "redirect:MemberAboutMe";
+			}
+			model.addAttribute("err", "舊密碼輸入錯誤");
+			return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
 		}
-		model.addAttribute("err", "舊密碼輸入錯誤");
-		return "forward:/WEB-INF/front-jsp/member/MemberInsert.jsp";
+
+		return "forward:/WEB-INF/front-jsp/Index.jsp";
 	}
 
 	// 更新會員細項 ok
 	@PostMapping("/Member.UpdateDetail")
-	public String UpdateDetail(@RequestParam("account") String mAccount, @RequestParam("mName") String mName,
+	public String UpdateDetail(@SessionAttribute(value = "member", required = false) MemberAccountBean accountBean,
+			@RequestParam("account") String mAccount, @RequestParam("mName") String mName,
 			@RequestParam("mEmail") String mEmail, @RequestParam("mPhone") String mPhone,
 			@RequestParam("mbirthday") String mbirthday,
 			@RequestParam(value = "mPhoto", required = false) MultipartFile mf, Model model, HttpSession session)
 			throws ParseException, IllegalStateException, IOException {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		MemberAccountBean bean = service.findAccountByAccount(mAccount);
-		MemberAccountBean oldbean = service.findAccountByAccount(mAccount);
-		String mPhoto = "";
-		if (mf != null && !mf.isEmpty()) {
-			String fileName = mf.getOriginalFilename();
-			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/member/users";
-			File fileDirPath = new File(fileDir, fileName);
-			mf.transferTo(fileDirPath);
-			mPhoto = "/images/member/users/" + fileName;
+		if (accountBean != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			MemberAccountBean oldbean = service.findAccountByAccount(mAccount);
+			String mPhoto = "";
+			if (mf != null && !mf.isEmpty()) {
+				String fileName = mf.getOriginalFilename();
+				String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/member/users";
+				File fileDirPath = new File(fileDir, fileName);
+				mf.transferTo(fileDirPath);
+				mPhoto = "/images/member/users/" + fileName;
 
-			MemberAccountBean resultBean = service.updateDetail(bean, mName, mEmail, mPhone, mPhoto,
-					LocalDate.parse(mbirthday, formatter));
-			session.setAttribute("member", resultBean);
-			return "redirect:MemberAboutMe";
-		} else {
-			mPhoto = oldbean.getDetailBean().getmPhoto();
-			MemberAccountBean resultBean = service.updateDetail(bean, mName, mEmail, mPhone, mPhoto,
-					LocalDate.parse(mbirthday, formatter));
-			session.setAttribute("member", resultBean);
-			return "redirect:MemberAboutMe";
+				MemberAccountBean resultBean = service.updateDetail(accountBean, mName, mEmail, mPhone, mPhoto,
+						LocalDate.parse(mbirthday, formatter));
+				session.setAttribute("member", resultBean);
+				return "redirect:MemberAboutMe";
+			} else {
+				mPhoto = oldbean.getDetailBean().getmPhoto();
+				MemberAccountBean resultBean = service.updateDetail(accountBean, mName, mEmail, mPhone, mPhoto,
+						LocalDate.parse(mbirthday, formatter));
+				session.setAttribute("member", resultBean);
+				return "redirect:MemberAboutMe";
+			}
 		}
+		return "forward:/WEB-INF/front-jsp/Index.jsp";
 	}
-	
+
+	// 生成 信的外觀 的方法
 	public String mailContent(String memberName, String content) {
-		String MailContent ="<html>"
-				+ "<body>"
-				+ "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:600px\">"
-				+ " <tbody>"
-				+ " <tr height=\"16\"></tr>"
-				+ " <tr><td>"
+		String MailContent = "<html>" + "<body>"
+				+ "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:600px\">" + " <tbody>"
+				+ " <tr height=\"16\"></tr>" + " <tr><td>"
 				+ "<table bgcolor=\"#4184F3\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"　style=\"min-width:332px;max-width:600px;border:1px solid #e0e0e0;border-bottom:0;border-top-left-radius:3px;border-top-right-radius:3px\">"
 				+ "<tbody> <tr><td height=\"72px\" colspan=\"3\"></td></tr>"
 				+ "<tr><td width=\"32px\"></td><td style=\"font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:24px;color:#ffffff;line-height:1.25\"> Döner Box - Döner&Pizza</td><td width=\"32px\"></td></tr>"
 				+ "<tr><td height=\"18px\" colspan=\"3\"></td></tr></tbody></table></td></tr>"
 				+ "<tr><td><table bgcolor=\"#FAFAFA\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"min-width:332px;max-width:600px;border:1px solid #f0f0f0;border-bottom:1px solid #c0c0c0;border-top:0;border-bottom-left-radius:3px;border-bottom-right-radius:3px\">"
 				+ "<tbody> <tr height=\"16px\"><td width=\"32px\" rowspan=\"3\"></td><td></td><td width=\"32px\" rowspan=\"3\"></td> </tr>"
-				+ "<tr><td><p>親愛的 "+ memberName +" 會員,</p><p>"+ content +"</p><p>若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。 或者是寄電子郵件:　DonerPizza　<span style=\"color:#659cef\" dir=\"ltr\"><a href=\"mailto:h60915@gmail.com\" target=\"_blank\">&lt;h60915@gmail.com&gt;</a></span></p></td></tr>"
+				+ "<tr><td><p>親愛的 " + memberName + " 會員,</p><p>" + content
+				+ "</p><p>若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。 或者是寄電子郵件:　DonerPizza　<span style=\"color:#659cef\" dir=\"ltr\"><a href=\"mailto:h60915@gmail.com\" target=\"_blank\">&lt;h60915@gmail.com&gt;</a></span></p></td></tr>"
 				+ " <tr height=\"32px\"></tr></tbody></table></td></tr> <tr height=\"16\"></tr></tbody></table>";
 		return MailContent;
 	}

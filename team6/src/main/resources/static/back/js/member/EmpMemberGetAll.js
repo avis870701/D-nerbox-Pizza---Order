@@ -1,5 +1,8 @@
 var indexPage = 1;
 $(function () {
+	$('#select').on('input', function () {
+
+	});
 	loadPage(indexPage);
 });
 
@@ -64,6 +67,7 @@ function loadPage(indexPage) {
 		}
 	});
 }
+
 
 function page(page) {
 	indexPage = page;

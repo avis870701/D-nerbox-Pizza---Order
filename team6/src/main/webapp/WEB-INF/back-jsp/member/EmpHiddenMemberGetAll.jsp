@@ -276,7 +276,7 @@
 									class="form-control" id="password" name="password" required placeholder="請輸入密碼">
 								<input type="checkbox" onclick="myFunction()">Show Password
 							</div>
-							<div>${err}</div>
+							<div  style="color:red;">${err}</div><br>
 							<button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
 								冊</button>
 						</div>

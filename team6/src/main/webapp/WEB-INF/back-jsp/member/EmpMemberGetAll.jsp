@@ -41,23 +41,26 @@
 									</a></li>
 								<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 										class="hide-menu">其他功能列表</span></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
+								<li class="sidebar-item"><a class="sidebar-link" href="/product/Product_Test_Main"
+										aria-expanded="false"> <span>
 											<i class="ti ti-article"></i>
 										</span> <span class="hide-menu">產品管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
+								<li class="sidebar-item"><a class="sidebar-link" href="/order/order.action"
+										aria-expanded="false"> <span>
 											<i class="ti ti-alert-circle"></i>
 										</span> <span class="hide-menu">訂單管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-card.html"
-										aria-expanded="false"> <span> <i class="ti ti-cards"></i>
+								<li class="sidebar-item"><a class="sidebar-link"
+										href="/reservation/reservemain.controller" aria-expanded="false"> <span> <i
+												class="ti ti-cards"></i>
 										</span> <span class="hide-menu">訂位管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-forms.html"
+								<li class="sidebar-item"><a class="sidebar-link" href="/delivery/home"
 										aria-expanded="false"> <span> <i class="ti ti-file-description"></i>
 										</span> <span class="hide-menu">外送管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-typography.html"
+								<li class="sidebar-item"><a class="sidebar-link" href="/promotions/promotionsMain"
 										aria-expanded="false"> <span>
 											<i class="ti ti-typography"></i>
 										</span> <span class="hide-menu">活動管理功能</span>
@@ -226,7 +229,8 @@
 										<h5 class="card-title fw-semibold mb-4">所有會員</h5>
 										<table class="table text-nowrap mb-0 align-middle">
 											<tr>
-												<td class="border-bottom-0"><span>查詢：</span><input type="text"></td>
+												<td class="border-bottom-0"><span>查詢：</span><input type="text"
+														id="select"></td>
 												<td class="border-bottom-0 d-grid gap-2 d-md-flex justify-content-md-end"
 													oncontextmenu="selectByName()">
 													<button
@@ -364,7 +368,7 @@
 									class="form-control" id="password" name="password" required placeholder="請輸入密碼">
 								<input type="checkbox" onclick="myFunction()">Show Password
 							</div>
-							<div>${err}</div>
+							<div style="color:red;">${err}</div><br>
 							<button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
 								冊</button>
 						</div>

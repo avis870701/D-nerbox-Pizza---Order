@@ -127,7 +127,7 @@
 									<input type="password" class="form-control"
 										id="exampleInputPassword1" name="password" required>
 								</div>
-								<div>${err}</div>
+								<div  style="color:red;">${err}</div><br>
 								<button type="submit"
 									class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
 									冊</button>

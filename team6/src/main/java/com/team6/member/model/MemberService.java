@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,8 @@ public class MemberService {
 	private RepositoryMemberDetail rmd;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private RepositoryForgotPwd rForgotPwd;
 
 	// 會員登入
 	public MemberAccountBean login(String account, String pwd) {
@@ -104,7 +107,7 @@ public class MemberService {
         mailSender.send(message);
     } 
 
-	// 新增?更新?會員細項
+	// 新增 會員細項
 	public MemberAccountBean insertDetail(MemberAccountBean accountBean) {
 		Optional<MemberAccountBean> optional = rma.findById(accountBean.getMaid());
 		if (!optional.isEmpty()) {
@@ -114,6 +117,20 @@ public class MemberService {
 			return aBean;
 		}
 		return null;
+	}
+	// =================================================================
+	
+	// 忘記密碼: 新增
+	public void insertForgotPwd(ForgotPwdBean bean) {
+		rForgotPwd.save(bean);
+	}
+	public Optional<MemberAccountBean> findAccountByEmail(String email) {
+		return rma.findAccountByEmail(email);
+	}
+	
+	// 忘記密碼: 檢查
+	public Optional<ForgotPwdBean> checkForgotPwd(int maid,String token) {
+		return rForgotPwd.checkToken(maid,token);
 	}
 	// =================================================================
 
@@ -284,5 +301,6 @@ public class MemberService {
 		} catch (Exception e) {
 		}
 	}
+
 
 }
