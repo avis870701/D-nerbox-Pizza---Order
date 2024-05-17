@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.team6.member.model.EmployeeAccountBean;
 import com.team6.member.model.MemberAccountBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
@@ -43,11 +45,24 @@ public class ReserveController {
 	//後台進入點&店家查詢待確認預訂訊息的總數
 	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
 	public String reserveMainAction(Model model) {
+		
 		int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
 		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信(html)
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
 		return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
 	}
+	
+//	//後台進入點&店家查詢待確認預訂訊息的總數&要有session才能登入
+//	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
+//	public String reserveMainAction(@SessionAttribute(value = "emp",required = false)EmployeeAccountBean bean,HttpSession session,Model model) {
+//		if(bean != null) {
+//			int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
+//			reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信(html)
+//			model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
+//			return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
+//		} return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
+//	}
+		
 	
 	//依姓名查詢ok
 	@GetMapping("/checkInByName")

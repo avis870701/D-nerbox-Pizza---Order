@@ -296,7 +296,7 @@
                 var newPeople = document.getElementById('numberOfPeople').value;
                 newPeople = Number(newPeople);
                 if (newPeople > 10) {
-                    alert("超過十位請直接電話聯絡");
+                    alert("超過十位請電話聯絡");
                     event.preventDefault();
                 } else if (newPeople < 1) {
                     alert("請輸入正確人數");
