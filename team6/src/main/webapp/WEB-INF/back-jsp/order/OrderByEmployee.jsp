@@ -311,7 +311,6 @@
 								<div class="right-container">
 
 
-									<input type="hidden" name="amount" value="${orderBean.amount}">
 									<div class="table-responsive shadow m-3">
 										<table
 											class="table table-striped text-nowrap mb-0 align-middle">
@@ -346,14 +345,17 @@
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="orderDetailsModalLabel">订单详情</h5>
+									<h3 class="modal-title fw-semibold mb-0"
+											id="orderDetailsModalLabel"><i class="fa-solid fa-pizza-slice"> Dönerbox pizza</i></h3>
 								</div>
+								<hr>
 								<div class="modal-body">
 									<!-- 這裡插入訂單明細的表格 -->
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">關閉</button>
+									<button type="button" class="btn btn-dark EmployeeOrder-close" data-dismiss="modal">
+										<b>關閉</b>
+									</button>
 								</div>
 							</div>
 						</div>

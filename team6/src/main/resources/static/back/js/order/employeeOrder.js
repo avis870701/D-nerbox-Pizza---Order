@@ -327,31 +327,32 @@ function displayOrderDetails(orderData) {
 	var totalAmount = 0;
 	var orderDetails = orderData.orderDetails;
 
-	// 創建表格元素
-	var table = $('<table>').attr('width', '100%').attr('border', '1').attr('cellspacing', '0').attr('cellpadding', '5').css('border-collapse', 'collapse');
 
-	// 創建表格標題行
-	var headerRow = $('<tr>').appendTo(table);
-	$('<th>').css('text-align', 'left').text('商品').appendTo(headerRow);
-	$('<th>').css('text-align', 'left').text('數量').appendTo(headerRow); // 新增數量列
-	$('<th>').css('text-align', 'left').text('金額').appendTo(headerRow);
-	$('<th>').css('text-align', 'center').text('備註').appendTo(headerRow); // 新增備註列
+	// 創建表格元素
+	var table = $('<table>').attr('width', '100%').attr('cellspacing', '0').attr('cellpadding', '5').css('border-collapse', 'collapse');
+
+
 
 	// 遍歷訂單詳細並創建表格行
 	orderDetails.forEach(function(detail) {
 		var row = $('<tr>').appendTo(table);
-		$('<td>').css('text-align', 'left').text(detail.productName).appendTo(row); // 修改這裡以反映訂單詳細的產品名稱
-		$('<td>').css('text-align', 'left').text(detail.quantity).appendTo(row); // 顯示數量
-		$('<td>').css('text-align', 'left').text('$' + (parseFloat(detail.unitPrice) * parseInt(detail.quantity)).toFixed(2)).appendTo(row); // 修改這裡以計算產品的總價格
-		$('<td>').css('text-align', 'center').text(detail.note).appendTo(row); // 顯示備註
+		$('<td>').css('text-align', 'left').attr('border', '1').text(detail.productName).appendTo(row); // 修改這裡以反映訂單詳細的產品名稱
+		$('<td>').css('text-align', 'left').attr('border', '1').text(detail.quantity + '份').appendTo(row); // 顯示數量
+		$('<td>').css('text-align', 'left').attr('border', '1').text('$' + (parseFloat(detail.unitPrice) * parseInt(detail.quantity)).toFixed(2)).appendTo(row); // 修改這裡以計算產品的總價格
+		$('<td>').css('text-align', 'center').attr('border', '1').text(detail.note).appendTo(row); // 顯示備註
+		$('<tr>').appendTo(table);
 		totalAmount += parseFloat(detail.unitPrice) * parseInt(detail.quantity); // 累加總金額
 	});
 
-	// 創建小計行
+	$('br').appendTo(table);
+
+	// 創建總金額行
 	var subtotalRow = $('<tr>').appendTo(table);
-	$('<td>').css('text-align', 'left').text('小計').attr('colspan', '2').appendTo(subtotalRow);
+	$('<td>').css('text-align', 'left').text('總金額').attr('colspan', '2').appendTo(subtotalRow);
 	$('<td>').css('text-align', 'left').text('$' + totalAmount.toFixed(2)).appendTo(subtotalRow); // 顯示總金額
 	$('<td>').css('text-align', 'left').text('').appendTo(subtotalRow); // 小計行不顯示備註
+
+
 
 	// 在頁面中顯示表格
 	$('#orderDetailsModal .modal-body').empty().append(table);
@@ -360,9 +361,16 @@ function displayOrderDetails(orderData) {
 	$('#orderDetailsModal').modal('show');
 }
 
-
+$('.EmployeeOrder-close').on('click', function() {
+    $('#orderDetailsModal').modal('hide');
+    window.location.href = '/order/orderByEmployee';
+});
 
 // 假设你有一个按钮或其他元素来触发发送订单的操作
 $('.employeeOrder-btn').click(function() {
-	sendOrder();
+	if(productPrice > 0){
+	sendOrder();		
+	}else {
+		alert('尚未點餐！');
+	}
 });
