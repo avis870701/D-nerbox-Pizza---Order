@@ -145,7 +145,7 @@
                     </p>
                     <form>
                         <div class="row g-3">
-                            <table class="table table-info table-striped table-hover">
+                            <table class="table table-striped table-hover">
                                 <tr>
                                     <th>項目</th>
                                     <th>內容</th>
@@ -202,14 +202,18 @@
                         </div>
                     </form>
                 </div>
+
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="h-100">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.2936109452053!2d121.23877997595442!3d24.956123241421917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468234813c40c1d%3A0x48b725030c927ac!2z5b635byP5oqr6Jap!5e0!3m2!1szh-TW!2stw!4v1714369917527!5m2!1szh-TW!2stw"
-                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div style="margin-top: 60px;">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.2936109452053!2d121.23877997595442!3d24.956123241421917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468234813c40c1d%3A0x48b725030c927ac!2z5b635byP5oqr6Jap!5e0!3m2!1szh-TW!2stw!4v1714369917527!5m2!1szh-TW!2stw"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
         </div>

@@ -1,7 +1,6 @@
 package com.team6.reservation.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.team6.member.model.EmployeeAccountBean;
 import com.team6.member.model.MemberAccountBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
 
 import jakarta.servlet.http.HttpSession;
 
+@SuppressWarnings("rawtypes")
 @Controller
 @RequestMapping("/reservation")
 public class ReserveController {
@@ -42,11 +45,24 @@ public class ReserveController {
 	//後台進入點&店家查詢待確認預訂訊息的總數
 	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
 	public String reserveMainAction(Model model) {
+		
 		int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
-		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信
+		reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信(html)
 		model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
 		return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
 	}
+	
+//	//後台進入點&店家查詢待確認預訂訊息的總數&要有session才能登入
+//	@RequestMapping(path = "/reservemain.controller", method = { RequestMethod.GET, RequestMethod.POST})
+//	public String reserveMainAction(@SessionAttribute(value = "emp",required = false)EmployeeAccountBean bean,HttpSession session,Model model) {
+//		if(bean != null) {
+//			int selectReservationStatusCounts = reserveService.selectReservationStatusCounts();
+//			reserveService.selectCustomerTommorowReservation();//明天是否有預定的客人?如果有我就寄信(html)
+//			model.addAttribute("selectReservationStatusCounts",selectReservationStatusCounts);		
+//			return "forward:/WEB-INF/back-jsp/reservation/reserveIndex.jsp";
+//		} return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
+//	}
+		
 	
 	//依姓名查詢ok
 	@GetMapping("/checkInByName")
@@ -119,7 +135,6 @@ public class ReserveController {
 	@PutMapping("/updateNumberOfPeople")
 	@ResponseBody
 	public ResponseEntity updateNumberOfPeople(@RequestParam(value="reservationId") int reservationId,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
-		//int newNumberOfPeople = Integer.parseInt(newNumberOfPeopleStr);
 		reserveService.updateNumberOfPeople(reservationId, newNumberOfPeople);
 		return ResponseEntity.ok().body("good");
 	}
@@ -237,8 +252,8 @@ public class ReserveController {
 	public String customerreserveMainAction() {
 		return "forward:/WEB-INF/front-jsp/reservation/cutomerReservePage.jsp";
 	}
-	
-	//客人新增預訂ok(含訂位完畢寄信功能)
+		
+	//客人新增預訂ok(含訂位完畢寄信功能)html信
 	@PostMapping("/customerReserve")
 	public String customerReserve(@RequestParam(value = "people", required = false/*可選的參數*/) int numberOfPeople,
 				@RequestParam(value = "date", required = false) String reservationDate,
@@ -256,14 +271,46 @@ public class ReserveController {
 			String link = "http://localhost:8080/reservation/cutomerReserveCheck?reservationUuid=" + uuid;
 			String receivers = mail;
 			String subject ="訂位成功通知信";
-			String content = "親愛的" + reservationName + "先生/小姐，您好！\n感謝您選擇 DonerPizza，預訂時間為：" + reservationDate + " " + reservationTime + "，共計" + numberOfPeople + "位用餐。\n以下是您的訂位資訊"+link+"\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
 			String from = "DonerPizza<h60915@gmail.com>";
-			reserveService.sendPlainText(receivers, subject, content,from);
-						
+			String content = "<html><body style=\"font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;\">" +
+	                "<div style=\"max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\">" +
+	                "<h2 style=\"text-align: center; color: #333;\">訂位成功通知信</h2>" +
+	                "<p>親愛的 <strong>" + reservationName + " 先生/小姐</strong>，您好！</p>" +
+	                "<p>感謝您選擇 DonerPizza，以下是您的訂位資訊：</p>" +
+	                "<table style=\"width: 100%; border-collapse: collapse; margin: 20px 0;\">" +
+	                "<tr>" +
+	                "<th style=\"border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;\">項目</th>" +
+	                "<th style=\"border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;\">內容</th>" +
+	                "</tr>" +
+	                "<tr>" +
+	                "<td style=\"border: 1px solid #ddd; padding: 8px;\">預訂時間</td>" +
+	                "<td style=\"border: 1px solid #ddd; padding: 8px;\">" + reservationDate + " " + reservationTime + "</td>" +
+	                "</tr>" +
+	                "<tr>" +
+	                "<td style=\"border: 1px solid #ddd; padding: 8px;\">用餐人數</td>" +
+	                "<td style=\"border: 1px solid #ddd; padding: 8px;\">" + numberOfPeople + " 位</td>" +
+	                "</tr>" +
+	                "</table>" +
+	                "<p>若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。</p>" +
+	                "<p>祝您用餐愉快！</p>" +
+	                "<div style=\"text-align: center; margin-top: 20px;\">" +
+	                "<a href=\"" + link + "\" style=\"background-color: #ff6347; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;\">確認訂位資訊</a>" +
+	                "</div>" +
+	                "</div>" +
+	                "<div style=\"text-align: center;\">" +
+	                "<img src=\"cid:menu\" alt=\"menu\" style=\"max-width: 33.33%;\">" +
+	                "</div>" +
+	                "</body></html>";
+
+
+
+			
+			reserveService.sendSimpleHtml(from,receivers,subject,content);
+					
 			model.addAttribute("insertReservation", reserve);
 			return "forward:/WEB-INF/front-jsp/reservation/reserveSuccess.jsp";
 		}
-	
+
 	//顯示給客人看他目前的訂位狀態
 	@GetMapping("/cutomerReserveCheck")
 	 public String customerReserveCheck(@RequestParam(value = "reservationUuid") UUID reservationUuid, Model model) {
@@ -327,35 +374,40 @@ public class ReserveController {
 	    return "forward:/WEB-INF/front-jsp/reservation/success.jsp"; 
 	}
 	
-	//會員端:給客人查詢歷史地位紀錄
+	// 會員端:給客人查詢歷史地位紀錄(排除accountBean=null)
 	@GetMapping("/selectHistoryReservationByCustomer")
-	public String selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
-	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
-	    
-	        account = accountBean.getmAccount();   
-	        System.out.println(account);
-	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
-	        
-	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
-	        return "forward:/WEB-INF/front-jsp/member/MemberAboutMe.jsp";
-	
-	    
-	}
-	
-	//session測試
-	@GetMapping("/test")
 	@ResponseBody
-	public String test(HttpSession session) {
-		
-		MemberAccountBean accountBean = (MemberAccountBean)session.getAttribute("member");
-		System.out.println(accountBean.getDetailBean().getmEmail());
-		
-		return accountBean.getDetailBean().getmEmail();
+	public ResponseEntity<?> selectHistoryReservationByCustomer(HttpSession session, Model model) {
+	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");
+	    if (accountBean == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("777");
+	    }
+
+	    String account = accountBean.getmAccount();
+	    System.out.println("印啦:" + account);
+
+	    List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+	    model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+	    return ResponseEntity.ok(selectHistoryReservationByCustomer);
 	}
+
+	
 	
 	
 	
 	/*暫時未用到*/
+	
+//	//session測試
+//	@GetMapping("/testtttt")
+//	@ResponseBody
+//	public String test(HttpSession session) {
+//		
+//		MemberAccountBean accountBean = (MemberAccountBean)session.getAttribute("member");
+//		System.out.println(accountBean.getDetailBean().getmEmail());
+//		
+//		return accountBean.getDetailBean().getmEmail();
+//	}
+	
 //	//分頁:搜尋歷史訂位紀錄(日期時間由大到小)
 //	@GetMapping("/selectByMonthAndYear/{pageNo}")
 //	public String selectPageHistoryReservationByDESC(@PathVariable("pageNo") int pageNo,@RequestParam(value = "monthSelect") String monthSelect,Model model) {
@@ -380,6 +432,7 @@ public class ReserveController {
 //		model.addAttribute("month",month);
 //		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
 //	}
+	
 	//搜尋歷史訂位紀錄
 //	@GetMapping("/selectByMonthAndYear")
 //	public String selectHistoryReservation(@RequestParam(value = "monthSelect") String monthSelect,Model model) {
@@ -392,6 +445,46 @@ public class ReserveController {
 //		model.addAttribute("year",year);
 //		model.addAttribute("month",month);
 //		return "forward:/WEB-INF/back-jsp/reservation/historyReservation.jsp";
+//	}
+	
+//	//客人新增預訂ok(含訂位完畢寄信功能)純文字信
+//	@PostMapping("/customerReserve")
+//	public String customerReserve(@RequestParam(value = "people", required = false/*可選的參數*/) int numberOfPeople,
+//				@RequestParam(value = "date", required = false) String reservationDate,
+//				@RequestParam(value = "phone", required = false) String phone,
+//				@RequestParam(value = "time", required = false) String reservationTime,
+//				@RequestParam(value = "note", required = false) String specialRequests,
+//				@RequestParam(value = "name", required = false) String reservationName,
+//				@RequestParam(value = "email", required = false) String mail,
+//				Model model) 
+//				{
+//			UUID uuid = UUID.randomUUID();
+//			reserve =reserveService.InsertReservation("ispan6",uuid,numberOfPeople, reservationDate, phone,mail, reservationTime,
+//			specialRequests, reservationName);			
+//			
+//			String link = "http://localhost:8080/reservation/cutomerReserveCheck?reservationUuid=" + uuid;
+//			String receivers = mail;
+//			String subject ="訂位成功通知信";
+//			String content = "親愛的" + reservationName + "先生/小姐，您好！\n感謝您選擇 DonerPizza，預訂時間為：" + reservationDate + " " + reservationTime + "，共計" + numberOfPeople + "位用餐。\n以下是您的訂位資訊"+link+"\n若有任何問題或需要協助，歡迎隨時與我們聯繫，客服專線：033345678 。\n祝您用餐愉快！";
+//			String from = "DonerPizza<h60915@gmail.com>";
+//			reserveService.sendPlainText(receivers, subject, content,from);
+//						
+//			model.addAttribute("insertReservation", reserve);
+//			return "forward:/WEB-INF/front-jsp/reservation/reserveSuccess.jsp";
+//		}
+	
+//	//會員端:給客人查詢歷史地位紀錄
+//	@GetMapping("/selectHistoryReservationByCustomer")
+//	@ResponseBody
+//	public List<Reserve> selectHistoryReservationByCustomer(String account, HttpSession session, Model model) {
+//	    MemberAccountBean accountBean = (MemberAccountBean) session.getAttribute("member");	    	
+//	        account = accountBean.getmAccount();
+//	        
+//	        System.out.println("印啦"+account);
+//	        List<Reserve> selectHistoryReservationByCustomer = reserveService.selectHistoryReservationByCustomer(account);
+//	        
+//	        model.addAttribute("selectHistoryReservationByCustomer", selectHistoryReservationByCustomer);
+//	        return selectHistoryReservationByCustomer;
 //	}
 }
 

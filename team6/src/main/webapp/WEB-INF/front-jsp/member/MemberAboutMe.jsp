@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	import="java.util.*,com.team6.reservation.model.*" %>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<!DOCTYPE html>
 		<html>
@@ -34,6 +35,22 @@
 
 			<!-- Template Stylesheet -->
 			<link href="/front/css/style.css" rel="stylesheet">
+			<!-- <script>
+
+				var showPhoto = $('#showPhoto');
+				var img = "";
+				if (member.detailBean.mPhoto == null) {
+					img += `<img src="/images/member/user.png" alt="" width="35"
+						height="35" class="rounded-circle">`;
+					showPhoto.append(img);
+				} else {
+					img += `<img src="${member.detailBean.mPhoto}" alt="" width="35"
+						height="35" class="rounded-circle">`;
+					showPhoto.append(img);
+				}
+
+
+			</script> -->
 		</head>
 
 		<body>
@@ -64,7 +81,7 @@
 							</div>
 						</div>
 						<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
+							<a class="nav-link dropdown-toggle" href="#"> <img src="/images/member/user.png" alt=""
 									width="35" height="35" class="rounded-circle">${member.detailBean.mName}
 							</a>
 							<div class="dropdown-menu bg-light rounded-0 m-0">
@@ -75,7 +92,7 @@
 								</a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
 									<p class="mb-0 dropdown-item">優惠券</p>
 								</a> <a href="/member/logout"
-									class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
+									class="btn btn-outline-primary mx-3 mt-2 d-block dropdown-item">登出</a>
 							</div>
 						</div>
 					</nav>
@@ -113,33 +130,38 @@
 											<button class="nav-link active btn" id="aboutmeTab" data-bs-toggle="tab"
 												data-bs-target="#aboutme" type="button" role="tab"
 												aria-controls="aboutme" aria-selected="true">
-												個人資訊</button>
+												個人資訊
+											</button>
 										</li>
 
 										<li class="nav-item" role="presentation">
 											<button class="nav-link btn" id="updatepwdTab" data-bs-toggle="tab"
 												data-bs-target="#updatepwd" type="button" role="tab"
-												aria-controls="updatepwd" aria-selected="false"
-												onclick="closeAbout()">修改密碼</button>
+												aria-controls="updatepwd" aria-selected="false" onclick="closeAbout()">
+												修改密碼
+											</button>
 
 										</li>
 										<li class="nav-item" role="presentation">
 											<button class="nav-link btn" id="#Tab" data-bs-toggle="tab"
 												data-bs-target="#" type="button" role="tab" aria-controls="#"
-												aria-selected="false" onclick="closeAbout()">歷史訂單</button>
+												aria-selected="false" onclick="closeAbout()">
+												歷史訂單
+											</button>
+										</li>
+										<li class="nav-item">
+											<button class="nav-link btn" id="MyRTab" data-bs-toggle="tab"
+												data-bs-target="#MyR" type="button" role="tab" aria-controls="MyR"
+												aria-selected="false" onclick="closeAbout(),historyReservation()">
+												我的訂位
+											</button>
 										</li>
 										<li class="nav-item">
 											<button class="nav-link btn" id="updatemeTab" data-bs-toggle="tab"
 												data-bs-target="#updateme" type="button" role="tab"
-												aria-controls="updateme" aria-selected="false"
-												onclick="closeAbout()">我的訂位</button>
-
-										</li>
-										<li class="nav-item">
-											<button class="nav-link btn" id="updatemeTab" data-bs-toggle="tab"
-												data-bs-target="#updateme" type="button" role="tab"
-												aria-controls="updateme" aria-selected="false"
-												onclick="closeAbout()">我的優惠券</button>
+												aria-controls="updateme" aria-selected="false" onclick="closeAbout()">
+												我的優惠券
+											</button>
 
 										</li>
 									</ul>
@@ -159,28 +181,29 @@
 													<tr>
 														<td><label for="mPhoto"><i class="fa fa-user"></i>
 																會員頭貼</label></td>
-														<td id="showPhoto"><img src="${member.detailBean.mPhoto}" alt=""
-																width="35" height="35" class="rounded-circle"></td>
+														<td id="showPhoto"></td>
 													</tr>
 													<tr>
 														<td><label for="mName"><i class="fa fa-user"></i>
 																會員名稱</label></td>
 														<td><input class="form-control" type="text" id="mName"
-																name="mName" value="${member.detailBean.mName}"
-																readonly></td>
+																name="mName" placeholder="John M. Doe"
+																value="${member.detailBean.mName}" readonly></td>
 													</tr>
 													<tr>
 														<td><label for="mEmail"><i
-																	class="fa fa-envelope"></i>電子信箱</label></td>
+																	class="fa fa-envelope"></i>電子信箱</label>
+														</td>
 														<td><input class="form-control" type="text" id="mEmail"
-																name="mEmail" required
+																name="mEmail" placeholder="john@example.com" required
 																value="${member.detailBean.mEmail}" readonly></td>
 													</tr>
 													<tr>
 														<td><label for="mPhone"><i class="fa fa-address-card-o"></i>
 																行動電話</label></td>
 														<td><input class="form-control" type="text" id="mPhone"
-																name="mPhone" pattern="[0]{1}[9]{1}\d{8}" maxlength="10"
+																name="mPhone" placeholder="0987654321"
+																pattern="[0]{1}[9]{1}\d{8}" maxlength="10"
 																value="${member.detailBean.mPhone}" readonly></td>
 													</tr>
 													<tr>
@@ -208,111 +231,125 @@
 										<div class="col-50" id="updateme" style="display: none;">
 											<h3 class="card-title fw-semibold mb-4">修改個人資訊</h3>
 											<p class="text-center">請填寫下列資訊</p>
-											<form method="post" action="Member.UpdateDetail">
-											</form>
-											<div class="table-responsive">
-												<table class="table text-nowrap mb-0 align-middle">
-													<tr>
-														<td><img id="changePhoto" src="${member.detailBean.mPhoto}"
-																alt="" width="35" height="35" class="rounded-circle">
-														</td>
-														<td><input class="form-control" type="file" id="UpmPhoto"
-																name="mPhoto" onchange="previewUserFile()">
-														</td>
-													</tr>
-													<tr>
-														<td>會員帳號</td>
-														<td><input class="form-control" type="text" id="Upaccount"
-																name="account" value="${member.mAccount}" readonly>
-														</td>
-													</tr>
-													<tr>
-														<td><label for="mName"><i class="fa fa-user"></i>
-																會員名稱</label></td>
-														<td><input class="form-control" type="text" id="UpmName"
-																name="mName" placeholder="John M. Doe"
-																value="${member.detailBean.mName}"></td>
-													</tr>
-													<tr>
-														<td><label for="mEmail"><i
-																	class="fa fa-envelope"></i>電子信箱</label></td>
-														<td><input class="form-control" type="text" id="UpmEmail"
-																name="mEmail" placeholder="john@example.com" required
-																value="${member.detailBean.mEmail}"></td>
-													</tr>
-													<tr>
-														<td><label for="mPhone"><i class="fa fa-address-card-o"></i>
-																行動電話</label></td>
-														<td><input class="form-control" type="text" id="UpmPhone"
-																name="mPhone" placeholder="0987654321"
-																pattern="[0]{1}[9]{1}\d{8}" maxlength="10"
-																value="${member.detailBean.mPhone}"></td>
-													</tr>
-													<tr>
-														<td><label for="mbirthday"><i class="fa fa-institution"></i>
-																生日</label></td>
-														<td><input class="form-control" type="date" id="Upmbirthday"
-																name="mbirthday" value="${member.detailBean.mbirthday}">
-														</td>
-													</tr>
-
-												</table>
-												<br>
-												<table class="table text-nowrap mb-0 align-middle">
-													<tbody>
+											<form method="post" action="Member.Update">
+												<div class="table-responsive">
+													<table class="table text-nowrap mb-0 align-middle">
 														<tr>
-															<td class="border-bottom-0 text-center"><button
-																	class="btn btn-danger" type="reset"
-																	onclick="off()">取消</button>
-																<span> </span>
-																<button class="btn btn-primary"
-																	onclick="updateMe(`'${member.mAccount}'`)">確定</button>
+															<td><img src="/images/member/user.png" alt="" width="35"
+																	height="35" class="rounded-circle"></td>
+															<td><input class="form-control" type="file" id="mPhoto"
+																	name="mPhoto"></td>
+														</tr>
+														<tr>
+															<td><label for="mName"><i class="fa fa-user"></i>
+																	會員名稱</label></td>
+															<td><input class="form-control" type="text" id="mName"
+																	name="mName" placeholder="John M. Doe"></td>
+														</tr>
+														<tr>
+															<td><label for="mEmail"><i
+																		class="fa fa-envelope"></i>電子信箱</label></td>
+															<td><input class="form-control" type="text" id="mEmail"
+																	name="mEmail" placeholder="john@example.com"
+																	required>
 															</td>
 														</tr>
-													</tbody>
-												</table>
-											</div>
+														<tr>
+															<td><label for="mPhone"><i class="fa fa-address-card-o"></i>
+																	行動電話</label></td>
+															<td><input class="form-control" type="text" id="mPhone"
+																	name="mPhone" placeholder="0987654321"
+																	pattern="[0]{1}[9]{1}\d{8}" maxlength="10"></td>
+														</tr>
+														<tr>
+															<td><label for="mbirthday"><i class="fa fa-institution"></i>
+																	生日</label></td>
+															<td><input class="form-control" type="date" id="mbirthday"
+																	name="mbirthday" value="1990-01-01"></td>
+														</tr>
+
+													</table>
+													<br>
+													<table class="table text-nowrap mb-0 align-middle">
+														<tbody>
+															<tr>
+																<td class="border-bottom-0 text-center"><button
+																		class="btn btn-danger" type="reset"
+																		onclick="off()">取消</button> <span>
+																	</span>
+																	<button class="btn btn-primary">確定</button>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</form>
 										</div>
 
 										<div class="col-50 fade tab-pane" id="updatepwd" role="tabpanel"
 											aria-labelledby="updatepwdTab" tabindex="0">
 											<h3 class="card-title fw-semibold mb-4">修改密碼</h3>
 											<form method="post" action="Member.UpdatePwd">
-											</form>
-											<div class="table-responsive">
-												<table class="table text-nowrap mb-0 align-middle">
-													<tr>
-														<td><label for="beforePwd"><i class="fa fa-user"></i>
-																舊的密碼</label></td>
-														<td><input type="password" class="form-control" id="beforePwd"
-																aria-describedby="emailHelp" name="beforePwd" required>
-														</td>
-													</tr>
-													<tr>
-														<td><label for="afterPwd"><i class="fa fa-user"></i>
-																新的密碼</label></td>
-														<td><input type="password" class="form-control" id="afterPwd"
-																aria-describedby="emailHelp" name="afterPwd" required>
-														</td>
-													</tr>
-													<tr>
-														<td><label for="againPwd"><i class="fa fa-user"></i>
-																再次輸入新的密碼</label></td>
-														<td><input type="password" class="form-control" id="againPwd"
-																aria-describedby="emailHelp" name="againPwd" required>
-															<div id="err"></div>
-														</td>
-													</tr>
-												</table>
-												<br>
-												<table class="table text-nowrap mb-0 align-middle">
-													<tbody>
+												<div class="table-responsive">
+													<table class="table text-nowrap mb-0 align-middle">
 														<tr>
-															<td class="border-bottom-0 text-center">
-																<button class="btn btn-primary"
-																	onclick="updatePwd(`${member.mAccount}`)">確定</button>
+															<td><label for="beforePwd"><i class="fa fa-user"></i>
+																	舊的密碼</label></td>
+															<td><input type="password" class="form-control"
+																	id="beforePwd" aria-describedby="emailHelp"
+																	name="beforePwd" required>
 															</td>
 														</tr>
+														<tr>
+															<td><label for="afterPwd"><i class="fa fa-user"></i>
+																	新的密碼</label></td>
+															<td><input type="password" class="form-control"
+																	id="afterPwd" aria-describedby="emailHelp"
+																	name="afterPwd" required>
+															</td>
+														</tr>
+														<tr>
+															<td><label for="againPwd"><i class="fa fa-user"></i>
+																	再次輸入新的密碼</label></td>
+															<td><input type="password" class="form-control"
+																	id="againPwd" aria-describedby="emailHelp"
+																	name="againPwd" required>
+															</td>
+														</tr>
+													</table>
+													<br>
+													<table class="table text-nowrap mb-0 align-middle">
+														<tbody>
+															<tr>
+																<td class="border-bottom-0 text-center">
+																	<button class="btn btn-primary"
+																		onclick="updatePwd(`${member.mAccount}`)">確定</button>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</form>
+										</div>
+										<div class="col-50 fade tab-pane" id="MyR" role="tabpanel"
+											aria-labelledby="MyRTab" tabindex="0">
+											<h3 class="card-title fw-semibold mb-4">歷史訂位紀錄</h3>
+											<div class="table-responsive">
+												<table class="table text-nowrap mb-0 align-middle" id="MyRTable">
+													<thead>
+														<tr>
+															<th>編號</th>
+															<th>預約名稱</th>
+															<th>電話</th>
+															<th>人數</th>
+															<th>預約日期</th>
+															<th>預約時間</th>
+															<th>狀態</th>
+															<th>備註</th>
+														</tr>
+													</thead>
+													<tbody>
+
 													</tbody>
 												</table>
 											</div>
@@ -421,6 +458,64 @@
 			<!-- Template Javascript -->
 			<script src="/front/js/main.js"></script>
 			<script src="/front/js/member/MemberAboutMe.js"></script>
+
+			<script>
+				function historyReservation() {
+					let table = $('#MyRTable tbody');
+					table.empty();
+					$.ajax({
+						type: 'get',
+						url: '/reservation/selectHistoryReservationByCustomer',
+						contentType: 'application/json',
+						success: function (data) {
+							if (data == null || data.length === 0) {
+								let tr = `<tr><td colspan="8">查無資料</td></tr>`;
+								table.append(tr);
+							} else {
+								$.each(data, function (index, n) {
+									var statusText = getStatusText(n.reservationStatus);
+									var tr = "<tr><td>" + (index + 1) + "</td><td>"
+										+ n.reservationName + "</td><td>"
+										+ n.phone + "</td><td>"
+										+ n.numberOfPeople + "</td><td>"
+										+ n.reservationDate + "</td><td>"
+										+ n.reservationTime + "</td><td>"
+										+ statusText + "</td><td>"
+										+ (n.note ? n.note : "") + "</td></tr>";
+									table.append(tr);
+								});
+							}
+						},
+						error: function (xhr, status, error) {
+							if (xhr.status === 401) {
+								alert("您已登出");
+								event.defaultPrevented;
+							} else {
+								let tr = `<tr><td colspan="8">發生錯誤，請稍後再試。</td></tr>`;
+								table.append(tr);
+							}
+						}
+					});
+				}
+
+				function getStatusText(status) {
+					switch (status) {
+						case 0:
+							return "店家未確認報到";
+						case 1:
+							return "店家已確認報到(客人前一天仍未確認)";
+						case 2:
+							return "客人前一天取消";
+						case 3:
+							return "客人前一天確定會報到";
+						case 4:
+							return "現場客";
+						default:
+							return "未知狀態";
+					}
+				}
+
+			</script>
 		</body>
 
 		</html>

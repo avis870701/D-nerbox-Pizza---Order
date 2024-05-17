@@ -1,6 +1,7 @@
 package com.team6.reservation.model;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -8,12 +9,16 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 @Transactional
@@ -108,13 +113,15 @@ public class ReserveService {
 		
 	    if (!tomorrowReservations.isEmpty()) {
 	        for (Reserve reservation : tomorrowReservations) {  
-	            System.out.println("我要寄信🤑");
 
 					String reservationName = reservation.getReservationName();
 					String reservationDate = reservation.getReservationDate();
 					String reservationTime = reservation.getReservationTime();
 					int numberOfPeople = reservation.getNumberOfPeople();
+					
+					//不轉成string，過一段時間UUID會變成null
 		            String reservationUuid = reservation.getReservationUUID().toString();
+		           
 		            String mail = reservation.getMail();
 		            				
 		            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationUuid=" + reservationUuid;
@@ -123,13 +130,31 @@ public class ReserveService {
 					
 		            String receivers = mail;
 					String subject ="請確認明日訂位";
-		            String content = "親愛的" + reservationName + "先生/小姐，您好！\n感謝您選擇 DonerPizza，預訂時間為：" + reservationDate + " " + reservationTime + "，共計" + numberOfPeople + "位用餐。\n若您確定會前來用餐，請點擊以下連結進行確認：\n" + confirmationLink + "\n若您無法前來用餐，請點擊以下連結進行取消訂位：\n" + rejectionLink + "\n如果有要更改人數，請點擊該連結：\n" + updateNumberOfPeopleAndConfirmLink;
 					String from = "DonerPizza<h60915@gmail.com>";
-					sendPlainText(receivers, subject, content,from);
-		            }
-	            
+					String content = "<html><body style=\"font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;\">" +
+			                "<div style=\"max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\">" +
+			                "<h2 style=\"text-align: center; color: #333;\">訂位確認通知</h2>" +
+			                "<p>親愛的 <strong>" + reservationName + " 先生/小姐</strong>，您好！</p>" +
+			                "<p>感謝您選擇 DonerPizza！</p>" +
+			                "<p>以下是您的訂位資訊：</p>" +
+			                "<table style=\"width: 100%;\">" +
+			                "<tr><td><strong>預訂時間：</strong></td><td>" + reservationDate + " " + reservationTime + "</td></tr>" +
+			                "<tr><td><strong>用餐人數：</strong></td><td>" + numberOfPeople + " 位</td></tr>" +
+			                "</table>" +
+			                "<p>若您確定會前來用餐，請點擊以下按鈕進行確認：</p>" +
+			                "<a href=\"" + confirmationLink + "\" style=\"display: block; background-color: #ff6347; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;\">確認訂位</a>" +
+			                "<p>若您無法前來用餐，請點擊以下按鈕進行取消訂位：</p>" +
+			                "<a href=\"" + rejectionLink + "\" style=\"display: block; background-color: #ff6347; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;\">取消訂位</a>" +
+			                "<p>如果您需要更改人數，請點擊以下按鈕：</p>" +
+			                "<a href=\"" + updateNumberOfPeopleAndConfirmLink + "\" style=\"display: block; background-color: #ff6347; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;\">更改人數</a>" +
+			                "<p>祝您用餐愉快！</p>" +
+			                "</div>" +
+			                "</body></html>";
+
+					sendSimpleHtml(from, receivers, subject, content);
+		            }         
 	    } else {
-	    	System.out.println("我不要寄信🤯");
+	    	System.out.println("寄送明日確認信件失敗🤯🤯");
 	        return;
 	    }
 	}
@@ -240,25 +265,38 @@ public class ReserveService {
 		} catch (Exception e) {
 		}
 	}
-	
-	//測試用:匯出成json
-	
-	
-	//自動寄信用
-    public void sendPlainText(String receivers, String subject, String content, String from) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(receivers);
-        message.setSubject(subject);
-        message.setText(content);
-        message.setFrom(from);
-
-        mailSender.send(message);
+	    
+   // 自動寄信用(HTML信件)
+    public void sendSimpleHtml(String from, String receiver, String subject, String content) {
+    	MimeMessage message = mailSender.createMimeMessage();
+		FileSystemResource fileSystemResource = new FileSystemResource(
+				new File("C:\\Users\\User\\Documents\\team6\\team6\\src\\main\\resources\\static\\images\\reservation\\menu.jpeg"));
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setFrom(from);
+			helper.setTo(receiver);
+			helper.setSubject(subject);
+			helper.setText(content, true);
+			helper.addInline("menu", fileSystemResource);
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}
+		mailSender.send(message);	
     }
-    
+       
 	//會員端:提供客人查詢自己的訂位紀錄
 	public List<Reserve> selectHistoryReservationByCustomer(String account){
 		return reserveRepository.selectHistoryReservationByCustomer(account);
-	}
-
+	}	
 	
+//	//自動寄信用(純文字信)
+//    public void sendPlainText(String receivers, String subject, String content, String from) {
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(receivers);
+//        message.setSubject(subject);
+//        message.setText(content);
+//        message.setFrom(from);
+//
+//        mailSender.send(message);
+//    }
 }
