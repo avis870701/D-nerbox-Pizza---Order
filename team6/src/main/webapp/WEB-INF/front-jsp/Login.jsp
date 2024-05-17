@@ -138,14 +138,19 @@
                                         <a class="text-primary fw-bold" href="/member/forgot">忘記密碼 ?</a>
                                     </div>
                                     <hr>
+                                    <div id="g_id_onload"
+                                        data-client_id="1061052456304-fvgb2fc831flpr7na6faddbf91ngi0r0.apps.googleusercontent.com"
+                                        data-context="signin" data-ux_mode="popup"
+                                        data-login_uri="http://localhost:8080/member/MemberLoginByGoogle" data-nonce=""
+                                        data-auto_prompt="false">
+                                    </div>
+
+                                    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline"
+                                        data-text="signin_with" data-size="large" data-locale="en-US"
+                                        data-logo_alignment="left">
+                                    </div>
                                     <div class="mb-4 text-center row ">
-                                        <div class="col">
-                                            <a href="#" class="google btn btn-danger w-60 py-8 fs-4 mb-4 rounded-2"><i
-                                                    class="fa fa-google fa-fw">
-                                                </i> <span style="font-family: 微軟正黑體; font-size: 20px;">以 Google+
-                                                    登入</span>
-                                            </a>
-                                        </div>
+
                                         <!-- <a href="#" class="fb btn btn-primary w-60 py-8 fs-4 mb-4 rounded-2">
                                             <i class="fa fa-facebook fa-fw"></i> 以
                                                 Facebook 登入
@@ -256,6 +261,7 @@
         <script src="/front/lib/easing/easing.min.js"></script>
         <script src="/front/lib/waypoints/waypoints.min.js"></script>
         <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="https://accounts.google.com/gsi/client?hl=en" async></script>
 
         <!-- Template Javascript -->
         <script src="/front/js/main.js"></script>

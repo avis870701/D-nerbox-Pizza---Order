@@ -1,5 +1,8 @@
 var indexPage = 1;
 $(function () {
+	$('#select').on('input', function () {
+
+	});
 	loadPage(indexPage);
 });
 
@@ -33,16 +36,29 @@ function loadPage(indexPage) {
 					} else {
 						tr += `<td class="border-bottom-0">` + `<img src="` + n.detailBean.mPhoto + `" class="userphoto"></td>`;
 					}
-					if (n.permissions == 0) {
-						tr += `<td> <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)" checked>已封鎖　　　</label>`
-							+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)">已啟用</label></td > `;
-					} else if (n.permissions == 1) {
-						tr += `<td> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)">已封鎖　　　`
-							+ `<input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)" checked>已啟用</td > `;
+					if (n.hidden == 0) {
+
+						tr += `<td> <label> 已封鎖並刪除　　　</label>`;
+
 					}
+					else if (n.hidden == 1) {
+						if (n.permissions == 0 && n.hidden == 1) {
+							tr += `<td> <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)" checked>已封鎖　　　</label>`
+								+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)">已啟用</label></td > `;
+						} else if (n.permissions == 1 && n.hidden == 1) {
+							tr += `<td> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)">已封鎖　　　`
+								+ `<input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)" checked>已啟用</td > `;
+						}
+					}
+
 					// tr += `</form > `;
-					tr += `<td class="border-bottom-0"><a href='/emp/MemberGoToUpdate?account=` + n.mAccount + `'><button class="btn btn-primary" type='submit'>更新</button></a></td>`;
-					tr += `<td class="border-bottom-0"><button class="btn btn-primary" type="submit" onclick="deleteAccount('` + n.mAccount + `')">刪除</button></td >`;
+					if (n.hidden == 0) {
+						tr += `<td class="border-bottom-0">　　　</td>`;
+						tr += `<td class="border-bottom-0"><button class="btn btn-danger" type="submit" onclick="rebackAccount('` + n.mAccount + `')">復原</button></td >`;
+					} else if (n.hidden == 1) {
+						tr += `<td class="border-bottom-0"><a href='/emp/MemberGoToUpdate?account=` + n.mAccount + `'><button class="btn btn-primary" type='submit'>更新</button></a></td>`;
+						tr += `<td class="border-bottom-0"><button class="btn btn-primary" type="submit" onclick="deleteAccount('` + n.mAccount + `')">刪除</button></td >`;
+					}
 					tr += "</tr>";
 					table.append(tr);
 				})
@@ -51,6 +67,7 @@ function loadPage(indexPage) {
 		}
 	});
 }
+
 
 function page(page) {
 	indexPage = page;
@@ -66,10 +83,28 @@ function deleteAccount(account) {
 			data: { "account": account },
 			success: function () {
 				alert("已刪除!");
-				window.location.href = "/emp/MemberGetAll/1";
+				window.location.href = "/emp/Member.SelectAll/1";
 			},
 			error: function () {
 				alert("已取消刪除!");
+			}
+		});
+	}
+}
+
+function rebackAccount(account) {
+	let confirmDelete = confirm("確定要 復原 嗎？");
+	if (confirmDelete) {
+		$.ajax({
+			type: 'PUT',
+			url: '/emp/Member.Reback',
+			data: { "account": account },
+			success: function () {
+				alert("已復原!");
+				window.location.href = "/emp/Member.SelectAll/1";
+			},
+			error: function () {
+				alert("已取消復原!");
 			}
 		});
 	}
@@ -84,8 +119,13 @@ function change(account, permissions) {
 			"permissions": permissions,
 			"empPermissions": 0
 		},
-		success: function () {
-			alert("已更改權限成功!")
+		success: function (respone) {
+			console.log(respone);
+			if (respone != "") {
+				alert("已更改權限成功!")
+			}
+			alert("此為已刪除帳號。");
+
 			//window.location.href = "/MemberGetAll/1";
 		}
 

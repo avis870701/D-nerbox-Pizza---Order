@@ -1,0 +1,70 @@
+/* 第三方登入獲取參數 */
+	@PostMapping("/google.login")
+	public String googleLogin(@RequestParam("credential") String credential)
+			throws GeneralSecurityException, IOException {
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+				// Specify the CLIENT_ID of the app that accesses the backend:
+				.setAudience(Collections
+						.singletonList("892237680262-jsfn5kl8g9a7ks0nj2sh9vgeem2o4tla.apps.googleusercontent.com"))
+				// Or, if multiple clients access the backend:
+				// .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+				.build();
+
+		// (Receive idTokenString by HTTPS POST)
+		// 这里验证登录回调的credential完整性
+		GoogleIdToken idToken = verifier.verify(credential);
+		Payload payload = idToken.getPayload();
+		
+		// Get profile information from payload
+		String email = payload.getEmail();
+		
+		// 紀錄金鑰
+		String thirdPartyId = payload.getSubject();
+		
+		// 紀錄何種第三方登入
+		String thirdPartyProvider = "Google";
+		
+		String name = (String) payload.get("name");
+		String pictureUrl = (String) payload.get("picture");
+//	            String locale = (String) payload.get("locale");
+		String familyName = (String) payload.get("family_name");
+		String givenName = (String) payload.get("given_name");
+		String[] splitAccount = email.split("@");
+		String account = splitAccount[0];
+		if (idToken != null) {
+//	            int level = 1;
+
+//			System.out.println("獨家金鑰: " + thirdPartyId);
+//			System.out.println("第三方登入方式: " + thirdPartyProvider);
+//			System.out.println("信箱: " + email);
+//			System.out.println("帳號: " + account);
+//			System.out.println("全名: " + name);
+//			System.out.println("照片: " + pictureUrl);
+//			System.out.println("姓氏: " + givenName);
+//			System.out.println("名字: " + familyName);
+
+			if (mService.findByAccount(account).isPresent()) {
+				if (mService.checkLogin(account, thirdPartyId)) {
+					System.out.println("登入成功");
+					// 儲存登入會員的bean物件
+					MemberBean memberInformation = mService.selectByAccountBean(account);
+					System.out.println(memberInformation);
+					// 設定session
+					httpSession.setAttribute("member", memberInformation);
+					System.out.println("session設定成功");
+					// 檢查會員等級
+					return "/good/jsp/EZBuyindex";
+				}
+			} else {
+				/* 紀錄當前時間 */
+				LocalDate now = LocalDate.now();
+				System.out.println(now);
+				MemberBean memBean = new MemberBean(account, thirdPartyId, email, name, thirdPartyProvider,now);
+				mService.insert(memBean);
+				httpSession.setAttribute("member", memBean);
+				System.out.println("有創建帳號");
+				return "/good/jsp/EZBuyindex";
+			}
+		} 
+		return "失敗";
+	}

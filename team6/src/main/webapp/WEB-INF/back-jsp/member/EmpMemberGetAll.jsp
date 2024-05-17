@@ -34,30 +34,33 @@
 							<ul id="sidebarnav">
 								<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 										class="hide-menu">後台功能列表</span></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="/member/Member.SelectAll"
+								<li class="sidebar-item"><a class="sidebar-link" href="/emp/Member.SelectAll/1"
 										aria-expanded="false"> <span>
 											<i class="ti ti-layout-dashboard"></i>
 										</span> <span class="hide-menu">會員管理功能</span>
 									</a></li>
 								<li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 										class="hide-menu">其他功能列表</span></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
+								<li class="sidebar-item"><a class="sidebar-link" href="/product/Product_Test_Main"
+										aria-expanded="false"> <span>
 											<i class="ti ti-article"></i>
 										</span> <span class="hide-menu">產品管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="#" aria-expanded="false"> <span>
+								<li class="sidebar-item"><a class="sidebar-link" href="/order/order.action"
+										aria-expanded="false"> <span>
 											<i class="ti ti-alert-circle"></i>
 										</span> <span class="hide-menu">訂單管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-card.html"
-										aria-expanded="false"> <span> <i class="ti ti-cards"></i>
+								<li class="sidebar-item"><a class="sidebar-link"
+										href="/reservation/reservemain.controller" aria-expanded="false"> <span> <i
+												class="ti ti-cards"></i>
 										</span> <span class="hide-menu">訂位管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-forms.html"
+								<li class="sidebar-item"><a class="sidebar-link" href="/delivery/home"
 										aria-expanded="false"> <span> <i class="ti ti-file-description"></i>
 										</span> <span class="hide-menu">外送管理功能</span>
 									</a></li>
-								<li class="sidebar-item"><a class="sidebar-link" href="./ui-typography.html"
+								<li class="sidebar-item"><a class="sidebar-link" href="/promotions/promotionsMain"
 										aria-expanded="false"> <span>
 											<i class="ti ti-typography"></i>
 										</span> <span class="hide-menu">活動管理功能</span>
@@ -223,9 +226,84 @@
 							<div class="col-lg-12 d-flex align-items-stretch">
 								<div class="card w-100">
 									<div class="card-body p-4">
-										<span class="card-title fw-semibold mb-4">所有會員</span>
-										<button onclick="document.getElementById('memberInsert').style.display='block'"
-											style="width: auto;" class="btn btn-primary mx-5">新憎會員</button>
+										<h5 class="card-title fw-semibold mb-4">所有會員</h5>
+										<table class="table text-nowrap mb-0 align-middle">
+											<tr>
+												<td class="border-bottom-0"><span>查詢：</span><input type="text"
+														id="select"></td>
+												<td class="border-bottom-0 d-grid gap-2 d-md-flex justify-content-md-end"
+													oncontextmenu="selectByName()">
+													<button
+														onclick="document.getElementById('memberInsert').style.display='block'"
+														class="btn btn-primary mx-5">新憎會員</button>
+												</td>
+											</tr>
+										</table>
+										<script>
+											function selectByName() {
+												$.ajax({
+													type: 'get',
+													url: '/emp/Member.SelectByName',
+													contentType: 'application/json',
+													success: function (response) {
+														$('#showmember').empty("");
+														if (response == null) {
+															$('table').prepend('<tr><td>no result</td></tr>');
+														} else {
+															var table = $('#showmember');
+															table.append(`<thead class="text-dark fs-4"><tr>`
+																+ `<th class="border-bottom-0">會員ID</th>`
+																+ `<th class="border-bottom-0">會員帳號</th>`
+																+ `<th class="border-bottom-0">會員名稱</th>`
+																+ `<th class="border-bottom-0">會員頭貼</th>`
+																+ `<th class="border-bottom-0">帳號權限</th>`
+																+ `<th class="border-bottom-0">修改</th>`
+																+ `<th class="border-bottom-0">刪除</th></tr></thead><tbody>`);
+
+															$.each(response, function (i, n) {
+																console.log(response);
+																var tr = `<tr><td class="border-bottom-0">` + n.maid + `</td>`
+																	+ `<td class="border-bottom-0">` + n.mAccount + `</td>`
+																	+ `<td class="border-bottom-0"><a href='Member.SelectOneByID?id=` + n.maid + "'>" + n.detailBean.mName + `</a></td>`;
+																if (n.detailBean.mPhoto == null) {
+																	tr += `<td class="border-bottom-0"><img src="/images/member/user.png" class="userphoto"></td>`;
+																} else {
+																	tr += `<td class="border-bottom-0">` + `<img src="` + n.detailBean.mPhoto + `" class="userphoto"></td>`;
+																}
+																if (n.hidden == 0) {
+
+																	tr += `<td> <label> 已封鎖並刪除　　　</label>`;
+
+																}
+																else if (n.hidden == 1) {
+																	if (n.permissions == 0 && n.hidden == 1) {
+																		tr += `<td> <label> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)" checked>已封鎖　　　</label>`
+																			+ `<label> <input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)">已啟用</label></td > `;
+																	} else if (n.permissions == 1 && n.hidden == 1) {
+																		tr += `<td> <input type="radio" name="permissions` + i + `" value="0" onchange="change('` + n.mAccount + `', this.value)">已封鎖　　　`
+																			+ `<input type="radio" name="permissions` + i + `" value="1" required onchange="change('` + n.mAccount + `', this.value)" checked>已啟用</td > `;
+																	}
+																}
+
+																// tr += `</form > `;
+																if (n.hidden == 0) {
+																	tr += `<td class="border-bottom-0">　　　</td>`;
+																	tr += `<td class="border-bottom-0"><button class="btn btn-danger" type="submit" onclick="rebackAccount('` + n.mAccount + `')">復原</button></td >`;
+																} else if (n.hidden == 1) {
+																	tr += `<td class="border-bottom-0"><a href='/emp/MemberGoToUpdate?account=` + n.mAccount + `'><button class="btn btn-primary" type='submit'>更新</button></a></td>`;
+																	tr += `<td class="border-bottom-0"><button class="btn btn-primary" type="submit" onclick="deleteAccount('` + n.mAccount + `')">刪除</button></td >`;
+																}
+																tr += "</tr>";
+																table.append(tr);
+															})
+															table.append("</tbody>");
+														}
+
+													}
+												})
+											}
+										</script>
+
 										<div class="table-responsive">
 											<!-- table -->
 											<table class="table text-nowrap mb-0 align-middle" id="showmember">
@@ -290,7 +368,7 @@
 									class="form-control" id="password" name="password" required placeholder="請輸入密碼">
 								<input type="checkbox" onclick="myFunction()">Show Password
 							</div>
-							<div>${err}</div>
+							<div style="color:red;">${err}</div><br>
 							<button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
 								冊</button>
 						</div>

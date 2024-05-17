@@ -200,9 +200,18 @@
 							<div class="col-lg-12 d-flex align-items-stretch">
 								<div class="card w-100">
 									<div class="card-body p-4">
-										<span class="card-title fw-semibold mb-4">所有會員</span>
-										<button onclick="document.getElementById('memberInsert').style.display='block'"
-											style="width: auto;" class="btn btn-primary mx-5">新憎會員</button>
+										<h5 class="card-title fw-semibold mb-4">所有會員</h5>
+										<table class="table text-nowrap mb-0 align-middle">
+											<tr>
+												<td class="border-bottom-0"><span>查詢：</span><input type="text"></td>
+												<td class="border-bottom-0">
+													<button
+														onclick="document.getElementById('memberInsert').style.display='block'"
+														style="width: auto;" class="btn btn-primary mx-5">新憎會員</button>
+												</td>
+											</tr>
+										</table>
+
 										<div class="table-responsive">
 											<!-- table -->
 											<table class="table text-nowrap mb-0 align-middle" id="showmember">
@@ -267,7 +276,7 @@
 									class="form-control" id="password" name="password" required placeholder="請輸入密碼">
 								<input type="checkbox" onclick="myFunction()">Show Password
 							</div>
-							<div>${err}</div>
+							<div  style="color:red;">${err}</div><br>
 							<button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">註
 								冊</button>
 						</div>

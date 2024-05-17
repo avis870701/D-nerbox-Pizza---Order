@@ -310,7 +310,7 @@
 														<tr>
 															<td class="border-bottom-0 text-center">
 																<button class="btn btn-primary"
-																	onclick="updatePwd()">確定</button>
+																	onclick="updatePwd(`${member.mAccount}`)">確定</button>
 															</td>
 														</tr>
 													</tbody>
