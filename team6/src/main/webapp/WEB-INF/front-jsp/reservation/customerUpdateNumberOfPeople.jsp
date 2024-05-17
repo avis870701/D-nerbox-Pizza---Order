@@ -194,10 +194,12 @@
                             </tr>
                         </table>
                         <p style="margin-top: 10px;">
-                        <form action="/reservation/updateNumberOfPeopleAndReservationStatusTo3" method="GET">
+                        <form action="/reservation/updateNumberOfPeopleAndReservationStatusTo3" method="GET"
+                            onsubmit="valid(event)">
                             <input type="hidden" name="reservationUuid"
                                 value="<%= selectCustomerTommorowComeOrNot.getReservationUUID() %>">
-                            <input type="number" name="newNumberOfPeople" placeholder="更改人數" style="width: auto;">
+                            <input type="number" name="newNumberOfPeople" placeholder="更改人數" style="width: auto;"
+                                id="numberOfPeople">
                             <button type="submit"><b>更改人數</b></button>
                         </form>
                         </p>
@@ -288,6 +290,27 @@
 
         <!-- Template Javascript -->
         <script src="/front/js/main.js"></script>
+
+        <script>
+            function valid(event) {
+                var newPeople = document.getElementById('numberOfPeople').value;
+                newPeople = Number(newPeople);
+                if (newPeople > 10) {
+                    alert("超過十位請直接電話聯絡");
+                    event.preventDefault();
+                } else if (newPeople < 1) {
+                    alert("請輸入正確人數");
+                    event.preventDefault();
+                } else {
+                    if (confirm("您確認要修改人數嗎？")) {
+
+                    } else {
+                        alert("已取消");
+                        event.preventDefault();
+                    }
+                }
+            }
+        </script>
     </body>
 
     </html>

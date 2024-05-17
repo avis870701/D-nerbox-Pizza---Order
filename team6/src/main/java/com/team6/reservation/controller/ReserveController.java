@@ -1,11 +1,9 @@
 package com.team6.reservation.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.compress.archivers.zip.X000A_NTFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,9 +26,9 @@ import com.team6.member.model.MemberAccountBean;
 import com.team6.reservation.model.Reserve;
 import com.team6.reservation.model.ReserveService;
 
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 
+@SuppressWarnings("rawtypes")
 @Controller
 @RequestMapping("/reservation")
 public class ReserveController {
@@ -122,7 +120,6 @@ public class ReserveController {
 	@PutMapping("/updateNumberOfPeople")
 	@ResponseBody
 	public ResponseEntity updateNumberOfPeople(@RequestParam(value="reservationId") int reservationId,@RequestParam(value="newNumberOfPeople") int newNumberOfPeople,Model model) {
-		//int newNumberOfPeople = Integer.parseInt(newNumberOfPeopleStr);
 		reserveService.updateNumberOfPeople(reservationId, newNumberOfPeople);
 		return ResponseEntity.ok().body("good");
 	}

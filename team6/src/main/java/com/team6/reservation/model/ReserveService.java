@@ -12,16 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
-import jakarta.mail.SendFailedException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -117,13 +113,15 @@ public class ReserveService {
 		
 	    if (!tomorrowReservations.isEmpty()) {
 	        for (Reserve reservation : tomorrowReservations) {  
-	            System.out.println("我要寄信🤑");
 
 					String reservationName = reservation.getReservationName();
 					String reservationDate = reservation.getReservationDate();
 					String reservationTime = reservation.getReservationTime();
 					int numberOfPeople = reservation.getNumberOfPeople();
+					
+					//不轉成string，過一段時間UUID會變成null
 		            String reservationUuid = reservation.getReservationUUID().toString();
+		           
 		            String mail = reservation.getMail();
 		            				
 		            String confirmationLink = "http://localhost:8080/reservation/customerComfirmto3?reservationUuid=" + reservationUuid;
@@ -153,13 +151,10 @@ public class ReserveService {
 			                "</div>" +
 			                "</body></html>";
 
-
-
-	
 					sendSimpleHtml(from, receivers, subject, content);
 		            }         
 	    } else {
-	    	System.out.println("我不要寄信🤯");
+	    	System.out.println("寄送明日確認信件失敗🤯🤯");
 	        return;
 	    }
 	}
