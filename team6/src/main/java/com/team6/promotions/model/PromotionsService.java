@@ -53,13 +53,13 @@ public class PromotionsService {
     }
 
 
-    //查詢本月
+    //查詢本月優惠
     public List<Promotions> getPromotionsForCurrentMonth() {
         return promotionsRepository.findPromotionsForCurrentMonth();
     }
 
 
-    //獲取折扣碼
+    //前端獲取折扣碼
     public String getDiscountCode(String promotionsName) {
         Promotions promotions = promotionsRepository.findPromotionsByPromotionsName(promotionsName);
         if (promotions != null) {
