@@ -427,8 +427,15 @@ function applyDiscount() {
 		.then(data => {
 			if (data.message === "Order inserted successfully.") {
 				console.log('訂單插入成功');
+				if(selectedPaymentMethod === '現金'){
+					window.location.href = '/order/historyOrder';
+				}
+				
+				
 				// 直接重定向到 LinePay 的支付頁面
+				if(selectedPaymentMethod === 'LinePay') {
 				window.location.href = '/order/linepayOrder';
+				}
 			} else {
 				throw new Error('Order creation failed');
 			}

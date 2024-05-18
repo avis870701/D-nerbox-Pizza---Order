@@ -127,7 +127,7 @@
 										<li class="nav-item" role="presentation">
 											<button class="nav-link btn" id="#Tab" data-bs-toggle="tab"
 												data-bs-target="#" type="button" role="tab" aria-controls="#"
-												aria-selected="false" onclick="closeAbout()">歷史訂單</button>
+												aria-selected="false" onclick="closeAbout()"><a href="/order/historyOrder">歷史訂單</a></button>
 										</li>
 										<li class="nav-item">
 											<button class="nav-link btn" id="MyRTab" data-bs-toggle="tab"

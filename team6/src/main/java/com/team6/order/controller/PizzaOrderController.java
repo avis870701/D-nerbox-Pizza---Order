@@ -1,7 +1,9 @@
 package com.team6.order.controller;
 
+import java.lang.reflect.Member;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.team6.member.model.MemberAccountBean;
+import com.team6.member.model.MemberService;
 import com.team6.order.model.Order;
 import com.team6.order.model.OrderDetails;
 import com.team6.order.model.OrderService;
@@ -37,6 +43,9 @@ public class PizzaOrderController {
 
 	@Autowired
 	private PromotionsService promotionsService;
+
+	@Autowired
+	private MemberService memberService;
 
 	// 前端store進入點 http://localhost:8080/order/pizzaOrder
 	@RequestMapping(path = "/pizzaOrder", method = { RequestMethod.GET, RequestMethod.POST })
@@ -58,17 +67,70 @@ public class PizzaOrderController {
 		}
 	}
 
+	// 前端 歷史訂單
+	@RequestMapping(path = "/historyOrder", method = { RequestMethod.GET, RequestMethod.POST })
+	public String HistoryOrderIndex(@SessionAttribute(value = "member", required = false) String member) {
+		if (member != null) {
+			return "forward:/WEB-INF/front-jsp/order/historyOrder.jsp";
+		} else {
+			return "forward:/WEB-INF/front-jsp/Index.jsp";
+		}
+	}
+
+	// 前端查詢 會員歷史訂單
+	@GetMapping(path = "searchOrderByAccount")
+	@ResponseBody
+	public List<Order> searchOrderByAccount(@SessionAttribute(value = "member") String member) {
+		// 查詢會員帳號
+		List<MemberAccountBean> memberAccountBeans = memberService.findAllByNotHidden();
+		String account = null;
+		for (MemberAccountBean mems : memberAccountBeans) {
+			if (mems.getMaid() == Integer.valueOf(member)) {
+				account = mems.getmAccount();
+				break;
+			}
+		}
+
+		if (account != null) {
+			List<Order> orders = oService.findHistoryOrder(account);
+			return orders;
+		}
+		System.out.println("account is null.");
+		return Collections.emptyList();
+	}
+
+	// 前端查詢 會員查詢訂單明細
+	@GetMapping("/memberSelectDetails")
+	@ResponseBody
+	public ResponseEntity<List<OrderDetails>> memberSelectDetails(@RequestParam("orderId") String orderId) {
+		List<OrderDetails> orderDetails = oService.findDetailsById(orderId);
+		if (orderDetails != null && !orderDetails.isEmpty()) {
+			return ResponseEntity.ok(orderDetails);
+		} else {
+			return ResponseEntity.notFound().build(); // no information back to 404 Not Found
+		}
+	}
+
 	// 點餐insert
 	@PostMapping("/createPizzaOrder")
 	@ResponseBody
-	public ResponseEntity<String> createPizzaOrder(@RequestBody Map<String, Object> orderData, Model model) {
+	public ResponseEntity<String> createPizzaOrder(@RequestBody Map<String, Object> orderData,
+			@SessionAttribute(value = "member") String member, Model model) {
 		String orderId = generateOrderId();
-		String account = (String) orderData.get("account");
 		String discount = orderData.get("discount") != null ? orderData.get("discount").toString() : "";
 		String payment = (String) orderData.get("payment");
 		String pickup = (String) orderData.get("pickup");
 		String orderStatus = "訂單待處理(未付款)";
 
+		// 查詢會員帳號
+		List<MemberAccountBean> memberAccountBeans = memberService.findAllByNotHidden();
+		String account = null;
+		for (MemberAccountBean mems : memberAccountBeans) {
+			if (mems.getMaid() == Integer.valueOf(member)) {
+				account = mems.getmAccount();
+				break;
+			}
+		}
 		// 查詢折扣金額
 		List<Promotions> discountList = promotionsService.selectAllDiscount();
 
@@ -126,7 +188,6 @@ public class PizzaOrderController {
 			}
 
 			Order order = oService.findOrderById(orderId);
-			List<OrderDetails> orderDetails = oService.findDetailsById(orderId);
 
 			if (payment.equals("LinePay")) {
 				model.addAttribute("orderId", orderId);

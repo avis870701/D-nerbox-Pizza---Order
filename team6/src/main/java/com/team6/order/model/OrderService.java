@@ -69,6 +69,16 @@ public class OrderService {
 		return null;
 	}
 
+	//前端 查詢會員所有訂單
+	public List<Order> findHistoryOrder(String account) {
+		List<Order> orders = oRepos.findHistoryOrderByAccount(account);
+		
+		if(!orders.isEmpty()) {
+			return orders;
+		}
+		return null;
+	}
+	
 	// 後端 更新折扣碼、金額
 	public void updateDiscount(String orderId, String discount, Integer discountPrice) {
 		oRepos.updatDiscountByOrderId(orderId, discount, discountPrice);

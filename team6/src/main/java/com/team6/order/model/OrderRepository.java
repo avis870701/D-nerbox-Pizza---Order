@@ -16,6 +16,10 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 	@Query(value = "SELECT o FROM Order o WHERE o.hideen = 0 ORDER BY o.orderId DESC", nativeQuery = true)
 	List<Order> findAllByHiddenEqualsZero();
 
+	// 前端查詢會員訂單
+	@Query("SELECT o FROM Order o WHERE o.account = :account ORDER BY o.orderId DESC")
+	List<Order> findHistoryOrderByAccount(String account);
+
 	// 後端查詢全部
 	@Query(value = "SELECT * FROM pizzaOrder", countQuery = "SELECT count(*) FROM pizzaOrder", nativeQuery = true)
 	Page<Order> findOrderAll(Pageable pageable);

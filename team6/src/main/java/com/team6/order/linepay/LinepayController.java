@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.team6.order.model.OrderService;
 
@@ -71,9 +72,10 @@ public class LinepayController {
 	}
 
 	@GetMapping("/confirmOrder")
-	public ResponseEntity<Object> confirmOrder(@RequestParam("transactionId") String transactionId,
+	public ModelAndView confirmOrder(@RequestParam("transactionId") String transactionId,
 			@SessionAttribute("paidAmount") String amount, @SessionAttribute("products") String products,
-			@SessionAttribute("orderId") String orderId,@SessionAttribute("orderStatus") String orderStatus) throws JSONException {
+			@SessionAttribute("orderId") String orderId, @SessionAttribute("orderStatus") String orderStatus)
+			throws JSONException {
 
 		JSONObject requestData = new JSONObject();
 		requestData.put("amount", amount);
@@ -94,15 +96,14 @@ public class LinepayController {
 				new HttpEntity<>(requestData.toString(), headers), LinepayResponse.class);
 
 		if (response.getStatusCode() == HttpStatus.OK) {
-	        orderStatus = "訂單待處理(已付款)";
-	        oService.updatePayment(orderId, orderStatus);
-	        return ResponseEntity.ok().body("付款完成");
-	    } else {
-	        orderStatus = "訂單扣款失敗";
-	        oService.updatePayment(orderId, orderStatus);
-	        return ResponseEntity.status(response.getStatusCode()).body("付款失敗");
-	    }
-
+			orderStatus = "訂單待處理(已付款)";
+			oService.updateOrderStatus(orderId, orderStatus);
+			return new ModelAndView("forward:/WEB-INF/front-jsp/order/historyOrder.jsp"); // Redirect to history order page
+		} else {
+			orderStatus = "訂單扣款失敗";
+			oService.updatePayment(orderId, orderStatus);
+			return new ModelAndView("forward:/WEB-INF/back-jsp/Err.jsp"); // Forward to error page
+		}
 	}
 
 }
