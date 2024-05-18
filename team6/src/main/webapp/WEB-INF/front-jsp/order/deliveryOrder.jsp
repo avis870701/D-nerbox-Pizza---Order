@@ -63,7 +63,7 @@
 
 
 	<!-- Navbar Start -->
-	<div class="container-fluid bg-white sticky-top">
+	<div class="container-fluid bg-white">
 		<div class="container">
 			<nav
 				class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
@@ -77,9 +77,10 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav ms-auto">
-						<a href="#" class="nav-item nav-link active">產品</a> <a href="#"
-							class="nav-item nav-link">活動優惠</a> <a href="#"
-							class="nav-item nav-link">訂位趣</a> <a href="#"
+						<a href="/product/product.front" class="nav-item nav-link active">產品</a>
+						<a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
+						<a href="/reservation/customerreservemain.controller"
+							class="nav-item nav-link">訂位趣</a> <a href="/test"
 							class="nav-item nav-link">線上點餐</a>
 					</div>
 				</div>
@@ -89,7 +90,7 @@
 						class="rounded-circle">${member.detailBean.mName}
 					</a>
 					<div class="dropdown-menu bg-light rounded-0 m-0">
-						<a href="MemberAboutMe" class="dropdown-item"> <i
+						<a href="/member/MemberAboutMe" class="dropdown-item"> <i
 							class="ti ti-user fs-6"></i>
 							<p class="mb-0 dropdown-item ">會員中心</p>
 						</a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
@@ -126,28 +127,19 @@
 					class="navbar navbar-light bg-light px-3 sticky-top ">
 					<div class="d-flex flex-grow-1">
 						<ul class="nav nav-pills flex-grow-1">
+							<li class="nav-item"><a class="nav-link fs-3" href="#pizza">披薩</a></li>
 							<li class="nav-item dropdown"><a
 								class="nav-link dropdown-toggle fs-3" data-bs-toggle="dropdown"
-								href="#" role="button" aria-expanded="false">主餐類</a>
+								href="#" role="button" aria-expanded="false">焗烤類</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#pizza">比薩</a></li>
-									<li>
-										<hr class="dropdown-divider">
-									</li>
 									<li><a class="dropdown-item" href="#bakedNoodles">焗烤麵</a></li>
-								</ul></li>
-
-							<li class="nav-item dropdown"><a
-								class="nav-link dropdown-toggle fs-3" data-bs-toggle="dropdown"
-								href="#" role="button" aria-expanded="false">副餐類</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#bakedFries">焗烤薯條</a></li>
 									<li>
 										<hr class="dropdown-divider">
 									</li>
-									<li><a class="dropdown-item" href="#deepFried">炸物</a></li>
+									<li><a class="dropdown-item" href="#bakedFries">焗烤薯條</a></li>
 								</ul></li>
-
+							<li class="nav-item"><a class="nav-link fs-3"
+								href="#deepFried">炸物</a></li>
 							<li class="nav-item"><a class="nav-link fs-3"
 								href="#dessert">甜點</a></li>
 							<li class="nav-item"><a class="nav-link fs-3" href="#drink">飲品</a></li>
@@ -164,21 +156,22 @@
 				</nav>
 				<div class="col-12 justify-content-center">
 					<div class="d-flex justify-content-end">
-						<i class="fa-solid fa-leaf">素食</i><i class="fa-solid fa-star">週三店休</i>
+						<i class="fa-solid fa-star">週三店休</i>
 					</div>
 					<div class="col-10 d-flex justify-content-center">
-						<h4 class="mb-3">Pizza</h4>
 						<div data-bs-spy="scroll" data-bs-target="#navbar-example2"
 							data-bs-offset="0" class="scrollspy-example row" tabindex="0">
+							<h2 class="mb-3">Pizza</h2>
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="pizza">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\夏威夷德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">夏威夷比薩</h4>
+										<h4 class="mb-3">夏威夷德國披薩</h4>
 										<p>Hawaii</p>
-										<h4 class="text-primary">$240</h4>
+										<h4 class="text-primary">$279</h4>
+										<input type="hidden" name="productId" value="1">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -189,14 +182,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\海鮮德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">海鮮比薩</h4>
+										<h4 class="mb-3">海鮮德國披薩</h4>
 										<p>Seafood</p>
-										<h4 class="text-primary">$250</h4>
+										<h4 class="text-primary">$289</h4>
+										<input type="hidden" name="productId" value="2">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -207,14 +200,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid"
+										src="\images\product\Shrimp_pineapple.png" alt=""
+										style="width: 247px; height: 181px;">
 									<div class="p-4">
-										<h4 class="mb-3">鳳梨蝦仁比薩</h4>
+										<h4 class="mb-3">鳳梨蝦仁披薩</h4>
 										<p>Shrimp pineapple</p>
-										<h4 class="text-primary">$220</h4>
+										<h4 class="text-primary">$279</h4>
+										<input type="hidden" name="productId" value="3"> <input
+											type="hidden" name="productId" value="3">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -225,14 +221,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\牛肉K吧德國比薩.jpg"
+										alt="">
 									<div class="p-4">
-										<h4 class="mb-3">牛K吧比薩</h4>
+										<h4 class="mb-3">牛肉K吧德國披薩</h4>
 										<p>Dönerbox(beef)</p>
-										<h4 class="text-primary">$220</h4>
+										<h4 class="text-primary">$259</h4>
+										<input type="hidden" name="productId" value="4">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -243,14 +240,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\臘腸意大利比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">臘腸比薩</h4>
+										<h4 class="mb-3">臘腸義大利披薩</h4>
 										<p>Salami</p>
-										<h4 class="text-primary">$220</h4>
+										<h4 class="text-primary">$269</h4>
+										<input type="hidden" name="productId" value="5">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -261,14 +258,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\Chicken_Bacon.jpg"
+										alt="" style="width: 247px; height: 181px;">
 									<div class="p-4">
-										<h4 class="mb-3">雞肉培根比薩</h4>
+										<h4 class="mb-3">雞肉培根披薩</h4>
 										<p>Chicken & Bacon</p>
-										<h4 class="text-primary">$200</h4>
+										<h4 class="text-primary">$269</h4>
+										<input type="hidden" name="productId" value="6">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -279,16 +277,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\起司意大利比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">起司比薩</i>
-										</h4>
+										<h4 class="mb-3">起司義大利披薩</h4>
 										<p>Cheese</p>
-										<h4 class="text-primary">$120</h4>
+										<h4 class="text-primary">$180</h4>
+										<input type="hidden" name="productId" value="7">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -299,14 +295,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\雞肉德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">雞肉比薩</h4>
+										<h4 class="mb-3">雞肉德國披薩</h4>
 										<p>Chickenw</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$190</h4>
+										<input type="hidden" name="productId" value="8">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -317,14 +313,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\培根德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">培根比薩</h4>
+										<h4 class="mb-3">培根德國披薩</h4>
 										<p>Bacon</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$185</h4>
+										<input type="hidden" name="productId" value="9">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -335,14 +331,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\鮪魚德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">鮪魚比薩</h4>
+										<h4 class="mb-3">鮪魚德國披薩</h4>
 										<p>Tuna</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="10">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -353,16 +349,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\瑪格麗塔披薩.jpg" alt=""
+										style="width: 247px; height: 181px;">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">鳳梨比薩</i>
-										</h4>
-										<p>Pineapple</p>
-										<h4 class="text-primary">$140</h4>
+										<h4 class="mb-3">瑪格麗塔披薩</h4>
+										<p>Margherita</p>
+										<h4 class="text-primary">$240</h4>
+										<input type="hidden" name="productId" value="12">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -373,16 +368,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="pizza">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\香菇德國比薩.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">洋菇比薩</i>
-										</h4>
+										<h4 class="mb-3">洋菇德國披薩</h4>
 										<p>mushroom</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$145</h4>
+										<input type="hidden" name="productId" value="11">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -394,19 +387,19 @@
 								</div>
 							</div>
 
-							<h4 class="mb-3">baked noodles</h4>
+							<h2 class="mb-3">Baked noodles</h2>
 
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="bakedNoodles">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid"
+										src="\images\product\Baked_cheese_fries.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">起司焗烤麵</i>
-										</h4>
+										<h4 class="mb-3">起司焗烤麵</h4>
 										<p>Cheese noodels</p>
-										<h4 class="text-primary">$100</h4>
+										<h4 class="text-primary">$120</h4>
+										<input type="hidden" name="productId" value="15">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -417,14 +410,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedNoodles">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\義大利雞肉焗烤麵.jpg"
+										alt="" style="width: 247px; height: 185px;">
 									<div class="p-4">
-										<h4 class="mb-3">雞肉焗烤麵</h4>
+										<h4 class="mb-3">義大利雞肉焗烤麵</h4>
 										<p>Chicken noodels</p>
-										<h4 class="text-primary">$140</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="14">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -435,14 +429,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedNoodles">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\牛肉K吧焗烤麵.jpg" alt=""
+										style="width: 247px; height: 185px;">
 									<div class="p-4">
-										<h4 class="mb-3">牛K吧焗烤麵</h4>
+										<h4 class="mb-3">義大利牛肉K吧焗烤麵</h4>
 										<p>Beef noodels</p>
-										<h4 class="text-primary">$140</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="13">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -453,14 +448,16 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedNoodles">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid"
+										src="\images\product\Seafood_noodels.jpg" alt=""
+										style="width: 247px; height: 185px;">
 									<div class="p-4">
 										<h4 class="mb-3">海鮮焗烤麵</h4>
 										<p>Seafood noodels</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="16">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -472,18 +469,17 @@
 								</div>
 							</div>
 
-							<h4 class="mb-3">baked fries</h4>
+							<h2 class="mb-3">baked fries</h2>
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="bakedFries">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\牛K吧焗烤薯條.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">起司焗烤薯條</i>
-										</h4>
+										<h4 class="mb-3">起司焗烤薯條</h4>
 										<p>Baked cheese fries</p>
-										<h4 class="text-primary">$120</h4>
+										<h4 class="text-primary">$160</h4>
+										<input type="hidden" name="productId" value="19">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -494,14 +490,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedFries">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\雞肉焗烤薯條.jpg" alt="">
 									<div class="p-4">
 										<h4 class="mb-3">雞肉焗烤薯條</h4>
 										<p>Chicken cheese fries</p>
-										<h4 class="text-primary">$150</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="18">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -512,14 +508,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedFries">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\牛K吧焗烤薯條.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">牛K吧薯條</h4>
+										<h4 class="mb-3">牛肉K吧焗烤薯條</h4>
 										<p>Beef cheese fries</p>
-										<h4 class="text-primary">$150</h4>
+										<h4 class="text-primary">$170</h4>
+										<input type="hidden" name="productId" value="20">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -530,14 +526,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="bakedFries">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\鮪魚焗烤薯條.jpg" alt="">
 									<div class="p-4">
 										<h4 class="mb-3">鮪魚焗烤薯條</h4>
 										<p>Tuna cheese fries</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$150</h4>
+										<input type="hidden" name="productId" value="17">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -550,18 +546,17 @@
 							</div>
 
 
-							<h4 class="mb-3">deep fried</h4>
+							<h2 class="mb-3">Deep fried</h2>
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="deepFried">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\薯條.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">薯條</i>
-										</h4>
+										<h4 class="mb-3">薯條</h4>
 										<p>French fries</p>
-										<h4 class="text-primary">$69</h4>
+										<h4 class="text-primary">$79</h4>
+										<input type="hidden" name="productId" value="22">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -572,14 +567,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="deepFried">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\炸雞塊(6塊).jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">雞塊</h4>
+										<h4 class="mb-3">雞塊(6)</h4>
 										<p>Chicken nuggets</p>
-										<h4 class="text-primary">$79</h4>
+										<h4 class="text-primary">$89</h4>
+										<input type="hidden" name="productId" value="23">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -590,16 +585,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="deepFried">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\炸起司條(5條).jpg"
+										alt="">
 									<div class="p-4">
-										<h4 class="mb-3">
-											<i class="fa-solid fa-leaf">炸起司條</i>
-										</h4>
+										<h4 class="mb-3">炸起司條(5)</h4>
 										<p>Mozzarella sticks</p>
-										<h4 class="text-primary">$79</h4>
+										<h4 class="text-primary">$89</h4>
+										<input type="hidden" name="productId" value="21">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -610,14 +604,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="deepFried">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\炸物拼盤.jpg" alt="">
 									<div class="p-4">
 										<h4 class="mb-3">炸物拼盤</h4>
 										<p>Mixed platter</p>
-										<h4 class="text-primary">$169</h4>
+										<h4 class="text-primary">$129</h4>
+										<input type="hidden" name="productId" value="24">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -629,16 +623,18 @@
 								</div>
 							</div>
 
-							<h4 class="mb-3">dessert</h4>
+							<h2 class="mb-3">Dessert</h2>
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="dessert">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\蘋果肉桂德國烤餅.jpg"
+										alt="">
 									<div class="p-4">
-										<h4 class="mb-3">蘋果烤餅</h4>
+										<h4 class="mb-3">蘋果肉桂德國烤餅</h4>
 										<p>Apple flammkuchen</p>
 										<h4 class="text-primary">$150</h4>
+										<input type="hidden" name="productId" value="25">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -649,14 +645,16 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="dessert">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid"
+										src="\images\product\Apple pudding flammkuchen.jpg" alt=""
+										style="width: 200px; height: 170px;">
 									<div class="p-4">
 										<h4 class="mb-3">蘋果布丁烤餅</h4>
 										<p>Apple pudding flammkuchen</p>
-										<h4 class="text-primary">$160</h4>
+										<h4 class="text-primary">$140</h4>
+										<input type="hidden" name="productId" value="26">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -667,14 +665,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="dessert">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\芝麻德國比烤餅.jpg" alt="">
 									<div class="p-4">
-										<h4 class="mb-3">芝麻烤餅</h4>
+										<h4 class="mb-3">芝麻德國比烤餅</h4>
 										<p>Sesame flammkuchen</p>
 										<h4 class="text-primary">$120</h4>
+										<input type="hidden" name="productId" value="27">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -687,16 +685,18 @@
 							</div>
 
 
-							<h4 class="mb-3">drink</h4>
+							<h2 class="mb-3">Drink</h2>
 
 							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
 								id="drink">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\可樂.jpg" alt=""
+										style="width: auto; height: 232px;">
 									<div class="p-4">
 										<h4 class="mb-3">可口可樂</h4>
 										<p>Coca cola</p>
 										<h4 class="text-primary">$39</h4>
+										<input type="hidden" name="productId" value="28">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -707,14 +707,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="drink">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\雪碧.jpg" alt="">
 									<div class="p-4">
 										<h4 class="mb-3">雪碧</h4>
 										<p>Sprite</p>
 										<h4 class="text-primary">$39</h4>
+										<input type="hidden" name="productId" value="29">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -725,14 +725,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s"
-								id="drink">
+							<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
 								<div class="store-item position-relative text-center">
-									<img class="img-fluid" src="img/store-product-1.jpg" alt="">
+									<img class="img-fluid" src="\images\product\蘋果汁.jpg" alt="">
 									<div class="p-4">
 										<h4 class="mb-3">蘋果汁</h4>
 										<p>Apple juice</p>
 										<h4 class="text-primary">$49</h4>
+										<input type="hidden" name="productId" value="30">
 									</div>
 									<div class="store-overlay">
 										<button type="button"
@@ -921,26 +921,25 @@
 										<div class="modal-body">
 											<div class="mb-3">
 												<label for="discountCode" class="form-label">折扣碼：</label> <input
-													type="text" class="form-control" id="discountCode">
+													type="text" class="form-control" name="discount"
+													id="discount">
 											</div>
 											<br>
 											<p>付款方式:</p>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="paymentMethod" id="cashPayment" value="cash">
-												<label class="form-check-label" for="cashPayment"> <i
-													class="fa-solid fa-money-check-dollar"></i>現金
-												</label>
-											</div>
-											<div class="form-check form-check-inline">
-												<input class="form-check-input" type="radio"
 													name="paymentMethod" id="creditCardPayment"
-													value="creditCard"> <label class="form-check-label"
-													for="creditCardPayment"> <i
-													class="fa-regular fa-credit-card"></i>LinePay
-												</label>
+													value="LinePay"> <label class="form-check-label"
+													for="creditCardPayment"><i
+													class="fa-regular fa-credit-card"></i>LinePay</label>
 											</div>
-											<div id="discountAmount" style="display: none;">折扣金額：</div>
+											<input type="hidden" name="account" id="account"
+												value="memberAccount"> <input type="hidden"
+												name="discountPrice" id="discountPrice" value=""> <input
+												type="hidden" name="payment" id="payment" value="">
+											<input type="hidden" name="pickup" id="pickup" value="外送">
+											<input type="hidden" name="orderStatus" id="orderStatus"
+												value="">
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary"
@@ -994,8 +993,7 @@
 									<div class="container mt-5">
 										<div class="d-flex justify-content-center">
 											<button type="button" class="btn btn-primary"
-												data-bs-toggle="modal" data-bs-target="#paymentModal">
-												查看付款方式</button>
+												id="checkOrderButton">查看付款方式</button>
 										</div>
 									</div>
 								</div>
@@ -1003,46 +1001,13 @@
 						</div>
 					</div>
 				</div>
+
+
 			</div>
 		</div>
 	</div>
 
-	<!-- Payment Modal -->
-	<div class="modal fade" id="paymentModal" tabindex="-1"
-		aria-labelledby="paymentModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="paymentModalLabel">填寫訂購資訊</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="mb-3">
-						<label for="discountCode" class="form-label">使用折扣碼：</label> <input
-							type="text" class="form-control" id="discountCode">
-					</div>
-					<br> 付款方式：
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="paymentMethod"
-							id="cashPayment" value="cash"> <label
-							class="form-check-label" for="cashPayment"> 現金 </label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="paymentMethod"
-							id="creditCardPayment" value="creditCard"> <label
-							class="form-check-label" for="creditCardPayment"> 信用卡 </label>
-					</div>
-					<div id="discountAmount" style="display: none;">折扣金額：</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">關閉</button>
-					<button type="button" class="btn btn-primary"
-						onclick="applyDiscount()">套用折扣</button>
-				</div>
-			</div>
-		</div>
+
 	</div>
 
 
@@ -1115,8 +1080,8 @@
 			<div class="row">
 				<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
 					&copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>,
-					<a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right
-					Reserved.
+					<a class="fw-medium" href="/member/emplogin">Döner Pizza德氏披薩</a>,
+					All Right Reserved.
 				</div>
 				<div class="col-md-6 text-center text-md-end">
 					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
@@ -1140,13 +1105,9 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/wow/wow.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="/front/js/main.js"></script>
+	<script src="../../..//static/front/js/main.js"></script>
 	<script src="../../../static/front/js/order/orderModal.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

@@ -365,6 +365,10 @@ function applyDiscount() {
 		}
 	}
 
+	console.log('selectedPaymentMethod: ' + selectedPaymentMethod);
+	console.log('paymentNethods:' + paymentMethods);
+
+
 	if (!selectedPaymentMethod) {
 		alert('請選擇付款方式');
 		return;
@@ -401,9 +405,6 @@ function applyDiscount() {
 		orderDetails.push({ productId, product, note, totalPrice, quantity });
 	}
 
-	// 输出 orderDetails 到控制台
-	console.log('orderDetails:', orderDetails);
-
 	// 構建POST數據
 	const postData = {
 		discount: discount,
@@ -424,9 +425,12 @@ function applyDiscount() {
 	})
 		.then(response => response.json())
 		.then(data => {
-			if (data === "Order inserted successfully.") {
-				// 處理成功響應
-				console.log('訂單插入成功')
+			if (data.message === "Order inserted successfully.") {
+				console.log('訂單插入成功');
+				// 直接重定向到 LinePay 的支付頁面
+				window.location.href = '/order/linepayOrder';
+			} else {
+				throw new Error('Order creation failed');
 			}
 		})
 		.catch(error => {

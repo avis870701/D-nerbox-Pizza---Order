@@ -12,7 +12,7 @@ payment NVARCHAR(50) not null,
 pickup NVARCHAR(50) not null,
 --後台:內用客人、外帶客人 前台:外送、外帶
 orderStatus NVARCHAR(50) DEFAULT '訂單待處理(未付款)',
---訂單待處理(未付款)、訂單待處理(已付款)、餐點製作中、餐點完成、待取餐、外送中、訂單完成、訂單取消
+--訂單待處理(未付款)、訂單待處理(已付款)、訂單扣款失敗、餐點製作中、餐點完成、待取餐、外送中、訂單完成、訂單取消
 cancelNote NVARCHAR(50) DEFAULT '',
 hide INT DEFAULT 0);	
 

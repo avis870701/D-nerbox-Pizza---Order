@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.team6.delivery.model.Delivery;
 import com.team6.order.model.Order;
@@ -42,6 +44,7 @@ import jakarta.servlet.http.HttpSession;
 //後段
 @Controller
 @RequestMapping("/order")
+@SessionAttributes("emp")
 public class OrderController {
 
 	@Autowired
@@ -58,14 +61,22 @@ public class OrderController {
 
 	// 後端進入點 http://localhost:8080/order/order.action
 	@RequestMapping(path = "/order.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderMainprocess() {
-		return "forward:/WEB-INF/back-jsp/order/OrderIndex.jsp";
+	public String orderMainprocess(@SessionAttribute("emp")String emp) {
+		if(emp != null) {
+			return "forward:/WEB-INF/back-jsp/order/OrderIndex.jsp";
+		}else {
+			return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
+		}
 	}
 
 	// 後端員工點餐進入點 http://localhost:8080/order/orderByEmployee
 	@RequestMapping(path = "/orderByEmployee", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderByEmployee() {
-		return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
+	public String orderByEmployee(@SessionAttribute("emp") String emp) {
+		if( emp != null) {
+			return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
+		}else {
+			return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
+		}
 	}
 
 	// select all
