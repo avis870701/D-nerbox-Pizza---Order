@@ -61,7 +61,7 @@ public class OrderController {
 
 	// 後端進入點 http://localhost:8080/order/order.action
 	@RequestMapping(path = "/order.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderMainprocess(@SessionAttribute("emp")String emp) {
+	public String orderMainprocess(@SessionAttribute(value = "emp", required = false) String emp) {
 		if(emp != null) {
 			return "forward:/WEB-INF/back-jsp/order/OrderIndex.jsp";
 		}else {
@@ -71,7 +71,7 @@ public class OrderController {
 
 	// 後端員工點餐進入點 http://localhost:8080/order/orderByEmployee
 	@RequestMapping(path = "/orderByEmployee", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderByEmployee(@SessionAttribute("emp") String emp) {
+	public String orderByEmployee(@SessionAttribute(value = "emp", required = false) String emp) {
 		if( emp != null) {
 			return "forward:/WEB-INF/back-jsp/order/OrderByEmployee.jsp";
 		}else {
