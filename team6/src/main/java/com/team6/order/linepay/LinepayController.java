@@ -21,17 +21,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team6.delivery.model.Delivery;
+import com.team6.delivery.model.DeliveryService;
 import com.team6.order.model.OrderService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/order")
 @SessionAttributes({ "orderId", "account", "oriAmount", "discount", "discountPrice", "paidAmount", "payment", "pickup",
 		"orderStatus", "detailsIds", "productIds", "products", "unitPrices", "quantitys", "subtotals", "notes",
-		"member" })
+		"member","address","date" })
 public class LinepayController {
 
 	@Autowired
 	private OrderService oService;
+	
+	@Autowired
+	private DeliveryService dService;
 
 	@GetMapping("/linepayOrder")
 	public ResponseEntity<Object> linepayOrder(@SessionAttribute("paidAmount") String amount,
@@ -74,7 +81,8 @@ public class LinepayController {
 	@GetMapping("/confirmOrder")
 	public ModelAndView confirmOrder(@RequestParam("transactionId") String transactionId,
 			@SessionAttribute("paidAmount") String amount, @SessionAttribute("products") String products,
-			@SessionAttribute("orderId") String orderId, @SessionAttribute("orderStatus") String orderStatus)
+			@SessionAttribute("orderId") String orderId, @SessionAttribute("orderStatus") String orderStatus,
+			@SessionAttribute("pickup")String pickup,HttpSession session,Delivery delivery)
 			throws JSONException {
 
 		JSONObject requestData = new JSONObject();
@@ -98,6 +106,14 @@ public class LinepayController {
 		if (response.getStatusCode() == HttpStatus.OK) {
 			orderStatus = "訂單待處理(已付款)";
 			oService.updateOrderStatus(orderId, orderStatus);
+			if(pickup == "外送") {
+				String address = (String)session.getAttribute("address");
+				String date = (String)session.getAttribute("date");
+				delivery.setAddress(address);
+				delivery.setDate(date);
+				delivery.setOrderid(orderId);
+				dService.insert(delivery);
+			}
 			return new ModelAndView("forward:/WEB-INF/front-jsp/order/historyOrder.jsp"); // Redirect to history order page
 		} else {
 			orderStatus = "訂單扣款失敗";

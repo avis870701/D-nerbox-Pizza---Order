@@ -129,7 +129,7 @@ public class PizzaOrderController {
 			if (mems.getMaid() == Integer.valueOf(member)) {
 				account = mems.getmAccount();
 				break;
-			}
+			}	
 		}
 		// 查詢折扣金額
 		List<Promotions> discountList = promotionsService.selectAllDiscount();
