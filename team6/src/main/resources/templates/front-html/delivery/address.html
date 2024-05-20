@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>取餐選擇</title>
+    <!-- <link rel="stylesheet"  href="/css/style.css"> -->
+    <link rel="stylesheet"  href="../../../static/front/css/delivery/deliverystyle.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* #iframe1,
+        #iframe2,
+        #iframe3,
+        #iframe4,
+        #iframe5,
+        #iframe6,
+        #iframe7
+        {   
+    position: fixed;   
+    left:0;   
+    top:190px;             
+    right:0;   
+    bottom:0;   
+    border:none;   
+    }   
+    iframe{   
+        width:50%;   
+        height: 75%;   
+        border:none;       
+    }  
+
+    .my-div {
+            width: 300px;
+            height: 200px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box; /* 讓padding不增加寬度 */
+        /* }  */
+    
+    </style>
+</head>
+<body background="../../../static/front/img/1.jpg">
+	
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-3">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button type="button" class="btn btn-outline-primary"><a href="https://www.google.com.tw/?hl=zh_TW">外帶</a></button>
+                    <button type="button" id="delivery" class="btn btn-outline-primary mr-2">外送</button>
+                    <button type="button"  id="Attractions" class="btn btn-outline-primary">景點直送</button>
+                </div>
+                <br>
+               
+                <select id="Attraction1" class="form-select form-select-sm" aria-label="Small select example">
+                    <h2 align="center">選擇景點</h2>
+                    <option selected>請選擇景點</option>
+                    <option value="桃園市中壢區中北路200號">中原大學</option>
+                    <option value="桃園市中壢區健行路229號">健行科技大學</option>
+                    <option value="桃園市中壢區中和路139號">中壢火車站</option>
+                    <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
+                    <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
+                    <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
+                    <option value="桃園市中壢區遠東路135號">元智大學</option>
+                </select>
+                <input type="date" id="date" name="trip-start" min="2018-01-01" max="2100-12-31" />
+                <button id="Attraction2" class="btn btn-primary">確定</button>
+                
+                <br>
+                <br>
+                <div>
+                </div>
+
+            <div class="input-group mt-3">
+                <h2 id="deliveryaddress" class="text-center">輸入外送地址</h2>
+                    <div>
+                        <span id="enter" class="input-group-text">自行輸入地址*</span>
+                        <input type="text" aria-label="Last name" id="catchbar" class="form-control" placeholder="请輸入外送地址">
+                    </div>
+            </div>
+
+                <div class="text-center mt-3">
+                    <button id="catch" onclick="getLocation()" class="btn btn-outline-primary"><i class="fas fa-map-marker-alt"></i></button>
+                    <button id="submit" class="btn btn-primary">確定</button>
+                </div>
+                <div>
+            </div>
+
+            <!-- <div class="container">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-3">
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-primary"><a href="https://www.google.com.tw/?hl=zh_TW">外帶</a></button>
+                            <button type="button" id="delivery" class="btn btn-outline-primary mr-2">外送</button>
+                            <button type="button" id="Attractions" class="btn btn-outline-primary">景點直送</button>
+                        </div>
+                        <br>
+                        <form action="/save" method="post"> 
+                            <h2 align="center">選擇景點</h2>
+                            <select id="Attraction1" class="form-select form-select-sm" aria-label="Small select example" name="address">
+                                <option selected>請選擇景點</option>
+                                <option value="桃園市中壢區中北路200號">中原大學</option>
+                                <option value="桃園市中壢區健行路229號">健行科技大學</option>
+                                <option value="桃園市中壢區中和路139號">中壢火車站</option>
+                                <option value="桃園市中壢區中華路一段267號">內壢火車站</option>
+                                <option value="桃園市中壢區中山東路二段510號">家樂福 中壢店</option>
+                                <option value="桃園市中壢區中華路一段450號">家樂福 內壢店</option>
+                                <option value="桃園市中壢區遠東路135號">元智大學</option>
+                            </select>
+                            <input type="date" id="date" name="date" min="2018-01-01" max="2100-12-31" />
+                            <button type="submit" id="Attraction2" class="btn btn-primary">確定</button>
+                        </form>
+                        <br>
+                        <br>
+                        <div class="input-group mt-3">
+                            <h2 id="deliveryaddress" class="text-center">輸入外送地址</h2>
+                            <form action="/save" method="post"> 
+                                <span id="enter" class="input-group-text">自行輸入地址*</span>
+                                <input type="text" aria-label="Address" name="address" class="form-control" placeholder="请輸入外送地址">
+                                <button type="submit" class="btn btn-primary">確定</button>
+                            </form>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="catch" onclick="getLocation()" class="btn btn-outline-primary"><i class="fas fa-map-marker-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             -->
+            <div class="text-center mt-6">
+                <div id="iframe1">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.256463818154!2d121.23820147367306!3d24.957387541375393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468221447a0f021%3A0x2b86d2650bb8bcff!2z5Lit5Y6f5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714618377967!5m2!1szh-TW!2stw" width="480" height="450" style="border:0;" allowfullscreen="" loading="lazy"  referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe2" >
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.555785535697!2d121.22654517367268!3d24.947198441784487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468224f87c71751%3A0x6c3205000735ed1d!2z5YGl6KGM56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714619132073!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe3">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14469.462824194185!2d121.20713658626295!3d24.953669318369634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346823f620af7c8b%3A0xb2ea3ac8ba632176!2z5Lit5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621334190!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe4" class="iframe-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.802670190146!2d121.25567347367371!3d24.97282754075522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821ff2247e46d%3A0x629926233052db00!2z5YWn5aOi54Gr6LuK56uZ!5e0!3m2!1szh-TW!2stw!4v1714621369010!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe5" class="iframe-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.55891941995!2d121.24213877367265!3d24.94709174178881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346822695ba82b0d%3A0xa64bad4fe99d1b89!2z5a625qiC56aPIOS4reWjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623400444!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe6" class="iframe-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.8143504390578!2d121.25110247367361!3d24.97243024077114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346821f8791fe543%3A0x66a64f7a04ad5200!2z5a625qiC56aPIOWFp-WjouW6lw!5e0!3m2!1szh-TW!2stw!4v1714623526141!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div id="iframe7" class="iframe-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.876323700467!2d121.26086727367353!3d24.970322140855902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681f5490d43fcd%3A0x186eb5a7e52b332b!2z5YWD5pm65aSn5a24!5e0!3m2!1szh-TW!2stw!4v1714623641605!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div> 
+
+        
+    
+   
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="../../../static/front/js/delivery/api.js"></script>
+<script src="../../../static/front/js/delivery/iframe.js"></script>
+<script src="../../../static/front/js/delivery/button.js"></script>
+<script>
+
+
+    $('#submit').click(function(){
+        const catchval =  $('#catchbar').val()
+        const date =  $('#date').val()
+        console.log(catchval);
+        console.log(date);
+        const matchesPattern = checkAddressFormat(catchval);
+        let data = {
+            address : catchval,
+            date : date
+        }
+        
+        if (matchesPattern) {
+                $.ajax({
+                type: 'POST',
+                url: '/save',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(result) {
+                    alert('输入的字符串符合指定的模式。');
+                    // window.location.href = '/delivery/home';   
+                },
+            })
+        } else {
+            alert('請输入桃園市中壢區及路名。');
+        }
+    });
+
+    // 使用正则表达式的 test() 方法检查输入字符串是否符合模式
+    function checkAddressFormat(inputString) {
+        const pattern = /桃園市|中壢區/;
+        return pattern.test(inputString);
+    }
+ 
+
+    $('#Attraction2').click(function(){
+        let Attraction1 = $('#Attraction1').val();
+        let date =  $('#date').val()
+        console.log(Attraction1);
+        console.log(date);
+    })
+
+</script>
+</body>
+</html>
