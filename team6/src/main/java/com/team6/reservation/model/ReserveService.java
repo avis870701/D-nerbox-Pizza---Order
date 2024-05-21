@@ -195,8 +195,8 @@ public class ReserveService {
         try {
             reserve.setAccount(ispanTeam2);
             reserve.setNumberOfPeople(numberOfPeople);
-            reserve.setReservationName("dineInCustomer");
-            reserve.setPhone("dineInCustomer");
+            reserve.setReservationName("現場用餐");
+            reserve.setPhone("");
             reserve.setReservationTime(reservationTime);
             reserve.setReservationDate(reservationDate);
             reserve.setNote(note);
@@ -236,11 +236,6 @@ public class ReserveService {
 	return reserveRepository.selectPageHistoryReservation(year,month,pageable);
 	}
 	
-	//分頁:查詢歷史訂位(依年月)且日期時間由大到小(未用)
-	public Page<Reserve> selectPageHistoryReservationByDESC(String year,String month,Pageable pageable ){
-	return reserveRepository.selectPageHistoryReservationByDESC(year,month,pageable);
-	}
-
 	//手動修改客人預訂狀態
 	public void autoUpdateReservationStatus(int reservationStatus,int reservationId ) {
 		reserveRepository.autoUpdateReservationStatus(reservationStatus, reservationId);
@@ -248,29 +243,34 @@ public class ReserveService {
 
 	//匯出成csv
 	public void saveDetailToCSV(String year, String month) {
-		String file = "C:\\Users\\User\\Downloads\\historyreservation.csv";
-		String CSV = "reservationUuid,account,reservationName,phone,mail,numberOfPeople,reservationDate,reservationTime,reservationStatus,note\n";
+	    String file = "C:\\Users\\User\\Downloads\\" + year + month + "歷史訂位紀錄.csv";
+	    String CSV = "編號,訂位編號,會員帳號,訂位姓名,電話,Email,訂位人數,訂位日期,訂位時間,訂位狀態,備註\n";
 
-		List<Reserve> reserves = reserveRepository.selectHistoryReservation(year, month);
-		try (FileOutputStream fos = new FileOutputStream(file);
-				BufferedOutputStream bos = new BufferedOutputStream(fos);) {
-			bos.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
-
-			for (Reserve reserve : reserves) {
-				CSV += reserve.saveToCsv() + "\n";
-			}
-			byte[] bytes = CSV.getBytes(StandardCharsets.UTF_8);
-			bos.write(bytes);
-			
-		} catch (Exception e) {
-		}
+	    List<Reserve> reserves = reserveRepository.selectHistoryReservation(year, month);
+	    //寫在try with reosurce內不用自己close
+	    try (FileOutputStream fos = new FileOutputStream(file);
+	         BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+	        bos.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
+	        
+	        int counter = 1; // 編號從1開始
+	        for (Reserve reserve : reserves) {
+	            CSV += counter++ + "," + reserve.saveToCsv() + "\n";
+	        }
+	        
+	        byte[] bytes = CSV.getBytes(StandardCharsets.UTF_8);
+	        bos.write(bytes);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
 	    
    // 自動寄信用(HTML信件)
     public void sendSimpleHtml(String from, String receiver, String subject, String content) {
     	MimeMessage message = mailSender.createMimeMessage();
-		FileSystemResource fileSystemResource = new FileSystemResource(
-				new File("C:\\Users\\User\\Documents\\team6\\team6\\src\\main\\resources\\static\\images\\reservation\\menu.jpeg"));
+    	FileSystemResource fileSystemResource = new FileSystemResource(
+    	        new File("src/main/resources/static/images/reservation/menu.jpeg"));
+
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setFrom(from);
@@ -299,4 +299,9 @@ public class ReserveService {
 //
 //        mailSender.send(message);
 //    }
+	
+//	//分頁:查詢歷史訂位(依年月)且日期時間由大到小
+//	public Page<Reserve> selectPageHistoryReservationByDESC(String year,String month,Pageable pageable ){
+//	return reserveRepository.selectPageHistoryReservationByDESC(year,month,pageable);
+//	}
 }

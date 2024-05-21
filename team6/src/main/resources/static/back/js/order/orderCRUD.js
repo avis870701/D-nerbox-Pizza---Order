@@ -110,7 +110,7 @@ $(document).ready(function() {
 					$('#cancelNoteModal').modal('hide');
 					fetchOrders(currentPage);
 				} else {
-					alert("請輸入正確格式的取消原因");
+					Swal.fire("請輸入正確格式的取消原因");
 				}
 			});
 		});
@@ -224,7 +224,10 @@ $(document).ready(function() {
 			$('#page' + pageNumber).addClass('active');
 		} else {
 			// 提示用户輸入的頁碼無效
-			alert('請輸入有效頁碼 1 到 ' + totalPages + ' 頁');
+			Swal.fire({
+				icon: "error",
+				title: '請輸入有效頁碼 1 到 ' + totalPages + ' 頁！',
+			});
 		}
 	});
 
@@ -339,7 +342,7 @@ $(document).ready(function() {
 					$('#cancelNoteModal').modal('hide');
 					fetchOrders(currentPage);
 				} else {
-					alert("請輸入正確格式的取消原因");
+					Swal.fire("請輸入正確格式的取消原因");
 				}
 			});
 		});
@@ -420,7 +423,7 @@ $(document).ready(function() {
 			error: function(xhr, status, error) {
 				if (xhr.status === 404) {
 					// 如果返回404，则显示警告提示
-					alert('已無餐點明細');
+					Swal.fire('已無餐點明細');
 				} else {
 					console.error(error);
 					// 在這裡處理請求失敗的情況
@@ -479,7 +482,7 @@ $(document).ready(function() {
 					$('#orderDetailsModal').modal('hide');
 					var page = currentPage;
 					fetchOrders(page);
-					alert('已無餐點明細');
+					Swal.fire('已無餐點明細');
 					//加入update 將折扣碼金額變為0 金額才不會變負的
 					updateDiscount(orderId)
 					return; // 终止執行後續代碼
@@ -558,7 +561,7 @@ $(document).ready(function() {
 		var paidAmount = parseFloat($(this).closest('tr').find('.paidAmount-id-input').val());
 		console.log('paidAmount::' + paidAmount);
 		if (paidAmount === 0) {
-			alert('總金額為0，無法進行優惠設定！');
+			Swal.fire('總金額為0，無法進行優惠設定！');
 		} else {
 
 			$('#updateDiscountModal').modal('show');
@@ -610,7 +613,7 @@ $(document).ready(function() {
 			var alertShown = false;
 
 			if (!alertShown && discountCode === '點擊下拉') {
-				alert("尚未選擇優惠折扣碼");
+				Swal.fire("尚未選擇優惠折扣碼");
 				alertShown = true;
 				return;
 			}
@@ -677,7 +680,7 @@ $(document).ready(function() {
 					$('#cancelNoteModal').modal('hide');
 					fetchOrders(currentPage);
 				} else {
-					alert("請輸入正確格式的取消原因");
+					Swal.fire("請輸入正確格式的取消原因");
 				}
 			});
 		}
@@ -763,7 +766,7 @@ $(document).ready(function() {
 			}
 
 		} else {
-			alert('請先 "查詢" 想要匯出的資料！');
+			Swal.fire('請先 "查詢" 想要匯出的資料！');
 		}
 
 		console.log('匯出格式：' + format);
@@ -782,7 +785,10 @@ $(document).ready(function() {
 			},
 			success: function(response) {
 				console.log(response);
-				alert('匯出成功！');
+				Swal.fire({
+					title: "匯出成功！!",
+					icon: "success"
+				});
 			},
 			error: function(xhr, status, error) {
 				console.error(error);
@@ -800,7 +806,10 @@ $(document).ready(function() {
 			},
 			success: function(response) {
 				console.log(response);
-				alert('匯出成功！');
+				Swal.fire({
+					title: "匯出成功！!",
+					icon: "success"
+				});
 			},
 			error: function(xhr, status, error) {
 				console.error(error);
@@ -818,7 +827,10 @@ $(document).ready(function() {
 			},
 			success: function(response) {
 				console.log(response);
-				alert('匯出成功！');
+				Swal.fire({
+					title: "匯出成功！!",
+					icon: "success"
+				});
 			},
 			error: function(xhr, status, error) {
 				console.error(error);

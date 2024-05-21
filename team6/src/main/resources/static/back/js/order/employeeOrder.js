@@ -133,10 +133,10 @@ function addOrder() {
 	var note = $('#noteInput').val();
 
 	if (productName == '') {
-		alert('請選擇產品！');
+		Swal.fire('請選擇產品！');
 	}
 	if (quantity <= 0 || quantity > 10) {
-		alert('數量限 1 ~ 10 之間！');
+		Swal.fire('數量限 1 ~ 10 之間！');
 	}
 
 	var sauceSelected = false;
@@ -150,7 +150,7 @@ function addOrder() {
 
 
 	if (!$('input[name="sauce"]').prop('disabled') && !sauceSelected) {
-		alert('請選擇一種醬料！');
+		Swal.fire('請選擇一種醬料！');
 		return; // 中止函數執行
 	}
 
@@ -371,6 +371,6 @@ $('.employeeOrder-btn').click(function() {
 	if(productPrice > 0){
 	sendOrder();		
 	}else {
-		alert('尚未點餐！');
+		Swal.fire('尚未點餐！');
 	}
 });

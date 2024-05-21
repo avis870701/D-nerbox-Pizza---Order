@@ -63,38 +63,36 @@
                             <a href="/product/product.front" class="nav-item nav-link active">產品</a>
                             <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
                             <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
-                            <a href="/test" class="nav-item nav-link">線上點餐</a>
+                            <a href="/delivery" class="nav-item nav-link">線上點餐</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
-                                <div class="dropdown-menu bg-light rounded-0 m-0">
-                                    <a href="#" class="dropdown-item">Features</a>
-                                    <a href="#" class="dropdown-item">Blog Article</a>
-                                    <a href="#" class="dropdown-item">Testimonial</a>
-                                    <a href="#" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
+								<div class="dropdown-menu bg-light rounded-0 m-0">
+									<a href="#" class="dropdown-item">特色</a> <a href="#"
+										class="dropdown-item">部落格</a> <a href="#"
+										class="dropdown-item">公司簡介</a> <a href="#" class="dropdown-item">分店資訊</a>
+								</div>
+							</div>
                         </div>
-                    </div>
-                    <div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
-                                width="35" height="35" class="rounded-circle">${member.detailBean.mName}
-                        </a>
-                        <div class="dropdown-menu bg-light rounded-0 m-0">
-                            <a href="/member/MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
-                                <p class="mb-0 dropdown-item ">會員中心</p>
-                            </a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
-                                <p class="mb-0 dropdown-item">訂單查詢</p>
-                            </a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
-                                <p class="mb-0 dropdown-item">優惠券</p>
-                            </a> <a href="/member/logout"
-                                class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
+                        <div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
+                                    width="35" height="35" class="rounded-circle">${member.detailBean.mName}
+                            </a>
+                            <div class="dropdown-menu bg-light rounded-0 m-0">
+                                <a href="/member/MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
+                                    <p class="mb-0 dropdown-item ">會員中心</p>
+                                </a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
+                                    <p class="mb-0 dropdown-item">訂單查詢</p>
+                                </a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
+                                    <p class="mb-0 dropdown-item">優惠券</p>
+                                </a> <a href="/member/logout"
+                                    class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
+                            </div>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
         <!-- Navbar End -->
-
 
         <!-- Page Header Start -->
         <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">

@@ -12,27 +12,43 @@ import org.springframework.data.repository.query.Param;
 
 public interface RepositoryMemberAccount extends JpaRepository<MemberAccountBean, Integer> {
 
-	@Query(value ="from MemberAccountBean where mAccount= ?1 and mPassword = ?2")
-	public Optional<MemberAccountBean> login(String acconut,String pwd);
-	
-	@Query(value ="from MemberAccountBean where mAccount= ?1")
-	public Optional<MemberAccountBean> findAccountByAccount(String account);
-	
-	@Query(value ="from MemberAccountBean where detailBean.mName like %:n% or mAccount like %:n% or maid = :n  ORDER BY maid")
-	public List<MemberAccountBean> findByName(@Param("n")String name);
-	
-	@Query(value ="SELECT * FROM memberAccount where hidden =1",nativeQuery = true)
-	public List<MemberAccountBean> findAllByNotHidden();
-	
-	@Query(value ="SELECT * FROM memberAccount a join memberDetail d on a.maid = d.fk_maId WHERE d.mName like %:n%",nativeQuery = true)
-	public Page<MemberAccountBean> findByNamePage(Pageable pageable, @Param("n")String empName);
-	
-	@Query(value ="SELECT * FROM memberAccount where hidden =1",nativeQuery = true)
-	public Page<MemberAccountBean> findAllByNotHiddenByPage(Pageable pageable);
+		// 登入查詢
+		@Query(value ="from MemberAccountBean where mAccount= ?1 and mPassword = ?2")
+		public Optional<MemberAccountBean> login(String acconut,String pwd);
+		
+		// 依 帳號 找到bean
+		@Query(value ="from MemberAccountBean where mAccount= ?1")
+		public Optional<MemberAccountBean> findAccountByAccount(String account);
+		
+		// 模糊查詢找到bean
+		@Query(value ="from MemberAccountBean where detailBean.mName like %:n% or mAccount like %:n% ORDER BY maid")
+		public List<MemberAccountBean> findByName(@Param("n")String name);
+		
+		// 模糊查詢 + 未被刪除 找到bean
+		@Query(value ="from MemberAccountBean where hidden = 1 and ( detailBean.mName like %:n% or mAccount like %:n% ) ORDER BY maid")
+		public List<MemberAccountBean> findByNameAndNotHidden(@Param("n")String name);
+		
+		// 查詢未被刪除之全部
+		@Query(value ="SELECT * FROM memberAccount where hidden =1",nativeQuery = true)
+		public List<MemberAccountBean> findAllByNotHidden();
+		
+		// 模糊查詢找到bean 分頁板
+//		@Query(value ="SELECT * FROM memberAccount a join memberDetail d on a.maid = d.fk_maId WHERE d.mName like %:n%",nativeQuery = true)
+		@Query(value ="from MemberAccountBean where detailBean.mName like %:n% or mAccount like %:n% ORDER BY maid")
+		public Page<MemberAccountBean> findByNamePage(Pageable pageable, @Param("n")String empName);
 
-	@Query(value ="from MemberAccountBean where detailBean.mEmail= ?1")
-	public Optional<MemberAccountBean> findAccountByEmail(String email);
-	
-//	@Query(value ="from MemberAccountBean where :type like %:name% ORDER BY maid")
-//	public Page<MemberAccountBean> findByNamePage(Pageable pageable, @Param("type")String type, @Param("name")String empName);
+		// 模糊查詢 + 未被刪除 分頁板
+		@Query(value ="from MemberAccountBean where hidden = 1 and ( detailBean.mName like %:n% or mAccount like %:n% ) ORDER BY maid")
+		public Page<MemberAccountBean> findByNameAndNotHiddenPage(Pageable pageable, @Param("n")String Name);
+		
+		// 查詢未被刪除之全部 分頁板
+		@Query(value ="SELECT * FROM memberAccount where hidden =1",nativeQuery = true)
+		public Page<MemberAccountBean> findAllByNotHiddenByPage(Pageable pageable);
+
+		// 依 電子信箱 找到bean
+		@Query(value ="from MemberAccountBean where detailBean.mEmail= ?1")
+		public Optional<MemberAccountBean> findAccountByEmail(String email);
+		
+//		@Query(value ="from MemberAccountBean where :type like %:name% ORDER BY maid")
+//		public Page<MemberAccountBean> findByNamePage(Pageable pageable, @Param("type")String type, @Param("name")String empName);
 }

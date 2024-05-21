@@ -63,31 +63,30 @@
                             <a href="/product/product.front" class="nav-item nav-link active">產品</a>
                             <a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
                             <a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
-                            <a href="/test" class="nav-item nav-link">線上點餐</a>
+                            <a href="/delivery" class="nav-item nav-link">線上點餐</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
-                                <div class="dropdown-menu bg-light rounded-0 m-0">
-                                    <a href="#" class="dropdown-item">Features</a>
-                                    <a href="#" class="dropdown-item">Blog Article</a>
-                                    <a href="#" class="dropdown-item">Testimonial</a>
-                                    <a href="#" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
+								<div class="dropdown-menu bg-light rounded-0 m-0">
+									<a href="#" class="dropdown-item">特色</a> <a href="#"
+										class="dropdown-item">部落格</a> <a href="#"
+										class="dropdown-item">公司簡介</a> <a href="#" class="dropdown-item">分店資訊</a>
+								</div>
+							</div>
                         </div>
-                    </div>
-                    <div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
-                                width="35" height="35" class="rounded-circle">${member.detailBean.mName}
-                        </a>
-                        <div class="dropdown-menu bg-light rounded-0 m-0">
-                            <a href="/member/MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
-                                <p class="mb-0 dropdown-item ">會員中心</p>
-                            </a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
-                                <p class="mb-0 dropdown-item">訂單查詢</p>
-                            </a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
-                                <p class="mb-0 dropdown-item">優惠券</p>
-                            </a> <a href="/member/logout"
-                                class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
+                        <div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
+                                    width="35" height="35" class="rounded-circle">${member.detailBean.mName}
+                            </a>
+                            <div class="dropdown-menu bg-light rounded-0 m-0">
+                                <a href="/member/MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
+                                    <p class="mb-0 dropdown-item ">會員中心</p>
+                                </a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
+                                    <p class="mb-0 dropdown-item">訂單查詢</p>
+                                </a> <a href="#" class="dropdown-item"> <i class="ti ti-list-check fs-6"></i>
+                                    <p class="mb-0 dropdown-item">優惠券</p>
+                                </a> <a href="/member/logout"
+                                    class="btn btn-outline-primary d-block dropdown-item px-4">登出</a>
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -116,68 +115,57 @@
         <div class="container-xxl contact py-5">
             <div class="container">
                 <div class="row g-5 mb-5">
-                    <!-- 
-               <div class="col-md-6 text-center wow fadeInUp" data-wow-delay="0.4s">
-                   <div class="btn-square mx-auto mb-3">
-                       <i class="fa fa-phone fa-2x text-white"></i>
-                   </div>
-                   <p class="mb-2">03-34567008</p>
-               </div> -->
-                    <!-- <div class="col-md-6 text-center wow fadeInUp" data-wow-delay="0.5s">
-                   <i class="fa fa-phone fa-2x text-white"></i>
-               </div>
-               <p class="mb-2">大仁街51號</p>
-               <p class="mb-0">桃園市中壢區</p> -->
-                </div>
-            </div>
-            <div class="row g-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="table-responsive">
+                                    <table
+                                        style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"
+                                        class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">
+                                                    項目</th>
+                                                <th
+                                                    style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">
+                                                    內容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">訂位大名：</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">
+                                                    <%= insertReservation.getReservationName() %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">訂位電話：</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">
+                                                    <%= insertReservation.getPhone() %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">訂位日期：</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">
+                                                    <%= insertReservation.getReservationDate() %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">訂位時間：</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px;">
+                                                    <%= insertReservation.getReservationTime() %>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-            </div>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-success table-light">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">項目</th>
-                                    <th scope="col">內容</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>訂位大名：</td>
-                                    <td>
-                                        <%= insertReservation.getReservationName()%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位電話：</td>
-                                    <td>
-                                        <%= insertReservation.getPhone() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位日期：</td>
-                                    <td>
-                                        <%= insertReservation.getReservationDate() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>訂位時間：</td>
-                                    <td>
-                                        <%= insertReservation.getReservationTime() %>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
         </div>
         <!-- Contact End -->
 

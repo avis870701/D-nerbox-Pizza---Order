@@ -126,7 +126,6 @@ public class ProductController {
 		
 		if (!mf.isEmpty()) {
 			String fileName = mf.getOriginalFilename();
-//			String fileDir = "C:/Action/workspace/team6/src/main/resources/static/product/images";
 			String fileDir = "C:/Users/User/Documents/team6/team6/src/main/resources/static/images/product";
 			File fileDirPath = new File(fileDir, fileName);
 			mf.transferTo(fileDirPath);

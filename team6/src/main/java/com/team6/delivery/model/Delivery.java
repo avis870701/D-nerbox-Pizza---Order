@@ -34,11 +34,7 @@ public class Delivery {
 		this.date = date;
 		
 	}
-//	public Delivery(String orderid,String address,String date) {
-//		this.orderid = orderid;
-//		this.address = address;
-//		this.date = date;
-//	}
+
 
 	public int getId() {
 		return id;

@@ -404,7 +404,8 @@
 			<script>
 				// 獲取當前日期和時間
 				var now = new Date();
-				var currentDate = now.toISOString().split('T')[0];
+				//var currentDate = now.toISOString().split('T')[0];
+				var currentDate = now.toLocaleDateString('sv-SE');
 				var currentTime = now.toTimeString().split(' ')[0].substring(0, 5); // 只保留時和分
 
 				document.getElementById('date').value = currentDate;

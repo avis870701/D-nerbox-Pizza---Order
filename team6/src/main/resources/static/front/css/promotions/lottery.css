@@ -4,9 +4,9 @@
     position: relative;
     border-radius: 50%;
     margin-left: 250px;
-    
-    
-    
+
+
+
 }
 
 /* 包裹器，用於旋轉 */
@@ -47,61 +47,63 @@
     transform-origin: right center; /* 以右側中心為旋轉基準 */
 }
 
-/* 左邊第一個區塊 */
-.left div.one{
-    background-color: #08ebda;
+
+/* 左邊部分的四個區塊 */
+.left div.one {
+    background-color: #FF6B6B;
 }
 
 /* 左邊第二個區塊 */
-.left div.two{
-    background-color: rgba(237, 169, 141, 0.98);
-    transform:rotate(-45deg); /* 逆時針旋轉45度 */
+.left div.two {
+    background-color: #FFD166;
+    transform: rotate(-45deg); /* 逆時針旋轉45度 */
 }
 
 /* 左邊第三個區塊 */
-.left div.three{
-    background-color: #08ebda;
-    transform:rotate(-90deg); /* 逆時針旋轉90度 */
+.left div.three {
+    background-color: #06D6A0;
+    transform: rotate(-90deg); /* 逆時針旋轉90度 */
 }
 
 /* 左邊第四個區塊 */
-.left div.four{
-    background-color: rgba(237, 169, 141, 0.98);
-    transform:rotate(-135deg); /* 逆時針旋轉135度 */
+.left div.four {
+    background-color: #118AB2;
+    transform: rotate(-135deg); /* 逆時針旋轉135度 */
 }
 
 /* 右邊部分的四個區塊 */
-.right div{
+.right div {
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     transform-origin: left center; /* 以左側中心為旋轉基準 */
 }
 
 /* 右邊第一個區塊 */
-.right div.one{
-    background-color: rgba(237, 169, 141, 0.98);
+.right div.one {
+    background-color: #EF476F;
 }
 
 /* 右邊第二個區塊 */
-.right div.two{
-    background-color: #08ebda;
-    transform:rotate(45deg); /* 順時針旋轉45度 */
+.right div.two {
+    background-color: #06D6A0;
+    transform: rotate(45deg); /* 順時針旋轉45度 */
 }
 
 /* 右邊第三個區塊 */
-.right div.three{
-    background-color: rgba(237, 169, 141, 0.98);
-    transform:rotate(90deg); /* 順時針旋轉90度 */
+.right div.three {
+    background-color: #FFD166;
+    transform: rotate(90deg); /* 順時針旋轉90度 */
 }
 
 /* 右邊第四個區塊 */
-.right div.four{
-    background-color: #08ebda;
-    transform:rotate(135deg); /* 順時針旋轉135度 */
+.right div.four {
+    background-color: #FF6B6B;
+    transform: rotate(135deg); /* 順時針旋轉135度 */
 }
+
 
 /* 左邊區塊的文字樣式 */
 .left .text{

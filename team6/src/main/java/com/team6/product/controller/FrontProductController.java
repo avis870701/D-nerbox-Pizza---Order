@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.team6.member.model.MemberAccountBean;
 import com.team6.product.model.ProductBean;
 import com.team6.product.model.ProductService;
-// 2024/5/9 marge後確定沒問題
+
 //@SessionAttributes(names = {})
 @Controller
 @RequestMapping(path = "/product")
@@ -33,8 +35,13 @@ public class FrontProductController {
 	
 	// 前端畫面main
 	@GetMapping("/product.front")
-	public String frontPageMain() {
-		return "forward:/WEB-INF/front-jsp/product/product.jsp";
+	public String frontPageMain(@SessionAttribute(value = "member", required = false) MemberAccountBean member) {
+		
+		if (member != null) {
+			return "forward:/WEB-INF/front-jsp/product/product.jsp";
+		}
+		
+		return "forward:/WEB-INF/front-jsp/product/productNoLogin.jsp";
 	}
 	
 	// 前端產品頁查詢類別
@@ -73,68 +80,5 @@ public class FrontProductController {
 	}
 	
 	
-	
-	
-	
-	
-//	@Autowired
-//	private TestPageService tService;
-//	
-//	// 測試扣產品數量進入點
-//	@GetMapping("/product.test")
-//	public String testProductQuantity(Model model) {
-//		// 18號測試用
-//		ProductBean productBean = productService.SelectById(31);
-//		model.addAttribute("productBean", productBean);
-//		return "forward:/WEB-INF/front-jsp/product/Number.jsp";
-//	}
-//	
-//	// 測試扣產品數量2，用@RequestBody接 然後使用DTO傳輸資料
-//	@PutMapping("/Product_coQuantity")
-//	@ResponseBody
-//	public ResponseEntity<ProductBean> testCoProductQuantity(
-//			@RequestBody ProductTest productTest){
-//		ProductBean productBean = productService.SelectById(productTest.getProductId());
-//		Integer pQuantity = productBean.getProductQuantity();
-//		
-//		
-//		pQuantity -= productTest.getQuantity();
-//		productBean.setProductQuantity(pQuantity);
-//		productService.UpdateProduct(productBean);
-//		
-//		ProductBean newPbean = productService.SelectById(productBean.getProductId());
-//		
-//		return ResponseEntity.ok().body(newPbean);
-//	}
-//	
-//	
-//	// 測試 分頁
-//	@GetMapping("/TestPage")
-//	public String testMain() {
-//		return "forward:/WEB-INF/front-jsp/product/TestPage.jsp";
-//	}
-//	
-//	// 測試 分頁
-//	@GetMapping(path = "/TestPageSelectAll")
-//	@ResponseBody
-//	public Page<TestPage> orderSelectAll(@RequestParam(defaultValue = "0") int page,
-//			@RequestParam(defaultValue = "5") int size) {
-//		Pageable pageable = PageRequest.of(page, size, Sort.by("tid").ascending());
-//		return tService.findTestPageAll(pageable);
-//	}
-//	
-//	// 測試 分頁帶查詢
-//	@GetMapping(path = "/TestPage2")
-//	@ResponseBody
-//	public Page<TestPage> testPageWithState(@RequestParam(defaultValue = "0") int page,
-//			@RequestParam(defaultValue = "5") int size) {
-//		
-//		Pageable pageable = PageRequest.of(page, size, Sort.by("tid").ascending());
-//		
-//		int state = 1;
-//		String name = "噁";
-//		
-//		return tService.findTestPageWithState(state, name, pageable);
-//	}
 	
 }

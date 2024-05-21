@@ -42,7 +42,7 @@ $(document).ready(function () {
                         `<h4>` + product.productName + '</h4>' +
                         `<p style="height: 100px;">` + product.productDesc + '</p>' +
                         '<div class="d-flex justify-content-between flex-lg-wrap">' +
-                        `<p class="text-dark fs-5 fw-bold mb-0">數量: ` + product.productQuantity + '</p>' +
+//                        `<p class="text-dark fs-5 fw-bold mb-0">數量: ` + product.productQuantity + '</p>' +
                         `<p class="text-dark fs-5 fw-bold mb-0">金額: ` + product.productPrice + '</p>' +
                         '</div>' +
                         '</div>' +

@@ -125,7 +125,7 @@
 				<div class="body-wrapper">
 					<!--  Header Start -->
 					<header class="app-header">
-						<h1>${year} 年 ${month} 月 歷史訂位紀錄</h1>
+						<h1>${year} 年 ${month} 月 歷史紀錄</h1>
 						<table>
 							<thead>
 								<tr>
@@ -147,7 +147,28 @@
 										<td>${reservation.reservationName}</td>
 										<td>${reservation.phone}</td>
 										<td>${reservation.note}</td>
-										<td>${reservation.reservationStatus}</td>
+										<td>
+											<c:choose>
+												<c:when test="${reservation.reservationStatus == 0}">
+													店家未確認
+												</c:when>
+												<c:when test="${reservation.reservationStatus == 1}">
+													店家已確認
+												</c:when>
+												<c:when test="${reservation.reservationStatus == 2}">
+													客人已取消
+												</c:when>
+												<c:when test="${reservation.reservationStatus == 3}">
+													客人已確認
+												</c:when>
+												<c:when test="${reservation.reservationStatus == 4}">
+													現場客
+												</c:when>
+												<c:otherwise>
+													未知狀態
+												</c:otherwise>
+											</c:choose>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -207,11 +228,7 @@
 
 			</div>
 			<div class="py-6 px-6 text-center">
-				<p class="mb-0 fs-4">
-					Design and Developed by <a href="https://adminmart.com/" target="_blank"
-						class="pe-1 text-primary text-decoration-underline">AdminMart.com</a>
-					Distributed by <a href="https://themewagon.com">ThemeWagon</a>
-				</p>
+
 			</div>
 			</div>
 			</div>

@@ -48,7 +48,7 @@
 		<div class="container-fluid bg-white sticky-top">
 			<div class="container">
 				<nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-					<a href="MemberIndex" class="navbar-brand"> <img class="img-fluid"
+					<a href="/member/MemberIndex" class="navbar-brand"> <img class="img-fluid"
 							src="/images/indexImages/DonerPizzaLogo.png" alt="Logo">
 					</a>
 					<button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
@@ -60,14 +60,22 @@
 							<a href="/product/product.front" class="nav-item nav-link active">產品</a>
 							<a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
 							<a href="/reservation/customerreservemain.controller" class="nav-item nav-link">訂位趣</a>
-							<a href="/test" class="nav-item nav-link">線上點餐</a>
+							<a href="/delivery" class="nav-item nav-link">線上點餐</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
+								<div class="dropdown-menu bg-light rounded-0 m-0">
+									<a href="#" class="dropdown-item">特色</a> <a href="#"
+										class="dropdown-item">部落格</a> <a href="#"
+										class="dropdown-item">公司簡介</a> <a href="#" class="dropdown-item">分店資訊</a>
+								</div>
+							</div>
 						</div>
 						<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#"> <img src="${member.detailBean.mPhoto}" alt=""
 									width="35" height="35" class="rounded-circle">${member.detailBean.mName}
 							</a>
 							<div class="dropdown-menu bg-light rounded-0 m-0">
-								<a href="MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
+								<a href="/member/MemberAboutMe" class="dropdown-item"> <i class="ti ti-user fs-6"></i>
 									<p class="mb-0 dropdown-item ">會員中心</p>
 								</a> <a href="#" class="dropdown-item"> <i class="ti ti-mail fs-6"></i>
 									<p class="mb-0 dropdown-item">訂單查詢</p>
@@ -199,42 +207,63 @@
 
 		<!-- Products Start -->
 		<div class="container-fluid product py-5 my-5">
-			<div class="container py-5">
-				<div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s"
-					style="max-width: 500px;">
-					<p class="fs-5 fw-medium fst-italic text-primary">Our Products</p>
-					<h1 class="display-6">Tea has a complex positive effect on the
-						body</h1>
-				</div>
-				<div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
-					<a href="" class="d-block product-item rounded"> <img src="/front/img/product-1.jpg" alt="">
-						<div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-							<h4 class="text-primary">Green Tea</h4>
-							<span class="text-body">Diam dolor diam ipsum sit diam amet
-								diam et eos. Clita erat ipsum</span>
-						</div>
-					</a> <a href="" class="d-block product-item rounded"> <img src="/front/img/product-2.jpg" alt="">
-						<div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-							<h4 class="text-primary">Black Tea</h4>
-							<span class="text-body">Diam dolor diam ipsum sit diam amet
-								diam et eos. Clita erat ipsum</span>
-						</div>
-					</a> <a href="" class="d-block product-item rounded"> <img src="/front/img/product-3.jpg" alt="">
-						<div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-							<h4 class="text-primary">Spiced Tea</h4>
-							<span class="text-body">Diam dolor diam ipsum sit diam amet
-								diam et eos. Clita erat ipsum</span>
-						</div>
-					</a> <a href="" class="d-block product-item rounded"> <img src="/front/img/product-4.jpg" alt="">
-						<div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
-							<h4 class="text-primary">Organic Tea</h4>
-							<span class="text-body">Diam dolor diam ipsum sit diam amet
-								diam et eos. Clita erat ipsum</span>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
+            <div class="container py-5">
+                <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s"
+                    style="max-width: 500px;">
+                    <h4 class="display-6 fw-medium fst-italic">猜你喜歡</h4>
+                </div>
+                <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/牛K吧焗烤薯條.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
+                        <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+                            <h4 class="text-primary">焗烤牛肉K吧焗烤薯條</h4>
+                            <span class="text-body">旋轉烤牛肉。焗烤，薯條。</span>
+                        </div>
+                    </a>
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/培根德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
+                        <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+                            <h4 class="text-primary">培根德國披薩</h4>
+                            <span class="text-body">培根。白醬，薄餅皮。</span>
+                        </div>
+                    </a>
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/炸雞塊(6塊).jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="3">炸物</div>
+
+                        <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+                            <h4 class="text-primary">雞塊(6)</h4>
+                            <span class="text-body">酥酥脆脆的雞塊</span>
+                        </div>
+                    </a>
+
+                    <a href="/product/product.front" class="d-block product-item rounded">
+                        <img src="/images/product/海鮮德國比薩.jpg" alt="">
+
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                            style="top: 10px; left: 10px;" data-categoryId="1">披薩</div>
+
+                        <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
+                            <h4 class="text-primary">海鮮德國披薩</h4>
+                            <span class="text-body">蝦仁、魚、蟹味腿。白醬，薄餅皮。</span>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
 		<!-- Products End -->
 
 
@@ -611,7 +640,7 @@
 				<div class="row">
 					<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
 						&copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>,
-						<a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right
+						<a class="fw-medium" href="/member/emplogin">Döner Pizza德氏披薩</a>, All Right
 						Reserved.
 					</div>
 					<div class="col-md-6 text-center text-md-end">
@@ -640,6 +669,8 @@
 
 		<!-- Template Javascript -->
 		<script src="/front/js/main.js"></script>
+		 <!-- 載入隨機產品輪播 -->
+        <script src="/front/js/product/productRandom.js"></script>
 	</body>
 
 	</html>

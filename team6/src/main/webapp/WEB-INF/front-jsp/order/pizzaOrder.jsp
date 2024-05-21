@@ -80,8 +80,17 @@
 						<a href="/product/product.front" class="nav-item nav-link active">產品</a>
 						<a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
 						<a href="/reservation/customerreservemain.controller"
-							class="nav-item nav-link">訂位趣</a> <a href="/test"
+							class="nav-item nav-link">訂位趣</a> <a href="/delivery"
 							class="nav-item nav-link">線上點餐</a>
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"
+								data-bs-toggle="dropdown">關於</a>
+							<div class="dropdown-menu bg-light rounded-0 m-0">
+								<a href="#" class="dropdown-item">特色</a> <a href="#"
+									class="dropdown-item">部落格</a> <a href="#" class="dropdown-item">公司簡介</a>
+								<a href="#" class="dropdown-item">分店資訊</a>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
@@ -855,8 +864,8 @@
 											配料加選
 											<div class="form-check">
 												<input class="form-check-input" type="checkbox"
-													id="mushroomBakedNoodles" value="加洋菇"> <label
-													class="form-check-label" for="mushroomBakedNoodles">加洋菇
+													id="mushroomBakedFries" value="加洋菇"> <label
+													class="form-check-label" for="mushroomBakedFries">加洋菇
 													+30</label>
 											</div>
 											<div class="mb-3">
@@ -888,8 +897,8 @@
 										<div class="modal-body">
 											<div class="mb-3">
 												<label for="quantity" class="form-label">數量：</label> <input
-													type="number" class="form-control" id="quantity" value="1"
-													min="1" max="10">
+													type="number" class="form-control" id="addOrderQuantity"
+													value="1" min="1" max="10">
 											</div>
 											<br> 備註：
 											<div class="mb-3">
@@ -901,7 +910,7 @@
 											<button type="button" class="btn btn-secondary"
 												data-bs-dismiss="modal">取消</button>
 											<button type="button" class="btn btn-primary"
-												onclick="addOrder(this)">送出</button>
+												onclick="addOrder()">送出</button>
 										</div>
 									</div>
 								</div>
@@ -928,15 +937,14 @@
 											<p>付款方式:</p>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="paymentMethod" id="cashPayment" value="現金">
-												<label class="form-check-label" for="cashPayment"><i
+													name="paymentMethod" id="cashPayment" value="現金"> <label
+													class="form-check-label" for="cashPayment"><i
 													class="fa-solid fa-money-check-dollar"></i>現金</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="paymentMethod" id="creditCardPayment"
-													value="LinePay"> <label class="form-check-label"
-													for="creditCardPayment"><i
+													name="paymentMethod" id="creditCardPayment" value="LinePay">
+												<label class="form-check-label" for="creditCardPayment"><i
 													class="fa-regular fa-credit-card"></i>LinePay</label>
 											</div>
 											<input type="hidden" name="account" id="account"
@@ -1113,12 +1121,17 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="../../..//static/front/js/main.js"></script>
-	<script src="../../../static/front/js/order/orderModal.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+	<script src="../../..//static/front/js/main.js"></script>
+	<script src="../../../static/front/js/order/orderModal.js"></script>
+
+	<!-- sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
 </body>
 
 </html>

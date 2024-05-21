@@ -2,6 +2,7 @@ package com.team6.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -49,74 +50,96 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	// Google 第三方登入
-//	@PostMapping("/MemberLoginByGoogle")
-//	public String MemberLoginByGoogle(@RequestParam("credential") String credential) {
-//		// pom.xml => google
-//		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-//				// Specify the CLIENT_ID of the app that accesses the backend:
-//				// 放憑證的金鑰 "client_id"。
-//				.setAudience(Collections.singletonList("1061052456304-fvgb2fc831flpr7na6faddbf91ngi0r0.apps.googleusercontent.com"))
-//				// Or, if multiple clients access the backend:
-//				// .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-//				.build();
-//
-//		// (Receive idTokenString by HTTPS POST)
-//		// 这里验证登录回调的credential完整性
-//		// 注意: 要選的是 com.google.api.client.googleapis.auth.oauth2 這組路徑。
-//		GoogleIdToken idToken = verifier.verify(credential);
-//		Payload payload = idToken.getPayload();
-//
-//		// Get profile information from payload
-//		String email = payload.getEmail();
-//
-//		// 紀錄金鑰
-//		String thirdPartyId = payload.getSubject();
-//
-//		String name = (String) payload.get("name");
-//		String pictureUrl = (String) payload.get("picture");
-////			    String locale = (String) payload.get("locale");
-//		String familyName = (String) payload.get("family_name");
-//		String givenName = (String) payload.get("given_name");
-//		String[] splitAccount = email.split("@");
-//		String account = splitAccount[0];
-//		if (idToken != null) {
-////			            int level = 1;
-//
-////					System.out.println("獨家金鑰: " + thirdPartyId);
-////					System.out.println("第三方登入方式: " + thirdPartyProvider);
-////					System.out.println("信箱: " + email);
-////					System.out.println("帳號: " + account);
-////					System.out.println("全名: " + name);
-////					System.out.println("照片: " + pictureUrl);
-////					System.out.println("姓氏: " + givenName);
-////					System.out.println("名字: " + familyName);
-//
-//			if (mService.findByAccount(account).isPresent()) {
-//				if (mService.checkLogin(account, thirdPartyId)) {
-//					System.out.println("登入成功");
-//					// 儲存登入會員的bean物件
-//					MemberBean memberInformation = mService.selectByAccountBean(account);
-//					System.out.println(memberInformation);
-//					// 設定session
-//					httpSession.setAttribute("member", memberInformation);
-//					System.out.println("session設定成功");
-//					// 檢查會員等級
-//					return "/good/jsp/EZBuyindex";
-//				}
-//			} else {
-//				/* 紀錄當前時間 */
-//				LocalDate now = LocalDate.now();
-//				System.out.println(now);
-//				MemberBean memBean = new MemberBean(account, thirdPartyId, email, name, thirdPartyProvider, now);
-//				mService.insert(memBean);
-//				httpSession.setAttribute("member", memBean);
-//				System.out.println("有創建帳號");
-//				return "/good/jsp/EZBuyindex";
-//			}
-//		}
-//		return "失敗";
-//	}
+	// Google 第三方登入 ok
+	@PostMapping("/MemberLoginByGoogle")
+	public String MemberLoginByGoogle(@RequestParam("credential") String credential, HttpSession session, Model model)
+			throws GeneralSecurityException, IOException, MessagingException {
+		// pom.xml => google
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+				// Specify the CLIENT_ID of the app that accesses the backend:
+				// 放憑證的金鑰 "client_id"。
+				.setAudience(Collections
+						.singletonList("1061052456304-fvgb2fc831flpr7na6faddbf91ngi0r0.apps.googleusercontent.com"))
+				// Or, if multiple clients access the backend:
+				// .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+				.build();
+
+		// (Receive idTokenString by HTTPS POST)
+		// 这里验证登录回调的credential完整性
+		// 注意: 要選的是 com.google.api.client.googleapis.auth.oauth2 這組路徑。
+		GoogleIdToken idToken = verifier.verify(credential);
+		Payload payload = idToken.getPayload();
+
+		// Get profile information from payload
+		String email = payload.getEmail();
+
+		// 紀錄金鑰
+		String thirdPartyId = payload.getSubject();
+
+		String name = (String) payload.get("name");
+		String pictureUrl = (String) payload.get("picture");
+		String locale = (String) payload.get("locale");
+		String familyName = (String) payload.get("family_name");
+		String givenName = (String) payload.get("given_name");
+		String[] splitAccount = email.split("@");
+		String account = splitAccount[0];
+
+		if (idToken != null) {
+			System.out.println("獨家金鑰: " + thirdPartyId);
+			System.out.println("信箱: " + email);
+			System.out.println("帳號: " + account);
+			System.out.println("全名: " + name);
+			System.out.println("照片: " + pictureUrl);
+			System.out.println("姓氏: " + givenName);
+			System.out.println("名字: " + familyName);
+			System.out.println("locale: " + locale);
+
+			if (service.findAccountByEmail(email).isPresent()) {
+				if (service.checkLogin(account, thirdPartyId)) {
+					System.out.println("登入成功");
+					// 儲存登入會員的bean物件
+					MemberAccountBean memberInformation = service.findAccountByAccount(account);
+					System.out.println(memberInformation);
+					// 設定session
+					session.setAttribute("member", memberInformation);
+					System.out.println("session設定成功");
+					// 檢查會員等級
+					return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+				}
+			} else {
+				/* 紀錄當前時間 */
+				LocalDate now = LocalDate.now();
+				System.out.println(now);
+				MemberAccountBean bean = new MemberAccountBean();
+				bean.setmAccount(account);
+				bean.setmPassword(thirdPartyId);
+				bean.setPermissions(1);
+				bean.setHidden(1);
+				MemberAccountBean returnBean = service.insertAccount(bean);
+				MemberDetailBean detailBean = new MemberDetailBean();
+				detailBean.setBean(returnBean);
+				detailBean.setmName(returnBean.getmAccount());
+				detailBean.setmEmail(email);
+				detailBean.setmPhoto("/images/member/user.png");
+				detailBean.setMbirthday(now);
+				detailBean.setRegistrationDate(now);
+				returnBean.setDetailBean(detailBean);
+				MemberAccountBean result = service.insertDetail(returnBean);
+				// 加自動寄信 ok
+				String receivers = detailBean.getmEmail();
+				String subject = "成為會員通知信";
+				String content = mailContent(detailBean.getmName(), "感謝您成為 DonerPizza 的會員。");
+				String from = "DonerPizza<h60915@gmail.com>";
+				service.sendPlainText(receivers, subject, content, from);
+				// -------------------------------------------------------
+				session.setAttribute("member", result);
+				System.out.println("有創建帳號");
+				return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+			}
+		}
+		model.addAttribute("err", "創建帳號失敗。");
+		return "forward:/WEB-INF/front-jsp/Err.jsp";
+	}
 
 	// 會員自行登入系列
 	@RequestMapping(path = "/login", method = { RequestMethod.GET, RequestMethod.POST })
@@ -128,12 +151,17 @@ public class MemberController {
 
 	@PostMapping("/memberlogin.controller")
 	public String login(@RequestParam("account") String account, @RequestParam("password") String pwd, Model model,
-			HttpSession session) {
+			HttpSession session/*, @SessionAttribute(value = "path", required = false) String path*/) {
 		MemberAccountBean bean = service.login(account, pwd);
 		if (bean != null) {
 			if (bean.getPermissions() == 1) {
-				session.setAttribute("member", bean);
-				return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+//				if (path == "" || path == null) {
+					session.setAttribute("member", bean);
+					return "forward:/WEB-INF/front-jsp/member/MemberIndex.jsp";
+//				}
+
+//					session.setAttribute("member", bean);
+//				return "redirect:" + path;
 			} else if (bean.getPermissions() == 0) {
 				model.addAttribute("err", "此帳號已凍結!!");
 				return "forward:/WEB-INF/front-jsp/Login.jsp";

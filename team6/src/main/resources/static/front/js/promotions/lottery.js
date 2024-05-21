@@ -1,6 +1,6 @@
 let wapper = document.querySelector(".wapper");
 let textAll = document.querySelectorAll(".wapper .text");
-let text = ["10元","20元","未中獎","飲料一瓶","40元","30元","未中獎","50元"];
+let text = ["10元", "15元", "25元", "20元", "40元", "35元", "30元", "50元"];
 for(let i = 0 ; i < textAll.length ; i++){
     textAll[i].innerHTML = text[i];
 }
@@ -64,10 +64,22 @@ function fetchDiscountCode(prizeName) {
     fetch(`/getDiscountCode?promotionsName=${encodeURIComponent(prizeName)}`)
         .then(response => response.text())
         .then(discountCode => {
-            alert(`您抽到了 : ${prizeName}\n折扣碼: ${discountCode}`);
+            const confirmation = confirm(`您抽到了 : ${prizeName}\n是否要複製該折扣碼：${discountCode}`);
+            if (confirmation) {
+                // 將折扣碼寫入剪貼板
+                navigator.clipboard.writeText(discountCode)
+                    .then(() => {
+                        alert(`折扣碼已複製: ${discountCode}`);
+                    })
+                    .catch(error => {
+                        console.error('複製折扣碼時發生錯誤:', error);
+                        alert(`複製折扣碼時發生錯誤，請手動複製：${discountCode}`);
+                    });
+            }
         })
         .catch(error => {
-            console.error('Error fetching discount code:', error);
-            alert(`您抽到了 : ${prizeName}\n但獲取折扣碼時發生錯誤，請稍後重試`);
+            console.error('獲取折扣碼時發生錯誤:', error);
+            alert(`獲取折扣碼時發生錯誤，請稍後重試`);
         });
+
 }

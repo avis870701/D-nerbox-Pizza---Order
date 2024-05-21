@@ -82,8 +82,16 @@
 						<a href="/product/product.front" class="nav-item nav-link active">產品</a>
 						<a href="/promotions/promotionsFront" class="nav-item nav-link">活動優惠</a>
 						<a href="/reservation/customerreservemain.controller"
-							class="nav-item nav-link">訂位趣</a> <a href="/test"
+							class="nav-item nav-link">訂位趣</a> <a href="/delivery"
 							class="nav-item nav-link">線上點餐</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">關於</a>
+								<div class="dropdown-menu bg-light rounded-0 m-0">
+									<a href="#" class="dropdown-item">特色</a> <a href="#"
+										class="dropdown-item">部落格</a> <a href="#"
+										class="dropdown-item">公司簡介</a> <a href="#" class="dropdown-item">分店資訊</a>
+								</div>
+							</div>
 					</div>
 				</div>
 				<div class="border-start ps-4 d-none d-lg-block nav-item dropdown">
@@ -314,7 +322,7 @@
 			<div class="row">
 				<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
 					&copy; <a class="fw-medium" href="https://www.ispan.com.tw/">資展國際股份有限公司</a>,
-					<a class="fw-medium" href="emplogin">Döner Pizza德氏披薩</a>, All Right
+					<a class="fw-medium" href="/member/emplogin">Döner Pizza德氏披薩</a>, All Right
 					Reserved.
 				</div>
 				<div class="col-md-6 text-center text-md-end">

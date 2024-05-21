@@ -15,7 +15,7 @@
   a:hover{text-decoration: none;}
 </style>
 <body>
-     <!--  Body Wrapper -->
+      <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
   data-sidebar-position="fixed" data-header-position="fixed">
   <!-- Sidebar Start -->
@@ -24,7 +24,8 @@
     <div>
       <div class="brand-logo d-flex align-items-center justify-content-between">
         <a href="./index.html" class="text-nowrap logo-img">
-          <img src="../../static/back/images/logos/dark-logo.svg" width="180" alt="" />
+          <img src="../../../static/images/indexImages/DonerPizzaSmall.png" width="180" alt="" />
+          <link rel="shortcut icon" type="image/png" href="../../../static/images/logos/favicon.png" />
         </a>
         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
           <i class="ti ti-x fs-8"></i>
@@ -33,114 +34,53 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
         <ul id="sidebarnav">
-
-
-            <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">後臺功能</span>
+          <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+              class="hide-menu">後台功能列表</span></li>
+              <li class="sidebar-item"><a class="sidebar-link" href="/delivery/home"
+                aria-expanded="false"> <span> <i class="ti ti-file-description"></i>
+                </span> <span class="hide-menu">外送管理功能</span>
+              </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-article"></i>
-        </span>
-                    <span class="hide-menu">會員</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-alert-circle"></i>
-        </span>
-                    <span class="hide-menu">產品</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-cards"></i>
-        </span>
-                    <span class="hide-menu">訂單</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-file-description"></i>
-        </span>
-                    <span class="hide-menu">訂位</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="/delivery/" aria-expanded="false">
-        <span>
-          <i class="ti ti-file-description"></i>
-        </span>
-                    <span class="hide-menu">外送</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="/promotions/promotionsMain" aria-expanded="false">
-        <span>
-          <i class="ti ti-typography"></i>
-        </span>
-                    <span class="hide-menu">活動</span>
-                </a>
-            </li>
-            <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">AUTH</span>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-login"></i>
-        </span>
-                    <span class="hide-menu">Login</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-user-plus"></i>
-        </span>
-                    <span class="hide-menu">Register</span>
-                </a>
-            </li>
-            <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">EXTRA</span>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-mood-happy"></i>
-        </span>
-                    <span class="hide-menu">Icons</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
-        <span>
-          <i class="ti ti-aperture"></i>
-        </span>
-                    <span class="hide-menu">Sample Page</span>
-                </a>
-            </li>
+            <li class="sidebar-item"><a class="sidebar-link" href="/delivery/emp"
+              aria-expanded="false"> <span> <i class="ti ti-file-description"></i>
+              </span> <span class="hide-menu">外送員管理</span>
+            </a>
+          </li>
+          <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
+              class="hide-menu">其他功能列表</span></li>
+              <li class="sidebar-item"><a class="sidebar-link" href="/emp/Member.SelectAll/1"
+              aria-expanded="false"> <span>
+                <i class="ti ti-layout-dashboard"></i>
+              </span> <span class="hide-menu">會員管理功能</span>
+            </a></li>
+          <li class="sidebar-item"><a class="sidebar-link" href="/product/Product_Test_Main"
+              aria-expanded="false"> <span>
+                <i class="ti ti-article"></i>
+              </span> <span class="hide-menu">產品管理功能</span>
+            </a></li>
+          <li class="sidebar-item"><a class="sidebar-link" href="/order/order.action"
+              aria-expanded="false"> <span>
+                <i class="ti ti-alert-circle"></i>
+              </span> <span class="hide-menu">訂單管理功能</span>
+            </a></li>
+          <li class="sidebar-item"><a class="sidebar-link"
+              href="/reservation/reservemain.controller" aria-expanded="false"> <span> <i
+                  class="ti ti-cards"></i>
+              </span> <span class="hide-menu">訂位管理功能</span>
+            </a></li>
+          
+          <li class="sidebar-item"><a class="sidebar-link" href="/promotions/promotionsMain"
+              aria-expanded="false"> <span>
+                <i class="ti ti-typography"></i>
+              </span> <span class="hide-menu">活動管理功能</span>
+            </a></li>
+          <li class="sidebar-item"><a class="sidebar-link" href="/emp/EmpGoBackToEmpIndex"
+              aria-expanded="false"> <span>
+                <i class="ti ti-typography"></i>
+              </span> <span class="hide-menu">返回主頁</span>
+            </a></li>
         </ul>
-        <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
-            <div class="d-flex">
-                <div class="unlimited-access-title me-3">
-                    <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
-                    <a href="https://adminmart.com/product/modernize-bootstrap-5-admin-template/"
-                       target="_blank" class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a>
-                </div>
-                <div class="unlimited-access-img">
-                    <img src="../../../static/back/images/backgrounds/rocket.png" alt="" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </nav>
+      </nav>
       <!-- End Sidebar navigation -->
     </div>
     <!-- End Sidebar scroll-->
@@ -152,41 +92,38 @@
     <header class="app-header">
       <nav class="navbar navbar-expand-lg navbar-light">
         <ul class="navbar-nav">
-          <li class="nav-item d-block d-xl-none">
-            <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-              <i class="ti ti-bell-ringing"></i>
+          <li class="nav-item d-block d-xl-none"><a class="nav-link sidebartoggler nav-icon-hover"
+              id="headerCollapse" href="javascript:void(0)"> <i class="ti ti-menu-2"></i>
+            </a></li>
+          <li class="nav-item"><a class="nav-link nav-icon-hover" href="javascript:void(0)"> <i
+                class="ti ti-bell-ringing"></i>
               <div class="notification bg-primary rounded-circle"></div>
-            </a>
-          </li>
+            </a></li>
         </ul>
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
           <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-            <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
-            <li class="nav-item dropdown">
-              <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+            <li class="nav-item dropdown"><a class="nav-link nav-icon-hover"
+                href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <img src="../../static/back/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
               </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                aria-labelledby="drop2">
                 <div class="message-body">
-                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                    <i class="ti ti-user fs-6"></i>
+                  <a href="javascript:void(0)"
+                    class="d-flex align-items-center gap-2 dropdown-item"> <i
+                      class="ti ti-user fs-6"></i>
                     <p class="mb-0 fs-3">My Profile</p>
-                  </a>
-                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                    <i class="ti ti-mail fs-6"></i>
+                  </a> <a href="javascript:void(0)"
+                    class="d-flex align-items-center gap-2 dropdown-item"> <i
+                      class="ti ti-mail fs-6"></i>
                     <p class="mb-0 fs-3">My Account</p>
                   </a>
-                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                    <i class="ti ti-list-check fs-6"></i>
+                  </a> <a href="javascript:void(0)"
+                    class="d-flex align-items-center gap-2 dropdown-item"> <i
+                      class="ti ti-list-check fs-6"></i>
                     <p class="mb-0 fs-3">My Task</p>
-                  </a>
-                  <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </a> <a href="/emp/logout"
+                    class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                 </div>
               </div>
             </li>
@@ -213,7 +150,8 @@
                             </div>
                             <div class="form-group text-center">
                                 <label for="orderid" style="text-align: center;">外送明細</label>
-                                <input id="orderid" type="text" class="form-control text-center" name="orderid" style="width: 400px;" th:value="${delivery.orderid}" required />
+                                <input id="orderid" type="text" class="form-control text-center" name="orderid" style="width: 400px;" th:value="${delivery.orderid}"
+                                readonly="readonly" required />
                             </div>
                             <div class="form-group text-center">
                                 <label for="address" style="text-align: center;">外送地址</label>
@@ -225,21 +163,32 @@
                             </div>
                             <div class="form-group text-center">
                               <label for="status" style="text-align: center;">外送單狀態</label>
-                              <select id="status" class="form-control text-center" name="status" style="width: 400px;" required>
+                              <select id="status" class="form-control text-center" name="status" style="width: 400px;">
+                                  <option value="1" th:selected="${delivery.status == 1}">待處理</option>
+                                  <option value="2" th:selected="${delivery.status == 2}">已接單</option>
+                                  <option value="3" th:selected="${delivery.status == 3}">外送中</option>
+                                  <option value="4" th:selected="${delivery.status == 4}">已送達</option>
+                                  <option value="0" th:selected="${delivery.status == 0}">已取消</option>
+                              </select>
+                          </div>
+                            <!-- <div class="form-group text-center">
+                              <label for="status" style="text-align: center;">外送單狀態</label>
+                              <select id="status" class="form-control text-center" name="status" style="width: 400px;" required> -->
                               <!-- <option selected> -->
                               <!-- <td th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></td> -->
-                              <option th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></option>
+                              <!-- <option th:text="${delivery.status == 1 ? '待處理' : (delivery.status == 2 ? '已接單' : (delivery.status == 3 ? '外送中' : (delivery.status == 4 ? '已送達' : '已取消')))}"></option>
                                   <option value="1">待處理</option>
                                   <option value="2">已接單</option>
                                   <option value="3">外送中</option>
                                   <option value="4">已送達</option>
                                   <option value="0">已取消</option>
                               </select>
-                          </div>
+                          </div> -->
                         </form>
                         <br>
                         <button onclick="update()" class="btn btn-success">更新</button>
                         <button type="button" id="back" class="btn btn-secondary">回上頁</button>
+                        <button type="button" id="onechange" class="btn btn-secondary">一鍵修改</button>
                     </div>
                 </div>
             </div>
@@ -250,9 +199,14 @@
     <script src="../../../static/back/js/delivery/CRUD.js"></script>
     <script>    
     $('#back').click(function(){
-            let homeURL = "http://localhost:8080/delivery/home";
+            let homeURL = "/delivery/home";
 		        window.location.href = homeURL;
        });
+    // 一鍵輸入
+    $('#onechange').click(function(){
+        $('#address').val('桃園市中壢區新生路二段421號');
+        $('#date').val('2024-5-15');
+      });
 
      
         //發送更新請求

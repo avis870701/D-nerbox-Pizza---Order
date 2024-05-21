@@ -91,7 +91,7 @@
     
         $.ajax({
             type: 'PUT',
-            url: '/delivery/upd', 
+            url: '/delivery/update', 
             contentType: 'application/json',
             data: JSON.stringify(Data),
             success: function(response) {

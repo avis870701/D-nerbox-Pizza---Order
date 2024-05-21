@@ -107,14 +107,14 @@
 									<div class="card-body">
 										<div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
 											<div class="mb-3 mb-sm-0">
-												<h5 class="card-title fw-semibold">Sales Overview</h5>
+												<h5 class="card-title fw-semibold">註冊概況</h5>
 											</div>
 											<div>
 												<select class="form-select">
-													<option value="1">March 2023</option>
-													<option value="2">April 2023</option>
-													<option value="3">May 2023</option>
-													<option value="4">June 2023</option>
+													<option value="1">2024 年 2 月</option>
+													<option value="2">2024 年 3 月</option>
+													<option value="3">2024 年 4 月</option>
+													<option value="4">2024 年 5 月</option>
 												</select>
 											</div>
 										</div>
@@ -128,7 +128,7 @@
 										<!-- Yearly Breakup -->
 										<div class="card overflow-hidden">
 											<div class="card-body p-4">
-												<h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
+												<h5 class="card-title mb-9 fw-semibold">每年註冊頻率</h5>
 												<div class="row align-items-center">
 													<div class="col-8">
 														<h4 class="fw-semibold mb-3">$36,358</h4>
@@ -137,19 +137,19 @@
 																class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
 																<i class="ti ti-arrow-up-left text-success"></i>
 															</span>
-															<p class="text-dark me-1 fs-3 mb-0">+9%</p>
-															<p class="fs-3 mb-0">last year</p>
+															<p class="text-dark me-1 fs-3 mb-0">+5.7%</p>
+															<p class="fs-3 mb-0">去年</p>
 														</div>
 														<div class="d-flex align-items-center">
 															<div class="me-4">
 																<span
 																	class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-																<span class="fs-2">2023</span>
+																<span class="fs-2">23年3月</span>
 															</div>
 															<div>
 																<span
 																	class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
-																<span class="fs-2">2023</span>
+																<span class="fs-2">23年4月</span>
 															</div>
 														</div>
 													</div>
@@ -168,8 +168,7 @@
 											<div class="card-body">
 												<div class="row alig n-items-start">
 													<div class="col-8">
-														<h5 class="card-title mb-9 fw-semibold">Monthly
-															Earnings</h5>
+														<h5 class="card-title mb-9 fw-semibold">每月註冊率</h5>
 														<h4 class="fw-semibold mb-3">$6,820</h4>
 														<div class="d-flex align-items-center pb-1">
 															<span
@@ -177,7 +176,7 @@
 																<i class="ti ti-arrow-down-right text-danger"></i>
 															</span>
 															<p class="text-dark me-1 fs-3 mb-0">+9%</p>
-															<p class="fs-3 mb-0">last year</p>
+															<p class="fs-3 mb-0">去年</p>
 														</div>
 													</div>
 													<div class="col-4">
@@ -203,21 +202,20 @@
 										<h5 class="card-title fw-semibold mb-4">所有會員</h5>
 										<table class="table text-nowrap mb-0 align-middle">
 											<tr>
-												<td class="border-bottom-0"><span>查詢：</span><input type="text"></td>
-												<td class="border-bottom-0">
+												<td class="border-bottom-0"><span>查詢：</span><input type="text" id="select"></td>
+												<td class="border-bottom-0 d-grid gap-2 d-md-flex justify-content-md-end"
+													oncontextmenu="selectByName()">
 													<button
 														onclick="document.getElementById('memberInsert').style.display='block'"
-														style="width: auto;" class="btn btn-primary mx-5">新憎會員</button>
+														class="btn btn-primary mx-5">新憎會員</button>
 												</td>
 											</tr>
 										</table>
 
 										<div class="table-responsive">
 											<!-- table -->
-											<table class="table text-nowrap mb-0 align-middle" id="showmember">
-
-											</table>
-
+											<!-- all查詢 開始 -->
+											<table class="table text-nowrap mb-0 align-middle" id="showmember"></table>
 											<table id="showpage" class="table text-nowrap mb-0 align-middle">
 												<tr>
 													<td class="border-bottom-0">總共 ${totalPages} 頁 有
@@ -243,6 +241,12 @@
 													</td>
 												</tr>
 											</table>
+											<!-- all查詢 結束 -->
+											
+											<!-- 模糊查詢 開始 -->
+											<table class="table text-nowrap mb-0 align-middle" id="showmemberByName"></table>
+											<table id="showpageByName" class="table text-nowrap mb-0 align-middle"></table>
+											<!-- 模糊查詢 結束 -->
 										</div>
 									</div>
 								</div>

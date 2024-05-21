@@ -30,47 +30,50 @@ public class DeliveryService {
 	@Autowired
 	private DeliveryRepository dRepos;
 	
+//========================= 外送單功能 =============================//
 	//查詢所有外送單資料
-	public List<Delivery> findall(){
+	public List<Delivery> FindAll(){
 		return dRepos.findAll();
 	}
 	
-	//查詢單筆
-	public Delivery findById(Integer id) {
+	//查詢單筆外送單資料
+	public Delivery FindById(Integer id) {
 		Optional<Delivery> op1 = dRepos.findById(id);
 		if(op1.isPresent()) {
 			return op1.get();
 		}
 			return null;	
 	}
-	//修改
-	public Delivery update(Delivery delivery) {
+	//更新外送單資料
+	public Delivery Update(Delivery delivery) {
 		return dRepos.save(delivery);
 	}
 	
-	//修改
-	public void  updateall() {
+	//更新外送訂單
+	public void UpdDeliveryOrderAll() {
 		dRepos.upddeliveyall();;
 	}
 		
 	
-	//刪除單筆
+	//刪除單筆外送單資料
 	public void DelDelivery(int id) {
 		dRepos.deleteById(id);
 	}
-	//新增
-	public Delivery insert(Delivery delivery){
+	//新增外送單資料
+	public Delivery Insert(Delivery delivery){
 		 return dRepos.save(delivery);
 	}
 	//新增
-	public Delivery add(String orderid,String date){
-		return  dRepos.add(orderid,date);
-	}
-	//創建JSON檔案
-	public void saveJson() {
+//	public Delivery add(String orderid,String date){
+//		return  dRepos.add(orderid,date);
+//	}
+	
+//========================= 資料匯出功能 =============================//
+	//儲存JSON檔案
+	public void SaveJson() {
 	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    List<Delivery> deliveries = dRepos.findAll();
-	    String json = gson.toJson(deliveries);
+	    List<Delivery> data = dRepos.findAll();
+	    String json = gson.toJson(data);
 
 //	    String folderPath = "C:/JSON";
 	    String folderPath = "C:/Users/User/Downloads";
@@ -100,15 +103,15 @@ public class DeliveryService {
 	        e.printStackTrace();
 	    }
 	}
-	//創建xml檔案
-	public void saveXml() {
+	//儲存xml檔案
+	public void SaveXml() {
 	    XStream xstream = new XStream(new DomDriver());
-	    List<Delivery> deliveries = dRepos.findAll();
+	    List<Delivery> data = dRepos.findAll();
 
 	    // 設定別名 (alias) 以便在 XML 中使用指定的標籤名稱
 	    xstream.alias("delivery", Delivery.class);
 
-	    String xml = xstream.toXML(deliveries);
+	    String xml = xstream.toXML(data);
 
 //	    String folderPath = "C:/XML";
 	    String folderPath = "C:/Users/User/Downloads";
@@ -138,9 +141,9 @@ public class DeliveryService {
 	        e.printStackTrace();
 	    }
 	}
-	//創建Excel檔案
-	public void saveExcel() {
-	    List<Delivery> deliveries = dRepos.findAll();
+	//儲存Excel檔案
+	public void SaveExcel() {
+	    List<Delivery> data = dRepos.findAll();
 
 //	    String folderPath = "C:/EXCEL";
 	    String folderPath = "C:/Users/User/Downloads";
@@ -166,16 +169,20 @@ public class DeliveryService {
 	        headerRow.createCell(0).setCellValue("外送訂單");
 	        headerRow.createCell(1).setCellValue("日期");
 	        headerRow.createCell(2).setCellValue("地址");
-//	        headerRow.createCell(3).setCellValue("Status");
+	        headerRow.createCell(3).setCellValue("外送員工");
+	        headerRow.createCell(4).setCellValue("外送開始時間");
+	        headerRow.createCell(5).setCellValue("外送結束時間");
 
 	        // 填入資料
 	        int rowNum = 1;
-	        for (Delivery delivery : deliveries) {
+	        for (Delivery delivery : data) {
 	            Row row = sheet.createRow(rowNum++);
 	            row.createCell(0).setCellValue(delivery.getId());
 	            row.createCell(1).setCellValue(delivery.getDate());
 	            row.createCell(2).setCellValue(delivery.getAddress());
-//	            row.createCell(3).setCellValue(delivery.getStatus());
+	            row.createCell(3).setCellValue(delivery.getEname());
+	            row.createCell(4).setCellValue(delivery.getStarttime());
+	            row.createCell(5).setCellValue(delivery.getEndtime());
 	        }
 
 	        // 將 Excel 工作簿寫入到文件
@@ -192,47 +199,56 @@ public class DeliveryService {
 	        e.printStackTrace();
 	    }
 	}
-// ==================================上面是好的不要修改==============================//
-	
+
+//========================= 外送員工管理功能 =============================//
 		//查詢狀態!=0
 		public List<Delivery> findnotZero(){
 			return dRepos.findallnotZero();
 		}
-		//查詢狀態為1
-		public List<Delivery> findallone(){
+		//查詢外送員狀態:待處理
+		public List<Delivery> FindPending(){
 			return dRepos.findallOne();
 		}
-		//查詢狀態為2
-		public List<Delivery> findalltwo(){
+		//查詢外送員狀態:已接單
+		public List<Delivery> FindAccept(){
 			return dRepos.findallTwo();
 		}
-		//查詢狀態為3
-		public List<Delivery> findallthree(){
+		//查詢外送員狀態:外送中
+		public List<Delivery> FindNowDelivery(){
 			return dRepos.findallThree();
 		}
-		//查詢狀態為4
-		public List<Delivery> findallfour(){
+		//查詢外送員狀態:已送達
+		public List<Delivery> FindDeliveryArrived(){
 			return dRepos.findallFour();
 		}
-		//查詢狀態為0
-		public List<Delivery> findallzero(){
+		//查詢外送員狀態:取消訂單
+		public List<Delivery> FindCancelDelivery(){
 			return dRepos.findallZero();
 		}
+// ==================================上面是好的不要修改==============================//
 		//修改已接單
-		public void UpdState(Integer id) {
-			 dRepos.upddeliverystate(id);
+		public void UpdAccept(Integer id) {
+			dRepos.upddeliverystate(id);
 		}
+		
+		//修改復原訂單為待處理
+		public void UpdRollBack(Integer id) {
+			dRepos.rollback(id);
+		}
+		//修改訂單
 		public void UpdStateZero(Integer id) {
 			dRepos.upddeliverystatezero(id);
 		}
-		
-		public void Updename(String ename,Integer id) {
+		//指派外送員 外送員狀態:外送中
+		public void UpdEnameDeliveryOrder(String ename,Integer id) {
 			dRepos.upddeliveryename(ename,id);
 		}
-		public void UpdEnd(Integer id) {
+		//外送員狀態:已送達
+		public void UpdDeliveryArrived(Integer id) {
 			dRepos.upddeliveryEnd(id);
 		}
-		public void EndAll() {
+		//一次修改多筆外送員狀態:外送中~已送達 
+		public void DeliveryArrivedAll() {
 			dRepos.endall();
 		}
 	

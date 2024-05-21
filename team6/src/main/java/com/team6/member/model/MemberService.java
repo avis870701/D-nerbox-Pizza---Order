@@ -41,6 +41,14 @@ public class MemberService {
 		}
 		return null;
 	}
+	
+	public boolean checkLogin(String account, String pwd) {
+		Optional<MemberAccountBean> bean=rma.login(account, pwd);
+		if(bean.isPresent()) {
+			return true;
+		}
+		return false;
+	}
 	// =================================================================
 
 	// 查詢單筆
@@ -64,6 +72,9 @@ public class MemberService {
 	public List<MemberAccountBean> findByName(String name) {
 		return rma.findByName(name);
 	}
+	public List<MemberAccountBean> findByNameAndNotHidden(String name) {
+		return rma.findByNameAndNotHidden(name);
+	}
 
 	// 全部查詢
 	public List<MemberAccountBean> findAll() {
@@ -74,14 +85,19 @@ public class MemberService {
 	}
 
 	// 回傳搜尋頁面筆數
+	// 全部版
 	public Page<MemberAccountBean> findAllByPage(Pageable pageable) {
 		return rma.findAll(pageable);
 	}
+	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,String name) {
+		return rma.findByNamePage(pageable,name);
+	}
+	// 只查未被刪除版
 	public Page<MemberAccountBean> findAllByNotHiddenByPage(Pageable pageable) {
 		return rma.findAllByNotHiddenByPage(pageable);
 	}
-	public Page<MemberAccountBean> findByNameByPage(Pageable pageable,/*String type,*/String name) {
-		return rma.findByNamePage(pageable,/*type,*/name);
+	public Page<MemberAccountBean> findByNameAndNotHiddenByPage(Pageable p1, String name) {
+		return rma.findByNameAndNotHiddenPage(p1,name);
 	}
 	// =================================================================
 
@@ -301,6 +317,5 @@ public class MemberService {
 		} catch (Exception e) {
 		}
 	}
-
 
 }

@@ -15,6 +15,11 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	@Transactional
 	@Query(value = "UPDATE Delivery SET status = 2 WHERE delivery_id = ?", nativeQuery = true)
 	public void upddeliverystate(Integer id);
+	//復原訂單
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE Delivery SET status = 1 WHERE delivery_id = ?", nativeQuery = true)
+	public void rollback(Integer id);
 	//修改外送員工姓名和外送狀態
 	@Modifying
 	@Transactional
@@ -25,7 +30,7 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	@Transactional
 	@Query(value = "UPDATE Delivery SET status = 0 WHERE delivery_id = ?", nativeQuery = true)
 	public void upddeliverystatezero(Integer id);
-	//修改為外送結束
+	//修改為已送達
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE Delivery  SET status = 4, endtime = GETDATE()  WHERE delivery_id = ?", nativeQuery = true)

@@ -72,7 +72,7 @@ function addPizzaOrder() {
 		extraCost += 30;
 	}
 
-	var totalPrice = (price + extraCost) * quantity;
+	var totalPrice = price + extraCost;
 
 	var note = sauce + " " + cheese + " " + mushroom;
 
@@ -129,7 +129,7 @@ function addBakedNoodlesOrder(button) {
 
 	var note = sauce + " " + mushroom;
 
-	var totalPrice = (price + extraCost) * quantity;
+	var totalPrice = price + extraCost;
 
 	var newRow = document.createElement("tr");
 	newRow.innerHTML = "<input type='hidden' name='productId' value='" + productId + "'>" +
@@ -171,7 +171,7 @@ function addBakedFriesOrder(button) {
 
 	var note = mushroom;
 
-	var totalPrice = (price + extraCost) * quantity;
+	var totalPrice = price + extraCost;
 
 	var newRow = document.createElement("tr");
 	newRow.innerHTML = "<input type='hidden' name='productId' value='" + productId + "'>" +
@@ -202,10 +202,11 @@ function addOrder(button) {
 	var priceText = itemContainer.querySelector('.text-primary').innerHTML;
 	var price = parseFloat(priceText.replace('$', ''));
 
-	var quantity = document.getElementById('quantity').value;
+
+	var quantity = document.getElementById('addOrderQuantity').value;
 	var note = document.getElementById('orderNotes').value;
 
-	var totalPrice = price * quantity;
+	var totalPrice = price;
 	var extraCost = 0;
 
 	var newRow = document.createElement("tr");
@@ -215,8 +216,6 @@ function addOrder(button) {
 		"<td>" + totalPrice + "</td>" +
 		"<td><input type='number' value='" + quantity + "' min='1' max='10' oninput='validity.valid||(value=1);' onchange='updateItemTotal(this, " + price + ", " + extraCost + "); updateTotalAmount();'></td>" +
 		'<td scope="col" class="remove-item"><i class="fa-regular fa-trash-can" onclick="removeOrderItem(event, this)" style="cursor: pointer" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'black\'"></i></td>';
-
-
 
 
 	document.getElementById("orderDetails").appendChild(newRow);
@@ -229,23 +228,29 @@ function addOrder(button) {
 	modal.hide();
 }
 
+
 // 更新單個商品的小計
 function updateItemTotal(input, price, extraCost) {
 	var row = input.parentNode.parentNode;
-	var quantity = parseInt(input.value);
-	var totalPrice = (price + extraCost) * quantity;
+	//var quantity = parseInt(input.value);
+	var totalPrice = price + extraCost;
 	row.cells[2].innerText = totalPrice;
 }
 
 // 更新總金額
 function updateTotalAmount() {
-	var totalAmountElement = document.getElementById('totalAmount');
-	var rows = document.getElementById("orderDetails").rows;
-	var totalAmount = 0;
-	for (var i = 0; i < rows.length; i++) {
-		totalAmount += parseFloat(rows[i].cells[2].innerText);
-	}
-	totalAmountElement.innerText = '$' + totalAmount;
+    var totalAmountElement = document.getElementById('totalAmount');
+    var rows = document.getElementById("orderDetails").rows;
+    var totalAmount = 0;
+    
+    for (var i = 0; i < rows.length; i++) {
+        var price = parseFloat(rows[i].cells[2].innerText);
+        var quantity = parseInt(rows[i].cells[3].querySelector('input').value);
+        var totalPrice = price * quantity;
+        totalAmount += totalPrice;
+    }
+    
+    totalAmountElement.innerText = '$' + totalAmount;
 }
 
 // 檢查input裡面數字的範圍
@@ -255,7 +260,7 @@ function checkInputRange(input) {
 		input.value = 1;
 	} else if (value > 10) {
 		input.value = 10;
-		alert("請輸入1到10之間的數字。");
+		Swal.fire("請輸入1到10之間的數字。");
 	}
 }
 
@@ -294,23 +299,15 @@ function resetBakedNoodlesForm() {
 // 重置BakedFries訂單表單
 function resetBakedFriesForm() {
 	// 重置選擇框的值為預設值
-	document.getElementById('cheeseBakedFries').checked = false;
-	document.getElementById('baconBakedFries').checked = false;
+	document.getElementById('mushroomBakedFries').checked = false;
 	document.getElementById('quantityBakedFries').value = 1;
 }
 
 // 重置一般訂單表單
 function resetForm() {
 	// 重置表單的值為預設值
-	document.getElementById('quantity').value = 1;
+	document.getElementById('addOrderQuantity').value = 1;
 	document.getElementById('orderNotes').value = '';
-}
-
-// 重置Tea訂單表單
-function resetTeaForm() {
-	// 重置选择框的值为默认值
-	document.getElementById("iceCheckbox").checked = false;
-	document.getElementById("noSugarRadio").checked = false;
 }
 
 
@@ -344,7 +341,7 @@ document.getElementById('checkOrderButton').addEventListener('click', function()
 		var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
 		paymentModal.show();
 	} else {
-		alert('請先選擇餐點！');
+		Swal.fire('請先選擇餐點！');
 	}
 });
 
@@ -357,7 +354,7 @@ function applyDiscount() {
 	var pickup = document.getElementById('pickup').value;
 	var orderStatus = document.getElementById('orderStatus').value;
 
-	// 获取选中的付款方式
+	// 獲取選中的付款方式
 	for (var i = 0; i < paymentMethods.length; i++) {
 		if (paymentMethods[i].checked) {
 			selectedPaymentMethod = paymentMethods[i].value;
@@ -365,12 +362,8 @@ function applyDiscount() {
 		}
 	}
 
-	console.log('selectedPaymentMethod: ' + selectedPaymentMethod);
-	console.log('paymentNethods:' + paymentMethods);
-
-
 	if (!selectedPaymentMethod) {
-		alert('請選擇付款方式');
+		Swal.fire('請選擇付款方式');
 		return;
 	}
 
@@ -427,14 +420,13 @@ function applyDiscount() {
 		.then(data => {
 			if (data.message === "Order inserted successfully.") {
 				console.log('訂單插入成功');
-				if(selectedPaymentMethod === '現金'){
+				if (selectedPaymentMethod === '現金') {
 					window.location.href = '/order/historyOrder';
 				}
-				
-				
+
 				// 直接重定向到 LinePay 的支付頁面
-				if(selectedPaymentMethod === 'LinePay') {
-				window.location.href = '/order/linepayOrder';
+				if (selectedPaymentMethod === 'LinePay') {
+					window.location.href = '/order/linepayOrder';
 				}
 			} else {
 				throw new Error('Order creation failed');

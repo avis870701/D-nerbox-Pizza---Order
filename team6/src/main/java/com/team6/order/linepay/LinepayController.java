@@ -106,13 +106,13 @@ public class LinepayController {
 		if (response.getStatusCode() == HttpStatus.OK) {
 			orderStatus = "訂單待處理(已付款)";
 			oService.updateOrderStatus(orderId, orderStatus);
-			if(pickup == "外送") {
+			if("外送".equals(pickup)) {
 				String address = (String)session.getAttribute("address");
 				String date = (String)session.getAttribute("date");
 				delivery.setAddress(address);
 				delivery.setDate(date);
 				delivery.setOrderid(orderId);
-				dService.insert(delivery);
+				dService.Insert(delivery);
 			}
 			return new ModelAndView("forward:/WEB-INF/front-jsp/order/historyOrder.jsp"); // Redirect to history order page
 		} else {

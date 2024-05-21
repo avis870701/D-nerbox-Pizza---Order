@@ -39,31 +39,31 @@ VALUES('John1001', '123456', '1', '1'),
 ('Michael', '123456', '1', '1'),
 ('Emily', '123456', '1', '1'),
 ('William', '123456', '1', '1'),
-('Sophia', '123456', '1', '1'),
-('Matthew', '123456', '1', '1'),
-('Olivia', '123456', '1', '1'),
-('Daniel', '123456', '1', '1'),
-('Rodriguez', '123456', '1', '1'),
-('Hernandez', '123456', '1', '1'),
-('Isabella', '123456', '1', '1'),
-('Charlotte', '123456', '0', '1'),
+('Sophia7', '123456', '1', '1'),
+('Matthew3', '123456', '1', '1'),
+('Olivia5', '123456', '1', '1'),
+('Daniel7', '123456', '1', '1'),
+('Rodriguez5', '123456', '1', '1'),
+('Hernandez456', '123456', '1', '1'),
+('Isabella9', '123456', '1', '1'),
+('Charlotte78', '123456', '0', '1'),
 ('Liam2044', '123456', '1', '1'),
 ('Emma6842', '123456', '1', '1'),
 ('Zoe48098', '123456', '1', '1'),
 ('Smith565', '123456', '1', '1'),
-('Anderson', '123456', '1', '1'),
-('Benjamin', '123456', '1', '1'),
+('Anderson76', '123456', '1', '1'),
+('Benjamin786', '123456', '1', '1'),
 ('Thomas691', '123456', '1', '1'),
-('Anderson', '123456', '1', '1'),
-('Benjamin', '123456', '0', '1'),
-('Thomas', '123456', '1', '1'),
-('ChloeWhite', '123456', '1', '1'),
-('Jackson', '123456', '0', '0'),
-('GraceHall', '123456', '1', '1'),
-('Thompson', '123456', '1', '1'),
-('LilyLewis', '123456', '0', '0'),
-('Gabriel', '123456', '1', '1'),
-('Zoe48098', '123456', '1', '1');
+('Anderson565', '123456', '1', '1'),
+('Benjamin46546', '123456', '0', '1'),
+('Thomas566', '123456', '1', '1'),
+('ChloeWhite7587', '123456', '1', '1'),
+('Jackson783', '123456', '0', '0'),
+('GraceHall45', '123456', '1', '1'),
+('Thompson86', '123456', '1', '1'),
+('LilyLewis453', '123456', '0', '0'),
+('Gabriel53', '123456', '1', '1'),
+('Zoe414546', '123456', '1', '1');
 INSERT INTO memberDetail(fk_maId,mName,mEmail,mPhone,mbirthday,mPhoto,RegistrationDate)
 VALUES ('1', 'John Doe', 'john.doe@gmail.com', '1234567890', '1995-08-15','/images/member/users/user01.jpg', '2004-03-26'),
 ('2', 'Jane Smith', 'jane.smith@gmail.com', '2345678901', '1990-06-25','/images/member/users/user02.jpg', '1997-10-20'),
@@ -198,6 +198,8 @@ SELECT * FROM EmployeeDetail
 SELECT * FROM EmployeeDetail edt join EmployeeAccount ea on ea.empid = edt.fk_empId join EmployeeDept edp on edt.fk_deptno=edp.deptno Where empPermissions=1 or empPermissions=2
 SELECT * FROM forgot_pwd
 
+--SELECT (SELECT * FROM memberAccount WHERE hidden = 1) FROM memberAccount  a join memberDetail d on a.maid= d.fk_maId WHERE a.mAccount like '%e%'
+SELECT * FROM memberAccount  a join memberDetail d on a.maid= d.fk_maId WHERE a.hidden = 1 and (a.mAccount like '%i%' or d.mName like '%i%') ORDER BY a.maid
 --================================================================================
 -----------------------------------------╬ч╖@еч©Х--------------
 

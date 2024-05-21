@@ -17,7 +17,7 @@ public interface PromotionsRepository extends JpaRepository<Promotions, String> 
     //訂單用折扣碼查詢折扣
 	@Transactional
 	@Modifying
-	@Query(value = "SELECT * from Promotions p WHERE p.Promotions_startDate >= GETDATE();",nativeQuery = true)
+	@Query(value = "SELECT * from Promotions p WHERE p.Promotions_startDate < GETDATE() AND p.Promotions_endDate >= GETDATE();",nativeQuery = true)
 	List<Promotions> findEfficientDiscountList();
 
     //查詢本月的優惠

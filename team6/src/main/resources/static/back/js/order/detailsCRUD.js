@@ -199,10 +199,10 @@ $(document).ready(function() {
 		};
 		
 		if($('#orderProductSelect option:selected').text() == ''){
-			alert('請選擇產品！');
+			Swal.fire('請選擇產品！');
 		}
 		if(quantity<=0 || quantity>10){
-			alert('數量限 1 ~ 10 之間！');
+			Swal.fire('數量限 1 ~ 10 之間！');
 		}
 		
 		// 發送 AJAX 請求
@@ -266,7 +266,7 @@ function loadOrderDetails(orderId) {
 				$('#orderDetailsModal').modal('hide');
 				var page = currentPage;
 				fetchOrders(page);
-				alert('已無餐點明細');
+				Swal.fire('已無餐點明細');
 				//加入update 將折扣碼金額變為0 金額才不會變負的
 				updateDiscount(orderId)
 				return; // 终止執行後續代碼

@@ -292,6 +292,125 @@
 			}
 
 			function updateNumberOfPeople(reservationId, newNumberOfPeople) {
+				fetch('/reservation/updateNumberOfPeople', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: new URLSearchParams/*可以透過參數名稱抓到從上面的HTML中帶來的參數*/({
+						action: 'updateNumberOfPeople',
+						reservationId: encodeURIComponent(reservationId),
+						newNumberOfPeople: encodeURIComponent(newNumberOfPeople)
+					})
+				})
+					.then(response => {
+						if (response.ok) {
+							console.log("成功更改人數");
+						} else {
+							return response.text().then(text => { throw new Error(text) });
+						}
+					})
+					.catch(error => {
+						alert("更新失敗！\n" + error.message);
+					});
+			}
+
+			function updateReservationDate(reservationId, newDate) {
+				fetch('/reservation/updateReservationDate', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: new URLSearchParams({
+						action: 'updateReservationDate',
+						reservationId: reservationId,
+						newDate: newDate
+					})
+				})
+					.then(response => {
+						if (response.ok) {
+							location.reload();
+						} else {
+							console.log("日期更新失敗");
+							return;
+						}
+					})
+			}
+
+			function updateReservationTime(reservationId, newTime) {
+				fetch('/reservation/updateReservationTime', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: new URLSearchParams({
+						action: 'updateReservationTime',
+						reservationId: reservationId,
+						newTime: newTime
+					})
+				})
+					.then(response => {
+						if (response.ok) {
+							location.reload();
+						} else {
+							console.log("時間更新失敗");
+							return;
+						}
+					})
+			}
+
+			function deleteReservation(reservationId) {
+				fetch('/reservation/deleteReservation', {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: new URLSearchParams({
+						action: 'deleteReservation',
+						reservationId: reservationId,
+					})
+				})
+					.then(response => {
+						if (response.ok) {
+							location.reload();
+						} else {
+							console.log("刪除失敗");
+							return;
+						}
+					})
+			}
+
+			function updateReservationStatusTo3(reservationId, reservationStatus) {
+				// 構建查詢字符串
+				let params = new URLSearchParams({
+					action: 'autoUpdateReservationStatus',
+					reservationStatus: reservationStatus,
+					reservationId: reservationId
+				});
+
+				// 將查詢字符串附加到 URL 中(因為GET不需要body)
+				fetch('/reservation/autoUpdateReservationStatus?' + params.toString(), {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					}
+				})
+					.then(response => {
+						if (response.ok) {
+							location.reload();
+						} else {
+							console.log("狀態更新失敗");
+							return;
+						}
+					})
+					.catch(error => {
+						console.error("請求錯誤: " + error.message);
+					});
+			}
+
+			//舊版
+			/*
+			function updateNumberOfPeople(reservationId, newNumberOfPeople) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('PUT', '/reservation/updateNumberOfPeople', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -304,7 +423,7 @@
 				};
 				xhr.send('action=updateNumberOfPeople&reservationId=' + encodeURIComponent(reservationId) + '&newNumberOfPeople=' + encodeURIComponent(newNumberOfPeople));
 			}
-
+			
 			function updateReservationDate(reservationId, newDate) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('PUT', '/reservation/updateReservationDate', true);
@@ -321,7 +440,7 @@
 				location.reload();
 			}
 
-			function deleteReservation(reservationId) {
+			 function deleteReservation(reservationId) {
 				if (confirm("確定要刪除此訂位資訊嗎？")) {
 					var xhr = new XMLHttpRequest();
 					xhr.open('DELETE', '/reservation/deleteReservation', true);
@@ -340,6 +459,7 @@
 					location.reload();
 				}
 			}
+			*/
 		</script>
 	</body>
 

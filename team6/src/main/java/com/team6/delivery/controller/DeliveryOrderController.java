@@ -2,19 +2,21 @@ package com.team6.delivery.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.team6.delivery.model.Data;
 import com.team6.delivery.model.Delivery;
 import com.team6.delivery.model.DeliveryService;
+import com.team6.member.model.MemberAccountBean;
+import com.team6.member.model.MemberDetailBean;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,17 +28,22 @@ public class DeliveryOrderController {
 	@Autowired
 	private DeliveryService dService;
 	
-//	http://localhost:8080/home
-	@GetMapping("/home")
-	public String Deliveryhome() {
-		return "/front-html/delivery/address";
-	}
+//  線上點餐前端頁面
 //	http://localhost:8080/test
-	@GetMapping("/test")
-	public String home() {
-		return "/front-html/delivery/test";
+//	@GetMapping("/test")
+	@RequestMapping(path = "/delivery", method = { RequestMethod.GET, RequestMethod.POST })
+	public String DeliveryHome(@SessionAttribute(value = "member", required = false) MemberAccountBean memberAccountBean ,Model m) {
+		if (memberAccountBean != null) {
+//			m.addAttribute(member);
+			m.addAttribute("member",memberAccountBean);
+			return "/front-html/delivery/FrontDelivery";
+		} else {
+			return "forward:/WEB-INF/front-jsp/Login.jsp";
+		}
 	}
+		
 	
+//	線上點餐前端傳送到session
 	@PostMapping("/save")
 	@ResponseBody
 	public String saveaddress(HttpSession session,@RequestBody Data data) {
@@ -48,28 +55,6 @@ public class DeliveryOrderController {
 		session.setAttribute("address", address);
 		session.setAttribute("date", date);
 		return "成功";
-	}
-	@GetMapping("/clear")
-	@ResponseBody
-	public String clearaddress(HttpSession session) {
-		
-		session.removeAttribute("address");
-		session.removeAttribute("date");
-		
-		return "清除";
-	}
-	
-	@GetMapping("/load")
-	@ResponseBody
-	public String loadaddress(HttpSession session,Delivery delivery) {
-		
-		String address	 = (String)session.getAttribute("address");
-		String date	 = (String)session.getAttribute("date");
-		delivery.setOrderid("20240505125426");
-		delivery.setAddress(address);
-		delivery.setDate(date);
-//		dService.insert(delivery);
-		return "地址:" + address + "," +  "日期:" + date ;
 	}
 
 	

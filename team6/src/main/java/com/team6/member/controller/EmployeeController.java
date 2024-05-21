@@ -60,11 +60,11 @@ public class EmployeeController {
 		if (bean != null) {
 			System.out.println(bean.getEmpAccount());
 			if (bean.getEmpPermissions() == "0") {
-				System.out.println(bean.getEmpAccount()+"0");
+				System.out.println(bean.getEmpAccount() + "0");
 				model.addAttribute("err", "此帳號已無權限!!");
 				return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
 			} else {
-				System.out.println(bean.getEmpAccount()+"1");
+				System.out.println(bean.getEmpAccount() + "1");
 				session.setAttribute("emp", bean);
 				return "forward:/WEB-INF/back-jsp/EmpIndex.jsp";
 			}
@@ -112,54 +112,33 @@ public class EmployeeController {
 	// ===================================================================================================
 
 	// 查詢系列--模糊
-	@GetMapping("/Member.SelectByName")
+	@RequestMapping(path = "/MemberSelectByName", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public String SelectByName(@SessionAttribute(value = "emp", required = false) EmployeeAccountBean bean,
-			@RequestParam("mName") String mName, Model model, HttpSession session) {
-		if (bean != null) {
-			List<MemberAccountBean> beans = mService.findByName(mName);
-			if (beans.isEmpty()) {
-				model.addAttribute("err", "查無資料");
-				session.setAttribute("mName", mName);
-				return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
-			} else {
-				model.addAttribute("beans", beans);
-				model.addAttribute("totalElements", beans.size());
-				session.setAttribute("mName", mName);
-				return "forward:/WEB-INF/back-jsp/member/MemberGetByName.jsp";
-			}
-		}
-		return "forward:/WEB-INF/back-jsp/EmpLogin.jsp";
-	}
-
-	@RequestMapping(path = "/MemberSelectByName/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public List<MemberAccountBean> processQueryByNameByPage(
+	public ResponseEntity<List<MemberAccountBean>> processQueryByNameByPage(
 			@SessionAttribute(value = "emp", required = false) EmployeeAccountBean bean,
-			@PathVariable("pageNo") int pageNo, Model m, HttpServletRequest request) {
+			@RequestParam("mName")String name, HttpServletRequest request) {
 		if (bean != null) {
 			HttpSession session = request.getSession();
-			String name = String.valueOf(session.getAttribute("mName"));
-			int pageSize = 10;
-			Pageable p1 = PageRequest.of(pageNo - 1, pageSize);
-			/*
-			 * switch (type){ case "mName": { Page<MemberAccountBean> page =
-			 * service.findByNameByPage(p1,"detailBean.mName",name); } case "account":{
-			 * Page<MemberAccountBean> page = service.findByNameByPage(p1,"mAccount",name);
-			 * } default: throw new IllegalArgumentException("Unexpected value: " + type); }
-			 */
-			Page<MemberAccountBean> page = mService.findByNameByPage(p1, name);
-
-			int totalPages = page.getTotalPages();
-			long totalElements = page.getTotalElements();
-			session.setAttribute("totalPages", totalPages);
-			session.setAttribute("totalElements", totalElements);
+			List<MemberAccountBean> beans = mService.findByName(name);
 			session.setAttribute("emp", bean);
-
-			return page.getContent();
+			return ResponseEntity.ok(beans);
 		}
 		return null;
 	}
+	
+	// 查詢系列--模糊 (未被假刪除)
+	@GetMapping("/Member.SelectByNameAndNotHidden")
+	@ResponseBody
+	public ResponseEntity<List<MemberAccountBean>> SelectByNameAndNotHidden(@SessionAttribute(value = "emp", required = false) EmployeeAccountBean bean,
+			@RequestParam("mName") String mName, Model model, HttpSession session) {
+		if (bean != null) {
+			List<MemberAccountBean> beans = mService.findByNameAndNotHidden(mName);
+			session.setAttribute("emp", bean);
+			return ResponseEntity.ok(beans);
+		}
+		return null;
+	}
+	
 	// ===================================================================================================
 
 	// 查詢系列--全部(假刪除以外)
